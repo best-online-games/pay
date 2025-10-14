@@ -17,6 +17,7 @@ jobs:
     steps:
     
     - uses: hyoo-ru/mam_build@master2
+      timeout-minutes: 3 
       with:
         package: 'bog/pay'
         modules: 'app'
