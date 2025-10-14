@@ -1,4 +1,4 @@
-name: $pay_app
+name: $bog_pay_app
 
 permissions: write-all
 
@@ -18,10 +18,10 @@ jobs:
 
     - uses: hyoo-ru/mam_build@master2
       with:
-        package: 'pay'
+        package: 'bog/pay'
         modules: 'app'
 
     - uses: hyoo-ru/gh-deploy@v4.4.1
       if: github.ref == 'refs/heads/main'
       with:
-        folder: 'pay/app/-'
+        folder: 'bog/pay/app/-'
