@@ -13,6 +13,30 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    - name: Try build (attempt 1)
+      id: attempt1
+      continue-on-error: true
+      uses: hyoo-ru/mam_build@master2
+      with:
+        package: 'bog/pay'
+        modules: 'app'
+        
+    - name: Try build (attempt 2)
+      if: steps.attempt1.outcome == 'failure'
+      id: attempt2
+      continue-on-error: true
+      uses: hyoo-ru/mam_build@master2
+      with:
+        package: 'bog/pay'
+        modules: 'app'
+        
+    - name: Try build (attempt 3)
+      if: steps.attempt2.outcome == 'failure'
+      uses: hyoo-ru/mam_build@master2
+      with:
+        package: 'bog/pay'
+        modules: 'app'
+        
     - uses: hyoo-ru/mam_build@master2
       with:
         package: 'bog/pay'
