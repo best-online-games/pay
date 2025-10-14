@@ -15,6 +15,12 @@ jobs:
     
     steps:
     
+    - name: Configure Git timeout
+      run: |
+        git config --global http.postBuffer 524288000
+        git config --global http.lowSpeedLimit 0
+        git config --global http.lowSpeedTime 999999
+    
     - uses: hyoo-ru/mam_build@master2
       with:
         package: 'bog/pay'
