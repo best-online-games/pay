@@ -20,13 +20,7 @@ jobs:
         package: 'bog/pay'
         modules: 'app'
         
-    - name: Debug
-      run: |
-        echo "github.ref: ${{ github.ref }}"
-        echo "github.ref_name: ${{ github.ref_name }}"
-        echo "github.event_name: ${{ github.event_name }}"
-    
     - uses: hyoo-ru/gh-deploy@v4.4.1
-      # if: github.ref == 'refs/heads/master'
+      if: github.ref_name == 'master'
       with:
         folder: 'bog/pay/app/-'
