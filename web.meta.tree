@@ -21,3 +21,4 @@
 	include \/mol/view/tree/test
 \/bog/pay/app
 	include \/mol/offline/install
+	deploy \/bog/pay/assets/*
