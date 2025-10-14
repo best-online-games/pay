@@ -17,12 +17,12 @@ jobs:
     
     - uses: hyoo-ru/mam_build@master2
       timeout-minutes: 15  # добавьте таймаут
-      continue-on-error: true 
+      # continue-on-error: true 
       with:
         package: 'bog/pay'
         modules: 'app'
         
     - uses: hyoo-ru/gh-deploy@v4.4.1
-      # if: github.ref == 'refs/heads/master'
+      if: github.ref == 'refs/heads/master'
       with:
         folder: 'bog/pay/app/-'
