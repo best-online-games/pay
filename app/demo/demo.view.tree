@@ -1,0 +1,111 @@
+$bog_pay_app_demo $mol_page
+	title \Demo Website
+	tools /
+		<= Settings $mol_button_minor
+			title \Settings
+		<= Profile $mol_button_minor
+			title \Profile
+	body /
+		<= Demo_content $mol_list
+			rows /
+				<= Welcome_section $mol_view
+					sub /
+						<= Welcome_title $mol_view
+							sub / <= Welcome_title_text $mol_dimmer
+								haystack \Welcome to Theme Editor
+						<= Welcome_text $mol_text
+							text \
+								\This is a complete preview of your theme. 
+								\All components are rendered with your custom colors.
+								\Try changing the colors in the editor to see live updates!
+				<= Cards_section $mol_list
+					rows /
+						<= Cards_title $mol_view
+							sub / <= Cards_title_text $mol_dimmer
+								haystack \Cards Preview
+						<= Cards_row $mol_row
+							sub /
+								<= Card1 $mol_view
+									sub /
+										<= Card1_title $mol_dimmer
+											haystack \Card 1
+										<= Card1_text $mol_text
+											text \This is a sample card with some text content.
+								<= Card2 $mol_view
+									sub /
+										<= Card2_title $mol_dimmer
+											haystack \Card 2
+										<= Card2_text $mol_text
+											text \Another card to show how themes apply.
+								<= Card3 $mol_view
+									sub /
+										<= Card3_title $mol_dimmer
+											haystack \Card 3
+										<= Card3_text $mol_text
+											text \Cards can have different content and styles.
+				<= Forms_section $mol_list
+					rows /
+						<= Forms_title $mol_view
+							sub / <= Forms_title_text $mol_dimmer
+								haystack \Forms & Inputs
+						<= Form_demo $mol_list
+							rows /
+								<= Name_field $mol_form_field
+									name \Name
+									Content <= Name_input $mol_string
+										hint \Enter your name
+										value? <=> demo_name? \
+								<= Email_field $mol_form_field
+									name \Email
+									Content <= Email_input $mol_string
+										hint \your@email.com
+										value? <=> demo_email? \
+								<= Message_field $mol_form_field
+									name \Message
+									Content <= Message_input $mol_textarea
+										hint \Your message...
+										value? <=> demo_message? \
+								<= Options_row $mol_row
+									sub /
+										<= Check1 $mol_check_box
+											title \Option 1
+											checked? <=> demo_check1? false
+										<= Check2 $mol_check_box
+											title \Option 2
+											checked? <=> demo_check2? false
+										<= Check3 $mol_check_box
+											title \Option 3
+											checked? <=> demo_check3? false
+								<= Buttons_row $mol_row
+									sub /
+										<= Submit_button $mol_button_major
+											title \Submit
+										<= Cancel_button $mol_button_minor
+											title \Cancel
+				<= Table_section $mol_list
+					rows /
+						<= Table_title $mol_view
+							sub / <= Table_title_text $mol_dimmer
+								haystack \Table Example
+						<= Table_demo $mol_list
+							rows /
+								<= Table_header $mol_row
+									sub /
+										<= Header1 $mol_dimmer haystack \Name
+										<= Header2 $mol_dimmer haystack \Status
+										<= Header3 $mol_dimmer haystack \Value
+								<= Table_row1 $mol_row
+									sub /
+										<= Row1_col1 $mol_view sub / <= Row1_col1_text $mol_text text \Item 1
+										<= Row1_col2 $mol_view sub / <= Row1_col2_text $mol_text text \Active
+										<= Row1_col3 $mol_view sub / <= Row1_col3_text $mol_text text \100
+								<= Table_row2 $mol_row
+									sub /
+										<= Row2_col1 $mol_view sub / <= Row2_col1_text $mol_text text \Item 2
+										<= Row2_col2 $mol_view sub / <= Row2_col2_text $mol_text text \Pending
+										<= Row2_col3 $mol_view sub / <= Row2_col3_text $mol_text text \250
+								<= Table_row3 $mol_row
+									sub /
+										<= Row3_col1 $mol_view sub / <= Row3_col1_text $mol_text text \Item 3
+										<= Row3_col2 $mol_view sub / <= Row3_col2_text $mol_text text \Complete
+										<= Row3_col3 $mol_view sub / <= Row3_col3_text $mol_text text \500

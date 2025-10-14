@@ -1,0 +1,19 @@
+$bog_pay_app_page_components $mol_page
+	title \Components
+	Head null
+	body /
+		<= Nav_menu $mol_book2_catalog
+			spreads *
+				surfaces <= Surfaces $bog_pay_app_page_components_sb_page
+					title \Surfaces
+					body /
+						<= Surfaces_content $mol_text
+							text \Surfaces page - Coming soon...
+				flex <= Flex $bog_pay_app_page_components_flex
+				buttons <= Buttons $bog_pay_app_page_components_sb_page
+					title \Buttons
+					body /
+						<= Buttons_content $mol_text
+							text \Buttons page - Coming soon...
+			- без понятия опять же, что это за компонент Placeholder и зачем он там нужен - 0 шансов и желания разбираться
+			Placeholder null

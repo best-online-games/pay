@@ -1,0 +1,18 @@
+$bog_pay_app $mol_page
+	plugins /
+		<= Theme $mol_theme_auto
+	title \$MOL UI
+	head /
+		<= Title
+		<= Switch
+		<= Tools
+	body /
+		<= Content
+	Deck $mol_deck
+		Switch => Switch
+		Content => Content
+		items /
+			<= Libraries $bog_pay_app_page_libraries
+			<= Components_page $bog_pay_app_page_components
+			<= Design_page $bog_pay_app_page_design
+			<= Themer_page $bog_pay_app_page_themer

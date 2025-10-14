@@ -1,0 +1,10 @@
+$bog_pay_app_page_components_flex $bog_pay_app_page_components_sb_page
+	title \Flex
+	body /
+		<= Card $bog_pay_app_page_components_sb_card
+			align_items \center
+			justify_content \center
+			colors \medium
+			sub /
+				<= Card_content $mol_text
+					text \Flex page - Coming soon...

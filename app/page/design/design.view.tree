@@ -1,0 +1,6 @@
+$bog_pay_app_page_design $mol_page
+	title \Design
+	Head null
+	body /
+		<= Content $mol_text
+			text \Design page - Coming soon...

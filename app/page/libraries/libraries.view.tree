@@ -1,0 +1,6 @@
+$bog_pay_app_page_libraries $mol_page
+	title \Libraries
+	Head null
+	body /
+		<= Content $mol_text
+			text \Libraries page - Coming soon...

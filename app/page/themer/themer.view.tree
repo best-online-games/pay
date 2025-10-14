@@ -1,0 +1,5 @@
+$bog_pay_app_page_themer $mol_page
+	title \Themer
+	Head null
+	body /
+		<= Colors $bog_pay_app_page_themer_colors
