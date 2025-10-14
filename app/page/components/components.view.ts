@@ -13,16 +13,16 @@ namespace $.$$ {
 		}
 
 		// 5 строк - по одной на каждый размер
-		@$mol_mem
-		size_rows() {
-			return $ds_surface.SIZES.map(size => (this as any).Size_row(size))
-		}
+		// @$mol_mem
+		// size_rows() {
+		// 	return $ds_surface.SIZES.map(size => (this as any).Size_row(size))
+		// }
 
 		// Колонки в строке - все цвета для данного размера
-		@$mol_mem_key
-		size_surfaces(size: string) {
-			return $ds_surface.COLORS.map(color => (this as any).Surface_cell(`${color}__${size}`))
-		}
+		// @$mol_mem_key
+		// size_surfaces(size: string) {
+		// 	return $ds_surface.COLORS.map(color => (this as any).Surface_cell(`${color}__${size}`))
+		// }
 
 		@$mol_mem_key
 		surface_color(id: string) {
@@ -47,15 +47,15 @@ namespace $.$$ {
 		}
 
 		// Создаём Surface по ID (color__state)
-		@$mol_mem_key
-		Grid_cell(id: string) {
-			const [color, state] = id.split('__')
+		// @$mol_mem_key
+		// Grid_cell(id: string) {
+		// 	const [color, state] = id.split('__')
 
-			const surface = new this.$.$ds_surface()
-			surface.colors(color as any)
-			surface.state(state as any)
+		// 	const surface = new this.$.$ds_surface()
+		// 	surface.colors(color as any)
+		// 	surface.state(state as any)
 
-			return surface
-		}
+		// 	return surface
+		// }
 	}
 }
