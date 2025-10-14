@@ -1,2 +1,3 @@
 include \/mol/offline/install
 
+deploy \/bog/pay/assets/*
