@@ -4,7 +4,6 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1" />
 		<meta name="mobile-web-app-capable" content="yes" />
-		<meta name="fragment" content="!" />
 		<link href="web.css" rel="stylesheet" />
 		<link href="/bog/pay/assets/favicon_light.ico" rel="icon" />
 	</head>
@@ -12,14 +11,6 @@
 	<body mol_view_root>
 		<div mol_view_root="$bog_pay_app"></div>
 		<script src="web.js" charset="utf-8"></script>
-		<script>
-			window.prerenderReady = false
-			document.addEventListener('DOMContentLoaded', function () {
-				setTimeout(function () {
-					window.prerenderReady = true
-				}, 3000)
-			})
-		</script>
 	
 				<script src="/mol/build/client/client.js" charset="utf-8"></script>
 				<script src="web.test.js" charset="utf-8"></script>
