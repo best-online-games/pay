@@ -2,22 +2,17 @@ $bog_pay_app $mol_page
 	plugins /
 		<= Theme $mol_theme_auto
 	Title $mol_link
-		arg *
+		uri \
 		sub / <= title \Bog Ping
 	head /
 		<= Title
-		<= Games_button $mol_button_minor
-			sub / <= games_button_title @ \Игры
-			click? <=> to_games? null
+		<= Switch
 		<= Tools
-	tools /
-		<= Account_button $mol_button_minor
-			sub / <= account_button_title @ \Личный кабинет
-			click? <=> to_account? null
 	body /
-		<= Pages $mol_switch
-			value <= page \
-			options *
-				home <= Home_page $bog_pay_app_page_home
-				games <= Games_page $bog_pay_app_page_games
-				account <= Account_page $bog_pay_app_page_account
+		<= Content
+	Deck $mol_deck
+		Switch => Switch
+		Content => Content
+		items /
+			<= Games $bog_pay_app_page_games
+			<= Personal_cabinet $bog_pay_app_page_account
