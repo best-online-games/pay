@@ -1,0 +1,79 @@
+$bog_pay_app_footer $mol_view
+	sub /
+		<= Footer_content $mol_view
+			sub /
+				<= Footer_sections $mol_view
+					sub /
+						<= Products_section $mol_view
+							sub /
+								<= Products_title $mol_view
+									sub / <= products_title @ \Продукты
+								<= Products_list $mol_list
+									rows /
+										<= Product1 $mol_link
+											arg *
+											sub / <= product1_text @ \Bog Ping Desktop
+										<= Product2 $mol_link
+											arg *
+											sub / <= product2_text @ \Bog Ping Mobile
+										<= Product3 $mol_link
+											arg *
+											sub / <= product3_text @ \Bog Analytics
+										<= Product4 $mol_link
+											arg *
+											sub / <= product4_text @ \Bog DDoS Shield
+						<= Company_section $mol_view
+							sub /
+								<= Company_title $mol_view
+									sub / <= company_title @ \Компания
+								<= Company_list $mol_list
+									rows /
+										<= Company1 $mol_link
+											arg *
+											sub / <= company1_text @ \О нас
+										<= Company2 $mol_link
+											arg *
+											sub / <= company2_text @ \Команда
+										<= Company3 $mol_link
+											arg *
+											sub / <= company3_text @ \Карьера
+										<= Company4 $mol_link
+											arg *
+											sub / <= company4_text @ \Блог
+						<= Support_section $mol_view
+							sub /
+								<= Support_title $mol_view
+									sub / <= support_title @ \Поддержка
+								<= Support_list $mol_list
+									rows /
+										<= Support1 $mol_link
+											arg *
+											sub / <= support1_text @ \Справочный центр
+										<= Support2 $mol_link
+											arg *
+											sub / <= support2_text @ \Связаться с нами
+										<= Support3 $mol_link
+											arg *
+											sub / <= support3_text @ \Статус серверов
+						<= Community_section $mol_view
+							sub /
+								<= Community_title $mol_view
+									sub / <= community_title @ \Сообщество
+								<= Community_list $mol_list
+									rows /
+										<= Community1 $mol_link
+											arg *
+											sub / <= community1_text @ \Discord
+										<= Community2 $mol_link
+											arg *
+											sub / <= community2_text @ \Reddit
+										<= Community3 $mol_link
+											arg *
+											sub / <= community3_text @ \Twitter
+										<= Community4 $mol_link
+											arg *
+											sub / <= community4_text @ \YouTube
+		<= Footer_bottom $mol_view
+			sub /
+				<= Copyright $mol_text
+					text @ \© 2025 Best-Online-Games (BOG). Все права защищены.
