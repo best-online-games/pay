@@ -2,9 +2,11 @@ namespace $.$$ {
 	const { rem } = $mol_style_unit
 
 	$mol_style_define($bog_pay_app_footer, {
-		background: '#1a1a1a',
+		background: {
+			color: '#1a1a1a',
+		},
 		color: 'white',
-		padding: `${rem(3.75)} ${rem(1.5)} ${rem(1.5)}`,
+		padding: [rem(3.75), rem(1.5), rem(1.5)],
 
 		Footer_content: {
 			maxWidth: rem(75),

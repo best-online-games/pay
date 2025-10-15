@@ -50,7 +50,12 @@ namespace $.$$ {
 				image: 'linear-gradient(135deg, #6d4aff, #9d7aff)',
 			},
 			borderRadius: '50%',
-			margin: [0, 'auto', rem(1.5)],
+			margin: {
+				top: 0,
+				left: 'auto',
+				right: 'auto',
+				bottom: rem(1.5),
+			},
 			display: 'flex',
 			alignItems: 'center',
 			justifyContent: 'center',

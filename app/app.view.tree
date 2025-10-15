@@ -15,13 +15,10 @@ $bog_pay_app $mol_page
 			sub / <= account_button_title @ \Личный кабинет
 			click? <=> to_account? null
 	body /
-		<= Content
+		<= Pages $mol_switch
+			value <= page \
+			options *
+				home <= Home_page $bog_pay_app_page_home
+				games <= Games_page $bog_pay_app_page_games
+				account <= Account_page $bog_pay_app_page_account
 		<= Footer $bog_pay_app_footer
-	Deck $mol_deck
-		Switch => Switch
-		Content => Content
-		param \page
-		items /
-			<= Home_page $bog_pay_app_page_home
-			<= Games_page $bog_pay_app_page_games
-			<= Account_page $bog_pay_app_page_account
