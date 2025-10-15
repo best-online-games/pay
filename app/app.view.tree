@@ -6,14 +6,21 @@ $bog_pay_app $mol_page
 		<= Title
 		<= Switch
 		<= Tools
+	tools /
+		<= Games_link $mol_link
+			arg * page \games
+			sub / <= games_link_title @ \Игры
+		<= Account_link $mol_link
+			arg * page \account
+			sub / <= account_link_title @ \Личный кабинет
 	body /
 		<= Content
 		<= Footer $bog_pay_app_footer
 	Deck $mol_deck
 		Switch => Switch
 		Content => Content
+		param \page
 		items /
-			<= Hero_page $bog_pay_app_page_hero
-			<= Features_page $bog_pay_app_page_features
+			<= Home_page $bog_pay_app_page_home
 			<= Games_page $bog_pay_app_page_games
-			<= About_page $bog_pay_app_page_about
+			<= Account_page $bog_pay_app_page_account

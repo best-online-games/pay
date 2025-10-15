@@ -11,7 +11,7 @@ namespace $.$$ {
 		Games_section: {
 			padding: rem(3),
 			maxWidth: rem(75),
-			margin: '0 auto',
+			margin: [0, 'auto'],
 			width: '100%',
 			boxSizing: 'border-box',
 		},
@@ -46,9 +46,11 @@ namespace $.$$ {
 		Game1_icon: {
 			width: rem(5),
 			height: rem(5),
-			background: 'linear-gradient(135deg, #6d4aff, #9d7aff)',
+			background: {
+				image: 'linear-gradient(135deg, #6d4aff, #9d7aff)',
+			},
 			borderRadius: '50%',
-			margin: `0 auto ${rem(1.5)}`,
+			margin: [0, 'auto', rem(1.5)],
 			display: 'flex',
 			alignItems: 'center',
 			justifyContent: 'center',
@@ -59,9 +61,11 @@ namespace $.$$ {
 		Game2_icon: {
 			width: rem(5),
 			height: rem(5),
-			background: 'linear-gradient(135deg, #6d4aff, #9d7aff)',
+			background: {
+				image: 'linear-gradient(135deg, #6d4aff, #9d7aff)',
+			},
 			borderRadius: '50%',
-			margin: `0 auto ${rem(1.5)}`,
+			margin: [0, 'auto', rem(1.5)],
 			display: 'flex',
 			alignItems: 'center',
 			justifyContent: 'center',
@@ -72,9 +76,11 @@ namespace $.$$ {
 		Game3_icon: {
 			width: rem(5),
 			height: rem(5),
-			background: 'linear-gradient(135deg, #6d4aff, #9d7aff)',
+			background: {
+				image: 'linear-gradient(135deg, #6d4aff, #9d7aff)',
+			},
 			borderRadius: '50%',
-			margin: `0 auto ${rem(1.5)}`,
+			margin: [0, 'auto', rem(1.5)],
 			display: 'flex',
 			alignItems: 'center',
 			justifyContent: 'center',
@@ -122,8 +128,10 @@ namespace $.$$ {
 			padding: `${rem(3)} ${rem(1.5)}`,
 			maxWidth: rem(75),
 			width: '100%',
-			margin: '0 auto',
-			background: '#fafafa',
+			margin: [0, 'auto'],
+			background: {
+				color: '#fafafa',
+			},
 			boxSizing: 'border-box',
 		},
 
@@ -157,9 +165,11 @@ namespace $.$$ {
 		Why1_icon: {
 			width: rem(5),
 			height: rem(5),
-			background: 'linear-gradient(135deg, #6d4aff, #9d7aff)',
+			background: {
+				image: 'linear-gradient(135deg, #6d4aff, #9d7aff)',
+			},
 			borderRadius: '50%',
-			margin: `0 auto ${rem(1.5)}`,
+			margin: [0, 'auto', rem(1.5)],
 			display: 'flex',
 			alignItems: 'center',
 			justifyContent: 'center',
@@ -170,9 +180,11 @@ namespace $.$$ {
 		Why2_icon: {
 			width: rem(5),
 			height: rem(5),
-			background: 'linear-gradient(135deg, #6d4aff, #9d7aff)',
+			background: {
+				image: 'linear-gradient(135deg, #6d4aff, #9d7aff)',
+			},
 			borderRadius: '50%',
-			margin: `0 auto ${rem(1.5)}`,
+			margin: [0, 'auto', rem(1.5)],
 			display: 'flex',
 			alignItems: 'center',
 			justifyContent: 'center',
@@ -183,9 +195,11 @@ namespace $.$$ {
 		Why3_icon: {
 			width: rem(5),
 			height: rem(5),
-			background: 'linear-gradient(135deg, #6d4aff, #9d7aff)',
+			background: {
+				image: 'linear-gradient(135deg, #6d4aff, #9d7aff)',
+			},
 			borderRadius: '50%',
-			margin: `0 auto ${rem(1.5)}`,
+			margin: [0, 'auto', rem(1.5)],
 			display: 'flex',
 			alignItems: 'center',
 			justifyContent: 'center',

@@ -9,7 +9,9 @@ namespace $.$$ {
 		},
 
 		Hero_section: {
-			background: 'linear-gradient(135deg, #f5f2ff 0%, #fff 100%)',
+			background: {
+				image: 'linear-gradient(135deg, #f5f2ff 0%, #fff 100%)',
+			},
 			padding: `${rem(3)} ${rem(1.5)}`,
 			textAlign: 'center',
 			width: '100%',
@@ -19,7 +21,7 @@ namespace $.$$ {
 		Hero_content: {
 			maxWidth: rem(56.25),
 			width: '100%',
-			margin: '0 auto',
+			margin: [0, 'auto'],
 			padding: `0 ${rem(1)}`,
 			boxSizing: 'border-box',
 		},
@@ -57,8 +59,10 @@ namespace $.$$ {
 		Hero_image: {
 			maxWidth: '100%',
 			width: '100%',
-			margin: `${rem(2.5)} auto 0`,
-			background: 'linear-gradient(135deg, #6d4aff, #9d7aff)',
+			margin: [rem(2.5), 'auto', 0],
+			background: {
+				image: 'linear-gradient(135deg, #6d4aff, #9d7aff)',
+			},
 			height: `clamp(${rem(15)}, 40vw, ${rem(25)})`,
 			borderRadius: rem(1),
 			display: 'flex',
@@ -108,7 +112,7 @@ namespace $.$$ {
 			padding: `${rem(3)} ${rem(1.5)}`,
 			maxWidth: rem(75),
 			width: '100%',
-			margin: '0 auto',
+			margin: [0, 'auto'],
 			boxSizing: 'border-box',
 		},
 
@@ -125,7 +129,7 @@ namespace $.$$ {
 			color: '#555',
 			fontSize: rem(1.125),
 			maxWidth: rem(43.75),
-			margin: `${rem(1.25)} auto`,
+			margin: [rem(1.25), 'auto'],
 		},
 
 		Stats_grid: {
