@@ -21,7 +21,12 @@ namespace $.$$ {
 		Hero_content: {
 			maxWidth: rem(56.25),
 			width: '100%',
-			margin: [0, 'auto'],
+			margin: {
+				top: 0,
+				bottom: 0,
+				left: 'auto',
+				right: 'auto',
+			},
 			padding: `0 ${rem(1)}`,
 			boxSizing: 'border-box',
 		},
@@ -59,7 +64,12 @@ namespace $.$$ {
 		Hero_image: {
 			maxWidth: '100%',
 			width: '100%',
-			margin: [rem(2.5), 'auto', 0],
+			margin: {
+				top: rem(2.5),
+				left: 'auto',
+				right: 'auto',
+				bottom: 0,
+			},
 			background: {
 				image: 'linear-gradient(135deg, #6d4aff, #9d7aff)',
 			},
@@ -112,7 +122,12 @@ namespace $.$$ {
 			padding: `${rem(3)} ${rem(1.5)}`,
 			maxWidth: rem(75),
 			width: '100%',
-			margin: [0, 'auto'],
+			margin: {
+				top: 0,
+				bottom: 0,
+				left: 'auto',
+				right: 'auto',
+			},
 			boxSizing: 'border-box',
 		},
 
@@ -129,7 +144,12 @@ namespace $.$$ {
 			color: '#555',
 			fontSize: rem(1.125),
 			maxWidth: rem(43.75),
-			margin: [rem(1.25), 'auto'],
+			margin: {
+				top: rem(1.25),
+				bottom: rem(1.25),
+				left: 'auto',
+				right: 'auto',
+			},
 		},
 
 		Stats_grid: {
