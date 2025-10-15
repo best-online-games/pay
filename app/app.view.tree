@@ -21,4 +21,3 @@ $bog_pay_app $mol_page
 				home <= Home_page $bog_pay_app_page_home
 				games <= Games_page $bog_pay_app_page_games
 				account <= Account_page $bog_pay_app_page_account
-		<= Footer $bog_pay_app_footer

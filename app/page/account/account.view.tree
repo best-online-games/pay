@@ -1,5 +1,5 @@
 $bog_pay_app_page_account $mol_page
-	title \Личный кабинет
+	title @ \Личный кабинет
 	Head null
 	body /
 		<= Content $mol_text
