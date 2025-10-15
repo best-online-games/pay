@@ -9418,6 +9418,283 @@ var $;
 })($ || ($ = {}));
 
 ;
+	($.$mol_button_major) = class $mol_button_major extends ($.$mol_button_minor) {
+		theme(){
+			return "$mol_theme_base";
+		}
+	};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/button/major/major.view.css", "[mol_button_major] {\n\tbackground-color: var(--mol_theme_back);\n\tcolor: var(--mol_theme_text);\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+	($.$bog_pay_app_page_home) = class $bog_pay_app_page_home extends ($.$mol_page) {
+		hero_title_text(){
+			return (this.$.$mol_locale.text("$bog_pay_app_page_home_hero_title_text"));
+		}
+		Hero_title(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.hero_title_text())]);
+			return obj;
+		}
+		Hero_description(){
+			const obj = new this.$.$mol_text();
+			(obj.text) = () => ((this.$.$mol_locale.text("$bog_pay_app_page_home_Hero_description_text")));
+			return obj;
+		}
+		download_text(){
+			return (this.$.$mol_locale.text("$bog_pay_app_page_home_download_text"));
+		}
+		Download_button(){
+			const obj = new this.$.$mol_button_major();
+			(obj.sub) = () => ([(this.download_text())]);
+			return obj;
+		}
+		Guarantee_text(){
+			const obj = new this.$.$mol_text();
+			(obj.text) = () => ((this.$.$mol_locale.text("$bog_pay_app_page_home_Guarantee_text_text")));
+			return obj;
+		}
+		hero_image_text(){
+			return "⚡ LOW PING";
+		}
+		Hero_image(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.hero_image_text())]);
+			return obj;
+		}
+		badge1_text(){
+			return "⭐ IGN Gaming";
+		}
+		Badge1(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.badge1_text())]);
+			return obj;
+		}
+		badge2_text(){
+			return "⭐ PC Gamer";
+		}
+		Badge2(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.badge2_text())]);
+			return obj;
+		}
+		badge3_text(){
+			return "⭐ GameSpot";
+		}
+		Badge3(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.badge3_text())]);
+			return obj;
+		}
+		Trust_badges(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([
+				(this.Badge1()), 
+				(this.Badge2()), 
+				(this.Badge3())
+			]);
+			return obj;
+		}
+		Hero_content(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([
+				(this.Hero_title()), 
+				(this.Hero_description()), 
+				(this.Download_button()), 
+				(this.Guarantee_text()), 
+				(this.Hero_image()), 
+				(this.Trust_badges())
+			]);
+			return obj;
+		}
+		Hero_section(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Hero_content())]);
+			return obj;
+		}
+		stats_title_text(){
+			return (this.$.$mol_locale.text("$bog_pay_app_page_home_stats_title_text"));
+		}
+		Stats_title(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.stats_title_text())]);
+			return obj;
+		}
+		Stats_subtitle(){
+			const obj = new this.$.$mol_text();
+			(obj.text) = () => ((this.$.$mol_locale.text("$bog_pay_app_page_home_Stats_subtitle_text")));
+			return obj;
+		}
+		stat1_value(){
+			return "500+";
+		}
+		Stat1_value(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.stat1_value())]);
+			return obj;
+		}
+		Stat1_label(){
+			const obj = new this.$.$mol_text();
+			(obj.text) = () => ((this.$.$mol_locale.text("$bog_pay_app_page_home_Stat1_label_text")));
+			return obj;
+		}
+		Stat1(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Stat1_value()), (this.Stat1_label())]);
+			return obj;
+		}
+		stat2_value(){
+			return "-70%";
+		}
+		Stat2_value(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.stat2_value())]);
+			return obj;
+		}
+		Stat2_label(){
+			const obj = new this.$.$mol_text();
+			(obj.text) = () => ((this.$.$mol_locale.text("$bog_pay_app_page_home_Stat2_label_text")));
+			return obj;
+		}
+		Stat2(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Stat2_value()), (this.Stat2_label())]);
+			return obj;
+		}
+		stat3_value(){
+			return "10";
+		}
+		Stat3_value(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.stat3_value())]);
+			return obj;
+		}
+		Stat3_label(){
+			const obj = new this.$.$mol_text();
+			(obj.text) = () => ((this.$.$mol_locale.text("$bog_pay_app_page_home_Stat3_label_text")));
+			return obj;
+		}
+		Stat3(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Stat3_value()), (this.Stat3_label())]);
+			return obj;
+		}
+		Stats_grid(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([
+				(this.Stat1()), 
+				(this.Stat2()), 
+				(this.Stat3())
+			]);
+			return obj;
+		}
+		Stats_section(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([
+				(this.Stats_title()), 
+				(this.Stats_subtitle()), 
+				(this.Stats_grid())
+			]);
+			return obj;
+		}
+		title(){
+			return "Bog Ping";
+		}
+		Head(){
+			return null;
+		}
+		body(){
+			return [(this.Hero_section()), (this.Stats_section())];
+		}
+	};
+	($mol_mem(($.$bog_pay_app_page_home.prototype), "Hero_title"));
+	($mol_mem(($.$bog_pay_app_page_home.prototype), "Hero_description"));
+	($mol_mem(($.$bog_pay_app_page_home.prototype), "Download_button"));
+	($mol_mem(($.$bog_pay_app_page_home.prototype), "Guarantee_text"));
+	($mol_mem(($.$bog_pay_app_page_home.prototype), "Hero_image"));
+	($mol_mem(($.$bog_pay_app_page_home.prototype), "Badge1"));
+	($mol_mem(($.$bog_pay_app_page_home.prototype), "Badge2"));
+	($mol_mem(($.$bog_pay_app_page_home.prototype), "Badge3"));
+	($mol_mem(($.$bog_pay_app_page_home.prototype), "Trust_badges"));
+	($mol_mem(($.$bog_pay_app_page_home.prototype), "Hero_content"));
+	($mol_mem(($.$bog_pay_app_page_home.prototype), "Hero_section"));
+	($mol_mem(($.$bog_pay_app_page_home.prototype), "Stats_title"));
+	($mol_mem(($.$bog_pay_app_page_home.prototype), "Stats_subtitle"));
+	($mol_mem(($.$bog_pay_app_page_home.prototype), "Stat1_value"));
+	($mol_mem(($.$bog_pay_app_page_home.prototype), "Stat1_label"));
+	($mol_mem(($.$bog_pay_app_page_home.prototype), "Stat1"));
+	($mol_mem(($.$bog_pay_app_page_home.prototype), "Stat2_value"));
+	($mol_mem(($.$bog_pay_app_page_home.prototype), "Stat2_label"));
+	($mol_mem(($.$bog_pay_app_page_home.prototype), "Stat2"));
+	($mol_mem(($.$bog_pay_app_page_home.prototype), "Stat3_value"));
+	($mol_mem(($.$bog_pay_app_page_home.prototype), "Stat3_label"));
+	($mol_mem(($.$bog_pay_app_page_home.prototype), "Stat3"));
+	($mol_mem(($.$bog_pay_app_page_home.prototype), "Stats_grid"));
+	($mol_mem(($.$bog_pay_app_page_home.prototype), "Stats_section"));
+
+
+;
+	($.$mol_text_list) = class $mol_text_list extends ($.$mol_text) {
+		type(){
+			return "";
+		}
+		auto_scroll(){
+			return null;
+		}
+		attr(){
+			return {...(super.attr()), "mol_text_list_type": (this.type())};
+		}
+		Paragraph(id){
+			const obj = new this.$.$mol_text_list_item();
+			(obj.index) = () => ((this.item_index(id)));
+			(obj.sub) = () => ((this.block_content(id)));
+			return obj;
+		}
+	};
+	($mol_mem_key(($.$mol_text_list.prototype), "Paragraph"));
+	($.$mol_text_list_item) = class $mol_text_list_item extends ($.$mol_paragraph) {
+		index(){
+			return 0;
+		}
+		attr(){
+			return {...(super.attr()), "mol_text_list_item_index": (this.index())};
+		}
+	};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/text/list/list.view.css", "[mol_text_list] {\r\n\tpadding-left: 1.75rem;\r\n}\r\n\r\n[mol_text_list_item] {\r\n\tcontain: none;\r\n\tdisplay: list-item;\r\n}\r\n\r\n[mol_text_list_item]::before {\r\n\tcontent: attr( mol_text_list_item_index ) \".\";\r\n\twidth: 1.25rem;\r\n\tdisplay: inline-block;\r\n\tposition: absolute;\r\n\tmargin-left: -1.75rem;\r\n\ttext-align: end;\r\n}\r\n\r\n[mol_text_list_type=\"-\"] > [mol_text_list_item]::before,\r\n[mol_text_list_type=\"*\"] > [mol_text_list_item]::before {\r\n\tcontent: \"•\";\r\n}\r\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($bog_pay_app_page_home, {});
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
 	($.$bog_pay_app_page_games) = class $bog_pay_app_page_games extends ($.$mol_page) {
 		games_title(){
 			return (this.$.$mol_locale.text("$bog_pay_app_page_games_games_title"));
@@ -9686,45 +9963,6 @@ var $;
 
 
 ;
-	($.$mol_text_list) = class $mol_text_list extends ($.$mol_text) {
-		type(){
-			return "";
-		}
-		auto_scroll(){
-			return null;
-		}
-		attr(){
-			return {...(super.attr()), "mol_text_list_type": (this.type())};
-		}
-		Paragraph(id){
-			const obj = new this.$.$mol_text_list_item();
-			(obj.index) = () => ((this.item_index(id)));
-			(obj.sub) = () => ((this.block_content(id)));
-			return obj;
-		}
-	};
-	($mol_mem_key(($.$mol_text_list.prototype), "Paragraph"));
-	($.$mol_text_list_item) = class $mol_text_list_item extends ($.$mol_paragraph) {
-		index(){
-			return 0;
-		}
-		attr(){
-			return {...(super.attr()), "mol_text_list_item_index": (this.index())};
-		}
-	};
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/text/list/list.view.css", "[mol_text_list] {\r\n\tpadding-left: 1.75rem;\r\n}\r\n\r\n[mol_text_list_item] {\r\n\tcontain: none;\r\n\tdisplay: list-item;\r\n}\r\n\r\n[mol_text_list_item]::before {\r\n\tcontent: attr( mol_text_list_item_index ) \".\";\r\n\twidth: 1.25rem;\r\n\tdisplay: inline-block;\r\n\tposition: absolute;\r\n\tmargin-left: -1.75rem;\r\n\ttext-align: end;\r\n}\r\n\r\n[mol_text_list_type=\"-\"] > [mol_text_list_item]::before,\r\n[mol_text_list_type=\"*\"] > [mol_text_list_item]::before {\r\n\tcontent: \"•\";\r\n}\r\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-;
 "use strict";
 
 ;
@@ -9964,14 +10202,15 @@ var $;
 			const obj = new this.$.$mol_theme_auto();
 			return obj;
 		}
-		title(){
-			return "Bog Ping";
-		}
 		Switch(){
 			return (this.Deck().Switch());
 		}
 		Content(){
 			return (this.Deck().Content());
+		}
+		Home(){
+			const obj = new this.$.$bog_pay_app_page_home();
+			return obj;
 		}
 		Games(){
 			const obj = new this.$.$bog_pay_app_page_games();
@@ -9984,32 +10223,26 @@ var $;
 		plugins(){
 			return [(this.Theme())];
 		}
-		Title(){
-			const obj = new this.$.$mol_link();
-			(obj.uri) = () => ("");
-			(obj.sub) = () => ([(this.title())]);
-			return obj;
-		}
 		head(){
-			return [
-				(this.Title()), 
-				(this.Switch()), 
-				(this.Tools())
-			];
+			return [(this.Switch())];
 		}
 		body(){
 			return [(this.Content())];
 		}
 		Deck(){
 			const obj = new this.$.$mol_deck();
-			(obj.items) = () => ([(this.Games()), (this.Personal_cabinet())]);
+			(obj.items) = () => ([
+				(this.Home()), 
+				(this.Games()), 
+				(this.Personal_cabinet())
+			]);
 			return obj;
 		}
 	};
 	($mol_mem(($.$bog_pay_app.prototype), "Theme"));
+	($mol_mem(($.$bog_pay_app.prototype), "Home"));
 	($mol_mem(($.$bog_pay_app.prototype), "Games"));
 	($mol_mem(($.$bog_pay_app.prototype), "Personal_cabinet"));
-	($mol_mem(($.$bog_pay_app.prototype), "Title"));
 	($mol_mem(($.$bog_pay_app.prototype), "Deck"));
 
 

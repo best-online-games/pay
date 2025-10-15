@@ -3600,6 +3600,18 @@ declare namespace $ {
 
 declare namespace $ {
 
+	export class $mol_button_major extends $mol_button_minor {
+		theme( ): string
+	}
+	
+}
+
+//# sourceMappingURL=major.view.tree.d.ts.map
+declare namespace $ {
+}
+
+declare namespace $ {
+
 	type $mol_text_list_item__index_mol_text_list_1 = $mol_type_enforce<
 		ReturnType< $mol_text_list['item_index'] >
 		,
@@ -3629,6 +3641,174 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=list.view.tree.d.ts.map
+declare namespace $ {
+
+	type $mol_view__sub_bog_pay_app_page_home_1 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_text__text_bog_pay_app_page_home_2 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_text['text'] >
+	>
+	type $mol_button_major__sub_bog_pay_app_page_home_3 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_button_major['sub'] >
+	>
+	type $mol_text__text_bog_pay_app_page_home_4 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_text['text'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_home_5 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_home_6 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_home_7 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_home_8 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_home_9 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_home_10 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_home_11 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_home_12 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_text__text_bog_pay_app_page_home_13 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_text['text'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_home_14 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_text__text_bog_pay_app_page_home_15 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_text['text'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_home_16 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_home_17 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_text__text_bog_pay_app_page_home_18 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_text['text'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_home_19 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_home_20 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_text__text_bog_pay_app_page_home_21 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_text['text'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_home_22 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_home_23 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_home_24 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	export class $bog_pay_app_page_home extends $mol_page {
+		hero_title_text( ): string
+		Hero_title( ): $mol_view
+		Hero_description( ): $mol_text
+		download_text( ): string
+		Download_button( ): $mol_button_major
+		Guarantee_text( ): $mol_text
+		hero_image_text( ): string
+		Hero_image( ): $mol_view
+		badge1_text( ): string
+		Badge1( ): $mol_view
+		badge2_text( ): string
+		Badge2( ): $mol_view
+		badge3_text( ): string
+		Badge3( ): $mol_view
+		Trust_badges( ): $mol_view
+		Hero_content( ): $mol_view
+		Hero_section( ): $mol_view
+		stats_title_text( ): string
+		Stats_title( ): $mol_view
+		Stats_subtitle( ): $mol_text
+		stat1_value( ): string
+		Stat1_value( ): $mol_view
+		Stat1_label( ): $mol_text
+		Stat1( ): $mol_view
+		stat2_value( ): string
+		Stat2_value( ): $mol_view
+		Stat2_label( ): $mol_text
+		Stat2( ): $mol_view
+		stat3_value( ): string
+		Stat3_value( ): $mol_view
+		Stat3_label( ): $mol_text
+		Stat3( ): $mol_view
+		Stats_grid( ): $mol_view
+		Stats_section( ): $mol_view
+		title( ): string
+		Head( ): any
+		body( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=home.view.tree.d.ts.map
+declare namespace $.$$ {
+}
+
 declare namespace $ {
 
 	type $mol_view__sub_bog_pay_app_page_games_1 = $mol_type_enforce<
@@ -3972,30 +4152,19 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_link__uri_bog_pay_app_1 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_link['uri'] >
-	>
-	type $mol_link__sub_bog_pay_app_2 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_link['sub'] >
-	>
-	type $mol_deck__items_bog_pay_app_3 = $mol_type_enforce<
+	type $mol_deck__items_bog_pay_app_1 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_deck['items'] >
 	>
 	export class $bog_pay_app extends $mol_page {
 		Theme( ): $mol_theme_auto
-		title( ): string
 		Switch( ): ReturnType< ReturnType< $bog_pay_app['Deck'] >['Switch'] >
 		Content( ): ReturnType< ReturnType< $bog_pay_app['Deck'] >['Content'] >
+		Home( ): $bog_pay_app_page_home
 		Games( ): $bog_pay_app_page_games
 		Personal_cabinet( ): $bog_pay_app_page_account
 		plugins( ): readonly(any)[]
-		Title( ): $mol_link
 		head( ): readonly(any)[]
 		body( ): readonly(any)[]
 		Deck( ): $mol_deck
