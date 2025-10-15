@@ -32,26 +32,6 @@ $.$$ = $
 "use strict";
 var $;
 (function ($) {
-    function $mol_offline() { }
-    $.$mol_offline = $mol_offline;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    try {
-        $mol_offline();
-    }
-    catch (error) {
-        console.error(error);
-    }
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
 })($ || ($ = {}));
 
 ;
@@ -5301,6 +5281,416 @@ var $;
 })($ || ($ = {}));
 
 ;
+"use strict";
+var $;
+(function ($) {
+    class $mol_locale extends $mol_object {
+        static lang_default() {
+            return 'en';
+        }
+        static lang(next) {
+            return this.$.$mol_state_local.value('locale', next) || $mol_dom_context.navigator.language.replace(/-.*/, '') || this.lang_default();
+        }
+        static source(lang) {
+            return JSON.parse(this.$.$mol_file.relative(`web.locale=${lang}.json`).text().toString());
+        }
+        static texts(lang, next) {
+            if (next)
+                return next;
+            try {
+                return this.source(lang).valueOf();
+            }
+            catch (error) {
+                if ($mol_fail_catch(error)) {
+                    const def = this.lang_default();
+                    if (lang === def)
+                        throw error;
+                }
+            }
+            return {};
+        }
+        static text(key) {
+            const lang = this.lang();
+            const target = this.texts(lang)[key];
+            if (target)
+                return target;
+            this.warn(key);
+            const en = this.texts('en')[key];
+            if (!en)
+                return key;
+            return en;
+        }
+        static warn(key) {
+            console.warn(`Not translated to "${this.lang()}": ${key}`);
+            return null;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_locale, "lang_default", null);
+    __decorate([
+        $mol_mem
+    ], $mol_locale, "lang", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_locale, "source", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_locale, "texts", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_locale, "text", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_locale, "warn", null);
+    $.$mol_locale = $mol_locale;
+})($ || ($ = {}));
+
+;
+	($.$mol_speck) = class $mol_speck extends ($.$mol_view) {
+		value(){
+			return null;
+		}
+		theme(){
+			return "$mol_theme_accent";
+		}
+		sub(){
+			return [(this.value())];
+		}
+	};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_layer = $mol_style_prop('mol_layer', [
+        'hover',
+        'focus',
+        'speck',
+        'float',
+        'popup',
+    ]);
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/layer/layer.css", ":root {\n\t--mol_layer_hover: 1;\n\t--mol_layer_focus: 2;\n\t--mol_layer_speck: 3;\n\t--mol_layer_float: 4;\n\t--mol_layer_popup: 5;\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/speck/speck.view.css", "[mol_speck] {\n\tfont-size: .75rem;\n\tborder-radius: 1rem;\n\tmargin: -0.5rem -0.2rem;\n\talign-self: flex-start;\n\tmin-height: 1em;\n\tmin-width: .75rem;\n\tvertical-align: sub;\n\tpadding: 0 .2rem;\n\tposition: absolute;\n\tz-index: var(--mol_layer_speck);\n\ttext-align: center;\n\tline-height: .9;\n\tdisplay: inline-block;\n\twhite-space: nowrap;\n\ttext-overflow: ellipsis;\n\tuser-select: none;\n\tbox-shadow: 0 0 3px rgba(0,0,0,.5);\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+	($.$mol_button) = class $mol_button extends ($.$mol_view) {
+		event_activate(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		activate(next){
+			return (this.event_activate(next));
+		}
+		clicks(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		event_key_press(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		key_press(next){
+			return (this.event_key_press(next));
+		}
+		disabled(){
+			return false;
+		}
+		tab_index(){
+			return 0;
+		}
+		hint(){
+			return "";
+		}
+		hint_safe(){
+			return (this.hint());
+		}
+		error(){
+			return "";
+		}
+		enabled(){
+			return true;
+		}
+		click(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		event_click(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		event(){
+			return {
+				...(super.event()), 
+				"click": (next) => (this.activate(next)), 
+				"dblclick": (next) => (this.clicks(next)), 
+				"keydown": (next) => (this.key_press(next))
+			};
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"disabled": (this.disabled()), 
+				"role": "button", 
+				"tabindex": (this.tab_index()), 
+				"title": (this.hint_safe())
+			};
+		}
+		sub(){
+			return [(this.title())];
+		}
+		Speck(){
+			const obj = new this.$.$mol_speck();
+			(obj.value) = () => ((this.error()));
+			return obj;
+		}
+	};
+	($mol_mem(($.$mol_button.prototype), "event_activate"));
+	($mol_mem(($.$mol_button.prototype), "clicks"));
+	($mol_mem(($.$mol_button.prototype), "event_key_press"));
+	($mol_mem(($.$mol_button.prototype), "click"));
+	($mol_mem(($.$mol_button.prototype), "event_click"));
+	($mol_mem(($.$mol_button.prototype), "Speck"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    let $mol_keyboard_code;
+    (function ($mol_keyboard_code) {
+        $mol_keyboard_code[$mol_keyboard_code["backspace"] = 8] = "backspace";
+        $mol_keyboard_code[$mol_keyboard_code["tab"] = 9] = "tab";
+        $mol_keyboard_code[$mol_keyboard_code["enter"] = 13] = "enter";
+        $mol_keyboard_code[$mol_keyboard_code["shift"] = 16] = "shift";
+        $mol_keyboard_code[$mol_keyboard_code["ctrl"] = 17] = "ctrl";
+        $mol_keyboard_code[$mol_keyboard_code["alt"] = 18] = "alt";
+        $mol_keyboard_code[$mol_keyboard_code["pause"] = 19] = "pause";
+        $mol_keyboard_code[$mol_keyboard_code["capsLock"] = 20] = "capsLock";
+        $mol_keyboard_code[$mol_keyboard_code["escape"] = 27] = "escape";
+        $mol_keyboard_code[$mol_keyboard_code["space"] = 32] = "space";
+        $mol_keyboard_code[$mol_keyboard_code["pageUp"] = 33] = "pageUp";
+        $mol_keyboard_code[$mol_keyboard_code["pageDown"] = 34] = "pageDown";
+        $mol_keyboard_code[$mol_keyboard_code["end"] = 35] = "end";
+        $mol_keyboard_code[$mol_keyboard_code["home"] = 36] = "home";
+        $mol_keyboard_code[$mol_keyboard_code["left"] = 37] = "left";
+        $mol_keyboard_code[$mol_keyboard_code["up"] = 38] = "up";
+        $mol_keyboard_code[$mol_keyboard_code["right"] = 39] = "right";
+        $mol_keyboard_code[$mol_keyboard_code["down"] = 40] = "down";
+        $mol_keyboard_code[$mol_keyboard_code["insert"] = 45] = "insert";
+        $mol_keyboard_code[$mol_keyboard_code["delete"] = 46] = "delete";
+        $mol_keyboard_code[$mol_keyboard_code["key0"] = 48] = "key0";
+        $mol_keyboard_code[$mol_keyboard_code["key1"] = 49] = "key1";
+        $mol_keyboard_code[$mol_keyboard_code["key2"] = 50] = "key2";
+        $mol_keyboard_code[$mol_keyboard_code["key3"] = 51] = "key3";
+        $mol_keyboard_code[$mol_keyboard_code["key4"] = 52] = "key4";
+        $mol_keyboard_code[$mol_keyboard_code["key5"] = 53] = "key5";
+        $mol_keyboard_code[$mol_keyboard_code["key6"] = 54] = "key6";
+        $mol_keyboard_code[$mol_keyboard_code["key7"] = 55] = "key7";
+        $mol_keyboard_code[$mol_keyboard_code["key8"] = 56] = "key8";
+        $mol_keyboard_code[$mol_keyboard_code["key9"] = 57] = "key9";
+        $mol_keyboard_code[$mol_keyboard_code["A"] = 65] = "A";
+        $mol_keyboard_code[$mol_keyboard_code["B"] = 66] = "B";
+        $mol_keyboard_code[$mol_keyboard_code["C"] = 67] = "C";
+        $mol_keyboard_code[$mol_keyboard_code["D"] = 68] = "D";
+        $mol_keyboard_code[$mol_keyboard_code["E"] = 69] = "E";
+        $mol_keyboard_code[$mol_keyboard_code["F"] = 70] = "F";
+        $mol_keyboard_code[$mol_keyboard_code["G"] = 71] = "G";
+        $mol_keyboard_code[$mol_keyboard_code["H"] = 72] = "H";
+        $mol_keyboard_code[$mol_keyboard_code["I"] = 73] = "I";
+        $mol_keyboard_code[$mol_keyboard_code["J"] = 74] = "J";
+        $mol_keyboard_code[$mol_keyboard_code["K"] = 75] = "K";
+        $mol_keyboard_code[$mol_keyboard_code["L"] = 76] = "L";
+        $mol_keyboard_code[$mol_keyboard_code["M"] = 77] = "M";
+        $mol_keyboard_code[$mol_keyboard_code["N"] = 78] = "N";
+        $mol_keyboard_code[$mol_keyboard_code["O"] = 79] = "O";
+        $mol_keyboard_code[$mol_keyboard_code["P"] = 80] = "P";
+        $mol_keyboard_code[$mol_keyboard_code["Q"] = 81] = "Q";
+        $mol_keyboard_code[$mol_keyboard_code["R"] = 82] = "R";
+        $mol_keyboard_code[$mol_keyboard_code["S"] = 83] = "S";
+        $mol_keyboard_code[$mol_keyboard_code["T"] = 84] = "T";
+        $mol_keyboard_code[$mol_keyboard_code["U"] = 85] = "U";
+        $mol_keyboard_code[$mol_keyboard_code["V"] = 86] = "V";
+        $mol_keyboard_code[$mol_keyboard_code["W"] = 87] = "W";
+        $mol_keyboard_code[$mol_keyboard_code["X"] = 88] = "X";
+        $mol_keyboard_code[$mol_keyboard_code["Y"] = 89] = "Y";
+        $mol_keyboard_code[$mol_keyboard_code["Z"] = 90] = "Z";
+        $mol_keyboard_code[$mol_keyboard_code["metaLeft"] = 91] = "metaLeft";
+        $mol_keyboard_code[$mol_keyboard_code["metaRight"] = 92] = "metaRight";
+        $mol_keyboard_code[$mol_keyboard_code["select"] = 93] = "select";
+        $mol_keyboard_code[$mol_keyboard_code["numpad0"] = 96] = "numpad0";
+        $mol_keyboard_code[$mol_keyboard_code["numpad1"] = 97] = "numpad1";
+        $mol_keyboard_code[$mol_keyboard_code["numpad2"] = 98] = "numpad2";
+        $mol_keyboard_code[$mol_keyboard_code["numpad3"] = 99] = "numpad3";
+        $mol_keyboard_code[$mol_keyboard_code["numpad4"] = 100] = "numpad4";
+        $mol_keyboard_code[$mol_keyboard_code["numpad5"] = 101] = "numpad5";
+        $mol_keyboard_code[$mol_keyboard_code["numpad6"] = 102] = "numpad6";
+        $mol_keyboard_code[$mol_keyboard_code["numpad7"] = 103] = "numpad7";
+        $mol_keyboard_code[$mol_keyboard_code["numpad8"] = 104] = "numpad8";
+        $mol_keyboard_code[$mol_keyboard_code["numpad9"] = 105] = "numpad9";
+        $mol_keyboard_code[$mol_keyboard_code["multiply"] = 106] = "multiply";
+        $mol_keyboard_code[$mol_keyboard_code["add"] = 107] = "add";
+        $mol_keyboard_code[$mol_keyboard_code["subtract"] = 109] = "subtract";
+        $mol_keyboard_code[$mol_keyboard_code["decimal"] = 110] = "decimal";
+        $mol_keyboard_code[$mol_keyboard_code["divide"] = 111] = "divide";
+        $mol_keyboard_code[$mol_keyboard_code["F1"] = 112] = "F1";
+        $mol_keyboard_code[$mol_keyboard_code["F2"] = 113] = "F2";
+        $mol_keyboard_code[$mol_keyboard_code["F3"] = 114] = "F3";
+        $mol_keyboard_code[$mol_keyboard_code["F4"] = 115] = "F4";
+        $mol_keyboard_code[$mol_keyboard_code["F5"] = 116] = "F5";
+        $mol_keyboard_code[$mol_keyboard_code["F6"] = 117] = "F6";
+        $mol_keyboard_code[$mol_keyboard_code["F7"] = 118] = "F7";
+        $mol_keyboard_code[$mol_keyboard_code["F8"] = 119] = "F8";
+        $mol_keyboard_code[$mol_keyboard_code["F9"] = 120] = "F9";
+        $mol_keyboard_code[$mol_keyboard_code["F10"] = 121] = "F10";
+        $mol_keyboard_code[$mol_keyboard_code["F11"] = 122] = "F11";
+        $mol_keyboard_code[$mol_keyboard_code["F12"] = 123] = "F12";
+        $mol_keyboard_code[$mol_keyboard_code["numLock"] = 144] = "numLock";
+        $mol_keyboard_code[$mol_keyboard_code["scrollLock"] = 145] = "scrollLock";
+        $mol_keyboard_code[$mol_keyboard_code["semicolon"] = 186] = "semicolon";
+        $mol_keyboard_code[$mol_keyboard_code["equals"] = 187] = "equals";
+        $mol_keyboard_code[$mol_keyboard_code["comma"] = 188] = "comma";
+        $mol_keyboard_code[$mol_keyboard_code["dash"] = 189] = "dash";
+        $mol_keyboard_code[$mol_keyboard_code["period"] = 190] = "period";
+        $mol_keyboard_code[$mol_keyboard_code["forwardSlash"] = 191] = "forwardSlash";
+        $mol_keyboard_code[$mol_keyboard_code["graveAccent"] = 192] = "graveAccent";
+        $mol_keyboard_code[$mol_keyboard_code["bracketOpen"] = 219] = "bracketOpen";
+        $mol_keyboard_code[$mol_keyboard_code["slashBack"] = 220] = "slashBack";
+        $mol_keyboard_code[$mol_keyboard_code["slashBackLeft"] = 226] = "slashBackLeft";
+        $mol_keyboard_code[$mol_keyboard_code["bracketClose"] = 221] = "bracketClose";
+        $mol_keyboard_code[$mol_keyboard_code["quoteSingle"] = 222] = "quoteSingle";
+    })($mol_keyboard_code = $.$mol_keyboard_code || ($.$mol_keyboard_code = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_button extends $.$mol_button {
+            status(next = [null]) { return next; }
+            disabled() {
+                return !this.enabled();
+            }
+            event_activate(next) {
+                if (!next)
+                    return;
+                if (!this.enabled())
+                    return;
+                try {
+                    this.event_click(next);
+                    this.click(next);
+                    this.status([null]);
+                }
+                catch (error) {
+                    Promise.resolve().then(() => this.status([error]));
+                    $mol_fail_hidden(error);
+                }
+            }
+            event_key_press(event) {
+                if (event.keyCode === $mol_keyboard_code.enter) {
+                    return this.activate(event);
+                }
+            }
+            tab_index() {
+                return this.enabled() ? super.tab_index() : -1;
+            }
+            error() {
+                const [error] = this.status();
+                if (!error)
+                    return '';
+                if (error instanceof Promise) {
+                    return $mol_fail_hidden(error);
+                }
+                return String(error.message ?? error);
+            }
+            hint_safe() {
+                try {
+                    return this.hint();
+                }
+                catch (error) {
+                    $mol_fail_log(error);
+                    return '';
+                }
+            }
+            sub_visible() {
+                return [
+                    ...this.error() ? [this.Speck()] : [],
+                    ...this.sub(),
+                ];
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_button.prototype, "status", null);
+        $$.$mol_button = $mol_button;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/button/button.view.css", "[mol_button] {\n\tborder: none;\n\tfont: inherit;\n\tdisplay: inline-flex;\n\tflex-shrink: 0;\n\ttext-decoration: inherit;\n\tcursor: inherit;\n\tposition: relative;\n\tbox-sizing: border-box;\n\tword-break: normal;\n\tcursor: default;\n\tuser-select: none;\n\t-webkit-user-select: none;\n\tborder-radius: var(--mol_gap_round);\n\tbackground: transparent;\n\tcolor: inherit;\n}\n\n[mol_button]:where(:not(:disabled)):hover {\n\tz-index: var(--mol_layer_hover);\n}\n\n[mol_button]:focus {\n\toutline: none;\n\tz-index: var(--mol_layer_focus);\n}\n");
+})($ || ($ = {}));
+
+;
+	($.$mol_button_typed) = class $mol_button_typed extends ($.$mol_button) {
+		minimal_height(){
+			return 40;
+		}
+		minimal_width(){
+			return 40;
+		}
+	};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/button/typed/typed.view.css", "[mol_button_typed] {\n\talign-content: center;\n\talign-items: center;\n\tpadding: var(--mol_gap_text);\n\tborder-radius: var(--mol_gap_round);\n\tgap: var(--mol_gap_space);\n\tuser-select: none;\n\tcursor: pointer;\n\tmin-width: 2.5rem;\n\tmin-height: 2.5rem;\n}\n\n[mol_button_typed][disabled] {\n\tpointer-events: none;\n}\n\n[mol_button_typed]:hover ,\n[mol_button_typed]:focus-visible {\n\tbox-shadow: inset 0 0 0 100vmax var(--mol_theme_hover);\n}\n\n[mol_button_typed]:active {\n\tcolor: var(--mol_theme_focus);\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+	($.$mol_button_minor) = class $mol_button_minor extends ($.$mol_button_typed) {};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/button/minor/minor.view.css", "[mol_button_minor] {\n\tcolor: var(--mol_theme_control);\n}\n\n[mol_button_minor][disabled] {\n\tcolor: var(--mol_theme_shade);\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
 	($.$mol_list) = class $mol_list extends ($.$mol_view) {
 		gap_before(){
 			return 0;
@@ -6416,350 +6806,6 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$mol_speck) = class $mol_speck extends ($.$mol_view) {
-		value(){
-			return null;
-		}
-		theme(){
-			return "$mol_theme_accent";
-		}
-		sub(){
-			return [(this.value())];
-		}
-	};
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_layer = $mol_style_prop('mol_layer', [
-        'hover',
-        'focus',
-        'speck',
-        'float',
-        'popup',
-    ]);
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/layer/layer.css", ":root {\n\t--mol_layer_hover: 1;\n\t--mol_layer_focus: 2;\n\t--mol_layer_speck: 3;\n\t--mol_layer_float: 4;\n\t--mol_layer_popup: 5;\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/speck/speck.view.css", "[mol_speck] {\n\tfont-size: .75rem;\n\tborder-radius: 1rem;\n\tmargin: -0.5rem -0.2rem;\n\talign-self: flex-start;\n\tmin-height: 1em;\n\tmin-width: .75rem;\n\tvertical-align: sub;\n\tpadding: 0 .2rem;\n\tposition: absolute;\n\tz-index: var(--mol_layer_speck);\n\ttext-align: center;\n\tline-height: .9;\n\tdisplay: inline-block;\n\twhite-space: nowrap;\n\ttext-overflow: ellipsis;\n\tuser-select: none;\n\tbox-shadow: 0 0 3px rgba(0,0,0,.5);\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-;
-	($.$mol_button) = class $mol_button extends ($.$mol_view) {
-		event_activate(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		activate(next){
-			return (this.event_activate(next));
-		}
-		clicks(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		event_key_press(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		key_press(next){
-			return (this.event_key_press(next));
-		}
-		disabled(){
-			return false;
-		}
-		tab_index(){
-			return 0;
-		}
-		hint(){
-			return "";
-		}
-		hint_safe(){
-			return (this.hint());
-		}
-		error(){
-			return "";
-		}
-		enabled(){
-			return true;
-		}
-		click(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		event_click(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		event(){
-			return {
-				...(super.event()), 
-				"click": (next) => (this.activate(next)), 
-				"dblclick": (next) => (this.clicks(next)), 
-				"keydown": (next) => (this.key_press(next))
-			};
-		}
-		attr(){
-			return {
-				...(super.attr()), 
-				"disabled": (this.disabled()), 
-				"role": "button", 
-				"tabindex": (this.tab_index()), 
-				"title": (this.hint_safe())
-			};
-		}
-		sub(){
-			return [(this.title())];
-		}
-		Speck(){
-			const obj = new this.$.$mol_speck();
-			(obj.value) = () => ((this.error()));
-			return obj;
-		}
-	};
-	($mol_mem(($.$mol_button.prototype), "event_activate"));
-	($mol_mem(($.$mol_button.prototype), "clicks"));
-	($mol_mem(($.$mol_button.prototype), "event_key_press"));
-	($mol_mem(($.$mol_button.prototype), "click"));
-	($mol_mem(($.$mol_button.prototype), "event_click"));
-	($mol_mem(($.$mol_button.prototype), "Speck"));
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    let $mol_keyboard_code;
-    (function ($mol_keyboard_code) {
-        $mol_keyboard_code[$mol_keyboard_code["backspace"] = 8] = "backspace";
-        $mol_keyboard_code[$mol_keyboard_code["tab"] = 9] = "tab";
-        $mol_keyboard_code[$mol_keyboard_code["enter"] = 13] = "enter";
-        $mol_keyboard_code[$mol_keyboard_code["shift"] = 16] = "shift";
-        $mol_keyboard_code[$mol_keyboard_code["ctrl"] = 17] = "ctrl";
-        $mol_keyboard_code[$mol_keyboard_code["alt"] = 18] = "alt";
-        $mol_keyboard_code[$mol_keyboard_code["pause"] = 19] = "pause";
-        $mol_keyboard_code[$mol_keyboard_code["capsLock"] = 20] = "capsLock";
-        $mol_keyboard_code[$mol_keyboard_code["escape"] = 27] = "escape";
-        $mol_keyboard_code[$mol_keyboard_code["space"] = 32] = "space";
-        $mol_keyboard_code[$mol_keyboard_code["pageUp"] = 33] = "pageUp";
-        $mol_keyboard_code[$mol_keyboard_code["pageDown"] = 34] = "pageDown";
-        $mol_keyboard_code[$mol_keyboard_code["end"] = 35] = "end";
-        $mol_keyboard_code[$mol_keyboard_code["home"] = 36] = "home";
-        $mol_keyboard_code[$mol_keyboard_code["left"] = 37] = "left";
-        $mol_keyboard_code[$mol_keyboard_code["up"] = 38] = "up";
-        $mol_keyboard_code[$mol_keyboard_code["right"] = 39] = "right";
-        $mol_keyboard_code[$mol_keyboard_code["down"] = 40] = "down";
-        $mol_keyboard_code[$mol_keyboard_code["insert"] = 45] = "insert";
-        $mol_keyboard_code[$mol_keyboard_code["delete"] = 46] = "delete";
-        $mol_keyboard_code[$mol_keyboard_code["key0"] = 48] = "key0";
-        $mol_keyboard_code[$mol_keyboard_code["key1"] = 49] = "key1";
-        $mol_keyboard_code[$mol_keyboard_code["key2"] = 50] = "key2";
-        $mol_keyboard_code[$mol_keyboard_code["key3"] = 51] = "key3";
-        $mol_keyboard_code[$mol_keyboard_code["key4"] = 52] = "key4";
-        $mol_keyboard_code[$mol_keyboard_code["key5"] = 53] = "key5";
-        $mol_keyboard_code[$mol_keyboard_code["key6"] = 54] = "key6";
-        $mol_keyboard_code[$mol_keyboard_code["key7"] = 55] = "key7";
-        $mol_keyboard_code[$mol_keyboard_code["key8"] = 56] = "key8";
-        $mol_keyboard_code[$mol_keyboard_code["key9"] = 57] = "key9";
-        $mol_keyboard_code[$mol_keyboard_code["A"] = 65] = "A";
-        $mol_keyboard_code[$mol_keyboard_code["B"] = 66] = "B";
-        $mol_keyboard_code[$mol_keyboard_code["C"] = 67] = "C";
-        $mol_keyboard_code[$mol_keyboard_code["D"] = 68] = "D";
-        $mol_keyboard_code[$mol_keyboard_code["E"] = 69] = "E";
-        $mol_keyboard_code[$mol_keyboard_code["F"] = 70] = "F";
-        $mol_keyboard_code[$mol_keyboard_code["G"] = 71] = "G";
-        $mol_keyboard_code[$mol_keyboard_code["H"] = 72] = "H";
-        $mol_keyboard_code[$mol_keyboard_code["I"] = 73] = "I";
-        $mol_keyboard_code[$mol_keyboard_code["J"] = 74] = "J";
-        $mol_keyboard_code[$mol_keyboard_code["K"] = 75] = "K";
-        $mol_keyboard_code[$mol_keyboard_code["L"] = 76] = "L";
-        $mol_keyboard_code[$mol_keyboard_code["M"] = 77] = "M";
-        $mol_keyboard_code[$mol_keyboard_code["N"] = 78] = "N";
-        $mol_keyboard_code[$mol_keyboard_code["O"] = 79] = "O";
-        $mol_keyboard_code[$mol_keyboard_code["P"] = 80] = "P";
-        $mol_keyboard_code[$mol_keyboard_code["Q"] = 81] = "Q";
-        $mol_keyboard_code[$mol_keyboard_code["R"] = 82] = "R";
-        $mol_keyboard_code[$mol_keyboard_code["S"] = 83] = "S";
-        $mol_keyboard_code[$mol_keyboard_code["T"] = 84] = "T";
-        $mol_keyboard_code[$mol_keyboard_code["U"] = 85] = "U";
-        $mol_keyboard_code[$mol_keyboard_code["V"] = 86] = "V";
-        $mol_keyboard_code[$mol_keyboard_code["W"] = 87] = "W";
-        $mol_keyboard_code[$mol_keyboard_code["X"] = 88] = "X";
-        $mol_keyboard_code[$mol_keyboard_code["Y"] = 89] = "Y";
-        $mol_keyboard_code[$mol_keyboard_code["Z"] = 90] = "Z";
-        $mol_keyboard_code[$mol_keyboard_code["metaLeft"] = 91] = "metaLeft";
-        $mol_keyboard_code[$mol_keyboard_code["metaRight"] = 92] = "metaRight";
-        $mol_keyboard_code[$mol_keyboard_code["select"] = 93] = "select";
-        $mol_keyboard_code[$mol_keyboard_code["numpad0"] = 96] = "numpad0";
-        $mol_keyboard_code[$mol_keyboard_code["numpad1"] = 97] = "numpad1";
-        $mol_keyboard_code[$mol_keyboard_code["numpad2"] = 98] = "numpad2";
-        $mol_keyboard_code[$mol_keyboard_code["numpad3"] = 99] = "numpad3";
-        $mol_keyboard_code[$mol_keyboard_code["numpad4"] = 100] = "numpad4";
-        $mol_keyboard_code[$mol_keyboard_code["numpad5"] = 101] = "numpad5";
-        $mol_keyboard_code[$mol_keyboard_code["numpad6"] = 102] = "numpad6";
-        $mol_keyboard_code[$mol_keyboard_code["numpad7"] = 103] = "numpad7";
-        $mol_keyboard_code[$mol_keyboard_code["numpad8"] = 104] = "numpad8";
-        $mol_keyboard_code[$mol_keyboard_code["numpad9"] = 105] = "numpad9";
-        $mol_keyboard_code[$mol_keyboard_code["multiply"] = 106] = "multiply";
-        $mol_keyboard_code[$mol_keyboard_code["add"] = 107] = "add";
-        $mol_keyboard_code[$mol_keyboard_code["subtract"] = 109] = "subtract";
-        $mol_keyboard_code[$mol_keyboard_code["decimal"] = 110] = "decimal";
-        $mol_keyboard_code[$mol_keyboard_code["divide"] = 111] = "divide";
-        $mol_keyboard_code[$mol_keyboard_code["F1"] = 112] = "F1";
-        $mol_keyboard_code[$mol_keyboard_code["F2"] = 113] = "F2";
-        $mol_keyboard_code[$mol_keyboard_code["F3"] = 114] = "F3";
-        $mol_keyboard_code[$mol_keyboard_code["F4"] = 115] = "F4";
-        $mol_keyboard_code[$mol_keyboard_code["F5"] = 116] = "F5";
-        $mol_keyboard_code[$mol_keyboard_code["F6"] = 117] = "F6";
-        $mol_keyboard_code[$mol_keyboard_code["F7"] = 118] = "F7";
-        $mol_keyboard_code[$mol_keyboard_code["F8"] = 119] = "F8";
-        $mol_keyboard_code[$mol_keyboard_code["F9"] = 120] = "F9";
-        $mol_keyboard_code[$mol_keyboard_code["F10"] = 121] = "F10";
-        $mol_keyboard_code[$mol_keyboard_code["F11"] = 122] = "F11";
-        $mol_keyboard_code[$mol_keyboard_code["F12"] = 123] = "F12";
-        $mol_keyboard_code[$mol_keyboard_code["numLock"] = 144] = "numLock";
-        $mol_keyboard_code[$mol_keyboard_code["scrollLock"] = 145] = "scrollLock";
-        $mol_keyboard_code[$mol_keyboard_code["semicolon"] = 186] = "semicolon";
-        $mol_keyboard_code[$mol_keyboard_code["equals"] = 187] = "equals";
-        $mol_keyboard_code[$mol_keyboard_code["comma"] = 188] = "comma";
-        $mol_keyboard_code[$mol_keyboard_code["dash"] = 189] = "dash";
-        $mol_keyboard_code[$mol_keyboard_code["period"] = 190] = "period";
-        $mol_keyboard_code[$mol_keyboard_code["forwardSlash"] = 191] = "forwardSlash";
-        $mol_keyboard_code[$mol_keyboard_code["graveAccent"] = 192] = "graveAccent";
-        $mol_keyboard_code[$mol_keyboard_code["bracketOpen"] = 219] = "bracketOpen";
-        $mol_keyboard_code[$mol_keyboard_code["slashBack"] = 220] = "slashBack";
-        $mol_keyboard_code[$mol_keyboard_code["slashBackLeft"] = 226] = "slashBackLeft";
-        $mol_keyboard_code[$mol_keyboard_code["bracketClose"] = 221] = "bracketClose";
-        $mol_keyboard_code[$mol_keyboard_code["quoteSingle"] = 222] = "quoteSingle";
-    })($mol_keyboard_code = $.$mol_keyboard_code || ($.$mol_keyboard_code = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_button extends $.$mol_button {
-            status(next = [null]) { return next; }
-            disabled() {
-                return !this.enabled();
-            }
-            event_activate(next) {
-                if (!next)
-                    return;
-                if (!this.enabled())
-                    return;
-                try {
-                    this.event_click(next);
-                    this.click(next);
-                    this.status([null]);
-                }
-                catch (error) {
-                    Promise.resolve().then(() => this.status([error]));
-                    $mol_fail_hidden(error);
-                }
-            }
-            event_key_press(event) {
-                if (event.keyCode === $mol_keyboard_code.enter) {
-                    return this.activate(event);
-                }
-            }
-            tab_index() {
-                return this.enabled() ? super.tab_index() : -1;
-            }
-            error() {
-                const [error] = this.status();
-                if (!error)
-                    return '';
-                if (error instanceof Promise) {
-                    return $mol_fail_hidden(error);
-                }
-                return String(error.message ?? error);
-            }
-            hint_safe() {
-                try {
-                    return this.hint();
-                }
-                catch (error) {
-                    $mol_fail_log(error);
-                    return '';
-                }
-            }
-            sub_visible() {
-                return [
-                    ...this.error() ? [this.Speck()] : [],
-                    ...this.sub(),
-                ];
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_button.prototype, "status", null);
-        $$.$mol_button = $mol_button;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/button/button.view.css", "[mol_button] {\n\tborder: none;\n\tfont: inherit;\n\tdisplay: inline-flex;\n\tflex-shrink: 0;\n\ttext-decoration: inherit;\n\tcursor: inherit;\n\tposition: relative;\n\tbox-sizing: border-box;\n\tword-break: normal;\n\tcursor: default;\n\tuser-select: none;\n\t-webkit-user-select: none;\n\tborder-radius: var(--mol_gap_round);\n\tbackground: transparent;\n\tcolor: inherit;\n}\n\n[mol_button]:where(:not(:disabled)):hover {\n\tz-index: var(--mol_layer_hover);\n}\n\n[mol_button]:focus {\n\toutline: none;\n\tz-index: var(--mol_layer_focus);\n}\n");
-})($ || ($ = {}));
-
-;
-	($.$mol_button_typed) = class $mol_button_typed extends ($.$mol_button) {
-		minimal_height(){
-			return 40;
-		}
-		minimal_width(){
-			return 40;
-		}
-	};
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/button/typed/typed.view.css", "[mol_button_typed] {\n\talign-content: center;\n\talign-items: center;\n\tpadding: var(--mol_gap_text);\n\tborder-radius: var(--mol_gap_round);\n\tgap: var(--mol_gap_space);\n\tuser-select: none;\n\tcursor: pointer;\n\tmin-width: 2.5rem;\n\tmin-height: 2.5rem;\n}\n\n[mol_button_typed][disabled] {\n\tpointer-events: none;\n}\n\n[mol_button_typed]:hover ,\n[mol_button_typed]:focus-visible {\n\tbox-shadow: inset 0 0 0 100vmax var(--mol_theme_hover);\n}\n\n[mol_button_typed]:active {\n\tcolor: var(--mol_theme_focus);\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-;
-	($.$mol_button_minor) = class $mol_button_minor extends ($.$mol_button_typed) {};
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/button/minor/minor.view.css", "[mol_button_minor] {\n\tcolor: var(--mol_theme_control);\n}\n\n[mol_button_minor][disabled] {\n\tcolor: var(--mol_theme_shade);\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-;
 "use strict";
 var $;
 (function ($) {
@@ -7048,72 +7094,6 @@ var $;
         ], $mol_button_copy.prototype, "attachments", null);
         $$.$mol_button_copy = $mol_button_copy;
     })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_locale extends $mol_object {
-        static lang_default() {
-            return 'en';
-        }
-        static lang(next) {
-            return this.$.$mol_state_local.value('locale', next) || $mol_dom_context.navigator.language.replace(/-.*/, '') || this.lang_default();
-        }
-        static source(lang) {
-            return JSON.parse(this.$.$mol_file.relative(`web.locale=${lang}.json`).text().toString());
-        }
-        static texts(lang, next) {
-            if (next)
-                return next;
-            try {
-                return this.source(lang).valueOf();
-            }
-            catch (error) {
-                if ($mol_fail_catch(error)) {
-                    const def = this.lang_default();
-                    if (lang === def)
-                        throw error;
-                }
-            }
-            return {};
-        }
-        static text(key) {
-            const lang = this.lang();
-            const target = this.texts(lang)[key];
-            if (target)
-                return target;
-            this.warn(key);
-            const en = this.texts('en')[key];
-            if (!en)
-                return key;
-            return en;
-        }
-        static warn(key) {
-            console.warn(`Not translated to "${this.lang()}": ${key}`);
-            return null;
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_locale, "lang_default", null);
-    __decorate([
-        $mol_mem
-    ], $mol_locale, "lang", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_locale, "source", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_locale, "texts", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_locale, "text", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_locale, "warn", null);
-    $.$mol_locale = $mol_locale;
 })($ || ($ = {}));
 
 ;
@@ -9438,6 +9418,235 @@ var $;
 })($ || ($ = {}));
 
 ;
+	($.$mol_button_major) = class $mol_button_major extends ($.$mol_button_minor) {
+		theme(){
+			return "$mol_theme_base";
+		}
+	};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/button/major/major.view.css", "[mol_button_major] {\n\tbackground-color: var(--mol_theme_back);\n\tcolor: var(--mol_theme_text);\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+	($.$bog_pay_app_page_hero) = class $bog_pay_app_page_hero extends ($.$mol_page) {
+		hero_title_text(){
+			return (this.$.$mol_locale.text("$bog_pay_app_page_hero_hero_title_text"));
+		}
+		Hero_title(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.hero_title_text())]);
+			return obj;
+		}
+		Hero_description(){
+			const obj = new this.$.$mol_text();
+			(obj.text) = () => ((this.$.$mol_locale.text("$bog_pay_app_page_hero_Hero_description_text")));
+			return obj;
+		}
+		download_text(){
+			return (this.$.$mol_locale.text("$bog_pay_app_page_hero_download_text"));
+		}
+		Download_button(){
+			const obj = new this.$.$mol_button_major();
+			(obj.sub) = () => ([(this.download_text())]);
+			return obj;
+		}
+		Guarantee_text(){
+			const obj = new this.$.$mol_text();
+			(obj.text) = () => ((this.$.$mol_locale.text("$bog_pay_app_page_hero_Guarantee_text_text")));
+			return obj;
+		}
+		hero_image_text(){
+			return "⚡ LOW PING";
+		}
+		Hero_image(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.hero_image_text())]);
+			return obj;
+		}
+		badge1_text(){
+			return "⭐ IGN Gaming";
+		}
+		Badge1(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.badge1_text())]);
+			return obj;
+		}
+		badge2_text(){
+			return "⭐ PC Gamer";
+		}
+		Badge2(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.badge2_text())]);
+			return obj;
+		}
+		badge3_text(){
+			return "⭐ GameSpot";
+		}
+		Badge3(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.badge3_text())]);
+			return obj;
+		}
+		Trust_badges(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([
+				(this.Badge1()), 
+				(this.Badge2()), 
+				(this.Badge3())
+			]);
+			return obj;
+		}
+		Hero_content(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([
+				(this.Hero_title()), 
+				(this.Hero_description()), 
+				(this.Download_button()), 
+				(this.Guarantee_text()), 
+				(this.Hero_image()), 
+				(this.Trust_badges())
+			]);
+			return obj;
+		}
+		Hero_section(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Hero_content())]);
+			return obj;
+		}
+		stats_title_text(){
+			return (this.$.$mol_locale.text("$bog_pay_app_page_hero_stats_title_text"));
+		}
+		Stats_title(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.stats_title_text())]);
+			return obj;
+		}
+		Stats_subtitle(){
+			const obj = new this.$.$mol_text();
+			(obj.text) = () => ((this.$.$mol_locale.text("$bog_pay_app_page_hero_Stats_subtitle_text")));
+			return obj;
+		}
+		stat1_value(){
+			return "500+";
+		}
+		Stat1_value(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.stat1_value())]);
+			return obj;
+		}
+		Stat1_label(){
+			const obj = new this.$.$mol_text();
+			(obj.text) = () => ((this.$.$mol_locale.text("$bog_pay_app_page_hero_Stat1_label_text")));
+			return obj;
+		}
+		Stat1(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Stat1_value()), (this.Stat1_label())]);
+			return obj;
+		}
+		stat2_value(){
+			return "-70%";
+		}
+		Stat2_value(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.stat2_value())]);
+			return obj;
+		}
+		Stat2_label(){
+			const obj = new this.$.$mol_text();
+			(obj.text) = () => ((this.$.$mol_locale.text("$bog_pay_app_page_hero_Stat2_label_text")));
+			return obj;
+		}
+		Stat2(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Stat2_value()), (this.Stat2_label())]);
+			return obj;
+		}
+		stat3_value(){
+			return "10";
+		}
+		Stat3_value(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.stat3_value())]);
+			return obj;
+		}
+		Stat3_label(){
+			const obj = new this.$.$mol_text();
+			(obj.text) = () => ((this.$.$mol_locale.text("$bog_pay_app_page_hero_Stat3_label_text")));
+			return obj;
+		}
+		Stat3(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Stat3_value()), (this.Stat3_label())]);
+			return obj;
+		}
+		Stats_grid(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([
+				(this.Stat1()), 
+				(this.Stat2()), 
+				(this.Stat3())
+			]);
+			return obj;
+		}
+		Stats_section(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([
+				(this.Stats_title()), 
+				(this.Stats_subtitle()), 
+				(this.Stats_grid())
+			]);
+			return obj;
+		}
+		title(){
+			return "Bog Ping";
+		}
+		Head(){
+			return null;
+		}
+		body(){
+			return [(this.Hero_section()), (this.Stats_section())];
+		}
+	};
+	($mol_mem(($.$bog_pay_app_page_hero.prototype), "Hero_title"));
+	($mol_mem(($.$bog_pay_app_page_hero.prototype), "Hero_description"));
+	($mol_mem(($.$bog_pay_app_page_hero.prototype), "Download_button"));
+	($mol_mem(($.$bog_pay_app_page_hero.prototype), "Guarantee_text"));
+	($mol_mem(($.$bog_pay_app_page_hero.prototype), "Hero_image"));
+	($mol_mem(($.$bog_pay_app_page_hero.prototype), "Badge1"));
+	($mol_mem(($.$bog_pay_app_page_hero.prototype), "Badge2"));
+	($mol_mem(($.$bog_pay_app_page_hero.prototype), "Badge3"));
+	($mol_mem(($.$bog_pay_app_page_hero.prototype), "Trust_badges"));
+	($mol_mem(($.$bog_pay_app_page_hero.prototype), "Hero_content"));
+	($mol_mem(($.$bog_pay_app_page_hero.prototype), "Hero_section"));
+	($mol_mem(($.$bog_pay_app_page_hero.prototype), "Stats_title"));
+	($mol_mem(($.$bog_pay_app_page_hero.prototype), "Stats_subtitle"));
+	($mol_mem(($.$bog_pay_app_page_hero.prototype), "Stat1_value"));
+	($mol_mem(($.$bog_pay_app_page_hero.prototype), "Stat1_label"));
+	($mol_mem(($.$bog_pay_app_page_hero.prototype), "Stat1"));
+	($mol_mem(($.$bog_pay_app_page_hero.prototype), "Stat2_value"));
+	($mol_mem(($.$bog_pay_app_page_hero.prototype), "Stat2_label"));
+	($mol_mem(($.$bog_pay_app_page_hero.prototype), "Stat2"));
+	($mol_mem(($.$bog_pay_app_page_hero.prototype), "Stat3_value"));
+	($mol_mem(($.$bog_pay_app_page_hero.prototype), "Stat3_label"));
+	($mol_mem(($.$bog_pay_app_page_hero.prototype), "Stat3"));
+	($mol_mem(($.$bog_pay_app_page_hero.prototype), "Stats_grid"));
+	($mol_mem(($.$bog_pay_app_page_hero.prototype), "Stats_section"));
+
+
+;
+	($.$bog_pay_app_page_home) = class $bog_pay_app_page_home extends ($.$bog_pay_app_page_hero) {};
+
+
+;
 	($.$mol_text_list) = class $mol_text_list extends ($.$mol_text) {
 		type(){
 			return "";
@@ -9477,24 +9686,7 @@ var $;
 "use strict";
 
 ;
-	($.$bog_pay_app_page_libraries) = class $bog_pay_app_page_libraries extends ($.$mol_page) {
-		Content(){
-			const obj = new this.$.$mol_text();
-			(obj.text) = () => ("Libraries page - Coming soon...");
-			return obj;
-		}
-		title(){
-			return "Libraries";
-		}
-		Head(){
-			return null;
-		}
-		body(){
-			return [(this.Content())];
-		}
-	};
-	($mol_mem(($.$bog_pay_app_page_libraries.prototype), "Content"));
-
+"use strict";
 
 ;
 "use strict";
@@ -9505,3427 +9697,507 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
-        class $bog_pay_app_page_libraries extends $.$bog_pay_app_page_libraries {
-            spread_title(id) {
-                const titles = {
-                    overview: 'Overview',
-                    installation: 'Installation',
-                    usage: 'Usage',
-                };
-                return titles[id] || id;
-            }
-        }
-        __decorate([
-            $mol_mem_key
-        ], $bog_pay_app_page_libraries.prototype, "spread_title", null);
-        $$.$bog_pay_app_page_libraries = $bog_pay_app_page_libraries;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-	($.$bog_pay_app_page_components_sb_page) = class $bog_pay_app_page_components_sb_page extends ($.$mol_page) {};
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        const { rem, px } = $mol_style_unit;
-        $mol_style_define($bog_pay_app_page_components_sb_page, {
-            flexGrow: '1',
-        });
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-	($.$bog_pay_app_page_components_sb_card) = class $bog_pay_app_page_components_sb_card extends ($.$mol_view) {};
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        const { rem, px } = $mol_style_unit;
-        $mol_style_define($bog_pay_app_page_components_sb_card, {
-            flexGrow: '1',
-        });
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-	($.$bog_pay_app_page_components_flex) = class $bog_pay_app_page_components_flex extends ($.$bog_pay_app_page_components_sb_page) {
-		Card_content(){
-			const obj = new this.$.$mol_text();
-			(obj.text) = () => ("Flex page - Coming soon...");
-			return obj;
-		}
-		Card(){
-			const obj = new this.$.$bog_pay_app_page_components_sb_card();
-			(obj.sub) = () => ([(this.Card_content())]);
-			return obj;
-		}
-		title(){
-			return "Flex";
-		}
-		body(){
-			return [(this.Card())];
-		}
-	};
-	($mol_mem(($.$bog_pay_app_page_components_flex.prototype), "Card_content"));
-	($mol_mem(($.$bog_pay_app_page_components_flex.prototype), "Card"));
-
-
-;
-"use strict";
-
-;
-	($.$mol_book2) = class $mol_book2 extends ($.$mol_scroll) {
-		pages_deep(){
-			return [];
-		}
-		pages(){
-			return (this.pages_deep());
-		}
-		Placeholder(){
-			const obj = new this.$.$mol_view();
-			return obj;
-		}
-		placeholders(){
-			return [(this.Placeholder())];
-		}
-		menu_title(){
-			return "";
-		}
-		sub(){
-			return [...(this.pages()), ...(this.placeholders())];
-		}
-		minimal_width(){
-			return 0;
-		}
-		Gap(id){
-			const obj = new this.$.$mol_view();
-			(obj.title) = () => ("");
-			return obj;
-		}
-	};
-	($mol_mem(($.$mol_book2.prototype), "Placeholder"));
-	($mol_mem_key(($.$mol_book2.prototype), "Gap"));
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_book2 extends $.$mol_book2 {
-            pages_deep() {
-                let result = [];
-                for (const subpage of this.pages()) {
-                    if (subpage instanceof $mol_book2)
-                        result = [...result, ...subpage.pages_deep()];
-                    else
-                        result.push(subpage);
-                }
-                return result;
-            }
-            title() {
-                return this.pages_deep().map(page => {
-                    try {
-                        return page?.title();
-                    }
-                    catch (error) {
-                        $mol_fail_log(error);
-                    }
-                }).reverse().filter(Boolean).join(' | ');
-            }
-            menu_title() {
-                return this.pages_deep()[0]?.title() || this.title();
-            }
-            sub() {
-                const placeholders = this.placeholders();
-                const next = this.pages_deep().filter(Boolean);
-                const prev = $mol_mem_cached(() => this.sub())?.filter(page => !placeholders.includes(page)) ?? [];
-                for (let i = 1; i; ++i) {
-                    const p = prev[prev.length - i];
-                    const n = next[next.length - i];
-                    if (!n)
-                        break;
-                    if (p === n)
-                        continue;
-                    new this.$.$mol_after_tick(() => {
-                        const b = this.dom_node();
-                        const p = n.dom_node();
-                        b.scroll({
-                            left: p.offsetLeft + p.offsetWidth - b.offsetWidth,
-                            behavior: 'smooth',
-                        });
-                    });
-                    break;
-                }
-                return [...next, ...placeholders];
-            }
-            bring() {
-                const pages = this.pages_deep();
-                if (pages.length)
-                    pages[pages.length - 1].bring();
-                else
-                    super.bring();
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_book2.prototype, "pages_deep", null);
-        __decorate([
-            $mol_mem
-        ], $mol_book2.prototype, "sub", null);
-        $$.$mol_book2 = $mol_book2;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/book2/book2.view.css", "[mol_book2] {\n\tdisplay: flex;\n\tflex-flow: row nowrap;\n\talign-items: stretch;\n\tflex: 1 1 auto;\n\talign-self: stretch;\n\tmargin: 0;\n\t/* box-shadow: 0 0 0 1px var(--mol_theme_line); */\n\t/* transform: translateZ(0); */\n\ttransition: none;\n\tscroll-snap-type: x mandatory;\n\t/* padding: 0 1px;\n\tscroll-padding: 0 1px;\n\tgap: 1px; */\n}\n\n[mol_book2] > * {\n/* \tflex: none; */\n\tscroll-snap-stop: always;\n\tscroll-snap-align: end;\n\tposition: relative;\n\tmin-height: 100%;\n\tmax-height: 100%;\n\tmax-width: 100%;\n\tflex-shrink: 0;\n\tbox-shadow: inset 0 0 0 1px var(--mol_theme_field);\n}\n\n[mol_book2] > *:not(:first-of-type):before,\n[mol_book2] > *:not(:last-of-type)::after {\n\tcontent: '';\n\tposition: absolute;\n\ttop: 1.5rem;\n\twidth: 3px;\n\theight: 1rem;\n\tbackground: linear-gradient(\n\t\tto bottom,\n\t\tvar(--mol_theme_special) 0%,\n\t\tvar(--mol_theme_special) 14%,\n\t\ttransparent 15%,\n\t\ttransparent 42%,\n\t\tvar(--mol_theme_special) 43%,\n\t\tvar(--mol_theme_special) 57%,\n\t\ttransparent 58%,\n\t\ttransparent 85%,\n\t\tvar(--mol_theme_special) 86%,\n\t\tvar(--mol_theme_special) 100%\n\t);\n\topacity: .5;\n\tz-index: var(--mol_layer_speck);\n}\n[mol_book2] > *:not(:first-of-type):before {\n\tleft: -3px;\n}\n[mol_book2] > *:not(:last-of-type)::after {\n\tright: -3px;\n}\n\n:where([mol_book2]) > * {\n\tbackground-color: var(--mol_theme_card);\n\t/* box-shadow: 0 0 0 1px var(--mol_theme_back); */\n}\n\n[mol_book2] > [mol_book2] {\n\tdisplay: contents;\n}\n\n[mol_book2] > *:first-child {\n\tscroll-snap-align: start;\n}\n\n[mol_book2] > [mol_view] {\n\ttransform: none; /* prevent content clipping */\n}\n\n[mol_book2_placeholder] {\n\tflex: 1 1 0;\n\tbackground: none;\n}\n\n[mol_book2_gap] {\n\tbackground: none;\n\tflex-grow: 1;\n\tscroll-snap-align: none;\n\tmargin-right: -1px;\n\tbox-shadow: none;\n}\n\n[mol_book2_gap]::before,\n[mol_book2_gap]::after {\n\tdisplay: none;\n}\n");
-})($ || ($ = {}));
-
-;
-	($.$mol_pop) = class $mol_pop extends ($.$mol_view) {
-		Anchor(){
-			return null;
-		}
-		align(){
-			return "bottom_center";
-		}
-		bubble_content(){
-			return [];
-		}
-		height_max(){
-			return 9999;
-		}
-		Bubble(){
-			const obj = new this.$.$mol_pop_bubble();
-			(obj.align) = () => ((this.align()));
-			(obj.content) = () => ((this.bubble_content()));
-			(obj.height_max) = () => ((this.height_max()));
-			return obj;
-		}
-		showed(next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		align_vert(){
-			return "";
-		}
-		align_hor(){
-			return "";
-		}
-		prefer(){
-			return "vert";
-		}
-		sub(){
-			return [(this.Anchor())];
-		}
-		sub_visible(){
-			return [(this.Anchor()), (this.Bubble())];
-		}
-	};
-	($mol_mem(($.$mol_pop.prototype), "Bubble"));
-	($mol_mem(($.$mol_pop.prototype), "showed"));
-	($.$mol_pop_bubble) = class $mol_pop_bubble extends ($.$mol_view) {
-		content(){
-			return [];
-		}
-		height_max(){
-			return 9999;
-		}
-		align(){
-			return "";
-		}
-		sub(){
-			return (this.content());
-		}
-		style(){
-			return {...(super.style()), "maxHeight": (this.height_max())};
-		}
-		attr(){
-			return {
-				...(super.attr()), 
-				"mol_pop_align": (this.align()), 
-				"tabindex": 0
-			};
-		}
-	};
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_pop extends $.$mol_pop {
-            showed(next = false) {
-                this.focused();
-                return next;
-            }
-            sub_visible() {
-                return [
-                    this.Anchor(),
-                    ...this.showed() ? [this.Bubble()] : [],
-                ];
-            }
-            height_max() {
-                const viewport = this.$.$mol_window.size();
-                const rect_bubble = this.view_rect();
-                const align = this.align_vert();
-                if (align === 'bottom')
-                    return (viewport.height - rect_bubble.bottom) * .66;
-                if (align === 'top')
-                    return rect_bubble.top * .66;
-                return 0;
-            }
-            align() {
-                switch (this.prefer()) {
-                    case 'hor': return `${this.align_hor()}_${this.align_vert()}`;
-                    case 'vert': return `${this.align_vert()}_${this.align_hor()}`;
-                    default: return this.prefer();
-                }
-            }
-            align_vert() {
-                const viewport = this.view_port();
-                const rect_pop = this.view_rect();
-                if (!rect_pop)
-                    return 'suspense';
-                return rect_pop.top > (viewport.top + viewport.height / 2) ? 'top' : 'bottom';
-            }
-            align_hor() {
-                const viewport = this.view_port();
-                const rect_pop = this.view_rect();
-                if (!rect_pop)
-                    return 'suspense';
-                return rect_pop.left > (viewport.left + viewport.width / 2) ? 'left' : 'right';
-            }
-            View_port() {
-                const view = new $mol_view;
-                view.dom_node = () => {
-                    let node = this.dom_node();
-                    while (node = node.offsetParent) {
-                        if (this.$.$mol_dom_context.getComputedStyle(node).overflow !== 'visible')
-                            return node;
-                    }
-                    return this.$.$mol_dom_context.document.documentElement;
-                };
-                return view;
-            }
-            view_port() {
-                return this.View_port().view_rect() ?? { ...this.$.$mol_window.size(), left: 0, top: 0 };
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_pop.prototype, "showed", null);
-        __decorate([
-            $mol_mem
-        ], $mol_pop.prototype, "sub_visible", null);
-        __decorate([
-            $mol_mem
-        ], $mol_pop.prototype, "height_max", null);
-        __decorate([
-            $mol_mem
-        ], $mol_pop.prototype, "align", null);
-        __decorate([
-            $mol_mem
-        ], $mol_pop.prototype, "align_vert", null);
-        __decorate([
-            $mol_mem
-        ], $mol_pop.prototype, "align_hor", null);
-        __decorate([
-            $mol_mem
-        ], $mol_pop.prototype, "View_port", null);
-        __decorate([
-            $mol_mem
-        ], $mol_pop.prototype, "view_port", null);
-        $$.$mol_pop = $mol_pop;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/pop/pop.view.css", "[mol_pop] {\n\tposition: relative;\n\tdisplay: inline-flex;\n}\n\n[mol_pop_bubble] {\n\tbox-shadow: 0 0 1rem hsla(0,0%,0%,.5);\n\tborder-radius: var(--mol_gap_round);\n\tposition: absolute;\n\tz-index: var(--mol_layer_popup);\n\tbackground: var(--mol_theme_back);\n\tmax-width: none;\n\tmax-height: none;\n\t/* overflow: hidden;\n\toverflow-y: scroll;\n\toverflow-y: overlay; */\n\tword-break: normal;\n\twidth: max-content;\n\t/* height: max-content; */\n\tflex-direction: column;\n\tmax-width: 80vw;\n\tmax-height: 80vw;\n\tcontain: paint;\n\ttransition-property: opacity;\n}\n\n:where( [mol_pop_bubble] > * ) {\n\tbackground: var(--mol_theme_card);\n}\n\n[mol_pop_bubble][mol_scroll] {\n\tbackground: var(--mol_theme_back);\n}\n\n[mol_pop_bubble]:focus {\n\toutline: none;\n}\n\n[mol_pop_align=\"suspense_suspense\"] {\n\topacity: 0;\n}\n\n[mol_pop_align=\"left_top\"] {\n\ttransform: translate(-100%);\n\tleft: 0;\n\tbottom: 0;\n}\n\n[mol_pop_align=\"left_center\"] {\n\ttransform: translate(-100%, -50%);\n\tleft: 0;\n\ttop: 50%;\n}\n\n[mol_pop_align=\"left_bottom\"] {\n\ttransform: translate(-100%);\n\tleft: 0;\n\ttop: 0;\n}\n\n[mol_pop_align=\"right_top\"] {\n\ttransform: translate(100%);\n\tright: 0;\n\tbottom: 0;\n}\n\n[mol_pop_align=\"right_center\"] {\n\ttransform: translate(100%, -50%);\n\tright: 0;\n\ttop: 50%;\n}\n\n[mol_pop_align=\"right_bottom\"] {\n\ttransform: translate(100%);\n\tright: 0;\n\ttop: 0;\n}\n\n[mol_pop_align=\"center\"] {\n\tleft: 50%;\n\ttop: 50%;\n\ttransform: translate(-50%, -50%);\n}\n\n[mol_pop_align=\"top_left\"] {\n\tright: 0;\n\tbottom: 100%;\n}\n\n[mol_pop_align=\"top_center\"] {\n\ttransform: translate(-50%);\n\tleft: 50%;\n\tbottom: 100%;\n}\n\n[mol_pop_align=\"top_right\"] {\n\tleft: 0;\n\tbottom: 100%;\n}\n\n[mol_pop_align=\"bottom_left\"] {\n\tright: 0;\n\ttop: 100%;\n}\n\n[mol_pop_align=\"bottom_center\"] {\n\ttransform: translate(-50%);\n\tleft: 50%;\n\ttop: 100%;\n}\n\n[mol_pop_align=\"bottom_right\"] {\n\tleft: 0;\n\ttop: 100%;\n}\n");
-})($ || ($ = {}));
-
-;
-	($.$mol_hotkey) = class $mol_hotkey extends ($.$mol_plugin) {
-		keydown(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		event(){
-			return {...(super.event()), "keydown": (next) => (this.keydown(next))};
-		}
-		key(){
-			return {};
-		}
-		mod_ctrl(){
-			return false;
-		}
-		mod_alt(){
-			return false;
-		}
-		mod_shift(){
-			return false;
-		}
-	};
-	($mol_mem(($.$mol_hotkey.prototype), "keydown"));
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_hotkey extends $.$mol_hotkey {
-            key() {
-                return super.key();
-            }
-            keydown(event) {
-                if (!event)
-                    return;
-                if (event.defaultPrevented)
-                    return;
-                let name = $mol_keyboard_code[event.keyCode];
-                if (this.mod_ctrl() !== (event.ctrlKey || event.metaKey))
-                    return;
-                if (this.mod_alt() !== event.altKey)
-                    return;
-                if (this.mod_shift() !== event.shiftKey)
-                    return;
-                const handle = this.key()[name];
-                if (handle)
-                    handle(event);
-            }
-        }
-        $$.$mol_hotkey = $mol_hotkey;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-	($.$mol_nav) = class $mol_nav extends ($.$mol_plugin) {
-		event_key(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		cycle(next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		mod_ctrl(){
-			return false;
-		}
-		mod_shift(){
-			return false;
-		}
-		mod_alt(){
-			return false;
-		}
-		keys_x(next){
-			if(next !== undefined) return next;
-			return [];
-		}
-		keys_y(next){
-			if(next !== undefined) return next;
-			return [];
-		}
-		current_x(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		current_y(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		event_up(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		event_down(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		event_left(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		event_right(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		event(){
-			return {...(super.event()), "keydown": (next) => (this.event_key(next))};
-		}
-	};
-	($mol_mem(($.$mol_nav.prototype), "event_key"));
-	($mol_mem(($.$mol_nav.prototype), "cycle"));
-	($mol_mem(($.$mol_nav.prototype), "keys_x"));
-	($mol_mem(($.$mol_nav.prototype), "keys_y"));
-	($mol_mem(($.$mol_nav.prototype), "current_x"));
-	($mol_mem(($.$mol_nav.prototype), "current_y"));
-	($mol_mem(($.$mol_nav.prototype), "event_up"));
-	($mol_mem(($.$mol_nav.prototype), "event_down"));
-	($mol_mem(($.$mol_nav.prototype), "event_left"));
-	($mol_mem(($.$mol_nav.prototype), "event_right"));
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_nav extends $.$mol_nav {
-            event_key(event) {
-                if (!event)
-                    return event;
-                if (event.defaultPrevented)
-                    return;
-                if (this.mod_ctrl() && !event.ctrlKey)
-                    return;
-                if (this.mod_shift() && !event.shiftKey)
-                    return;
-                if (this.mod_alt() && !event.altKey)
-                    return;
-                switch (event.keyCode) {
-                    case $mol_keyboard_code.up: return this.event_up(event);
-                    case $mol_keyboard_code.down: return this.event_down(event);
-                    case $mol_keyboard_code.left: return this.event_left(event);
-                    case $mol_keyboard_code.right: return this.event_right(event);
-                    case $mol_keyboard_code.pageUp: return this.event_up(event);
-                    case $mol_keyboard_code.pageDown: return this.event_down(event);
-                }
-            }
-            event_up(event) {
-                if (!event)
-                    return event;
-                const keys = this.keys_y();
-                if (keys.length < 1)
-                    return;
-                const index_y = this.index_y();
-                const index_old = index_y === null ? 0 : index_y;
-                const index_new = (index_old + keys.length - 1) % keys.length;
-                event.preventDefault();
-                if (index_old === 0 && !this.cycle())
-                    return;
-                this.current_y(this.keys_y()[index_new]);
-            }
-            event_down(event) {
-                if (!event)
-                    return event;
-                const keys = this.keys_y();
-                if (keys.length < 1)
-                    return;
-                const index_y = this.index_y();
-                const index_old = index_y === null ? keys.length - 1 : index_y;
-                const index_new = (index_old + 1) % keys.length;
-                event.preventDefault();
-                if (index_new === 0 && !this.cycle())
-                    return;
-                this.current_y(this.keys_y()[index_new]);
-            }
-            event_left(event) {
-                if (!event)
-                    return event;
-                const keys = this.keys_x();
-                if (keys.length < 1)
-                    return;
-                const index_x = this.index_x();
-                const index_old = index_x === null ? 0 : index_x;
-                const index_new = (index_old + keys.length - 1) % keys.length;
-                event.preventDefault();
-                if (index_old === 0 && !this.cycle())
-                    return;
-                this.current_x(this.keys_x()[index_new]);
-            }
-            event_right(event) {
-                if (!event)
-                    return event;
-                const keys = this.keys_x();
-                if (keys.length < 1)
-                    return;
-                const index_x = this.index_x();
-                const index_old = index_x === null ? keys.length - 1 : index_x;
-                const index_new = (index_old + 1) % keys.length;
-                event.preventDefault();
-                if (index_new === 0 && !this.cycle())
-                    return;
-                this.current_x(this.keys_x()[index_new]);
-            }
-            index_y() {
-                let index = this.keys_y().indexOf(this.current_y());
-                if (index < 0)
-                    return null;
-                return index;
-            }
-            index_x() {
-                let index = this.keys_x().indexOf(this.current_x());
-                if (index < 0)
-                    return null;
-                return index;
-            }
-        }
-        $$.$mol_nav = $mol_nav;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-	($.$mol_string) = class $mol_string extends ($.$mol_view) {
-		selection_watcher(){
-			return null;
-		}
-		error_report(){
-			return null;
-		}
-		disabled(){
-			return false;
-		}
-		value(next){
-			if(next !== undefined) return next;
-			return "";
-		}
-		value_changed(next){
-			return (this.value(next));
-		}
-		hint(){
-			return "";
-		}
-		hint_visible(){
-			return (this.hint());
-		}
-		spellcheck(){
-			return true;
-		}
-		autocomplete_native(){
-			return "";
-		}
-		selection_end(){
-			return 0;
-		}
-		selection_start(){
-			return 0;
-		}
-		keyboard(){
-			return "text";
-		}
-		enter(){
-			return "go";
-		}
-		length_max(){
-			return +Infinity;
-		}
-		type(next){
-			if(next !== undefined) return next;
-			return "text";
-		}
-		event_change(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		submit_with_ctrl(){
-			return false;
-		}
-		submit(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Submit(){
-			const obj = new this.$.$mol_hotkey();
-			(obj.mod_ctrl) = () => ((this.submit_with_ctrl()));
-			(obj.key) = () => ({"enter": (next) => (this.submit(next))});
-			return obj;
-		}
-		dom_name(){
-			return "input";
-		}
-		enabled(){
-			return true;
-		}
-		minimal_height(){
-			return 40;
-		}
-		autocomplete(){
-			return false;
-		}
-		selection(next){
-			if(next !== undefined) return next;
-			return [0, 0];
-		}
-		auto(){
-			return [(this.selection_watcher()), (this.error_report())];
-		}
-		field(){
-			return {
-				...(super.field()), 
-				"disabled": (this.disabled()), 
-				"value": (this.value_changed()), 
-				"placeholder": (this.hint_visible()), 
-				"spellcheck": (this.spellcheck()), 
-				"autocomplete": (this.autocomplete_native()), 
-				"selectionEnd": (this.selection_end()), 
-				"selectionStart": (this.selection_start()), 
-				"inputMode": (this.keyboard()), 
-				"enterkeyhint": (this.enter())
-			};
-		}
-		attr(){
-			return {
-				...(super.attr()), 
-				"maxlength": (this.length_max()), 
-				"type": (this.type())
-			};
-		}
-		event(){
-			return {...(super.event()), "input": (next) => (this.event_change(next))};
-		}
-		plugins(){
-			return [(this.Submit())];
-		}
-	};
-	($mol_mem(($.$mol_string.prototype), "value"));
-	($mol_mem(($.$mol_string.prototype), "type"));
-	($mol_mem(($.$mol_string.prototype), "event_change"));
-	($mol_mem(($.$mol_string.prototype), "submit"));
-	($mol_mem(($.$mol_string.prototype), "Submit"));
-	($mol_mem(($.$mol_string.prototype), "selection"));
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_string extends $.$mol_string {
-            event_change(next) {
-                if (!next)
-                    return;
-                const el = this.dom_node();
-                const from = el.selectionStart;
-                const to = el.selectionEnd;
-                try {
-                    el.value = this.value_changed(el.value);
-                }
-                catch (error) {
-                    const el = this.dom_node();
-                    if (error instanceof Error) {
-                        el.setCustomValidity(error.message);
-                        el.reportValidity();
-                    }
-                    $mol_fail_hidden(error);
-                }
-                if (to === null)
-                    return;
-                el.selectionEnd = to;
-                el.selectionStart = from;
-                this.selection_change(next);
-            }
-            error_report() {
-                try {
-                    if (this.focused())
-                        this.value();
-                }
-                catch (error) {
-                    const el = this.dom_node();
-                    if (error instanceof Error) {
-                        el.setCustomValidity(error.message);
-                        el.reportValidity();
-                    }
-                }
-            }
-            hint_visible() {
-                return (this.enabled() ? this.hint() : '') || ' ';
-            }
-            disabled() {
-                return !this.enabled();
-            }
-            autocomplete_native() {
-                return this.autocomplete() ? 'on' : 'off';
-            }
-            selection_watcher() {
-                return new $mol_dom_listener(this.$.$mol_dom_context.document, 'selectionchange', $mol_wire_async(event => this.selection_change(event)));
-            }
-            selection_change(event) {
-                const el = this.dom_node();
-                if (el !== this.$.$mol_dom_context.document.activeElement)
-                    return;
-                const [from, to] = this.selection([
-                    el.selectionStart,
-                    el.selectionEnd,
-                ]);
-                el.selectionEnd = to;
-                el.selectionStart = from;
-                if (to !== from && el.selectionEnd === el.selectionStart) {
-                    el.selectionEnd = to;
-                }
-            }
-            selection_start() {
-                const el = this.dom_node();
-                if (!this.focused())
-                    return undefined;
-                if (el.selectionStart == null)
-                    return undefined;
-                return this.selection()[0];
-            }
-            selection_end() {
-                const el = this.dom_node();
-                if (!this.focused())
-                    return undefined;
-                if (el.selectionEnd == null)
-                    return undefined;
-                return this.selection()[1];
-            }
-        }
-        __decorate([
-            $mol_action
-        ], $mol_string.prototype, "event_change", null);
-        __decorate([
-            $mol_mem
-        ], $mol_string.prototype, "error_report", null);
-        __decorate([
-            $mol_mem
-        ], $mol_string.prototype, "selection_watcher", null);
-        $$.$mol_string = $mol_string;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/string/string.view.css", "[mol_string] {\n\tbox-sizing: border-box;\n\toutline-offset: 0;\n\tborder: none;\n\tborder-radius: var(--mol_gap_round);\n\twhite-space: pre-line;\n\toverflow: hidden;\n\ttext-overflow: ellipsis;\n\tpadding: var(--mol_gap_text);\n\ttext-align: left;\n\tposition: relative;\n\tfont: inherit;\n\tflex: 1 1 auto;\n\tbackground: transparent;\n\tmin-width: 0;\n\tcolor: inherit;\n\tbackground: var(--mol_theme_field);\n}\n\n[mol_string]:disabled:not(:placeholder-shown) {\n\tbackground-color: transparent;\n\tcolor: var(--mol_theme_text);\n}\n\n[mol_string]:where(:not(:disabled)) {\n\tbox-shadow: inset 0 0 0 1px var(--mol_theme_line);\n}\n\n[mol_string]:where(:not(:disabled)):hover {\n\tbox-shadow: inset 0 0 0 2px var(--mol_theme_line);\n\tz-index: var(--mol_layer_hover);\n}\n\n[mol_string]:focus {\n\toutline: none;\n\tz-index: var(--mol_layer_focus);\n\tcolor: var(--mol_theme_text);\n\tbox-shadow: inset 0 0 0 1px var(--mol_theme_focus);\n}\n\n[mol_string]::placeholder {\n\tcolor: var(--mol_theme_shade);\n}\n\n[mol_string]::-ms-clear {\n\tdisplay: none;\n}\n");
-})($ || ($ = {}));
-
-;
-	($.$mol_icon_close) = class $mol_icon_close extends ($.$mol_icon) {
-		path(){
-			return "M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z";
-		}
-	};
-
-
-;
-"use strict";
-
-;
-	($.$mol_search) = class $mol_search extends ($.$mol_pop) {
-		clear(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Hotkey(){
-			const obj = new this.$.$mol_hotkey();
-			(obj.key) = () => ({"escape": (next) => (this.clear(next))});
-			return obj;
-		}
-		nav_components(){
-			return [];
-		}
-		nav_focused(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Nav(){
-			const obj = new this.$.$mol_nav();
-			(obj.keys_y) = () => ((this.nav_components()));
-			(obj.current_y) = (next) => ((this.nav_focused(next)));
-			return obj;
-		}
-		suggests_showed(next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		query(next){
-			if(next !== undefined) return next;
-			return "";
-		}
-		hint(){
-			return (this.$.$mol_locale.text("$mol_search_hint"));
-		}
-		submit(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		enabled(){
-			return true;
-		}
-		keyboard(){
-			return "search";
-		}
-		enter(){
-			return "search";
-		}
-		bring(){
-			return (this.Query().bring());
-		}
-		Query(){
-			const obj = new this.$.$mol_string();
-			(obj.value) = (next) => ((this.query(next)));
-			(obj.hint) = () => ((this.hint()));
-			(obj.submit) = (next) => ((this.submit(next)));
-			(obj.enabled) = () => ((this.enabled()));
-			(obj.keyboard) = () => ((this.keyboard()));
-			(obj.enter) = () => ((this.enter()));
-			return obj;
-		}
-		Clear_icon(){
-			const obj = new this.$.$mol_icon_close();
-			return obj;
-		}
-		Clear(){
-			const obj = new this.$.$mol_button_minor();
-			(obj.hint) = () => ((this.$.$mol_locale.text("$mol_search_Clear_hint")));
-			(obj.enabled) = () => ((this.enabled()));
-			(obj.click) = (next) => ((this.clear(next)));
-			(obj.sub) = () => ([(this.Clear_icon())]);
-			return obj;
-		}
-		anchor_content(){
-			return [(this.Query()), (this.Clear())];
-		}
-		menu_items(){
-			return [];
-		}
-		Menu(){
-			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ((this.menu_items()));
-			return obj;
-		}
-		Bubble_pane(){
-			const obj = new this.$.$mol_scroll();
-			(obj.sub) = () => ([(this.Menu())]);
-			return obj;
-		}
-		suggest_select(id, next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		suggest_label(id){
-			return "";
-		}
-		Suggest_label(id){
-			const obj = new this.$.$mol_dimmer();
-			(obj.haystack) = () => ((this.suggest_label(id)));
-			(obj.needle) = () => ((this.query()));
-			return obj;
-		}
-		suggest_content(id){
-			return [(this.Suggest_label(id))];
-		}
-		suggests(){
-			return [];
-		}
-		plugins(){
-			return [
-				...(super.plugins()), 
-				(this.Hotkey()), 
-				(this.Nav())
-			];
-		}
-		showed(next){
-			return (this.suggests_showed(next));
-		}
-		align_hor(){
-			return "right";
-		}
-		Anchor(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ((this.anchor_content()));
-			return obj;
-		}
-		bubble_content(){
-			return [(this.Bubble_pane())];
-		}
-		Suggest(id){
-			const obj = new this.$.$mol_button_minor();
-			(obj.click) = (next) => ((this.suggest_select(id, next)));
-			(obj.sub) = () => ((this.suggest_content(id)));
-			return obj;
-		}
-	};
-	($mol_mem(($.$mol_search.prototype), "clear"));
-	($mol_mem(($.$mol_search.prototype), "Hotkey"));
-	($mol_mem(($.$mol_search.prototype), "nav_focused"));
-	($mol_mem(($.$mol_search.prototype), "Nav"));
-	($mol_mem(($.$mol_search.prototype), "suggests_showed"));
-	($mol_mem(($.$mol_search.prototype), "query"));
-	($mol_mem(($.$mol_search.prototype), "submit"));
-	($mol_mem(($.$mol_search.prototype), "Query"));
-	($mol_mem(($.$mol_search.prototype), "Clear_icon"));
-	($mol_mem(($.$mol_search.prototype), "Clear"));
-	($mol_mem(($.$mol_search.prototype), "Menu"));
-	($mol_mem(($.$mol_search.prototype), "Bubble_pane"));
-	($mol_mem_key(($.$mol_search.prototype), "suggest_select"));
-	($mol_mem_key(($.$mol_search.prototype), "Suggest_label"));
-	($mol_mem(($.$mol_search.prototype), "Anchor"));
-	($mol_mem_key(($.$mol_search.prototype), "Suggest"));
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_search extends $.$mol_search {
-            anchor_content() {
-                return [
-                    this.Query(),
-                    ...this.query() ? [this.Clear()] : [],
-                ];
-            }
-            suggests_showed(next = true) {
-                this.query();
-                if (!this.focused())
-                    return false;
-                return next;
-            }
-            suggest_selected(next) {
-                if (next === undefined)
-                    return;
-                this.query(next);
-                this.Query().focused(true);
-            }
-            nav_components() {
-                return [
-                    this.Query(),
-                    ...this.menu_items(),
-                ];
-            }
-            nav_focused(component) {
-                if (!this.focused())
-                    return null;
-                if (component == null) {
-                    for (let comp of this.nav_components()) {
-                        if (comp && comp.focused())
-                            return comp;
-                    }
-                    return null;
-                }
-                if (this.suggests_showed()) {
-                    this.ensure_visible(component, "center");
-                    component.focused(true);
-                }
-                return component;
-            }
-            suggest_label(key) {
-                return key;
-            }
-            menu_items() {
-                return this.suggests().map((suggest) => this.Suggest(suggest));
-            }
-            suggest_select(id, event) {
-                this.query(id);
-                this.Query().selection([id.length, id.length]);
-                this.Query().focused(true);
-            }
-            clear(event) {
-                this.query('');
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_search.prototype, "anchor_content", null);
-        __decorate([
-            $mol_mem
-        ], $mol_search.prototype, "suggests_showed", null);
-        __decorate([
-            $mol_mem
-        ], $mol_search.prototype, "nav_focused", null);
-        __decorate([
-            $mol_mem
-        ], $mol_search.prototype, "menu_items", null);
-        $$.$mol_search = $mol_search;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/search/search.view.css", "[mol_search] {\n\talign-self: flex-start;\n\tflex: auto;\n}\n\n[mol_search_anchor] {\n\tflex: 1 1 auto;\n}\n\n[mol_search_query] {\n\tflex-grow: 1;\n}\n\n[mol_search_menu] {\n\tmin-height: .75rem;\n\tdisplay: flex;\n}\n\n[mol_search_suggest] {\n\ttext-align: left;\n}\n\n[mol_search_suggest_label_high] {\n\tcolor: var(--mol_theme_shade);\n\ttext-shadow: none;\n}\n");
-})($ || ($ = {}));
-
-;
-	($.$mol_book2_catalog) = class $mol_book2_catalog extends ($.$mol_book2) {
-		Menu_title(){
-			return (this.Menu().Title());
-		}
-		menu_title(){
-			return "";
-		}
-		Menu_tools(){
-			return (this.Menu().Tools());
-		}
-		Menu_logo(){
-			return null;
-		}
-		menu_head(){
-			return [(this.Menu_title()), (this.Menu_tools())];
-		}
-		menu_filter(next){
-			if(next !== undefined) return next;
-			return "";
-		}
-		Menu_filter(){
-			const obj = new this.$.$mol_search();
-			(obj.query) = (next) => ((this.menu_filter(next)));
-			return obj;
-		}
-		Menu_links_empty(){
-			const obj = new this.$.$mol_view();
-			return obj;
-		}
-		arg(id){
-			return {};
-		}
-		menu_link_arg(id){
-			return (this.arg(id));
-		}
-		spread_title(id){
-			return "";
-		}
-		Menu_link_title(id){
-			const obj = new this.$.$mol_dimmer();
-			(obj.needle) = () => ((this.menu_filter()));
-			(obj.haystack) = () => ((this.spread_title(id)));
-			return obj;
-		}
-		menu_link_content(id){
-			return [(this.Menu_link_title(id))];
-		}
-		Menu_link(id){
-			const obj = new this.$.$mol_link();
-			(obj.arg) = () => ((this.menu_link_arg(id)));
-			(obj.sub) = () => ((this.menu_link_content(id)));
-			return obj;
-		}
-		menu_item_content(id){
-			return [(this.Menu_link(id))];
-		}
-		Menu_item(id){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ((this.menu_item_content(id)));
-			return obj;
-		}
-		menu_links(){
-			return [(this.Menu_item("0"))];
-		}
-		Menu_links(){
-			const obj = new this.$.$mol_list();
-			(obj.Empty) = () => ((this.Menu_links_empty()));
-			(obj.rows) = () => ((this.menu_links()));
-			return obj;
-		}
-		menu_body(){
-			return [(this.Menu_filter()), (this.Menu_links())];
-		}
-		menu_foot(){
-			return [];
-		}
-		Menu(){
-			const obj = new this.$.$mol_page();
-			(obj.title) = () => ((this.menu_title()));
-			(obj.Logo) = () => ((this.Menu_logo()));
-			(obj.tools) = () => ([...(this.menu_tools()), ...(this.addon_tools())]);
-			(obj.head) = () => ((this.menu_head()));
-			(obj.body) = () => ((this.menu_body()));
-			(obj.foot) = () => ((this.menu_foot()));
-			return obj;
-		}
-		spread_close_arg(){
-			return {};
-		}
-		Spread_close_icon(){
-			const obj = new this.$.$mol_icon_close();
-			return obj;
-		}
-		param(){
-			return "";
-		}
-		spread(next){
-			if(next !== undefined) return next;
-			return "";
-		}
-		spreads(){
-			return {};
-		}
-		Spread(id){
-			const obj = new this.$.$mol_view();
-			return obj;
-		}
-		Spread_default(){
-			return null;
-		}
-		spread_ids(){
-			return [];
-		}
-		menu_filter_enabled(){
-			return false;
-		}
-		spread_ids_filtered(){
-			return [];
-		}
-		spread_current(){
-			return null;
-		}
-		menu_tools(){
-			return [];
-		}
-		addon_tools(){
-			return [];
-		}
-		pages(){
-			return [(this.Menu())];
-		}
-		Spread_close(){
-			const obj = new this.$.$mol_link();
-			(obj.arg) = () => ((this.spread_close_arg()));
-			(obj.hint) = () => ((this.$.$mol_locale.text("$mol_book2_catalog_Spread_close_hint")));
-			(obj.sub) = () => ([(this.Spread_close_icon())]);
-			return obj;
-		}
-	};
-	($mol_mem(($.$mol_book2_catalog.prototype), "menu_filter"));
-	($mol_mem(($.$mol_book2_catalog.prototype), "Menu_filter"));
-	($mol_mem(($.$mol_book2_catalog.prototype), "Menu_links_empty"));
-	($mol_mem_key(($.$mol_book2_catalog.prototype), "Menu_link_title"));
-	($mol_mem_key(($.$mol_book2_catalog.prototype), "Menu_link"));
-	($mol_mem_key(($.$mol_book2_catalog.prototype), "Menu_item"));
-	($mol_mem(($.$mol_book2_catalog.prototype), "Menu_links"));
-	($mol_mem(($.$mol_book2_catalog.prototype), "Menu"));
-	($mol_mem(($.$mol_book2_catalog.prototype), "Spread_close_icon"));
-	($mol_mem(($.$mol_book2_catalog.prototype), "spread"));
-	($mol_mem_key(($.$mol_book2_catalog.prototype), "Spread"));
-	($mol_mem(($.$mol_book2_catalog.prototype), "Spread_close"));
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_match_text(query, values) {
-        const tags = query.toLowerCase().trim().split(/\s+/).filter(tag => tag);
-        if (tags.length === 0)
-            return () => true;
-        return (variant) => {
-            const vals = values(variant);
-            return tags.every(tag => vals.some(val => val.toLowerCase().indexOf(tag) >= 0));
-        };
-    }
-    $.$mol_match_text = $mol_match_text;
-})($ || ($ = {}));
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_book2_catalog extends $.$mol_book2_catalog {
-            spread_current() {
-                return this.spread() === '' ? this.Spread_default() : this.Spread(this.spread());
-            }
-            pages() {
-                const spread = this.spread_current();
-                return [
-                    this.Menu(),
-                    ...spread
-                        ? spread instanceof $mol_book2
-                            ? spread.pages_deep()
-                            : [spread]
-                        : [],
-                ];
-            }
-            auto() {
-                const spread = this.spread_current();
-                if (spread instanceof $mol_book2)
-                    spread.auto();
-            }
-            spread_ids() {
-                return Object.keys(this.spreads());
-            }
-            menu_body() {
-                return [
-                    ...this.menu_filter_enabled() ? [this.Menu_filter()] : [],
-                    this.Menu_links(),
-                ];
-            }
-            menu_filter_enabled() {
-                return this.spread_ids().length >= 10;
-            }
-            menu_links() {
-                return this.spread_ids_filtered()
-                    .map(spread => this.Menu_item(spread));
-            }
-            spread_ids_filtered() {
-                return this.spread_ids()
-                    .filter($mol_match_text(this.menu_filter(), spread => [this.spread_title(spread)]));
-            }
-            Spread(id) {
-                return this.spreads()[id];
-            }
-            Spread_default() {
-                return this.spreads()[''];
-            }
-            spread(next) {
-                return this.$.$mol_state_arg.value(this.param(), next) ?? '';
-            }
-            arg(spread) {
-                return { [this.param()]: spread || null };
-            }
-            spread_close_arg() {
-                return { [this.param()]: null };
-            }
-            spread_title(spread) {
-                const page = this.Spread(spread);
-                return page instanceof $mol_book2
-                    && page.menu_title()
-                    || page.title()
-                    || spread;
-            }
-            spread_current_book() {
-                const spread = this.spread_current();
-                return spread instanceof $mol_book2 ? spread : null;
-            }
-            placeholders() {
-                const spread_placeholders = this.spread_current_book()?.placeholders() ?? [];
-                return spread_placeholders.length ? spread_placeholders : super.placeholders();
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_book2_catalog.prototype, "pages", null);
-        __decorate([
-            $mol_mem
-        ], $mol_book2_catalog.prototype, "spread_ids", null);
-        __decorate([
-            $mol_mem
-        ], $mol_book2_catalog.prototype, "menu_body", null);
-        __decorate([
-            $mol_mem
-        ], $mol_book2_catalog.prototype, "menu_links", null);
-        __decorate([
-            $mol_mem
-        ], $mol_book2_catalog.prototype, "spread_ids_filtered", null);
-        __decorate([
-            $mol_mem
-        ], $mol_book2_catalog.prototype, "spread", null);
-        __decorate([
-            $mol_mem
-        ], $mol_book2_catalog.prototype, "placeholders", null);
-        $$.$mol_book2_catalog = $mol_book2_catalog;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        $mol_style_define($mol_book2_catalog, {
-            Menu_filter: {
-                flex: {
-                    shrink: 0,
-                    grow: 0,
-                },
-                alignSelf: 'stretch',
-            },
-            Menu_item: {
-                align: {
-                    items: 'flex-start',
-                },
-            },
-            Menu_link: {
-                flex: {
-                    grow: 1,
-                    shrink: 1,
-                    wrap: 'wrap',
-                },
-            },
-        });
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-	($.$bog_pay_app_page_components) = class $bog_pay_app_page_components extends ($.$mol_page) {
-		Surfaces_content(){
-			const obj = new this.$.$mol_text();
-			(obj.text) = () => ("Surfaces page - Coming soon...");
-			return obj;
-		}
-		Surfaces(){
-			const obj = new this.$.$bog_pay_app_page_components_sb_page();
-			(obj.title) = () => ("Surfaces");
-			(obj.body) = () => ([(this.Surfaces_content())]);
-			return obj;
-		}
-		Flex(){
-			const obj = new this.$.$bog_pay_app_page_components_flex();
-			return obj;
-		}
-		Buttons_content(){
-			const obj = new this.$.$mol_text();
-			(obj.text) = () => ("Buttons page - Coming soon...");
-			return obj;
-		}
-		Buttons(){
-			const obj = new this.$.$bog_pay_app_page_components_sb_page();
-			(obj.title) = () => ("Buttons");
-			(obj.body) = () => ([(this.Buttons_content())]);
-			return obj;
-		}
-		Nav_menu(){
-			const obj = new this.$.$mol_book2_catalog();
-			(obj.spreads) = () => ({
-				"surfaces": (this.Surfaces()), 
-				"flex": (this.Flex()), 
-				"buttons": (this.Buttons())
-			});
-			(obj.Placeholder) = () => (null);
-			return obj;
-		}
-		title(){
-			return "Components";
-		}
-		Head(){
-			return null;
-		}
-		body(){
-			return [(this.Nav_menu())];
-		}
-	};
-	($mol_mem(($.$bog_pay_app_page_components.prototype), "Surfaces_content"));
-	($mol_mem(($.$bog_pay_app_page_components.prototype), "Surfaces"));
-	($mol_mem(($.$bog_pay_app_page_components.prototype), "Flex"));
-	($mol_mem(($.$bog_pay_app_page_components.prototype), "Buttons_content"));
-	($mol_mem(($.$bog_pay_app_page_components.prototype), "Buttons"));
-	($mol_mem(($.$bog_pay_app_page_components.prototype), "Nav_menu"));
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $bog_pay_app_page_components extends $.$bog_pay_app_page_components {
-            spread_title(id) {
-                const titles = {
-                    buttons: 'Buttons',
-                    inputs: 'Inputs',
-                    cards: 'Cards',
-                    tables: 'Tables',
-                    surfaces: 'Surfaces',
-                };
-                return titles[id] || id;
-            }
-            surface_color(id) {
-                return id.split('__')[0];
-            }
-            surface_interactive(id) {
-                return id.split('__')[1];
-            }
-            grid_header_text(state) {
-                return state.toUpperCase();
-            }
-            grid_row_text(color) {
-                return color.toUpperCase();
-            }
-        }
-        __decorate([
-            $mol_mem_key
-        ], $bog_pay_app_page_components.prototype, "spread_title", null);
-        __decorate([
-            $mol_mem_key
-        ], $bog_pay_app_page_components.prototype, "surface_color", null);
-        __decorate([
-            $mol_mem_key
-        ], $bog_pay_app_page_components.prototype, "surface_interactive", null);
-        __decorate([
-            $mol_mem_key
-        ], $bog_pay_app_page_components.prototype, "grid_header_text", null);
-        __decorate([
-            $mol_mem_key
-        ], $bog_pay_app_page_components.prototype, "grid_row_text", null);
-        $$.$bog_pay_app_page_components = $bog_pay_app_page_components;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-	($.$bog_pay_app_page_design) = class $bog_pay_app_page_design extends ($.$mol_page) {
-		Content(){
-			const obj = new this.$.$mol_text();
-			(obj.text) = () => ("Design page - Coming soon...");
-			return obj;
-		}
-		title(){
-			return "Design";
-		}
-		Head(){
-			return null;
-		}
-		body(){
-			return [(this.Content())];
-		}
-	};
-	($mol_mem(($.$bog_pay_app_page_design.prototype), "Content"));
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $bog_pay_app_page_design extends $.$bog_pay_app_page_design {
-        }
-        $$.$bog_pay_app_page_design = $bog_pay_app_page_design;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-	($.$mol_row) = class $mol_row extends ($.$mol_view) {};
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/row/row.view.css", "[mol_row] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\talign-items: flex-start;\n\talign-content: flex-start;\n\tjustify-content: flex-start;\n\tpadding: var(--mol_gap_block);\n\tgap: var(--mol_gap_block);\n\tflex: 0 0 auto;\n\tbox-sizing: border-box;\n\tmax-width: 100%;\n}\n\n[mol_row] > * {\n\tmax-width: 100%;\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-;
-	($.$bog_pay_app_color) = class $bog_pay_app_color extends ($.$mol_view) {
-		Input(){
-			const obj = new this.$.$mol_string();
-			(obj.value) = (next) => ((this.value(next)));
-			return obj;
-		}
-		picker_input(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Picker(){
-			const obj = new this.$.$mol_view();
-			(obj.attr) = () => ({"type": "color"});
-			(obj.dom_name) = () => ("input");
-			(obj.event) = () => ({"input": (next) => (this.picker_input(next))});
-			return obj;
-		}
-		Picker_wrapper(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Picker())]);
-			return obj;
-		}
-		value(next){
-			if(next !== undefined) return next;
-			return "";
-		}
-		attr(){
-			return {...(super.attr()), "ds_themer_color": ""};
-		}
-		sub(){
-			return [(this.Input()), (this.Picker_wrapper())];
-		}
-	};
-	($mol_mem(($.$bog_pay_app_color.prototype), "Input"));
-	($mol_mem(($.$bog_pay_app_color.prototype), "picker_input"));
-	($mol_mem(($.$bog_pay_app_color.prototype), "Picker"));
-	($mol_mem(($.$bog_pay_app_color.prototype), "Picker_wrapper"));
-	($mol_mem(($.$bog_pay_app_color.prototype), "value"));
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $bog_pay_app_color extends $.$bog_pay_app_color {
-            hex_value() {
-                const val = this.value();
-                if (!val)
-                    return '#3b82f6';
-                if (val.startsWith('#'))
-                    return val;
-                return this.color_to_hex(val) || '#3b82f6';
-            }
-            color_to_hex(color) {
-                try {
-                    const ctx = document.createElement('canvas').getContext('2d');
-                    if (!ctx)
-                        return null;
-                    ctx.fillStyle = color;
-                    return ctx.fillStyle;
-                }
-                catch (e) {
-                    return null;
-                }
-            }
-            hex_to_oklch(hex) {
-                hex = hex.replace('#', '');
-                const r = parseInt(hex.slice(0, 2), 16) / 255;
-                const g = parseInt(hex.slice(2, 4), 16) / 255;
-                const b = parseInt(hex.slice(4, 6), 16) / 255;
-                const max = Math.max(r, g, b);
-                const min = Math.min(r, g, b);
-                const l = (max + min) / 2;
-                let h = 0;
-                let c = 0;
-                if (max !== min) {
-                    c = max - min;
-                    if (max === r) {
-                        h = ((g - b) / c + (g < b ? 6 : 0)) * 60;
-                    }
-                    else if (max === g) {
-                        h = ((b - r) / c + 2) * 60;
-                    }
-                    else {
-                        h = ((r - g) / c + 4) * 60;
-                    }
-                }
-                const lightness = Math.round(l * 100);
-                const chroma = (c * 0.2).toFixed(2);
-                const hue = Math.round(h);
-                return `oklch(${lightness}% ${chroma} ${hue}deg)`;
-            }
-            picker_input() {
-                const input = this.Picker().dom_node();
-                const hex = input.value;
-                const current = this.value();
-                if (current.startsWith('oklch')) {
-                    this.value(this.hex_to_oklch(hex));
-                }
-                else if (current.startsWith('rgb')) {
-                    const r = parseInt(hex.slice(1, 3), 16);
-                    const g = parseInt(hex.slice(3, 5), 16);
-                    const b = parseInt(hex.slice(5, 7), 16);
-                    this.value(`rgb(${r}, ${g}, ${b})`);
-                }
-                else {
-                    this.value(hex);
-                }
-            }
-            Picker() {
-                const picker = new this.$.$mol_view();
-                picker.dom_name = () => 'input';
-                picker.attr = () => ({
-                    type: 'color',
-                    value: this.hex_value(),
-                });
-                picker.event = () => ({
-                    input: (e) => {
-                        const target = e.target;
-                        const hex = target.value;
-                        const current = this.value();
-                        if (current.startsWith('oklch')) {
-                            this.value(this.hex_to_oklch(hex));
-                        }
-                        else if (current.startsWith('rgb')) {
-                            const r = parseInt(hex.slice(1, 3), 16);
-                            const g = parseInt(hex.slice(3, 5), 16);
-                            const b = parseInt(hex.slice(5, 7), 16);
-                            this.value(`rgb(${r}, ${g}, ${b})`);
-                        }
-                        else {
-                            this.value(hex);
-                        }
-                    },
-                });
-                return picker;
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $bog_pay_app_color.prototype, "hex_value", null);
-        __decorate([
-            $mol_mem
-        ], $bog_pay_app_color.prototype, "Picker", null);
-        $$.$bog_pay_app_color = $bog_pay_app_color;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        const { rem, px } = $mol_style_unit;
-        $mol_style_define($bog_pay_app_color, {
-            display: 'flex',
-            flex: {
-                direction: 'row',
-                wrap: 'nowrap',
-            },
-            gap: $mol_gap.text,
-            alignItems: 'center',
-            Input: {
-                flex: {
-                    grow: 1,
-                },
-            },
-            Picker_wrapper: {
-                flex: {
-                    shrink: 0,
-                },
-            },
-            Picker: {
-                width: px(40),
-                height: px(40),
-                border: {
-                    width: 0,
-                },
-                borderRadius: px(4),
-                cursor: 'pointer',
+        const { rem, per } = $mol_style_unit;
+        $mol_style_define($bog_pay_app_page_hero, {
+            Body: {
                 padding: 0,
+                maxWidth: '100%',
+                overflow: 'hidden',
+            },
+            Hero_section: {
+                background: {
+                    image: [['linear-gradient(135deg, #f5f2ff 0%, #fff 100%)']],
+                },
+                padding: {
+                    top: rem(3),
+                    bottom: rem(3),
+                    left: rem(1.5),
+                    right: rem(1.5),
+                },
+                textAlign: 'center',
+                width: '100%',
+                boxSizing: 'border-box',
+            },
+            Hero_content: {
+                maxWidth: rem(56.25),
+                width: '100%',
+                margin: {
+                    top: 0,
+                    bottom: 0,
+                    left: 'auto',
+                    right: 'auto',
+                },
+                padding: {
+                    top: 0,
+                    bottom: 0,
+                    left: rem(1),
+                    right: rem(1),
+                },
+                boxSizing: 'border-box',
+            },
+            Hero_title: {
+                fontSize: `clamp(${rem(1.75)}, 5vw, ${rem(3)})`,
+                marginBottom: rem(1.5),
+                fontWeight: '700',
+                alignItems: 'center',
+                justifyContent: 'center',
+                wordWrap: 'break-word',
+            },
+            Hero_description: {
+                fontSize: `clamp(${rem(1)}, 3vw, ${rem(1.25)})`,
+                color: '#555',
+                marginBottom: rem(2),
+                lineHeight: '1.6',
+                wordWrap: 'break-word',
+            },
+            Download_button: {
+                fontSize: rem(1.125),
+                padding: {
+                    top: rem(1),
+                    bottom: rem(1),
+                    left: rem(2.5),
+                    right: rem(2.5),
+                },
+                marginBottom: rem(1),
+            },
+            Guarantee_text: {
+                color: '#6d4aff',
+                fontWeight: '600',
+                marginTop: rem(1),
+                marginBottom: rem(2),
+            },
+            Hero_image: {
+                maxWidth: '100%',
+                width: '100%',
+                margin: {
+                    top: rem(2.5),
+                    left: 'auto',
+                    right: 'auto',
+                    bottom: 0,
+                },
+                background: {
+                    image: [['linear-gradient(135deg, #6d4aff, #9d7aff)']],
+                },
+                height: `clamp(${rem(15)}, 40vw, ${rem(25)})`,
+                borderRadius: rem(1),
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'white',
+                fontSize: `clamp(${rem(1)}, 3vw, ${rem(1.5)})`,
+                fontWeight: '600',
+                boxSizing: 'border-box',
+            },
+            Trust_badges: {
+                display: 'flex',
+                justifyContent: 'center',
+                gap: rem(1),
+                marginTop: rem(2.5),
+                flexWrap: 'wrap',
+                width: '100%',
+                boxSizing: 'border-box',
+            },
+            Badge1: {
+                padding: {
+                    top: rem(0.75),
+                    bottom: rem(0.75),
+                    left: rem(1.5),
+                    right: rem(1.5),
+                },
+                background: {
+                    color: 'white',
+                },
+                borderRadius: rem(0.5),
+                boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                fontWeight: '600',
+            },
+            Badge2: {
+                padding: {
+                    top: rem(0.75),
+                    bottom: rem(0.75),
+                    left: rem(1.5),
+                    right: rem(1.5),
+                },
+                background: {
+                    color: 'white',
+                },
+                borderRadius: rem(0.5),
+                boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                fontWeight: '600',
+            },
+            Badge3: {
+                padding: {
+                    top: rem(0.75),
+                    bottom: rem(0.75),
+                    left: rem(1.5),
+                    right: rem(1.5),
+                },
+                background: {
+                    color: 'white',
+                },
+                borderRadius: rem(0.5),
+                boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                fontWeight: '600',
+            },
+            Stats_section: {
+                padding: {
+                    top: rem(3),
+                    bottom: rem(3),
+                    left: rem(1.5),
+                    right: rem(1.5),
+                },
+                maxWidth: rem(75),
+                width: '100%',
+                margin: {
+                    top: 0,
+                    bottom: 0,
+                    left: 'auto',
+                    right: 'auto',
+                },
+                boxSizing: 'border-box',
+            },
+            Stats_title: {
+                fontSize: rem(2.25),
+                marginBottom: rem(1.5),
+                textAlign: 'center',
+                fontWeight: '700',
+                justifyContent: 'center',
+            },
+            Stats_subtitle: {
+                textAlign: 'center',
+                color: '#555',
+                fontSize: rem(1.125),
+                maxWidth: rem(43.75),
+                margin: {
+                    top: rem(1.25),
+                    bottom: rem(1.25),
+                    left: 'auto',
+                    right: 'auto',
+                },
+            },
+            Stats_grid: {
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+                gap: rem(2),
+                textAlign: 'center',
+                marginTop: rem(3),
+                width: '100%',
+            },
+            Stat1: {
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+            },
+            Stat2: {
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+            },
+            Stat3: {
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+            },
+            Stat1_value: {
+                fontSize: rem(3),
+                color: '#6d4aff',
+                marginBottom: rem(0.5),
+                fontWeight: '700',
+                justifyContent: 'center',
+            },
+            Stat2_value: {
+                fontSize: rem(3),
+                color: '#6d4aff',
+                marginBottom: rem(0.5),
+                fontWeight: '700',
+                justifyContent: 'center',
+            },
+            Stat3_value: {
+                fontSize: rem(3),
+                color: '#6d4aff',
+                marginBottom: rem(0.5),
+                fontWeight: '700',
+                justifyContent: 'center',
+            },
+            Stat1_label: {
+                color: '#555',
+            },
+            Stat2_label: {
+                color: '#555',
+            },
+            Stat3_label: {
+                color: '#555',
             },
         });
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
 ;
-	($.$mol_labeler) = class $mol_labeler extends ($.$mol_list) {
-		label(){
-			return [(this.title())];
+	($.$bog_pay_app_page_games) = class $bog_pay_app_page_games extends ($.$mol_page) {
+		games_title(){
+			return (this.$.$mol_locale.text("$bog_pay_app_page_games_games_title"));
 		}
-		Label(){
+		Games_title(){
 			const obj = new this.$.$mol_view();
-			(obj.minimal_height) = () => (32);
-			(obj.sub) = () => ((this.label()));
+			(obj.sub) = () => ([(this.games_title())]);
 			return obj;
 		}
-		content(){
-			return [];
+		game1_icon_text(){
+			return "🎯";
 		}
-		Content(){
+		Game1_icon(){
 			const obj = new this.$.$mol_view();
-			(obj.minimal_height) = () => (24);
-			(obj.sub) = () => ((this.content()));
+			(obj.sub) = () => ([(this.game1_icon_text())]);
 			return obj;
 		}
-		rows(){
-			return [(this.Label()), (this.Content())];
+		game1_title(){
+			return (this.$.$mol_locale.text("$bog_pay_app_page_games_game1_title"));
 		}
-	};
-	($mol_mem(($.$mol_labeler.prototype), "Label"));
-	($mol_mem(($.$mol_labeler.prototype), "Content"));
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/labeler/labeler.view.css", "[mol_labeler] {\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-items: stretch;\n\tcursor: inherit;\n}\n\n[mol_labeler_label] {\n\tmin-height: 2rem;\n\tcolor: var(--mol_theme_shade);\n\tpadding: .5rem .75rem 0;\n\tgap: 0 var(--mol_gap_block);\n\tflex-wrap: wrap;\n}\n\n[mol_labeler_content] {\n\tdisplay: flex;\n\tpadding: var(--mol_gap_text);\n\tmin-height: 2.5rem;\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-;
-	($.$mol_form_field) = class $mol_form_field extends ($.$mol_labeler) {
-		name(){
-			return "";
-		}
-		bid(){
-			return "";
-		}
-		Bid(){
+		Game1_title(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.bid())]);
+			(obj.sub) = () => ([(this.game1_title())]);
 			return obj;
 		}
-		control(){
-			return null;
-		}
-		bids(){
-			return [];
-		}
-		label(){
-			return [(this.name()), (this.Bid())];
-		}
-		content(){
-			return [(this.control())];
-		}
-	};
-	($mol_mem(($.$mol_form_field.prototype), "Bid"));
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_form_field extends $.$mol_form_field {
-            bid() {
-                return this.bids().filter(Boolean)[0] ?? '';
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_form_field.prototype, "bid", null);
-        $$.$mol_form_field = $mol_form_field;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/form/field/field.view.css", "[mol_form_field] {\n\talign-items: stretch;\n}\n\n[mol_form_field_bid] {\n\tcolor: var(--mol_theme_focus);\n\tdisplay: inline-block;\n\ttext-shadow: 0 0;\n}\n\n[mol_form_field_content] {\n\tborder-radius: var(--mol_gap_round);\n}\n");
-})($ || ($ = {}));
-
-;
-	($.$mol_textarea) = class $mol_textarea extends ($.$mol_stack) {
-		clickable(next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		sidebar_showed(){
-			return false;
-		}
-		press(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		hover(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		value(next){
-			if(next !== undefined) return next;
-			return "";
-		}
-		hint(){
-			return " ";
-		}
-		enabled(){
-			return true;
-		}
-		spellcheck(){
-			return true;
-		}
-		length_max(){
-			return +Infinity;
-		}
-		selection(next){
-			if(next !== undefined) return next;
-			return [];
-		}
-		bring(){
-			return (this.Edit().bring());
-		}
-		submit(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		submit_with_ctrl(){
-			return true;
-		}
-		Edit(){
-			const obj = new this.$.$mol_textarea_edit();
-			(obj.value) = (next) => ((this.value(next)));
-			(obj.hint) = () => ((this.hint()));
-			(obj.enabled) = () => ((this.enabled()));
-			(obj.spellcheck) = () => ((this.spellcheck()));
-			(obj.length_max) = () => ((this.length_max()));
-			(obj.selection) = (next) => ((this.selection(next)));
-			(obj.submit) = (next) => ((this.submit(next)));
-			(obj.submit_with_ctrl) = () => ((this.submit_with_ctrl()));
-			return obj;
-		}
-		row_numb(id){
-			return 0;
-		}
-		highlight(){
-			return "";
-		}
-		syntax(){
-			const obj = new this.$.$mol_syntax2();
-			return obj;
-		}
-		View(){
-			const obj = new this.$.$mol_text_code();
-			(obj.text) = () => ((this.value()));
-			(obj.render_visible_only) = () => (false);
-			(obj.row_numb) = (id) => ((this.row_numb(id)));
-			(obj.sidebar_showed) = () => ((this.sidebar_showed()));
-			(obj.highlight) = () => ((this.highlight()));
-			(obj.syntax) = () => ((this.syntax()));
-			return obj;
-		}
-		attr(){
-			return {
-				...(super.attr()), 
-				"mol_textarea_clickable": (this.clickable()), 
-				"mol_textarea_sidebar_showed": (this.sidebar_showed())
-			};
-		}
-		event(){
-			return {"keydown": (next) => (this.press(next)), "pointermove": (next) => (this.hover(next))};
-		}
-		sub(){
-			return [(this.Edit()), (this.View())];
-		}
-		symbols_alt(){
-			return {
-				"comma": "<", 
-				"period": ">", 
-				"dash": "−", 
-				"equals": "≈", 
-				"graveAccent": "́", 
-				"forwardSlash": "÷", 
-				"E": "€", 
-				"V": "✔", 
-				"X": "×", 
-				"C": "©", 
-				"P": "§", 
-				"H": "₽", 
-				"key0": "°", 
-				"key8": "•", 
-				"key2": "@", 
-				"key3": "#", 
-				"key4": "$", 
-				"key6": "^", 
-				"key7": "&", 
-				"bracketOpen": "[", 
-				"bracketClose": "]", 
-				"slashBack": "|"
-			};
-		}
-		symbols_alt_ctrl(){
-			return {"space": " "};
-		}
-		symbols_alt_shift(){
-			return {
-				"V": "✅", 
-				"X": "❌", 
-				"O": "⭕", 
-				"key1": "❗", 
-				"key4": "💲", 
-				"key7": "❓", 
-				"comma": "«", 
-				"period": "»", 
-				"semicolon": "“", 
-				"quoteSingle": "”", 
-				"dash": "—", 
-				"equals": "≠", 
-				"graveAccent": "̱", 
-				"bracketOpen": "{", 
-				"bracketClose": "}"
-			};
-		}
-	};
-	($mol_mem(($.$mol_textarea.prototype), "clickable"));
-	($mol_mem(($.$mol_textarea.prototype), "press"));
-	($mol_mem(($.$mol_textarea.prototype), "hover"));
-	($mol_mem(($.$mol_textarea.prototype), "value"));
-	($mol_mem(($.$mol_textarea.prototype), "selection"));
-	($mol_mem(($.$mol_textarea.prototype), "submit"));
-	($mol_mem(($.$mol_textarea.prototype), "Edit"));
-	($mol_mem(($.$mol_textarea.prototype), "syntax"));
-	($mol_mem(($.$mol_textarea.prototype), "View"));
-	($.$mol_textarea_edit) = class $mol_textarea_edit extends ($.$mol_string) {
-		dom_name(){
-			return "textarea";
-		}
-		enter(){
-			return "enter";
-		}
-		field(){
-			return {...(super.field()), "scrollTop": 0};
-		}
-	};
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_textarea extends $.$mol_textarea {
-            indent_inc() {
-                let text = this.value();
-                let [from, to] = this.selection();
-                const rows = text.split('\n');
-                let start = 0;
-                for (let i = 0; i < rows.length; ++i) {
-                    let end = start + rows[i].length;
-                    if (end >= from && start <= to) {
-                        if (to === from || start !== to) {
-                            rows[i] = '\t' + rows[i];
-                            to += 1;
-                            end += 1;
-                        }
-                    }
-                    start = end + 1;
-                }
-                this.value(rows.join('\n'));
-                this.selection([from + 1, to]);
-            }
-            indent_dec() {
-                let text = this.value();
-                let [from, to] = this.selection();
-                const rows = text.split('\n');
-                let start = 0;
-                for (let i = 0; i < rows.length; ++i) {
-                    const end = start + rows[i].length;
-                    if (end >= from && start <= to && rows[i].startsWith('\t')) {
-                        rows[i] = rows[i].slice(1);
-                        to -= 1;
-                        if (start < from)
-                            from -= 1;
-                    }
-                    start = end + 1;
-                }
-                this.value(rows.join('\n'));
-                this.selection([from, to]);
-            }
-            symbol_insert(event) {
-                const symbol = event.shiftKey
-                    ? this.symbols_alt_shift()[$mol_keyboard_code[event.keyCode]]
-                    : event.ctrlKey
-                        ? this.symbols_alt_ctrl()[$mol_keyboard_code[event.keyCode]]
-                        : this.symbols_alt()[$mol_keyboard_code[event.keyCode]];
-                if (!symbol)
-                    return;
-                event.preventDefault();
-                document.execCommand('insertText', false, symbol);
-            }
-            clickable(next) {
-                if (!this.enabled())
-                    return true;
-                return next ?? false;
-            }
-            hover(event) {
-                this.clickable(event.ctrlKey);
-            }
-            press(event) {
-                if (event.altKey) {
-                    this.symbol_insert(event);
-                }
-                else {
-                    switch (event.keyCode) {
-                        case !event.shiftKey && $mol_keyboard_code.tab:
-                            this.indent_inc();
-                            break;
-                        case event.shiftKey && $mol_keyboard_code.tab:
-                            this.indent_dec();
-                            break;
-                        default: return;
-                    }
-                    event.preventDefault();
-                }
-            }
-            row_numb(index) {
-                return index;
-            }
-            syntax() {
-                return this.$.$mol_syntax2_md_code;
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_textarea.prototype, "clickable", null);
-        $$.$mol_textarea = $mol_textarea;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/textarea/textarea.view.css", "[mol_textarea] {\n\tflex: 1 0 auto;\n\tflex-direction: column;\n\tvertical-align: top;\n\tmin-height: max-content;\n\twhite-space: pre-wrap;\n\tword-break: break-word;\n\tborder-radius: var(--mol_gap_round);\n\tfont-family: monospace;\n\tposition: relative;\n\ttab-size: 4;\n}\n\n[mol_textarea_view] {\n\tpointer-events: none;\n\twhite-space: inherit;\n\tfont-family: inherit;\n\ttab-size: inherit;\n\tuser-select: none;\n}\n\n[mol_textarea_view_copy] {\n\tpointer-events: all;\n}\n\n[mol_textarea_clickable] > [mol_textarea_view] {\n\tpointer-events: all;\n\tuser-select: auto;\n}\n\n[mol_textarea_clickable] > [mol_textarea_edit] {\n\tuser-select: none;\n}\n\n[mol_textarea_edit] {\n\tfont-family: inherit;\n\tpadding: var(--mol_gap_text);\n\tcolor: transparent !important;\n\tcaret-color: var(--mol_theme_text);\n\tresize: none;\n\ttext-align: inherit;\n\twhite-space: inherit;\n\tborder-radius: inherit;\n\toverflow-anchor: none;\n\tposition: absolute;\n\theight: 100%;\n\twidth: 100%;\n\ttab-size: inherit;\n}\n\n[mol_textarea_sidebar_showed] [mol_textarea_edit] {\n\tleft: 1.75rem;\n\twidth: calc( 100% - 1.75rem );\n}\n\n[mol_textarea_edit]:hover + [mol_textarea_view] {\n\tz-index: var(--mol_layer_hover);\n}\n\n[mol_textarea_edit]:focus + [mol_textarea_view] {\n\tz-index: var(--mol_layer_focus);\n}\n");
-})($ || ($ = {}));
-
-;
-	($.$mol_icon_tick) = class $mol_icon_tick extends ($.$mol_icon) {
-		path(){
-			return "M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z";
-		}
-	};
-
-
-;
-"use strict";
-
-;
-	($.$mol_check_box) = class $mol_check_box extends ($.$mol_check) {
-		Icon(){
-			const obj = new this.$.$mol_icon_tick();
-			return obj;
-		}
-	};
-	($mol_mem(($.$mol_check_box.prototype), "Icon"));
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/check/box/box.view.css", "[mol_check_box_icon] {\n\tborder-radius: var(--mol_gap_round);\n\tbox-shadow: inset 0 0 0 1px var(--mol_theme_line);\n\tcolor: var(--mol_theme_shade);\n\theight: 1rem;\n\talign-self: center;\n}\n\n[mol_check]:not([mol_check_checked]) > [mol_check_box_icon] {\n\tfill: transparent;\n}\n\n[mol_check]:not([disabled]) > [mol_check_box_icon] {\n\tbackground: var(--mol_theme_field);\n\tcolor: var(--mol_theme_text);\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-;
-	($.$mol_button_major) = class $mol_button_major extends ($.$mol_button_minor) {
-		theme(){
-			return "$mol_theme_base";
-		}
-	};
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/button/major/major.view.css", "[mol_button_major] {\n\tbackground-color: var(--mol_theme_back);\n\tcolor: var(--mol_theme_text);\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-;
-	($.$bog_pay_app_demo) = class $bog_pay_app_demo extends ($.$mol_page) {
-		Settings(){
-			const obj = new this.$.$mol_button_minor();
-			(obj.title) = () => ("Settings");
-			return obj;
-		}
-		Profile(){
-			const obj = new this.$.$mol_button_minor();
-			(obj.title) = () => ("Profile");
-			return obj;
-		}
-		Welcome_title_text(){
-			const obj = new this.$.$mol_dimmer();
-			(obj.haystack) = () => ("Welcome to Theme Editor");
-			return obj;
-		}
-		Welcome_title(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Welcome_title_text())]);
-			return obj;
-		}
-		Welcome_text(){
+		Game1_text(){
 			const obj = new this.$.$mol_text();
-			(obj.text) = () => ("This is a complete preview of your theme. \nAll components are rendered with your custom colors.\nTry changing the colors in the editor to see live updates!");
+			(obj.text) = () => ((this.$.$mol_locale.text("$bog_pay_app_page_games_Game1_text_text")));
 			return obj;
 		}
-		Welcome_section(){
+		Game1(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Welcome_title()), (this.Welcome_text())]);
-			return obj;
-		}
-		Cards_title_text(){
-			const obj = new this.$.$mol_dimmer();
-			(obj.haystack) = () => ("Cards Preview");
-			return obj;
-		}
-		Cards_title(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Cards_title_text())]);
-			return obj;
-		}
-		Card1_title(){
-			const obj = new this.$.$mol_dimmer();
-			(obj.haystack) = () => ("Card 1");
-			return obj;
-		}
-		Card1_text(){
-			const obj = new this.$.$mol_text();
-			(obj.text) = () => ("This is a sample card with some text content.");
-			return obj;
-		}
-		Card1(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Card1_title()), (this.Card1_text())]);
-			return obj;
-		}
-		Card2_title(){
-			const obj = new this.$.$mol_dimmer();
-			(obj.haystack) = () => ("Card 2");
-			return obj;
-		}
-		Card2_text(){
-			const obj = new this.$.$mol_text();
-			(obj.text) = () => ("Another card to show how themes apply.");
-			return obj;
-		}
-		Card2(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Card2_title()), (this.Card2_text())]);
-			return obj;
-		}
-		Card3_title(){
-			const obj = new this.$.$mol_dimmer();
-			(obj.haystack) = () => ("Card 3");
-			return obj;
-		}
-		Card3_text(){
-			const obj = new this.$.$mol_text();
-			(obj.text) = () => ("Cards can have different content and styles.");
-			return obj;
-		}
-		Card3(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Card3_title()), (this.Card3_text())]);
-			return obj;
-		}
-		Cards_row(){
-			const obj = new this.$.$mol_row();
 			(obj.sub) = () => ([
-				(this.Card1()), 
-				(this.Card2()), 
-				(this.Card3())
+				(this.Game1_icon()), 
+				(this.Game1_title()), 
+				(this.Game1_text())
 			]);
 			return obj;
 		}
-		Cards_section(){
-			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ([(this.Cards_title()), (this.Cards_row())]);
-			return obj;
+		game2_icon_text(){
+			return "⚔️";
 		}
-		Forms_title_text(){
-			const obj = new this.$.$mol_dimmer();
-			(obj.haystack) = () => ("Forms & Inputs");
-			return obj;
-		}
-		Forms_title(){
+		Game2_icon(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Forms_title_text())]);
+			(obj.sub) = () => ([(this.game2_icon_text())]);
 			return obj;
 		}
-		demo_name(next){
-			if(next !== undefined) return next;
-			return "";
+		game2_title(){
+			return (this.$.$mol_locale.text("$bog_pay_app_page_games_game2_title"));
 		}
-		Name_input(){
-			const obj = new this.$.$mol_string();
-			(obj.hint) = () => ("Enter your name");
-			(obj.value) = (next) => ((this.demo_name(next)));
+		Game2_title(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.game2_title())]);
 			return obj;
 		}
-		Name_field(){
-			const obj = new this.$.$mol_form_field();
-			(obj.name) = () => ("Name");
-			(obj.Content) = () => ((this.Name_input()));
+		Game2_text(){
+			const obj = new this.$.$mol_text();
+			(obj.text) = () => ((this.$.$mol_locale.text("$bog_pay_app_page_games_Game2_text_text")));
 			return obj;
 		}
-		demo_email(next){
-			if(next !== undefined) return next;
-			return "";
-		}
-		Email_input(){
-			const obj = new this.$.$mol_string();
-			(obj.hint) = () => ("your@email.com");
-			(obj.value) = (next) => ((this.demo_email(next)));
-			return obj;
-		}
-		Email_field(){
-			const obj = new this.$.$mol_form_field();
-			(obj.name) = () => ("Email");
-			(obj.Content) = () => ((this.Email_input()));
-			return obj;
-		}
-		demo_message(next){
-			if(next !== undefined) return next;
-			return "";
-		}
-		Message_input(){
-			const obj = new this.$.$mol_textarea();
-			(obj.hint) = () => ("Your message...");
-			(obj.value) = (next) => ((this.demo_message(next)));
-			return obj;
-		}
-		Message_field(){
-			const obj = new this.$.$mol_form_field();
-			(obj.name) = () => ("Message");
-			(obj.Content) = () => ((this.Message_input()));
-			return obj;
-		}
-		demo_check1(next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		Check1(){
-			const obj = new this.$.$mol_check_box();
-			(obj.title) = () => ("Option 1");
-			(obj.checked) = (next) => ((this.demo_check1(next)));
-			return obj;
-		}
-		demo_check2(next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		Check2(){
-			const obj = new this.$.$mol_check_box();
-			(obj.title) = () => ("Option 2");
-			(obj.checked) = (next) => ((this.demo_check2(next)));
-			return obj;
-		}
-		demo_check3(next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		Check3(){
-			const obj = new this.$.$mol_check_box();
-			(obj.title) = () => ("Option 3");
-			(obj.checked) = (next) => ((this.demo_check3(next)));
-			return obj;
-		}
-		Options_row(){
-			const obj = new this.$.$mol_row();
+		Game2(){
+			const obj = new this.$.$mol_view();
 			(obj.sub) = () => ([
-				(this.Check1()), 
-				(this.Check2()), 
-				(this.Check3())
+				(this.Game2_icon()), 
+				(this.Game2_title()), 
+				(this.Game2_text())
 			]);
 			return obj;
 		}
-		Submit_button(){
-			const obj = new this.$.$mol_button_major();
-			(obj.title) = () => ("Submit");
-			return obj;
+		game3_icon_text(){
+			return "🏆";
 		}
-		Cancel_button(){
-			const obj = new this.$.$mol_button_minor();
-			(obj.title) = () => ("Cancel");
-			return obj;
-		}
-		Buttons_row(){
-			const obj = new this.$.$mol_row();
-			(obj.sub) = () => ([(this.Submit_button()), (this.Cancel_button())]);
-			return obj;
-		}
-		Form_demo(){
-			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ([
-				(this.Name_field()), 
-				(this.Email_field()), 
-				(this.Message_field()), 
-				(this.Options_row()), 
-				(this.Buttons_row())
-			]);
-			return obj;
-		}
-		Forms_section(){
-			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ([(this.Forms_title()), (this.Form_demo())]);
-			return obj;
-		}
-		Table_title_text(){
-			const obj = new this.$.$mol_dimmer();
-			(obj.haystack) = () => ("Table Example");
-			return obj;
-		}
-		Table_title(){
+		Game3_icon(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Table_title_text())]);
+			(obj.sub) = () => ([(this.game3_icon_text())]);
 			return obj;
 		}
-		Header1(){
-			const obj = new this.$.$mol_dimmer();
-			(obj.haystack) = () => ("Name");
+		game3_title(){
+			return (this.$.$mol_locale.text("$bog_pay_app_page_games_game3_title"));
+		}
+		Game3_title(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.game3_title())]);
 			return obj;
 		}
-		Header2(){
-			const obj = new this.$.$mol_dimmer();
-			(obj.haystack) = () => ("Status");
+		Game3_text(){
+			const obj = new this.$.$mol_text();
+			(obj.text) = () => ((this.$.$mol_locale.text("$bog_pay_app_page_games_Game3_text_text")));
 			return obj;
 		}
-		Header3(){
-			const obj = new this.$.$mol_dimmer();
-			(obj.haystack) = () => ("Value");
-			return obj;
-		}
-		Table_header(){
-			const obj = new this.$.$mol_row();
+		Game3(){
+			const obj = new this.$.$mol_view();
 			(obj.sub) = () => ([
-				(this.Header1()), 
-				(this.Header2()), 
-				(this.Header3())
+				(this.Game3_icon()), 
+				(this.Game3_title()), 
+				(this.Game3_text())
 			]);
 			return obj;
 		}
-		Row1_col1_text(){
-			const obj = new this.$.$mol_text();
-			(obj.text) = () => ("Item 1");
-			return obj;
-		}
-		Row1_col1(){
+		Games_grid(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Row1_col1_text())]);
-			return obj;
-		}
-		Row1_col2_text(){
-			const obj = new this.$.$mol_text();
-			(obj.text) = () => ("Active");
-			return obj;
-		}
-		Row1_col2(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Row1_col2_text())]);
-			return obj;
-		}
-		Row1_col3_text(){
-			const obj = new this.$.$mol_text();
-			(obj.text) = () => ("100");
-			return obj;
-		}
-		Row1_col3(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Row1_col3_text())]);
-			return obj;
-		}
-		Table_row1(){
-			const obj = new this.$.$mol_row();
 			(obj.sub) = () => ([
-				(this.Row1_col1()), 
-				(this.Row1_col2()), 
-				(this.Row1_col3())
+				(this.Game1()), 
+				(this.Game2()), 
+				(this.Game3())
 			]);
 			return obj;
 		}
-		Row2_col1_text(){
-			const obj = new this.$.$mol_text();
-			(obj.text) = () => ("Item 2");
-			return obj;
-		}
-		Row2_col1(){
+		Games_section(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Row2_col1_text())]);
+			(obj.sub) = () => ([(this.Games_title()), (this.Games_grid())]);
 			return obj;
 		}
-		Row2_col2_text(){
-			const obj = new this.$.$mol_text();
-			(obj.text) = () => ("Pending");
-			return obj;
+		why_title(){
+			return (this.$.$mol_locale.text("$bog_pay_app_page_games_why_title"));
 		}
-		Row2_col2(){
+		Why_title(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Row2_col2_text())]);
+			(obj.sub) = () => ([(this.why_title())]);
 			return obj;
 		}
-		Row2_col3_text(){
-			const obj = new this.$.$mol_text();
-			(obj.text) = () => ("250");
-			return obj;
+		why1_icon_text(){
+			return "🌍";
 		}
-		Row2_col3(){
+		Why1_icon(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Row2_col3_text())]);
+			(obj.sub) = () => ([(this.why1_icon_text())]);
 			return obj;
 		}
-		Table_row2(){
-			const obj = new this.$.$mol_row();
+		why1_title(){
+			return (this.$.$mol_locale.text("$bog_pay_app_page_games_why1_title"));
+		}
+		Why1_title(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.why1_title())]);
+			return obj;
+		}
+		Why1_text(){
+			const obj = new this.$.$mol_text();
+			(obj.text) = () => ((this.$.$mol_locale.text("$bog_pay_app_page_games_Why1_text_text")));
+			return obj;
+		}
+		Why1(){
+			const obj = new this.$.$mol_view();
 			(obj.sub) = () => ([
-				(this.Row2_col1()), 
-				(this.Row2_col2()), 
-				(this.Row2_col3())
+				(this.Why1_icon()), 
+				(this.Why1_title()), 
+				(this.Why1_text())
 			]);
 			return obj;
 		}
-		Row3_col1_text(){
-			const obj = new this.$.$mol_text();
-			(obj.text) = () => ("Item 3");
-			return obj;
+		why2_icon_text(){
+			return "📊";
 		}
-		Row3_col1(){
+		Why2_icon(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Row3_col1_text())]);
+			(obj.sub) = () => ([(this.why2_icon_text())]);
 			return obj;
 		}
-		Row3_col2_text(){
-			const obj = new this.$.$mol_text();
-			(obj.text) = () => ("Complete");
-			return obj;
+		why2_title(){
+			return (this.$.$mol_locale.text("$bog_pay_app_page_games_why2_title"));
 		}
-		Row3_col2(){
+		Why2_title(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Row3_col2_text())]);
+			(obj.sub) = () => ([(this.why2_title())]);
 			return obj;
 		}
-		Row3_col3_text(){
+		Why2_text(){
 			const obj = new this.$.$mol_text();
-			(obj.text) = () => ("500");
+			(obj.text) = () => ((this.$.$mol_locale.text("$bog_pay_app_page_games_Why2_text_text")));
 			return obj;
 		}
-		Row3_col3(){
+		Why2(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Row3_col3_text())]);
-			return obj;
-		}
-		Table_row3(){
-			const obj = new this.$.$mol_row();
 			(obj.sub) = () => ([
-				(this.Row3_col1()), 
-				(this.Row3_col2()), 
-				(this.Row3_col3())
+				(this.Why2_icon()), 
+				(this.Why2_title()), 
+				(this.Why2_text())
 			]);
 			return obj;
 		}
-		Table_demo(){
-			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ([
-				(this.Table_header()), 
-				(this.Table_row1()), 
-				(this.Table_row2()), 
-				(this.Table_row3())
+		why3_icon_text(){
+			return "💚";
+		}
+		Why3_icon(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.why3_icon_text())]);
+			return obj;
+		}
+		why3_title(){
+			return (this.$.$mol_locale.text("$bog_pay_app_page_games_why3_title"));
+		}
+		Why3_title(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.why3_title())]);
+			return obj;
+		}
+		Why3_text(){
+			const obj = new this.$.$mol_text();
+			(obj.text) = () => ((this.$.$mol_locale.text("$bog_pay_app_page_games_Why3_text_text")));
+			return obj;
+		}
+		Why3(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([
+				(this.Why3_icon()), 
+				(this.Why3_title()), 
+				(this.Why3_text())
 			]);
 			return obj;
 		}
-		Table_section(){
-			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ([(this.Table_title()), (this.Table_demo())]);
+		Why_grid(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([
+				(this.Why1()), 
+				(this.Why2()), 
+				(this.Why3())
+			]);
 			return obj;
 		}
-		Demo_content(){
-			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ([
-				(this.Welcome_section()), 
-				(this.Cards_section()), 
-				(this.Forms_section()), 
-				(this.Table_section())
-			]);
+		Why_section(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Why_title()), (this.Why_grid())]);
 			return obj;
 		}
 		title(){
-			return "Demo Website";
-		}
-		tools(){
-			return [(this.Settings()), (this.Profile())];
-		}
-		body(){
-			return [(this.Demo_content())];
-		}
-	};
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Settings"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Profile"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Welcome_title_text"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Welcome_title"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Welcome_text"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Welcome_section"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Cards_title_text"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Cards_title"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Card1_title"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Card1_text"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Card1"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Card2_title"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Card2_text"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Card2"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Card3_title"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Card3_text"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Card3"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Cards_row"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Cards_section"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Forms_title_text"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Forms_title"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "demo_name"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Name_input"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Name_field"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "demo_email"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Email_input"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Email_field"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "demo_message"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Message_input"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Message_field"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "demo_check1"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Check1"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "demo_check2"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Check2"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "demo_check3"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Check3"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Options_row"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Submit_button"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Cancel_button"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Buttons_row"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Form_demo"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Forms_section"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Table_title_text"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Table_title"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Header1"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Header2"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Header3"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Table_header"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Row1_col1_text"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Row1_col1"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Row1_col2_text"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Row1_col2"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Row1_col3_text"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Row1_col3"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Table_row1"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Row2_col1_text"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Row2_col1"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Row2_col2_text"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Row2_col2"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Row2_col3_text"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Row2_col3"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Table_row2"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Row3_col1_text"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Row3_col1"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Row3_col2_text"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Row3_col2"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Row3_col3_text"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Row3_col3"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Table_row3"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Table_demo"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Table_section"));
-	($mol_mem(($.$bog_pay_app_demo.prototype), "Demo_content"));
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        const { rem, px } = $mol_style_unit;
-        $mol_style_define($bog_pay_app_demo, {
-            Demo_content: {
-                gap: $mol_gap.block,
-                padding: $mol_gap.block,
-            },
-            Welcome_section: {
-                padding: $mol_gap.block,
-                background: {
-                    color: $mol_theme.card,
-                },
-                borderRadius: px(8),
-            },
-            Welcome_title: {
-                fontSize: rem(1.5),
-                fontWeight: 'bold',
-                margin: {
-                    bottom: $mol_gap.block,
-                },
-            },
-            Cards_section: {
-                gap: $mol_gap.block,
-            },
-            Cards_title: {
-                fontSize: rem(1.25),
-                fontWeight: 'bold',
-                padding: $mol_gap.block,
-            },
-            Cards_row: {
-                gap: $mol_gap.block,
-                flex: {
-                    wrap: 'wrap',
-                },
-            },
-            Card1: {
-                flex: {
-                    basis: rem(15),
-                    grow: 1,
-                },
-                padding: $mol_gap.block,
-                background: {
-                    color: $mol_theme.card,
-                },
-                borderRadius: px(8),
-                border: {
-                    width: px(1),
-                    style: 'solid',
-                    color: $mol_theme.line,
-                },
-            },
-            Card2: {
-                flex: {
-                    basis: rem(15),
-                    grow: 1,
-                },
-                padding: $mol_gap.block,
-                background: {
-                    color: $mol_theme.card,
-                },
-                borderRadius: px(8),
-                border: {
-                    width: px(1),
-                    style: 'solid',
-                    color: $mol_theme.line,
-                },
-            },
-            Card3: {
-                flex: {
-                    basis: rem(15),
-                    grow: 1,
-                },
-                padding: $mol_gap.block,
-                background: {
-                    color: $mol_theme.card,
-                },
-                borderRadius: px(8),
-                border: {
-                    width: px(1),
-                    style: 'solid',
-                    color: $mol_theme.line,
-                },
-            },
-            Card1_title: {
-                fontSize: rem(1.1),
-                fontWeight: '600',
-                margin: {
-                    bottom: $mol_gap.text,
-                },
-            },
-            Card2_title: {
-                fontSize: rem(1.1),
-                fontWeight: '600',
-                margin: {
-                    bottom: $mol_gap.text,
-                },
-            },
-            Card3_title: {
-                fontSize: rem(1.1),
-                fontWeight: '600',
-                margin: {
-                    bottom: $mol_gap.text,
-                },
-            },
-            Forms_section: {
-                gap: $mol_gap.block,
-            },
-            Forms_title: {
-                fontSize: rem(1.25),
-                fontWeight: 'bold',
-                padding: $mol_gap.block,
-            },
-            Form_demo: {
-                gap: $mol_gap.block,
-                padding: $mol_gap.block,
-                background: {
-                    color: $mol_theme.card,
-                },
-                borderRadius: px(8),
-            },
-            Options_row: {
-                gap: $mol_gap.block,
-                flex: {
-                    wrap: 'wrap',
-                },
-            },
-            Buttons_row: {
-                gap: $mol_gap.block,
-            },
-            Table_section: {
-                gap: $mol_gap.block,
-            },
-            Table_title: {
-                fontSize: rem(1.25),
-                fontWeight: 'bold',
-                padding: $mol_gap.block,
-            },
-            Table_demo: {
-                gap: px(1),
-                background: {
-                    color: $mol_theme.line,
-                },
-                border: {
-                    width: px(1),
-                    style: 'solid',
-                    color: $mol_theme.line,
-                },
-                borderRadius: px(8),
-            },
-            Table_header: {
-                background: {
-                    color: $mol_theme.card,
-                },
-                fontWeight: 'bold',
-                padding: $mol_gap.block,
-                gap: px(1),
-            },
-            Table_row1: {
-                background: {
-                    color: $mol_theme.back,
-                },
-                padding: $mol_gap.block,
-                gap: px(1),
-            },
-            Table_row2: {
-                background: {
-                    color: $mol_theme.back,
-                },
-                padding: $mol_gap.block,
-                gap: px(1),
-            },
-            Table_row3: {
-                background: {
-                    color: $mol_theme.back,
-                },
-                padding: $mol_gap.block,
-                gap: px(1),
-            },
-            Header1: {
-                flex: {
-                    grow: 1,
-                    basis: 0,
-                },
-            },
-            Header2: {
-                flex: {
-                    grow: 1,
-                    basis: 0,
-                },
-            },
-            Header3: {
-                flex: {
-                    grow: 1,
-                    basis: 0,
-                },
-            },
-        });
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-	($.$bog_pay_app_page_themer_colors) = class $bog_pay_app_page_themer_colors extends ($.$mol_row) {
-		Controls_title_text(){
-			const obj = new this.$.$mol_dimmer();
-			return obj;
-		}
-		Controls_title(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Controls_title_text())]);
-			return obj;
-		}
-		Backgrounds_title_text(){
-			const obj = new this.$.$mol_dimmer();
-			(obj.haystack) = () => ("Backgrounds");
-			return obj;
-		}
-		Backgrounds_title(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Backgrounds_title_text())]);
-			return obj;
-		}
-		color_back(next){
-			if(next !== undefined) return next;
-			return "oklch(20% .01 240deg)";
-		}
-		Back_color(){
-			const obj = new this.$.$bog_pay_app_color();
-			(obj.value) = (next) => ((this.color_back(next)));
-			return obj;
-		}
-		Back_field(){
-			const obj = new this.$.$mol_form_field();
-			(obj.name) = () => ("Background");
-			(obj.Content) = () => ((this.Back_color()));
-			return obj;
-		}
-		color_card(next){
-			if(next !== undefined) return next;
-			return "oklch(30% .05 240deg / .25)";
-		}
-		Card_color(){
-			const obj = new this.$.$bog_pay_app_color();
-			(obj.value) = (next) => ((this.color_card(next)));
-			return obj;
-		}
-		Card_field(){
-			const obj = new this.$.$mol_form_field();
-			(obj.name) = () => ("Card");
-			(obj.Content) = () => ((this.Card_color()));
-			return obj;
-		}
-		color_field(next){
-			if(next !== undefined) return next;
-			return "oklch(15% 0 240deg / .25)";
-		}
-		Field_color(){
-			const obj = new this.$.$bog_pay_app_color();
-			(obj.value) = (next) => ((this.color_field(next)));
-			return obj;
-		}
-		Field_field(){
-			const obj = new this.$.$mol_form_field();
-			(obj.name) = () => ("Field");
-			(obj.Content) = () => ((this.Field_color()));
-			return obj;
-		}
-		color_hover(next){
-			if(next !== undefined) return next;
-			return "oklch(70% 0 240deg / .1)";
-		}
-		Hover_color(){
-			const obj = new this.$.$bog_pay_app_color();
-			(obj.value) = (next) => ((this.color_hover(next)));
-			return obj;
-		}
-		Hover_field(){
-			const obj = new this.$.$mol_form_field();
-			(obj.name) = () => ("Hover");
-			(obj.Content) = () => ((this.Hover_color()));
-			return obj;
-		}
-		Backgrounds_section(){
-			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ([
-				(this.Backgrounds_title()), 
-				(this.Back_field()), 
-				(this.Card_field()), 
-				(this.Field_field()), 
-				(this.Hover_field())
-			]);
-			return obj;
-		}
-		Text_title_text(){
-			const obj = new this.$.$mol_dimmer();
-			(obj.haystack) = () => ("Text Colors");
-			return obj;
-		}
-		Text_title(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Text_title_text())]);
-			return obj;
-		}
-		color_text(next){
-			if(next !== undefined) return next;
-			return "oklch(80% 0 240deg)";
-		}
-		Text_color(){
-			const obj = new this.$.$bog_pay_app_color();
-			(obj.value) = (next) => ((this.color_text(next)));
-			return obj;
-		}
-		Text_field(){
-			const obj = new this.$.$mol_form_field();
-			(obj.name) = () => ("Text");
-			(obj.Content) = () => ((this.Text_color()));
-			return obj;
-		}
-		color_shade(next){
-			if(next !== undefined) return next;
-			return "oklch(60% 0 240deg)";
-		}
-		Shade_color(){
-			const obj = new this.$.$bog_pay_app_color();
-			(obj.value) = (next) => ((this.color_shade(next)));
-			return obj;
-		}
-		Shade_field(){
-			const obj = new this.$.$mol_form_field();
-			(obj.name) = () => ("Shade");
-			(obj.Content) = () => ((this.Shade_color()));
-			return obj;
-		}
-		color_line(next){
-			if(next !== undefined) return next;
-			return "oklch(60% 0 240deg / .25)";
-		}
-		Line_color(){
-			const obj = new this.$.$bog_pay_app_color();
-			(obj.value) = (next) => ((this.color_line(next)));
-			return obj;
-		}
-		Line_field(){
-			const obj = new this.$.$mol_form_field();
-			(obj.name) = () => ("Line");
-			(obj.Content) = () => ((this.Line_color()));
-			return obj;
-		}
-		color_focus(next){
-			if(next !== undefined) return next;
-			return "oklch(80% .2 60deg)";
-		}
-		Focus_color(){
-			const obj = new this.$.$bog_pay_app_color();
-			(obj.value) = (next) => ((this.color_focus(next)));
-			return obj;
-		}
-		Focus_field(){
-			const obj = new this.$.$mol_form_field();
-			(obj.name) = () => ("Focus");
-			(obj.Content) = () => ((this.Focus_color()));
-			return obj;
-		}
-		Text_section(){
-			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ([
-				(this.Text_title()), 
-				(this.Text_field()), 
-				(this.Shade_field()), 
-				(this.Line_field()), 
-				(this.Focus_field())
-			]);
-			return obj;
-		}
-		Controls_section_title_text(){
-			const obj = new this.$.$mol_dimmer();
-			(obj.haystack) = () => ("Control Colors");
-			return obj;
-		}
-		Controls_section_title(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Controls_section_title_text())]);
-			return obj;
-		}
-		color_control(next){
-			if(next !== undefined) return next;
-			return "oklch(70% .1 240deg)";
-		}
-		Control_color(){
-			const obj = new this.$.$bog_pay_app_color();
-			(obj.value) = (next) => ((this.color_control(next)));
-			return obj;
-		}
-		Control_field(){
-			const obj = new this.$.$mol_form_field();
-			(obj.name) = () => ("Control");
-			(obj.Content) = () => ((this.Control_color()));
-			return obj;
-		}
-		color_current(next){
-			if(next !== undefined) return next;
-			return "oklch(70% .2 150deg)";
-		}
-		Current_color(){
-			const obj = new this.$.$bog_pay_app_color();
-			(obj.value) = (next) => ((this.color_current(next)));
-			return obj;
-		}
-		Current_field(){
-			const obj = new this.$.$mol_form_field();
-			(obj.name) = () => ("Current");
-			(obj.Content) = () => ((this.Current_color()));
-			return obj;
-		}
-		color_special(next){
-			if(next !== undefined) return next;
-			return "oklch(70% .2 330deg)";
-		}
-		Special_color(){
-			const obj = new this.$.$bog_pay_app_color();
-			(obj.value) = (next) => ((this.color_special(next)));
-			return obj;
-		}
-		Special_field(){
-			const obj = new this.$.$mol_form_field();
-			(obj.name) = () => ("Special");
-			(obj.Content) = () => ((this.Special_color()));
-			return obj;
-		}
-		Controls_section(){
-			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ([
-				(this.Controls_section_title()), 
-				(this.Control_field()), 
-				(this.Current_field()), 
-				(this.Special_field())
-			]);
-			return obj;
-		}
-		Controls_inner(){
-			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ([
-				(this.Controls_title()), 
-				(this.Backgrounds_section()), 
-				(this.Text_section()), 
-				(this.Controls_section())
-			]);
-			return obj;
-		}
-		Controls(){
-			const obj = new this.$.$mol_scroll();
-			(obj.sub) = () => ([(this.Controls_inner())]);
-			return obj;
-		}
-		Demo_site(){
-			const obj = new this.$.$bog_pay_app_demo();
-			return obj;
-		}
-		Preview_inner(){
-			const obj = new this.$.$mol_view();
-			(obj.style) = () => ({
-				"--mol_theme_back": (this.color_back()), 
-				"--mol_theme_card": (this.color_card()), 
-				"--mol_theme_field": (this.color_field()), 
-				"--mol_theme_hover": (this.color_hover()), 
-				"--mol_theme_text": (this.color_text()), 
-				"--mol_theme_shade": (this.color_shade()), 
-				"--mol_theme_line": (this.color_line()), 
-				"--mol_theme_focus": (this.color_focus()), 
-				"--mol_theme_control": (this.color_control()), 
-				"--mol_theme_current": (this.color_current()), 
-				"--mol_theme_special": (this.color_special())
-			});
-			(obj.sub) = () => ([(this.Demo_site())]);
-			return obj;
-		}
-		Preview(){
-			const obj = new this.$.$mol_scroll();
-			(obj.sub) = () => ([(this.Preview_inner())]);
-			return obj;
-		}
-		sub(){
-			return [(this.Controls()), (this.Preview())];
-		}
-	};
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Controls_title_text"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Controls_title"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Backgrounds_title_text"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Backgrounds_title"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "color_back"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Back_color"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Back_field"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "color_card"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Card_color"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Card_field"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "color_field"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Field_color"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Field_field"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "color_hover"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Hover_color"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Hover_field"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Backgrounds_section"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Text_title_text"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Text_title"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "color_text"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Text_color"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Text_field"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "color_shade"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Shade_color"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Shade_field"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "color_line"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Line_color"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Line_field"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "color_focus"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Focus_color"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Focus_field"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Text_section"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Controls_section_title_text"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Controls_section_title"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "color_control"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Control_color"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Control_field"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "color_current"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Current_color"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Current_field"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "color_special"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Special_color"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Special_field"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Controls_section"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Controls_inner"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Controls"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Demo_site"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Preview_inner"));
-	($mol_mem(($.$bog_pay_app_page_themer_colors.prototype), "Preview"));
-
-
-;
-	($.$mol_status) = class $mol_status extends ($.$mol_view) {
-		message(){
-			return "";
-		}
-		status(){
-			return (this.title());
-		}
-		minimal_height(){
-			return 24;
-		}
-		minimal_width(){
-			return 0;
-		}
-		sub(){
-			return [(this.message())];
-		}
-	};
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_status extends $.$mol_status {
-            message() {
-                try {
-                    return this.status() ?? null;
-                }
-                catch (error) {
-                    if (error instanceof Promise)
-                        $mol_fail_hidden(error);
-                    $mol_fail_log(error);
-                    return error.message;
-                }
-            }
-        }
-        $$.$mol_status = $mol_status;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/status/status.view.css", "[mol_status] {\n\tpadding: var(--mol_gap_text);\n\tborder-radius: var(--mol_gap_round);\n\tdisplay: block;\n}\n\n[mol_status]:not([mol_view_error=\"Promise\"]) {\n\tcolor: var(--mol_theme_focus);\n}\n\n[mol_status]:not([mol_view_error=\"Promise\"]):empty {\n\tdisplay: none;\n}\n");
-})($ || ($ = {}));
-
-;
-	($.$mol_form) = class $mol_form extends ($.$mol_list) {
-		keydown(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		form_fields(){
-			return [];
-		}
-		body(){
-			return (this.form_fields());
-		}
-		Body(){
-			const obj = new this.$.$mol_list();
-			(obj.sub) = () => ((this.body()));
-			return obj;
-		}
-		submit_title(){
-			return (this.$.$mol_locale.text("$mol_form_submit_title"));
-		}
-		submit_hint(){
-			return "";
-		}
-		submit_activate(next){
-			return (this.Submit().activate(next));
-		}
-		submit(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Submit(){
-			const obj = new this.$.$mol_button_major();
-			(obj.title) = () => ((this.submit_title()));
-			(obj.hint) = () => ((this.submit_hint()));
-			(obj.click) = (next) => ((this.submit(next)));
-			return obj;
-		}
-		result(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Result(){
-			const obj = new this.$.$mol_status();
-			(obj.message) = () => ((this.result()));
-			return obj;
-		}
-		buttons(){
-			return [(this.Submit()), (this.Result())];
-		}
-		foot(){
-			return (this.buttons());
-		}
-		Foot(){
-			const obj = new this.$.$mol_row();
-			(obj.sub) = () => ((this.foot()));
-			return obj;
-		}
-		submit_allowed(){
-			return true;
-		}
-		submit_blocked(){
-			return false;
-		}
-		event(){
-			return {...(super.event()), "keydown": (next) => (this.keydown(next))};
-		}
-		save(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		message_done(){
-			return (this.$.$mol_locale.text("$mol_form_message_done"));
-		}
-		message_invalid(){
-			return (this.$.$mol_locale.text("$mol_form_message_invalid"));
-		}
-		rows(){
-			return [(this.Body()), (this.Foot())];
-		}
-	};
-	($mol_mem(($.$mol_form.prototype), "keydown"));
-	($mol_mem(($.$mol_form.prototype), "Body"));
-	($mol_mem(($.$mol_form.prototype), "submit"));
-	($mol_mem(($.$mol_form.prototype), "Submit"));
-	($mol_mem(($.$mol_form.prototype), "result"));
-	($mol_mem(($.$mol_form.prototype), "Result"));
-	($mol_mem(($.$mol_form.prototype), "Foot"));
-	($mol_mem(($.$mol_form.prototype), "save"));
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_form extends $.$mol_form {
-            form_fields() {
-                return [...this.view_find(view => view instanceof $mol_form_field)]
-                    .map(path => path[path.length - 1]);
-            }
-            submit_allowed() {
-                return this.form_fields().every(field => !field.bid());
-            }
-            submit_blocked() {
-                return !this.submit_allowed();
-            }
-            keydown(next) {
-                if (next.ctrlKey && next.keyCode === $mol_keyboard_code.enter && !this.submit_blocked())
-                    this.submit(next);
-            }
-            result(next) {
-                if (next instanceof Error)
-                    next = next.message || this.message_invalid();
-                return next ?? '';
-            }
-            buttons() {
-                return [
-                    this.Submit(),
-                    ...this.result() ? [this.Result()] : [],
-                ];
-            }
-            submit(next) {
-                try {
-                    if (!this.submit_allowed()) {
-                        throw new Error(this.message_invalid());
-                    }
-                    this.save(next);
-                }
-                catch (e) {
-                    if ($mol_promise_like(e))
-                        $mol_fail_hidden(e);
-                    $mol_fail_log(e);
-                    this.result(e);
-                    return false;
-                }
-                this.result(this.message_done());
-                return true;
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_form.prototype, "form_fields", null);
-        __decorate([
-            $mol_mem
-        ], $mol_form.prototype, "submit_allowed", null);
-        __decorate([
-            $mol_mem
-        ], $mol_form.prototype, "result", null);
-        __decorate([
-            $mol_mem
-        ], $mol_form.prototype, "buttons", null);
-        __decorate([
-            $mol_action
-        ], $mol_form.prototype, "submit", null);
-        $$.$mol_form = $mol_form;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/form/form.view.css", "[mol_form] {\r\n\tgap: var(--mol_gap_block);\r\n}\r\n\r\n[mol_form_body] {\r\n\tgap: var(--mol_gap_block);\r\n}");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-;
-	($.$bog_pay_app_page_themer) = class $bog_pay_app_page_themer extends ($.$mol_page) {
-		Colors(){
-			const obj = new this.$.$bog_pay_app_page_themer_colors();
-			return obj;
-		}
-		title(){
-			return "Themer";
+			return "Игры";
 		}
 		Head(){
 			return null;
 		}
 		body(){
-			return [(this.Colors())];
+			return [(this.Games_section()), (this.Why_section())];
 		}
 	};
-	($mol_mem(($.$bog_pay_app_page_themer.prototype), "Colors"));
+	($mol_mem(($.$bog_pay_app_page_games.prototype), "Games_title"));
+	($mol_mem(($.$bog_pay_app_page_games.prototype), "Game1_icon"));
+	($mol_mem(($.$bog_pay_app_page_games.prototype), "Game1_title"));
+	($mol_mem(($.$bog_pay_app_page_games.prototype), "Game1_text"));
+	($mol_mem(($.$bog_pay_app_page_games.prototype), "Game1"));
+	($mol_mem(($.$bog_pay_app_page_games.prototype), "Game2_icon"));
+	($mol_mem(($.$bog_pay_app_page_games.prototype), "Game2_title"));
+	($mol_mem(($.$bog_pay_app_page_games.prototype), "Game2_text"));
+	($mol_mem(($.$bog_pay_app_page_games.prototype), "Game2"));
+	($mol_mem(($.$bog_pay_app_page_games.prototype), "Game3_icon"));
+	($mol_mem(($.$bog_pay_app_page_games.prototype), "Game3_title"));
+	($mol_mem(($.$bog_pay_app_page_games.prototype), "Game3_text"));
+	($mol_mem(($.$bog_pay_app_page_games.prototype), "Game3"));
+	($mol_mem(($.$bog_pay_app_page_games.prototype), "Games_grid"));
+	($mol_mem(($.$bog_pay_app_page_games.prototype), "Games_section"));
+	($mol_mem(($.$bog_pay_app_page_games.prototype), "Why_title"));
+	($mol_mem(($.$bog_pay_app_page_games.prototype), "Why1_icon"));
+	($mol_mem(($.$bog_pay_app_page_games.prototype), "Why1_title"));
+	($mol_mem(($.$bog_pay_app_page_games.prototype), "Why1_text"));
+	($mol_mem(($.$bog_pay_app_page_games.prototype), "Why1"));
+	($mol_mem(($.$bog_pay_app_page_games.prototype), "Why2_icon"));
+	($mol_mem(($.$bog_pay_app_page_games.prototype), "Why2_title"));
+	($mol_mem(($.$bog_pay_app_page_games.prototype), "Why2_text"));
+	($mol_mem(($.$bog_pay_app_page_games.prototype), "Why2"));
+	($mol_mem(($.$bog_pay_app_page_games.prototype), "Why3_icon"));
+	($mol_mem(($.$bog_pay_app_page_games.prototype), "Why3_title"));
+	($mol_mem(($.$bog_pay_app_page_games.prototype), "Why3_text"));
+	($mol_mem(($.$bog_pay_app_page_games.prototype), "Why3"));
+	($mol_mem(($.$bog_pay_app_page_games.prototype), "Why_grid"));
+	($mol_mem(($.$bog_pay_app_page_games.prototype), "Why_section"));
 
 
 ;
@@ -12937,11 +10209,276 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
-        class $bog_pay_app_page_themer extends $.$bog_pay_app_page_themer {
-        }
-        $$.$bog_pay_app_page_themer = $bog_pay_app_page_themer;
+        const { rem } = $mol_style_unit;
+        $mol_style_define($bog_pay_app_page_games, {
+            Body: {
+                padding: 0,
+                maxWidth: '100%',
+                overflow: 'hidden',
+            },
+            Games_section: {
+                padding: rem(3),
+                maxWidth: rem(75),
+                margin: [0, 'auto'],
+                width: '100%',
+                boxSizing: 'border-box',
+            },
+            Games_title: {
+                fontSize: rem(2.25),
+                marginBottom: rem(1.5),
+                textAlign: 'center',
+                fontWeight: '700',
+                justifyContent: 'center',
+            },
+            Games_grid: {
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                gap: rem(2.5),
+                marginTop: rem(3.75),
+            },
+            Game1: {
+                textAlign: 'center',
+            },
+            Game2: {
+                textAlign: 'center',
+            },
+            Game3: {
+                textAlign: 'center',
+            },
+            Game1_icon: {
+                width: rem(5),
+                height: rem(5),
+                background: {
+                    image: [['linear-gradient(135deg, #6d4aff, #9d7aff)']],
+                },
+                borderRadius: '50%',
+                margin: {
+                    top: 0,
+                    left: 'auto',
+                    right: 'auto',
+                    bottom: rem(1.5),
+                },
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'white',
+                fontSize: rem(2),
+            },
+            Game2_icon: {
+                width: rem(5),
+                height: rem(5),
+                background: {
+                    image: [['linear-gradient(135deg, #6d4aff, #9d7aff)']],
+                },
+                borderRadius: '50%',
+                margin: {
+                    top: 0,
+                    left: 'auto',
+                    right: 'auto',
+                    bottom: rem(1.5),
+                },
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'white',
+                fontSize: rem(2),
+            },
+            Game3_icon: {
+                width: rem(5),
+                height: rem(5),
+                background: {
+                    image: [['linear-gradient(135deg, #6d4aff, #9d7aff)']],
+                },
+                borderRadius: '50%',
+                margin: {
+                    top: 0,
+                    left: 'auto',
+                    right: 'auto',
+                    bottom: rem(1.5),
+                },
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'white',
+                fontSize: rem(2),
+            },
+            Game1_title: {
+                fontSize: rem(1.5),
+                marginBottom: rem(1),
+                fontWeight: '700',
+                justifyContent: 'center',
+            },
+            Game2_title: {
+                fontSize: rem(1.5),
+                marginBottom: rem(1),
+                fontWeight: '700',
+                justifyContent: 'center',
+            },
+            Game3_title: {
+                fontSize: rem(1.5),
+                marginBottom: rem(1),
+                fontWeight: '700',
+                justifyContent: 'center',
+            },
+            Game1_text: {
+                color: '#555',
+                lineHeight: '1.8',
+            },
+            Game2_text: {
+                color: '#555',
+                lineHeight: '1.8',
+            },
+            Game3_text: {
+                color: '#555',
+                lineHeight: '1.8',
+            },
+            Why_section: {
+                padding: {
+                    top: rem(3),
+                    bottom: rem(3),
+                    left: rem(1.5),
+                    right: rem(1.5),
+                },
+                maxWidth: rem(75),
+                width: '100%',
+                margin: [0, 'auto'],
+                background: {
+                    color: '#fafafa',
+                },
+                boxSizing: 'border-box',
+            },
+            Why_title: {
+                fontSize: rem(2.25),
+                marginBottom: rem(1.5),
+                textAlign: 'center',
+                fontWeight: '700',
+                justifyContent: 'center',
+            },
+            Why_grid: {
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                gap: rem(2.5),
+                marginTop: rem(3.75),
+            },
+            Why1: {
+                textAlign: 'center',
+            },
+            Why2: {
+                textAlign: 'center',
+            },
+            Why3: {
+                textAlign: 'center',
+            },
+            Why1_icon: {
+                width: rem(5),
+                height: rem(5),
+                background: {
+                    image: [['linear-gradient(135deg, #6d4aff, #9d7aff)']],
+                },
+                borderRadius: '50%',
+                margin: {
+                    top: 0,
+                    left: 'auto',
+                    right: 'auto',
+                    bottom: rem(1.5),
+                },
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'white',
+                fontSize: rem(2),
+            },
+            Why2_icon: {
+                width: rem(5),
+                height: rem(5),
+                background: {
+                    image: [['linear-gradient(135deg, #6d4aff, #9d7aff)']],
+                },
+                borderRadius: '50%',
+                margin: {
+                    top: 0,
+                    left: 'auto',
+                    right: 'auto',
+                    bottom: rem(1.5),
+                },
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'white',
+                fontSize: rem(2),
+            },
+            Why3_icon: {
+                width: rem(5),
+                height: rem(5),
+                background: {
+                    image: [['linear-gradient(135deg, #6d4aff, #9d7aff)']],
+                },
+                borderRadius: '50%',
+                margin: {
+                    top: 0,
+                    left: 'auto',
+                    right: 'auto',
+                    bottom: rem(1.5),
+                },
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'white',
+                fontSize: rem(2),
+            },
+            Why1_title: {
+                fontSize: rem(1.5),
+                marginBottom: rem(1),
+                fontWeight: '700',
+                justifyContent: 'center',
+            },
+            Why2_title: {
+                fontSize: rem(1.5),
+                marginBottom: rem(1),
+                fontWeight: '700',
+                justifyContent: 'center',
+            },
+            Why3_title: {
+                fontSize: rem(1.5),
+                marginBottom: rem(1),
+                fontWeight: '700',
+                justifyContent: 'center',
+            },
+            Why1_text: {
+                color: '#555',
+                lineHeight: '1.8',
+            },
+            Why2_text: {
+                color: '#555',
+                lineHeight: '1.8',
+            },
+            Why3_text: {
+                color: '#555',
+                lineHeight: '1.8',
+            },
+        });
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
+
+;
+	($.$bog_pay_app_page_account) = class $bog_pay_app_page_account extends ($.$mol_page) {
+		Content(){
+			const obj = new this.$.$mol_text();
+			(obj.text) = () => ((this.$.$mol_locale.text("$bog_pay_app_page_account_Content_text")));
+			return obj;
+		}
+		title(){
+			return "Личный кабинет";
+		}
+		Head(){
+			return null;
+		}
+		body(){
+			return [(this.Content())];
+		}
+	};
+	($mol_mem(($.$bog_pay_app_page_account.prototype), "Content"));
+
 
 ;
 "use strict";
@@ -13083,34 +10620,293 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$mol_deck) = class $mol_deck extends ($.$mol_list) {
-		current(next){
-			if(next !== undefined) return next;
-			return "0";
+	($.$bog_pay_app_footer) = class $bog_pay_app_footer extends ($.$mol_view) {
+		products_title(){
+			return (this.$.$mol_locale.text("$bog_pay_app_footer_products_title"));
 		}
-		switch_options(){
-			return {};
-		}
-		Switch(){
-			const obj = new this.$.$mol_switch();
-			(obj.value) = (next) => ((this.current(next)));
-			(obj.options) = () => ((this.switch_options()));
-			return obj;
-		}
-		Content(){
+		Products_title(){
 			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.products_title())]);
 			return obj;
 		}
-		items(){
-			return [];
+		product1_text(){
+			return (this.$.$mol_locale.text("$bog_pay_app_footer_product1_text"));
 		}
-		rows(){
-			return [(this.Switch()), (this.Content())];
+		Product1(){
+			const obj = new this.$.$mol_link();
+			(obj.arg) = () => ({});
+			(obj.sub) = () => ([(this.product1_text())]);
+			return obj;
+		}
+		product2_text(){
+			return (this.$.$mol_locale.text("$bog_pay_app_footer_product2_text"));
+		}
+		Product2(){
+			const obj = new this.$.$mol_link();
+			(obj.arg) = () => ({});
+			(obj.sub) = () => ([(this.product2_text())]);
+			return obj;
+		}
+		product3_text(){
+			return (this.$.$mol_locale.text("$bog_pay_app_footer_product3_text"));
+		}
+		Product3(){
+			const obj = new this.$.$mol_link();
+			(obj.arg) = () => ({});
+			(obj.sub) = () => ([(this.product3_text())]);
+			return obj;
+		}
+		product4_text(){
+			return (this.$.$mol_locale.text("$bog_pay_app_footer_product4_text"));
+		}
+		Product4(){
+			const obj = new this.$.$mol_link();
+			(obj.arg) = () => ({});
+			(obj.sub) = () => ([(this.product4_text())]);
+			return obj;
+		}
+		Products_list(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ([
+				(this.Product1()), 
+				(this.Product2()), 
+				(this.Product3()), 
+				(this.Product4())
+			]);
+			return obj;
+		}
+		Products_section(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Products_title()), (this.Products_list())]);
+			return obj;
+		}
+		company_title(){
+			return (this.$.$mol_locale.text("$bog_pay_app_footer_company_title"));
+		}
+		Company_title(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.company_title())]);
+			return obj;
+		}
+		company1_text(){
+			return (this.$.$mol_locale.text("$bog_pay_app_footer_company1_text"));
+		}
+		Company1(){
+			const obj = new this.$.$mol_link();
+			(obj.arg) = () => ({});
+			(obj.sub) = () => ([(this.company1_text())]);
+			return obj;
+		}
+		company2_text(){
+			return (this.$.$mol_locale.text("$bog_pay_app_footer_company2_text"));
+		}
+		Company2(){
+			const obj = new this.$.$mol_link();
+			(obj.arg) = () => ({});
+			(obj.sub) = () => ([(this.company2_text())]);
+			return obj;
+		}
+		company3_text(){
+			return (this.$.$mol_locale.text("$bog_pay_app_footer_company3_text"));
+		}
+		Company3(){
+			const obj = new this.$.$mol_link();
+			(obj.arg) = () => ({});
+			(obj.sub) = () => ([(this.company3_text())]);
+			return obj;
+		}
+		company4_text(){
+			return (this.$.$mol_locale.text("$bog_pay_app_footer_company4_text"));
+		}
+		Company4(){
+			const obj = new this.$.$mol_link();
+			(obj.arg) = () => ({});
+			(obj.sub) = () => ([(this.company4_text())]);
+			return obj;
+		}
+		Company_list(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ([
+				(this.Company1()), 
+				(this.Company2()), 
+				(this.Company3()), 
+				(this.Company4())
+			]);
+			return obj;
+		}
+		Company_section(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Company_title()), (this.Company_list())]);
+			return obj;
+		}
+		support_title(){
+			return (this.$.$mol_locale.text("$bog_pay_app_footer_support_title"));
+		}
+		Support_title(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.support_title())]);
+			return obj;
+		}
+		support1_text(){
+			return (this.$.$mol_locale.text("$bog_pay_app_footer_support1_text"));
+		}
+		Support1(){
+			const obj = new this.$.$mol_link();
+			(obj.arg) = () => ({});
+			(obj.sub) = () => ([(this.support1_text())]);
+			return obj;
+		}
+		support2_text(){
+			return (this.$.$mol_locale.text("$bog_pay_app_footer_support2_text"));
+		}
+		Support2(){
+			const obj = new this.$.$mol_link();
+			(obj.arg) = () => ({});
+			(obj.sub) = () => ([(this.support2_text())]);
+			return obj;
+		}
+		support3_text(){
+			return (this.$.$mol_locale.text("$bog_pay_app_footer_support3_text"));
+		}
+		Support3(){
+			const obj = new this.$.$mol_link();
+			(obj.arg) = () => ({});
+			(obj.sub) = () => ([(this.support3_text())]);
+			return obj;
+		}
+		Support_list(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ([
+				(this.Support1()), 
+				(this.Support2()), 
+				(this.Support3())
+			]);
+			return obj;
+		}
+		Support_section(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Support_title()), (this.Support_list())]);
+			return obj;
+		}
+		community_title(){
+			return (this.$.$mol_locale.text("$bog_pay_app_footer_community_title"));
+		}
+		Community_title(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.community_title())]);
+			return obj;
+		}
+		community1_text(){
+			return (this.$.$mol_locale.text("$bog_pay_app_footer_community1_text"));
+		}
+		Community1(){
+			const obj = new this.$.$mol_link();
+			(obj.arg) = () => ({});
+			(obj.sub) = () => ([(this.community1_text())]);
+			return obj;
+		}
+		community2_text(){
+			return (this.$.$mol_locale.text("$bog_pay_app_footer_community2_text"));
+		}
+		Community2(){
+			const obj = new this.$.$mol_link();
+			(obj.arg) = () => ({});
+			(obj.sub) = () => ([(this.community2_text())]);
+			return obj;
+		}
+		community3_text(){
+			return (this.$.$mol_locale.text("$bog_pay_app_footer_community3_text"));
+		}
+		Community3(){
+			const obj = new this.$.$mol_link();
+			(obj.arg) = () => ({});
+			(obj.sub) = () => ([(this.community3_text())]);
+			return obj;
+		}
+		community4_text(){
+			return (this.$.$mol_locale.text("$bog_pay_app_footer_community4_text"));
+		}
+		Community4(){
+			const obj = new this.$.$mol_link();
+			(obj.arg) = () => ({});
+			(obj.sub) = () => ([(this.community4_text())]);
+			return obj;
+		}
+		Community_list(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ([
+				(this.Community1()), 
+				(this.Community2()), 
+				(this.Community3()), 
+				(this.Community4())
+			]);
+			return obj;
+		}
+		Community_section(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Community_title()), (this.Community_list())]);
+			return obj;
+		}
+		Footer_sections(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([
+				(this.Products_section()), 
+				(this.Company_section()), 
+				(this.Support_section()), 
+				(this.Community_section())
+			]);
+			return obj;
+		}
+		Footer_content(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Footer_sections())]);
+			return obj;
+		}
+		Copyright(){
+			const obj = new this.$.$mol_text();
+			(obj.text) = () => ((this.$.$mol_locale.text("$bog_pay_app_footer_Copyright_text")));
+			return obj;
+		}
+		Footer_bottom(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Copyright())]);
+			return obj;
+		}
+		sub(){
+			return [(this.Footer_content()), (this.Footer_bottom())];
 		}
 	};
-	($mol_mem(($.$mol_deck.prototype), "current"));
-	($mol_mem(($.$mol_deck.prototype), "Switch"));
-	($mol_mem(($.$mol_deck.prototype), "Content"));
+	($mol_mem(($.$bog_pay_app_footer.prototype), "Products_title"));
+	($mol_mem(($.$bog_pay_app_footer.prototype), "Product1"));
+	($mol_mem(($.$bog_pay_app_footer.prototype), "Product2"));
+	($mol_mem(($.$bog_pay_app_footer.prototype), "Product3"));
+	($mol_mem(($.$bog_pay_app_footer.prototype), "Product4"));
+	($mol_mem(($.$bog_pay_app_footer.prototype), "Products_list"));
+	($mol_mem(($.$bog_pay_app_footer.prototype), "Products_section"));
+	($mol_mem(($.$bog_pay_app_footer.prototype), "Company_title"));
+	($mol_mem(($.$bog_pay_app_footer.prototype), "Company1"));
+	($mol_mem(($.$bog_pay_app_footer.prototype), "Company2"));
+	($mol_mem(($.$bog_pay_app_footer.prototype), "Company3"));
+	($mol_mem(($.$bog_pay_app_footer.prototype), "Company4"));
+	($mol_mem(($.$bog_pay_app_footer.prototype), "Company_list"));
+	($mol_mem(($.$bog_pay_app_footer.prototype), "Company_section"));
+	($mol_mem(($.$bog_pay_app_footer.prototype), "Support_title"));
+	($mol_mem(($.$bog_pay_app_footer.prototype), "Support1"));
+	($mol_mem(($.$bog_pay_app_footer.prototype), "Support2"));
+	($mol_mem(($.$bog_pay_app_footer.prototype), "Support3"));
+	($mol_mem(($.$bog_pay_app_footer.prototype), "Support_list"));
+	($mol_mem(($.$bog_pay_app_footer.prototype), "Support_section"));
+	($mol_mem(($.$bog_pay_app_footer.prototype), "Community_title"));
+	($mol_mem(($.$bog_pay_app_footer.prototype), "Community1"));
+	($mol_mem(($.$bog_pay_app_footer.prototype), "Community2"));
+	($mol_mem(($.$bog_pay_app_footer.prototype), "Community3"));
+	($mol_mem(($.$bog_pay_app_footer.prototype), "Community4"));
+	($mol_mem(($.$bog_pay_app_footer.prototype), "Community_list"));
+	($mol_mem(($.$bog_pay_app_footer.prototype), "Community_section"));
+	($mol_mem(($.$bog_pay_app_footer.prototype), "Footer_sections"));
+	($mol_mem(($.$bog_pay_app_footer.prototype), "Footer_content"));
+	($mol_mem(($.$bog_pay_app_footer.prototype), "Copyright"));
+	($mol_mem(($.$bog_pay_app_footer.prototype), "Footer_bottom"));
 
 
 ;
@@ -13122,25 +10918,202 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
-        class $mol_deck extends $.$mol_deck {
-            current(next) {
-                return $mol_state_session.value(`${this}.current()`, next) || '0';
-            }
-            switch_options() {
-                let options = {};
-                this.items().forEach((item, index) => {
-                    options[String(index)] = item.title();
-                });
-                return options;
-            }
-            Content() {
-                return this.items()[Number(this.current())];
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_deck.prototype, "Content", null);
-        $$.$mol_deck = $mol_deck;
+        const { rem } = $mol_style_unit;
+        $mol_style_define($bog_pay_app_footer, {
+            background: {
+                color: '#1a1a1a',
+            },
+            color: 'white',
+            padding: {
+                top: rem(3.75),
+                left: rem(1.5),
+                right: rem(1.5),
+                bottom: rem(1.5),
+            },
+            Footer_content: {
+                maxWidth: rem(75),
+                margin: [0, 'auto'],
+            },
+            Footer_sections: {
+                display: 'grid',
+                gridTemplateColumns: 'repeat(4, 1fr)',
+                gap: rem(2.5),
+                marginBottom: rem(2.5),
+            },
+            Products_section: {
+                display: 'flex',
+                flexDirection: 'column',
+            },
+            Company_section: {
+                display: 'flex',
+                flexDirection: 'column',
+            },
+            Support_section: {
+                display: 'flex',
+                flexDirection: 'column',
+            },
+            Community_section: {
+                display: 'flex',
+                flexDirection: 'column',
+            },
+            Products_title: {
+                marginBottom: rem(1.25),
+                fontSize: rem(1.125),
+                fontWeight: '700',
+                justifyContent: 'flex-start',
+            },
+            Company_title: {
+                marginBottom: rem(1.25),
+                fontSize: rem(1.125),
+                fontWeight: '700',
+                justifyContent: 'flex-start',
+            },
+            Support_title: {
+                marginBottom: rem(1.25),
+                fontSize: rem(1.125),
+                fontWeight: '700',
+                justifyContent: 'flex-start',
+            },
+            Community_title: {
+                marginBottom: rem(1.25),
+                fontSize: rem(1.125),
+                fontWeight: '700',
+                justifyContent: 'flex-start',
+            },
+            Products_list: {
+                display: 'flex',
+                flexDirection: 'column',
+                gap: rem(0.75),
+            },
+            Company_list: {
+                display: 'flex',
+                flexDirection: 'column',
+                gap: rem(0.75),
+            },
+            Support_list: {
+                display: 'flex',
+                flexDirection: 'column',
+                gap: rem(0.75),
+            },
+            Community_list: {
+                display: 'flex',
+                flexDirection: 'column',
+                gap: rem(0.75),
+            },
+            Product1: {
+                color: '#aaa',
+                textDecoration: 'none',
+                ':hover': {
+                    color: '#6d4aff',
+                },
+            },
+            Product2: {
+                color: '#aaa',
+                textDecoration: 'none',
+                ':hover': {
+                    color: '#6d4aff',
+                },
+            },
+            Product3: {
+                color: '#aaa',
+                textDecoration: 'none',
+                ':hover': {
+                    color: '#6d4aff',
+                },
+            },
+            Product4: {
+                color: '#aaa',
+                textDecoration: 'none',
+                ':hover': {
+                    color: '#6d4aff',
+                },
+            },
+            Company1: {
+                color: '#aaa',
+                textDecoration: 'none',
+                ':hover': {
+                    color: '#6d4aff',
+                },
+            },
+            Company2: {
+                color: '#aaa',
+                textDecoration: 'none',
+                ':hover': {
+                    color: '#6d4aff',
+                },
+            },
+            Company3: {
+                color: '#aaa',
+                textDecoration: 'none',
+                ':hover': {
+                    color: '#6d4aff',
+                },
+            },
+            Company4: {
+                color: '#aaa',
+                textDecoration: 'none',
+                ':hover': {
+                    color: '#6d4aff',
+                },
+            },
+            Support1: {
+                color: '#aaa',
+                textDecoration: 'none',
+                ':hover': {
+                    color: '#6d4aff',
+                },
+            },
+            Support2: {
+                color: '#aaa',
+                textDecoration: 'none',
+                ':hover': {
+                    color: '#6d4aff',
+                },
+            },
+            Support3: {
+                color: '#aaa',
+                textDecoration: 'none',
+                ':hover': {
+                    color: '#6d4aff',
+                },
+            },
+            Community1: {
+                color: '#aaa',
+                textDecoration: 'none',
+                ':hover': {
+                    color: '#6d4aff',
+                },
+            },
+            Community2: {
+                color: '#aaa',
+                textDecoration: 'none',
+                ':hover': {
+                    color: '#6d4aff',
+                },
+            },
+            Community3: {
+                color: '#aaa',
+                textDecoration: 'none',
+                ':hover': {
+                    color: '#6d4aff',
+                },
+            },
+            Community4: {
+                color: '#aaa',
+                textDecoration: 'none',
+                ':hover': {
+                    color: '#6d4aff',
+                },
+            },
+            Footer_bottom: {
+                textAlign: 'center',
+                paddingTop: rem(1.5),
+                borderTop: '1px solid #333',
+            },
+            Copyright: {
+                color: '#aaa',
+            },
+        });
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
@@ -13150,68 +11123,174 @@ var $;
 			const obj = new this.$.$mol_theme_auto();
 			return obj;
 		}
-		Switch(){
-			return (this.Deck().Switch());
+		title(){
+			return "Bog Ping";
 		}
-		Content(){
-			return (this.Deck().Content());
+		games_button_title(){
+			return (this.$.$mol_locale.text("$bog_pay_app_games_button_title"));
 		}
-		Libraries(){
-			const obj = new this.$.$bog_pay_app_page_libraries();
+		to_games(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Games_button(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.sub) = () => ([(this.games_button_title())]);
+			(obj.click) = (next) => ((this.to_games(next)));
 			return obj;
 		}
-		Components_page(){
-			const obj = new this.$.$bog_pay_app_page_components();
+		account_button_title(){
+			return (this.$.$mol_locale.text("$bog_pay_app_account_button_title"));
+		}
+		to_account(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Account_button(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.sub) = () => ([(this.account_button_title())]);
+			(obj.click) = (next) => ((this.to_account(next)));
 			return obj;
 		}
-		Design_page(){
-			const obj = new this.$.$bog_pay_app_page_design();
+		page(){
+			return "";
+		}
+		Home_page(){
+			const obj = new this.$.$bog_pay_app_page_home();
 			return obj;
 		}
-		Themer_page(){
-			const obj = new this.$.$bog_pay_app_page_themer();
+		Games_page(){
+			const obj = new this.$.$bog_pay_app_page_games();
+			return obj;
+		}
+		Account_page(){
+			const obj = new this.$.$bog_pay_app_page_account();
+			return obj;
+		}
+		Pages(){
+			const obj = new this.$.$mol_switch();
+			(obj.value) = () => ((this.page()));
+			(obj.options) = () => ({
+				"home": (this.Home_page()), 
+				"games": (this.Games_page()), 
+				"account": (this.Account_page())
+			});
+			return obj;
+		}
+		Footer(){
+			const obj = new this.$.$bog_pay_app_footer();
 			return obj;
 		}
 		plugins(){
 			return [(this.Theme())];
 		}
-		title(){
-			return "$MOL UI";
+		Title(){
+			const obj = new this.$.$mol_link();
+			(obj.arg) = () => ({});
+			(obj.sub) = () => ([(this.title())]);
+			return obj;
 		}
 		head(){
 			return [
 				(this.Title()), 
-				(this.Switch()), 
+				(this.Games_button()), 
 				(this.Tools())
 			];
 		}
-		body(){
-			return [(this.Content())];
+		tools(){
+			return [(this.Account_button())];
 		}
-		Deck(){
-			const obj = new this.$.$mol_deck();
-			(obj.items) = () => ([
-				(this.Libraries()), 
-				(this.Components_page()), 
-				(this.Design_page()), 
-				(this.Themer_page())
-			]);
-			return obj;
+		body(){
+			return [(this.Pages()), (this.Footer())];
 		}
 	};
 	($mol_mem(($.$bog_pay_app.prototype), "Theme"));
-	($mol_mem(($.$bog_pay_app.prototype), "Libraries"));
-	($mol_mem(($.$bog_pay_app.prototype), "Components_page"));
-	($mol_mem(($.$bog_pay_app.prototype), "Design_page"));
-	($mol_mem(($.$bog_pay_app.prototype), "Themer_page"));
-	($mol_mem(($.$bog_pay_app.prototype), "Deck"));
+	($mol_mem(($.$bog_pay_app.prototype), "to_games"));
+	($mol_mem(($.$bog_pay_app.prototype), "Games_button"));
+	($mol_mem(($.$bog_pay_app.prototype), "to_account"));
+	($mol_mem(($.$bog_pay_app.prototype), "Account_button"));
+	($mol_mem(($.$bog_pay_app.prototype), "Home_page"));
+	($mol_mem(($.$bog_pay_app.prototype), "Games_page"));
+	($mol_mem(($.$bog_pay_app.prototype), "Account_page"));
+	($mol_mem(($.$bog_pay_app.prototype), "Pages"));
+	($mol_mem(($.$bog_pay_app.prototype), "Footer"));
+	($mol_mem(($.$bog_pay_app.prototype), "Title"));
 
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_offline() { }
+    $.$mol_offline = $mol_offline;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    try {
+        $mol_offline();
+    }
+    catch (error) {
+        console.error(error);
+    }
+})($ || ($ = {}));
 
 ;
 "use strict";
 
 ;
 "use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_pay_app extends $.$bog_pay_app {
+            page(next) {
+                return this.$.$mol_state_arg.value('page', next) || 'home';
+            }
+            to_games() {
+                this.page('games');
+            }
+            to_account() {
+                this.page('account');
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app.prototype, "page", null);
+        __decorate([
+            $mol_action
+        ], $bog_pay_app.prototype, "to_games", null);
+        __decorate([
+            $mol_action
+        ], $bog_pay_app.prototype, "to_account", null);
+        $$.$bog_pay_app = $bog_pay_app;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const { rem } = $mol_style_unit;
+        $mol_style_define($bog_pay_app, {
+            Head: {
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+            },
+            Games_button: {
+                position: 'absolute',
+                left: '50%',
+                transform: 'translateX(-50%)',
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
 
 
 export default $

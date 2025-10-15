@@ -15,43 +15,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_offline(): void;
-}
-
-declare namespace $ {
-    type $mol_log3_event<Fields> = {
-        [key in string]: unknown;
-    } & {
-        time?: string;
-        place: unknown;
-        message: string;
-    } & Fields;
-    type $mol_log3_logger<Fields, Res = void> = (this: $, event: $mol_log3_event<Fields>) => Res;
-    let $mol_log3_come: $mol_log3_logger<{}>;
-    let $mol_log3_done: $mol_log3_logger<{}>;
-    let $mol_log3_fail: $mol_log3_logger<{}>;
-    let $mol_log3_warn: $mol_log3_logger<{
-        hint: string;
-    }>;
-    let $mol_log3_rise: $mol_log3_logger<{}>;
-    let $mol_log3_area: $mol_log3_logger<{}, () => void>;
-    function $mol_log3_area_lazy(this: $, event: $mol_log3_event<{}>): () => void;
-    let $mol_log3_stack: (() => void)[];
-}
-
-declare namespace $ {
-    type $mol_type_keys_extract<Input, Upper, Lower = never> = {
-        [Field in keyof Input]: unknown extends Input[Field] ? never : Input[Field] extends never ? never : Input[Field] extends Upper ? [
-            Lower
-        ] extends [Input[Field]] ? Field : never : never;
-    }[keyof Input];
-}
-
-declare namespace $ {
-    function $mol_log3_web_make(level: $mol_type_keys_extract<Console, Function>, color: string): (this: $, event: $mol_log3_event<{}>) => () => void;
-}
-
-declare namespace $ {
     var $mol_dom_context: typeof globalThis;
 }
 
@@ -60,13 +23,6 @@ declare namespace $ {
 
 declare namespace $ {
     var $mol_dom: typeof globalThis;
-}
-
-declare namespace $ {
-    function $mol_offline_web(): void;
-}
-
-declare namespace $ {
 }
 
 declare namespace $ {
@@ -581,6 +537,39 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    type $mol_log3_event<Fields> = {
+        [key in string]: unknown;
+    } & {
+        time?: string;
+        place: unknown;
+        message: string;
+    } & Fields;
+    type $mol_log3_logger<Fields, Res = void> = (this: $, event: $mol_log3_event<Fields>) => Res;
+    let $mol_log3_come: $mol_log3_logger<{}>;
+    let $mol_log3_done: $mol_log3_logger<{}>;
+    let $mol_log3_fail: $mol_log3_logger<{}>;
+    let $mol_log3_warn: $mol_log3_logger<{
+        hint: string;
+    }>;
+    let $mol_log3_rise: $mol_log3_logger<{}>;
+    let $mol_log3_area: $mol_log3_logger<{}, () => void>;
+    function $mol_log3_area_lazy(this: $, event: $mol_log3_event<{}>): () => void;
+    let $mol_log3_stack: (() => void)[];
+}
+
+declare namespace $ {
+    type $mol_type_keys_extract<Input, Upper, Lower = never> = {
+        [Field in keyof Input]: unknown extends Input[Field] ? never : Input[Field] extends never ? never : Input[Field] extends Upper ? [
+            Lower
+        ] extends [Input[Field]] ? Field : never : never;
+    }[keyof Input];
+}
+
+declare namespace $ {
+    function $mol_log3_web_make(level: $mol_type_keys_extract<Console, Function>, color: string): (this: $, event: $mol_log3_event<{}>) => () => void;
+}
+
+declare namespace $ {
     class $mol_wire_task<Host, Args extends readonly unknown[], Result> extends $mol_wire_fiber<Host, Args, Result> {
         static getter<Host, Args extends readonly unknown[], Result>(task: (this: Host, ...args: Args) => Result): (host: Host, args: Args) => $mol_wire_task<Host, Args, Result>;
         get temp(): boolean;
@@ -763,7 +752,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    const $mol_theme: Record<"image" | "line" | "text" | "field" | "focus" | "back" | "hover" | "card" | "current" | "special" | "control" | "shade" | "spirit", $mol_style_func<"var", unknown>>;
+    const $mol_theme: Record<"image" | "line" | "text" | "focus" | "back" | "hover" | "card" | "current" | "special" | "control" | "shade" | "field" | "spirit", $mol_style_func<"var", unknown>>;
 }
 
 declare namespace $ {
@@ -773,7 +762,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    let $mol_gap: Record<"text" | "block" | "space" | "blur" | "round", $mol_style_func<"var", unknown>>;
+    let $mol_gap: Record<"text" | "block" | "blur" | "space" | "round", $mol_style_func<"var", unknown>>;
 }
 
 declare namespace $ {
@@ -1331,6 +1320,324 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_lock extends $mol_object {
+        protected promise: null | Promise<void>;
+        wait(): Promise<() => void>;
+        grab(): () => void;
+    }
+}
+
+declare namespace $ {
+    function $mol_compare_array<Value extends ArrayLike<unknown>>(a: Value, b: Value): boolean;
+}
+
+declare namespace $ {
+    type $mol_charset_encoding = 'utf8' | 'utf-16le' | 'utf-16be' | 'ibm866' | 'iso-8859-2' | 'iso-8859-3' | 'iso-8859-4' | 'iso-8859-5' | 'iso-8859-6' | 'iso-8859-7' | 'iso-8859-8' | 'iso-8859-8i' | 'iso-8859-10' | 'iso-8859-13' | 'iso-8859-14' | 'iso-8859-15' | 'iso-8859-16' | 'koi8-r' | 'koi8-u' | 'koi8-r' | 'macintosh' | 'windows-874' | 'windows-1250' | 'windows-1251' | 'windows-1252' | 'windows-1253' | 'windows-1254' | 'windows-1255' | 'windows-1256' | 'windows-1257' | 'windows-1258' | 'x-mac-cyrillic' | 'gbk' | 'gb18030' | 'hz-gb-2312' | 'big5' | 'euc-jp' | 'iso-2022-jp' | 'shift-jis' | 'euc-kr' | 'iso-2022-kr';
+}
+
+declare namespace $ {
+    function $mol_charset_decode(buffer: BufferSource, encoding?: $mol_charset_encoding): string;
+}
+
+declare var $node: any;
+
+declare namespace $ {
+    function $mol_charset_encode(value: string): Uint8Array<ArrayBuffer>;
+}
+
+declare namespace $ {
+    type $mol_file_transaction_mode = 'create' | 'exists_truncate' | 'exists_fail' | 'read_only' | 'write_only' | 'read_write' | 'append';
+    type $mol_file_transaction_buffer = ArrayBufferView;
+    class $mol_file_transaction extends $mol_object {
+        path(): string;
+        modes(): readonly $mol_file_transaction_mode[];
+        write(options: {
+            buffer: ArrayBufferView | string | readonly ArrayBufferView[];
+            offset?: number | null;
+            length?: number | null;
+            position?: number | null;
+        }): number;
+        read(): Uint8Array<ArrayBuffer>;
+        truncate(size: number): void;
+        close(): void;
+        destructor(): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_file_transaction_web extends $mol_file_transaction {
+        write(options: {
+            buffer: ArrayBufferView | string | readonly ArrayBufferView[];
+            offset?: number | null;
+            length?: number | null;
+            position?: number | null;
+        }): number;
+        truncate(size: number): void;
+        read(): Buffer<ArrayBuffer>;
+        close(): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_file_base extends $mol_object {
+        static absolute<This extends typeof $mol_file_base>(this: This, path: string): InstanceType<This>;
+        static relative<This extends typeof $mol_file_base>(this: This, path: string): InstanceType<This>;
+        static base: string;
+        path(): string;
+        parent(): this;
+        exists_cut(): boolean;
+        protected root(): boolean;
+        protected stat(next?: $mol_file_stat | null, virt?: 'virt'): $mol_file_stat | null;
+        protected static changed: Set<$mol_file_base>;
+        protected static frame: null | $mol_after_timeout;
+        protected static changed_add(type: 'change' | 'rename', path: string): void;
+        static watch_debounce(): number;
+        static flush(): void;
+        protected static watching: boolean;
+        protected static lock: $mol_lock;
+        protected static watch_off(path: string): void;
+        static unwatched<Result>(side_effect: () => Result, affected_dir: string): Result;
+        reset(): void;
+        modified(): Date | null;
+        version(): string;
+        protected info(path: string): null | $mol_file_stat;
+        protected ensure(): void;
+        protected drop(): void;
+        protected copy(to: string): void;
+        protected read(): Uint8Array<ArrayBuffer>;
+        protected write(buffer: Uint8Array<ArrayBuffer>): void;
+        protected kids(): readonly this[];
+        readable(opts: {
+            start?: number;
+            end?: number;
+        }): ReadableStream<Uint8Array<ArrayBuffer>>;
+        writable(opts: {
+            start?: number;
+        }): WritableStream<Uint8Array<ArrayBuffer>>;
+        buffer(next?: Uint8Array<ArrayBuffer>): Uint8Array<ArrayBuffer>;
+        stat_make(size: number): {
+            readonly type: "file";
+            readonly size: number;
+            readonly atime: Date;
+            readonly mtime: Date;
+            readonly ctime: Date;
+        };
+        clone(to: string): this | null;
+        watcher(): {
+            destructor(): void;
+        };
+        exists(next?: boolean): boolean;
+        type(): "" | $mol_file_type;
+        name(): string;
+        ext(): string;
+        text(next?: string, virt?: 'virt'): string;
+        text_int(next?: string, virt?: 'virt'): string;
+        sub(reset?: null): this[];
+        resolve(path: string): this;
+        relate(base?: $mol_file_base): string;
+        find(include?: RegExp, exclude?: RegExp): this[];
+        size(): number;
+        toJSON(): string;
+        open(...modes: readonly $mol_file_transaction_mode[]): $mol_file_transaction;
+    }
+}
+
+declare namespace $ {
+    type $mol_file_type = 'file' | 'dir' | 'link';
+    interface $mol_file_stat {
+        type: $mol_file_type;
+        size: number;
+        atime: Date;
+        mtime: Date;
+        ctime: Date;
+    }
+    class $mol_file extends $mol_file_base {
+    }
+}
+
+declare namespace $ {
+    function $mol_dom_parse(text: string, type?: DOMParserSupportedType): Document;
+}
+
+declare namespace $ {
+    class $mol_fetch_response extends $mol_object2 {
+        readonly native: Response;
+        constructor(native: Response);
+        status(): "success" | "unknown" | "inform" | "redirect" | "wrong" | "failed";
+        code(): number;
+        message(): string;
+        headers(): Headers;
+        mime(): string | null;
+        stream(): ReadableStream<Uint8Array<ArrayBuffer>> | null;
+        text(): string;
+        json(): unknown;
+        blob(): Blob;
+        buffer(): ArrayBuffer;
+        xml(): Document;
+        xhtml(): Document;
+        html(): Document;
+    }
+    class $mol_fetch extends $mol_object2 {
+        static request(input: RequestInfo, init?: RequestInit): Promise<Response> & {
+            destructor: () => void;
+        };
+        static response(input: RequestInfo, init?: RequestInit): $mol_fetch_response;
+        static success(input: RequestInfo, init?: RequestInit): $mol_fetch_response;
+        static stream(input: RequestInfo, init?: RequestInit): ReadableStream<Uint8Array<ArrayBuffer>> | null;
+        static text(input: RequestInfo, init?: RequestInit): string;
+        static json(input: RequestInfo, init?: RequestInit): unknown;
+        static blob(input: RequestInfo, init?: RequestInit): Blob;
+        static buffer(input: RequestInfo, init?: RequestInit): ArrayBuffer;
+        static xml(input: RequestInfo, init?: RequestInit): Document;
+        static xhtml(input: RequestInfo, init?: RequestInit): Document;
+        static html(input: RequestInfo, init?: RequestInit): Document;
+    }
+}
+
+declare namespace $ {
+    class $mol_file_webdav extends $mol_file_base {
+        static relative<This extends typeof $mol_file>(this: This, path: string): InstanceType<This>;
+        resolve(path: string): this;
+        static headers(): Record<string, string>;
+        headers(): Record<string, string>;
+        protected fetch(init: RequestInit): $mol_fetch_response;
+        protected read(): Uint8Array<ArrayBuffer>;
+        protected write(body: Uint8Array<ArrayBuffer>): void;
+        protected ensure(): void;
+        protected drop(): void;
+        protected copy(to: string): void;
+        protected kids(): this[];
+        readable(opts: {
+            start?: number;
+            end?: number;
+        }): ReadableStream<Uint8Array<ArrayBuffer>>;
+        protected info(): $mol_file_stat | null;
+    }
+}
+
+declare namespace $ {
+    class $mol_file_web extends $mol_file_webdav {
+        static base: string;
+        version(): string;
+        protected info(): $mol_file_stat | null;
+    }
+}
+
+declare namespace $ {
+    interface $mol_locale_dict {
+        [key: string]: string;
+    }
+    class $mol_locale extends $mol_object {
+        static lang_default(): string;
+        static lang(next?: string): string;
+        static source(lang: string): any;
+        static texts(lang: string, next?: $mol_locale_dict): $mol_locale_dict;
+        static text(key: string): string;
+        static warn(key: string): null;
+    }
+}
+
+declare namespace $ {
+    let $mol_layer: Record<"float" | "focus" | "hover" | "speck" | "popup", $mol_style_func<"var", unknown>>;
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	export class $mol_speck extends $mol_view {
+		value( ): any
+		theme( ): string
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=speck.view.tree.d.ts.map
+declare namespace $ {
+
+	type $mol_speck__value_mol_button_1 = $mol_type_enforce<
+		ReturnType< $mol_button['error'] >
+		,
+		ReturnType< $mol_speck['value'] >
+	>
+	export class $mol_button extends $mol_view {
+		event_activate( next?: any ): any
+		activate( next?: ReturnType< $mol_button['event_activate'] > ): ReturnType< $mol_button['event_activate'] >
+		clicks( next?: any ): any
+		event_key_press( next?: any ): any
+		key_press( next?: ReturnType< $mol_button['event_key_press'] > ): ReturnType< $mol_button['event_key_press'] >
+		disabled( ): boolean
+		tab_index( ): number
+		hint( ): string
+		hint_safe( ): ReturnType< $mol_button['hint'] >
+		error( ): string
+		enabled( ): boolean
+		click( next?: any ): any
+		event_click( next?: any ): any
+		event( ): ({ 
+			click( next?: ReturnType< $mol_button['activate'] > ): ReturnType< $mol_button['activate'] >,
+			dblclick( next?: ReturnType< $mol_button['clicks'] > ): ReturnType< $mol_button['clicks'] >,
+			keydown( next?: ReturnType< $mol_button['key_press'] > ): ReturnType< $mol_button['key_press'] >,
+		})  & ReturnType< $mol_view['event'] >
+		attr( ): ({ 
+			'disabled': ReturnType< $mol_button['disabled'] >,
+			'role': string,
+			'tabindex': ReturnType< $mol_button['tab_index'] >,
+			'title': ReturnType< $mol_button['hint_safe'] >,
+		})  & ReturnType< $mol_view['attr'] >
+		sub( ): readonly($mol_view_content)[]
+		Speck( ): $mol_speck
+	}
+	
+}
+
+//# sourceMappingURL=button.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_button extends $.$mol_button {
+        status(next?: any[]): any[];
+        disabled(): boolean;
+        event_activate(next: Event): void;
+        event_key_press(event: KeyboardEvent): any;
+        tab_index(): number;
+        error(): string;
+        hint_safe(): string;
+        sub_visible(): ($mol_view_content | $mol_speck)[];
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	export class $mol_button_typed extends $mol_button {
+		minimal_height( ): number
+		minimal_width( ): number
+	}
+	
+}
+
+//# sourceMappingURL=typed.view.tree.d.ts.map
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	export class $mol_button_minor extends $mol_button_typed {
+	}
+	
+}
+
+//# sourceMappingURL=minor.view.tree.d.ts.map
+declare namespace $ {
     function $mol_support_css_overflow_anchor(this: $): boolean;
 }
 
@@ -1758,108 +2065,6 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    let $mol_layer: Record<"focus" | "float" | "hover" | "speck" | "popup", $mol_style_func<"var", unknown>>;
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	export class $mol_speck extends $mol_view {
-		value( ): any
-		theme( ): string
-		sub( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=speck.view.tree.d.ts.map
-declare namespace $ {
-
-	type $mol_speck__value_mol_button_1 = $mol_type_enforce<
-		ReturnType< $mol_button['error'] >
-		,
-		ReturnType< $mol_speck['value'] >
-	>
-	export class $mol_button extends $mol_view {
-		event_activate( next?: any ): any
-		activate( next?: ReturnType< $mol_button['event_activate'] > ): ReturnType< $mol_button['event_activate'] >
-		clicks( next?: any ): any
-		event_key_press( next?: any ): any
-		key_press( next?: ReturnType< $mol_button['event_key_press'] > ): ReturnType< $mol_button['event_key_press'] >
-		disabled( ): boolean
-		tab_index( ): number
-		hint( ): string
-		hint_safe( ): ReturnType< $mol_button['hint'] >
-		error( ): string
-		enabled( ): boolean
-		click( next?: any ): any
-		event_click( next?: any ): any
-		event( ): ({ 
-			click( next?: ReturnType< $mol_button['activate'] > ): ReturnType< $mol_button['activate'] >,
-			dblclick( next?: ReturnType< $mol_button['clicks'] > ): ReturnType< $mol_button['clicks'] >,
-			keydown( next?: ReturnType< $mol_button['key_press'] > ): ReturnType< $mol_button['key_press'] >,
-		})  & ReturnType< $mol_view['event'] >
-		attr( ): ({ 
-			'disabled': ReturnType< $mol_button['disabled'] >,
-			'role': string,
-			'tabindex': ReturnType< $mol_button['tab_index'] >,
-			'title': ReturnType< $mol_button['hint_safe'] >,
-		})  & ReturnType< $mol_view['attr'] >
-		sub( ): readonly($mol_view_content)[]
-		Speck( ): $mol_speck
-	}
-	
-}
-
-//# sourceMappingURL=button.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_button extends $.$mol_button {
-        status(next?: any[]): any[];
-        disabled(): boolean;
-        event_activate(next: Event): void;
-        event_key_press(event: KeyboardEvent): any;
-        tab_index(): number;
-        error(): string;
-        hint_safe(): string;
-        sub_visible(): ($mol_view_content | $mol_speck)[];
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	export class $mol_button_typed extends $mol_button {
-		minimal_height( ): number
-		minimal_width( ): number
-	}
-	
-}
-
-//# sourceMappingURL=typed.view.tree.d.ts.map
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	export class $mol_button_minor extends $mol_button_typed {
-	}
-	
-}
-
-//# sourceMappingURL=minor.view.tree.d.ts.map
-declare var $node: any;
-
-declare namespace $ {
     type $mol_blob = Blob;
     let $mol_blob: {
         prototype: Blob;
@@ -2009,222 +2214,6 @@ declare namespace $.$$ {
         html(): string;
         attachments(): ClipboardItem[];
         click(event?: Event): void;
-    }
-}
-
-declare namespace $ {
-    class $mol_lock extends $mol_object {
-        protected promise: null | Promise<void>;
-        wait(): Promise<() => void>;
-        grab(): () => void;
-    }
-}
-
-declare namespace $ {
-    function $mol_compare_array<Value extends ArrayLike<unknown>>(a: Value, b: Value): boolean;
-}
-
-declare namespace $ {
-    type $mol_charset_encoding = 'utf8' | 'utf-16le' | 'utf-16be' | 'ibm866' | 'iso-8859-2' | 'iso-8859-3' | 'iso-8859-4' | 'iso-8859-5' | 'iso-8859-6' | 'iso-8859-7' | 'iso-8859-8' | 'iso-8859-8i' | 'iso-8859-10' | 'iso-8859-13' | 'iso-8859-14' | 'iso-8859-15' | 'iso-8859-16' | 'koi8-r' | 'koi8-u' | 'koi8-r' | 'macintosh' | 'windows-874' | 'windows-1250' | 'windows-1251' | 'windows-1252' | 'windows-1253' | 'windows-1254' | 'windows-1255' | 'windows-1256' | 'windows-1257' | 'windows-1258' | 'x-mac-cyrillic' | 'gbk' | 'gb18030' | 'hz-gb-2312' | 'big5' | 'euc-jp' | 'iso-2022-jp' | 'shift-jis' | 'euc-kr' | 'iso-2022-kr';
-}
-
-declare namespace $ {
-    function $mol_charset_decode(buffer: BufferSource, encoding?: $mol_charset_encoding): string;
-}
-
-declare namespace $ {
-    function $mol_charset_encode(value: string): Uint8Array<ArrayBuffer>;
-}
-
-declare namespace $ {
-    type $mol_file_transaction_mode = 'create' | 'exists_truncate' | 'exists_fail' | 'read_only' | 'write_only' | 'read_write' | 'append';
-    type $mol_file_transaction_buffer = ArrayBufferView;
-    class $mol_file_transaction extends $mol_object {
-        path(): string;
-        modes(): readonly $mol_file_transaction_mode[];
-        write(options: {
-            buffer: ArrayBufferView | string | readonly ArrayBufferView[];
-            offset?: number | null;
-            length?: number | null;
-            position?: number | null;
-        }): number;
-        read(): Uint8Array<ArrayBuffer>;
-        truncate(size: number): void;
-        close(): void;
-        destructor(): void;
-    }
-}
-
-declare namespace $ {
-    class $mol_file_transaction_web extends $mol_file_transaction {
-        write(options: {
-            buffer: ArrayBufferView | string | readonly ArrayBufferView[];
-            offset?: number | null;
-            length?: number | null;
-            position?: number | null;
-        }): number;
-        truncate(size: number): void;
-        read(): Buffer<ArrayBuffer>;
-        close(): void;
-    }
-}
-
-declare namespace $ {
-    class $mol_file_base extends $mol_object {
-        static absolute<This extends typeof $mol_file_base>(this: This, path: string): InstanceType<This>;
-        static relative<This extends typeof $mol_file_base>(this: This, path: string): InstanceType<This>;
-        static base: string;
-        path(): string;
-        parent(): this;
-        exists_cut(): boolean;
-        protected root(): boolean;
-        protected stat(next?: $mol_file_stat | null, virt?: 'virt'): $mol_file_stat | null;
-        protected static changed: Set<$mol_file_base>;
-        protected static frame: null | $mol_after_timeout;
-        protected static changed_add(type: 'change' | 'rename', path: string): void;
-        static watch_debounce(): number;
-        static flush(): void;
-        protected static watching: boolean;
-        protected static lock: $mol_lock;
-        protected static watch_off(path: string): void;
-        static unwatched<Result>(side_effect: () => Result, affected_dir: string): Result;
-        reset(): void;
-        modified(): Date | null;
-        version(): string;
-        protected info(path: string): null | $mol_file_stat;
-        protected ensure(): void;
-        protected drop(): void;
-        protected copy(to: string): void;
-        protected read(): Uint8Array<ArrayBuffer>;
-        protected write(buffer: Uint8Array<ArrayBuffer>): void;
-        protected kids(): readonly this[];
-        readable(opts: {
-            start?: number;
-            end?: number;
-        }): ReadableStream<Uint8Array<ArrayBuffer>>;
-        writable(opts: {
-            start?: number;
-        }): WritableStream<Uint8Array<ArrayBuffer>>;
-        buffer(next?: Uint8Array<ArrayBuffer>): Uint8Array<ArrayBuffer>;
-        stat_make(size: number): {
-            readonly type: "file";
-            readonly size: number;
-            readonly atime: Date;
-            readonly mtime: Date;
-            readonly ctime: Date;
-        };
-        clone(to: string): this | null;
-        watcher(): {
-            destructor(): void;
-        };
-        exists(next?: boolean): boolean;
-        type(): "" | $mol_file_type;
-        name(): string;
-        ext(): string;
-        text(next?: string, virt?: 'virt'): string;
-        text_int(next?: string, virt?: 'virt'): string;
-        sub(reset?: null): this[];
-        resolve(path: string): this;
-        relate(base?: $mol_file_base): string;
-        find(include?: RegExp, exclude?: RegExp): this[];
-        size(): number;
-        toJSON(): string;
-        open(...modes: readonly $mol_file_transaction_mode[]): $mol_file_transaction;
-    }
-}
-
-declare namespace $ {
-    type $mol_file_type = 'file' | 'dir' | 'link';
-    interface $mol_file_stat {
-        type: $mol_file_type;
-        size: number;
-        atime: Date;
-        mtime: Date;
-        ctime: Date;
-    }
-    class $mol_file extends $mol_file_base {
-    }
-}
-
-declare namespace $ {
-    function $mol_dom_parse(text: string, type?: DOMParserSupportedType): Document;
-}
-
-declare namespace $ {
-    class $mol_fetch_response extends $mol_object2 {
-        readonly native: Response;
-        constructor(native: Response);
-        status(): "success" | "unknown" | "inform" | "redirect" | "wrong" | "failed";
-        code(): number;
-        message(): string;
-        headers(): Headers;
-        mime(): string | null;
-        stream(): ReadableStream<Uint8Array<ArrayBuffer>> | null;
-        text(): string;
-        json(): unknown;
-        blob(): Blob;
-        buffer(): ArrayBuffer;
-        xml(): Document;
-        xhtml(): Document;
-        html(): Document;
-    }
-    class $mol_fetch extends $mol_object2 {
-        static request(input: RequestInfo, init?: RequestInit): Promise<Response> & {
-            destructor: () => void;
-        };
-        static response(input: RequestInfo, init?: RequestInit): $mol_fetch_response;
-        static success(input: RequestInfo, init?: RequestInit): $mol_fetch_response;
-        static stream(input: RequestInfo, init?: RequestInit): ReadableStream<Uint8Array<ArrayBuffer>> | null;
-        static text(input: RequestInfo, init?: RequestInit): string;
-        static json(input: RequestInfo, init?: RequestInit): unknown;
-        static blob(input: RequestInfo, init?: RequestInit): Blob;
-        static buffer(input: RequestInfo, init?: RequestInit): ArrayBuffer;
-        static xml(input: RequestInfo, init?: RequestInit): Document;
-        static xhtml(input: RequestInfo, init?: RequestInit): Document;
-        static html(input: RequestInfo, init?: RequestInit): Document;
-    }
-}
-
-declare namespace $ {
-    class $mol_file_webdav extends $mol_file_base {
-        static relative<This extends typeof $mol_file>(this: This, path: string): InstanceType<This>;
-        resolve(path: string): this;
-        static headers(): Record<string, string>;
-        headers(): Record<string, string>;
-        protected fetch(init: RequestInit): $mol_fetch_response;
-        protected read(): Uint8Array<ArrayBuffer>;
-        protected write(body: Uint8Array<ArrayBuffer>): void;
-        protected ensure(): void;
-        protected drop(): void;
-        protected copy(to: string): void;
-        protected kids(): this[];
-        readable(opts: {
-            start?: number;
-            end?: number;
-        }): ReadableStream<Uint8Array<ArrayBuffer>>;
-        protected info(): $mol_file_stat | null;
-    }
-}
-
-declare namespace $ {
-    class $mol_file_web extends $mol_file_webdav {
-        static base: string;
-        version(): string;
-        protected info(): $mol_file_stat | null;
-    }
-}
-
-declare namespace $ {
-    interface $mol_locale_dict {
-        [key: string]: string;
-    }
-    class $mol_locale extends $mol_object {
-        static lang_default(): string;
-        static lang(next?: string): string;
-        static source(lang: string): any;
-        static texts(lang: string, next?: $mol_locale_dict): $mol_locale_dict;
-        static text(key: string): string;
-        static warn(key: string): null;
     }
 }
 
@@ -3496,6 +3485,18 @@ declare namespace $ {
 
 declare namespace $ {
 
+	export class $mol_button_major extends $mol_button_minor {
+		theme( ): string
+	}
+	
+}
+
+//# sourceMappingURL=major.view.tree.d.ts.map
+declare namespace $ {
+}
+
+declare namespace $ {
+
 	type $mol_text_list_item__index_mol_text_list_1 = $mol_type_enforce<
 		ReturnType< $mol_text_list['item_index'] >
 		,
@@ -3527,12 +3528,396 @@ declare namespace $ {
 //# sourceMappingURL=list.view.tree.d.ts.map
 declare namespace $ {
 
-	type $mol_text__text_bog_pay_app_page_libraries_1 = $mol_type_enforce<
+	type $mol_view__sub_bog_pay_app_page_hero_1 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_text__text_bog_pay_app_page_hero_2 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_text['text'] >
 	>
-	export class $bog_pay_app_page_libraries extends $mol_page {
+	type $mol_button_major__sub_bog_pay_app_page_hero_3 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_button_major['sub'] >
+	>
+	type $mol_text__text_bog_pay_app_page_hero_4 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_text['text'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_hero_5 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_hero_6 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_hero_7 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_hero_8 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_hero_9 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_hero_10 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_hero_11 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_hero_12 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_text__text_bog_pay_app_page_hero_13 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_text['text'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_hero_14 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_text__text_bog_pay_app_page_hero_15 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_text['text'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_hero_16 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_hero_17 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_text__text_bog_pay_app_page_hero_18 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_text['text'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_hero_19 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_hero_20 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_text__text_bog_pay_app_page_hero_21 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_text['text'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_hero_22 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_hero_23 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_hero_24 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	export class $bog_pay_app_page_hero extends $mol_page {
+		hero_title_text( ): string
+		Hero_title( ): $mol_view
+		Hero_description( ): $mol_text
+		download_text( ): string
+		Download_button( ): $mol_button_major
+		Guarantee_text( ): $mol_text
+		hero_image_text( ): string
+		Hero_image( ): $mol_view
+		badge1_text( ): string
+		Badge1( ): $mol_view
+		badge2_text( ): string
+		Badge2( ): $mol_view
+		badge3_text( ): string
+		Badge3( ): $mol_view
+		Trust_badges( ): $mol_view
+		Hero_content( ): $mol_view
+		Hero_section( ): $mol_view
+		stats_title_text( ): string
+		Stats_title( ): $mol_view
+		Stats_subtitle( ): $mol_text
+		stat1_value( ): string
+		Stat1_value( ): $mol_view
+		Stat1_label( ): $mol_text
+		Stat1( ): $mol_view
+		stat2_value( ): string
+		Stat2_value( ): $mol_view
+		Stat2_label( ): $mol_text
+		Stat2( ): $mol_view
+		stat3_value( ): string
+		Stat3_value( ): $mol_view
+		Stat3_label( ): $mol_text
+		Stat3( ): $mol_view
+		Stats_grid( ): $mol_view
+		Stats_section( ): $mol_view
+		title( ): string
+		Head( ): any
+		body( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=hero.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $bog_pay_app_page_home extends $bog_pay_app_page_hero {
+	}
+	
+}
+
+//# sourceMappingURL=home.view.tree.d.ts.map
+declare namespace $.$$ {
+}
+
+declare namespace $ {
+
+	type $mol_view__sub_bog_pay_app_page_games_1 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_games_2 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_games_3 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_text__text_bog_pay_app_page_games_4 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_text['text'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_games_5 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_games_6 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_games_7 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_text__text_bog_pay_app_page_games_8 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_text['text'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_games_9 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_games_10 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_games_11 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_text__text_bog_pay_app_page_games_12 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_text['text'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_games_13 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_games_14 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_games_15 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_games_16 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_games_17 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_games_18 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_text__text_bog_pay_app_page_games_19 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_text['text'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_games_20 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_games_21 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_games_22 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_text__text_bog_pay_app_page_games_23 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_text['text'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_games_24 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_games_25 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_games_26 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_text__text_bog_pay_app_page_games_27 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_text['text'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_games_28 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_games_29 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_page_games_30 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	export class $bog_pay_app_page_games extends $mol_page {
+		games_title( ): string
+		Games_title( ): $mol_view
+		game1_icon_text( ): string
+		Game1_icon( ): $mol_view
+		game1_title( ): string
+		Game1_title( ): $mol_view
+		Game1_text( ): $mol_text
+		Game1( ): $mol_view
+		game2_icon_text( ): string
+		Game2_icon( ): $mol_view
+		game2_title( ): string
+		Game2_title( ): $mol_view
+		Game2_text( ): $mol_text
+		Game2( ): $mol_view
+		game3_icon_text( ): string
+		Game3_icon( ): $mol_view
+		game3_title( ): string
+		Game3_title( ): $mol_view
+		Game3_text( ): $mol_text
+		Game3( ): $mol_view
+		Games_grid( ): $mol_view
+		Games_section( ): $mol_view
+		why_title( ): string
+		Why_title( ): $mol_view
+		why1_icon_text( ): string
+		Why1_icon( ): $mol_view
+		why1_title( ): string
+		Why1_title( ): $mol_view
+		Why1_text( ): $mol_text
+		Why1( ): $mol_view
+		why2_icon_text( ): string
+		Why2_icon( ): $mol_view
+		why2_title( ): string
+		Why2_title( ): $mol_view
+		Why2_text( ): $mol_text
+		Why2( ): $mol_view
+		why3_icon_text( ): string
+		Why3_icon( ): $mol_view
+		why3_title( ): string
+		Why3_title( ): $mol_view
+		Why3_text( ): $mol_text
+		Why3( ): $mol_view
+		Why_grid( ): $mol_view
+		Why_section( ): $mol_view
+		title( ): string
+		Head( ): any
+		body( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=games.view.tree.d.ts.map
+declare namespace $.$$ {
+}
+
+declare namespace $ {
+
+	type $mol_text__text_bog_pay_app_page_account_1 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_text['text'] >
+	>
+	export class $bog_pay_app_page_account extends $mol_page {
 		Content( ): $mol_text
 		title( ): string
 		Head( ): any
@@ -3541,1953 +3926,7 @@ declare namespace $ {
 	
 }
 
-//# sourceMappingURL=libraries.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $bog_pay_app_page_libraries extends $.$bog_pay_app_page_libraries {
-        spread_title(id: string): string;
-    }
-}
-
-declare namespace $ {
-
-	export class $bog_pay_app_page_components_sb_page extends $mol_page {
-	}
-	
-}
-
-//# sourceMappingURL=page.view.tree.d.ts.map
-declare namespace $.$$ {
-}
-
-declare namespace $ {
-
-	export class $bog_pay_app_page_components_sb_card extends $mol_view {
-	}
-	
-}
-
-//# sourceMappingURL=card.view.tree.d.ts.map
-declare namespace $.$$ {
-}
-
-declare namespace $ {
-
-	type $mol_text__text_bog_pay_app_page_components_flex_1 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	type $bog_pay_app_page_components_sb_card__sub_bog_pay_app_page_components_flex_2 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_pay_app_page_components_sb_card['sub'] >
-	>
-	export class $bog_pay_app_page_components_flex extends $bog_pay_app_page_components_sb_page {
-		Card_content( ): $mol_text
-		Card( ): $bog_pay_app_page_components_sb_card
-		title( ): string
-		body( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=flex.view.tree.d.ts.map
-declare namespace $ {
-
-	type $mol_book2_sub__1 = $mol_type_enforce<
-		ReturnType< $mol_book2['pages'] >[number]
-		,
-		$mol_view
-	>
-	type $mol_book2_sub__2 = $mol_type_enforce<
-		ReturnType< $mol_book2['placeholders'] >[number]
-		,
-		$mol_view
-	>
-	type $mol_view__title_mol_book2_3 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_view['title'] >
-	>
-	export class $mol_book2 extends $mol_scroll {
-		pages_deep( ): readonly($mol_view)[]
-		pages( ): ReturnType< $mol_book2['pages_deep'] >
-		Placeholder( ): $mol_view
-		placeholders( ): readonly($mol_view)[]
-		menu_title( ): string
-		sub( ): readonly($mol_view)[]
-		minimal_width( ): number
-		Gap( id: any): $mol_view
-	}
-	
-}
-
-//# sourceMappingURL=book2.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_book2 extends $.$mol_book2 {
-        pages_deep(): $mol_view[];
-        title(): string;
-        menu_title(): string;
-        sub(): $mol_view[];
-        bring(): void;
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	type $mol_pop_bubble__align_mol_pop_1 = $mol_type_enforce<
-		ReturnType< $mol_pop['align'] >
-		,
-		ReturnType< $mol_pop_bubble['align'] >
-	>
-	type $mol_pop_bubble__content_mol_pop_2 = $mol_type_enforce<
-		ReturnType< $mol_pop['bubble_content'] >
-		,
-		ReturnType< $mol_pop_bubble['content'] >
-	>
-	type $mol_pop_bubble__height_max_mol_pop_3 = $mol_type_enforce<
-		ReturnType< $mol_pop['height_max'] >
-		,
-		ReturnType< $mol_pop_bubble['height_max'] >
-	>
-	export class $mol_pop extends $mol_view {
-		Anchor( ): any
-		align( ): string
-		bubble_content( ): readonly($mol_view_content)[]
-		height_max( ): number
-		Bubble( ): $mol_pop_bubble
-		showed( next?: boolean ): boolean
-		align_vert( ): string
-		align_hor( ): string
-		prefer( ): string
-		sub( ): readonly(any)[]
-		sub_visible( ): readonly(any)[]
-	}
-	
-	export class $mol_pop_bubble extends $mol_view {
-		content( ): readonly($mol_view_content)[]
-		height_max( ): number
-		align( ): string
-		sub( ): ReturnType< $mol_pop_bubble['content'] >
-		style( ): ({ 
-			'maxHeight': ReturnType< $mol_pop_bubble['height_max'] >,
-		})  & ReturnType< $mol_view['style'] >
-		attr( ): ({ 
-			'mol_pop_align': ReturnType< $mol_pop_bubble['align'] >,
-			'tabindex': number,
-		})  & ReturnType< $mol_view['attr'] >
-	}
-	
-}
-
-//# sourceMappingURL=pop.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_pop extends $.$mol_pop {
-        showed(next?: boolean): boolean;
-        sub_visible(): any[];
-        height_max(): number;
-        align(): string;
-        align_vert(): "suspense" | "top" | "bottom";
-        align_hor(): "suspense" | "left" | "right";
-        View_port(): $mol_view;
-        view_port(): {
-            width: number;
-            height: number;
-            left: number;
-            right: number;
-            top: number;
-            bottom: number;
-        } | {
-            left: number;
-            top: number;
-            width: number;
-            height: number;
-        };
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	export class $mol_hotkey extends $mol_plugin {
-		keydown( next?: any ): any
-		event( ): ({ 
-			keydown( next?: ReturnType< $mol_hotkey['keydown'] > ): ReturnType< $mol_hotkey['keydown'] >,
-		})  & ReturnType< $mol_plugin['event'] >
-		key( ): Record<string, any>
-		mod_ctrl( ): boolean
-		mod_alt( ): boolean
-		mod_shift( ): boolean
-	}
-	
-}
-
-//# sourceMappingURL=hotkey.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_hotkey extends $.$mol_hotkey {
-        key(): { [key in keyof typeof $mol_keyboard_code]?: (event: KeyboardEvent) => void; };
-        keydown(event?: KeyboardEvent): void;
-    }
-}
-
-declare namespace $ {
-
-	export class $mol_nav extends $mol_plugin {
-		event_key( next?: any ): any
-		cycle( next?: boolean ): boolean
-		mod_ctrl( ): boolean
-		mod_shift( ): boolean
-		mod_alt( ): boolean
-		keys_x( next?: readonly(any)[] ): readonly(any)[]
-		keys_y( next?: readonly(any)[] ): readonly(any)[]
-		current_x( next?: any ): any
-		current_y( next?: any ): any
-		event_up( next?: any ): any
-		event_down( next?: any ): any
-		event_left( next?: any ): any
-		event_right( next?: any ): any
-		event( ): ({ 
-			keydown( next?: ReturnType< $mol_nav['event_key'] > ): ReturnType< $mol_nav['event_key'] >,
-		})  & ReturnType< $mol_plugin['event'] >
-	}
-	
-}
-
-//# sourceMappingURL=nav.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_nav extends $.$mol_nav {
-        event_key(event?: KeyboardEvent): undefined;
-        event_up(event?: KeyboardEvent): undefined;
-        event_down(event?: KeyboardEvent): undefined;
-        event_left(event?: KeyboardEvent): undefined;
-        event_right(event?: KeyboardEvent): undefined;
-        index_y(): number | null;
-        index_x(): number | null;
-    }
-}
-
-declare namespace $ {
-
-	type $mol_hotkey__mod_ctrl_mol_string_1 = $mol_type_enforce<
-		ReturnType< $mol_string['submit_with_ctrl'] >
-		,
-		ReturnType< $mol_hotkey['mod_ctrl'] >
-	>
-	type $mol_hotkey__key_mol_string_2 = $mol_type_enforce<
-		({ 
-			enter( next?: ReturnType< $mol_string['submit'] > ): ReturnType< $mol_string['submit'] >,
-		}) 
-		,
-		ReturnType< $mol_hotkey['key'] >
-	>
-	export class $mol_string extends $mol_view {
-		selection_watcher( ): any
-		error_report( ): any
-		disabled( ): boolean
-		value( next?: string ): string
-		value_changed( next?: ReturnType< $mol_string['value'] > ): ReturnType< $mol_string['value'] >
-		hint( ): string
-		hint_visible( ): ReturnType< $mol_string['hint'] >
-		spellcheck( ): boolean
-		autocomplete_native( ): string
-		selection_end( ): number
-		selection_start( ): number
-		keyboard( ): string
-		enter( ): string
-		length_max( ): number
-		type( next?: string ): string
-		event_change( next?: any ): any
-		submit_with_ctrl( ): boolean
-		submit( next?: any ): any
-		Submit( ): $mol_hotkey
-		dom_name( ): string
-		enabled( ): boolean
-		minimal_height( ): number
-		autocomplete( ): boolean
-		selection( next?: readonly(number)[] ): readonly(number)[]
-		auto( ): readonly(any)[]
-		field( ): ({ 
-			'disabled': ReturnType< $mol_string['disabled'] >,
-			'value': ReturnType< $mol_string['value_changed'] >,
-			'placeholder': ReturnType< $mol_string['hint_visible'] >,
-			'spellcheck': ReturnType< $mol_string['spellcheck'] >,
-			'autocomplete': ReturnType< $mol_string['autocomplete_native'] >,
-			'selectionEnd': ReturnType< $mol_string['selection_end'] >,
-			'selectionStart': ReturnType< $mol_string['selection_start'] >,
-			'inputMode': ReturnType< $mol_string['keyboard'] >,
-			'enterkeyhint': ReturnType< $mol_string['enter'] >,
-		})  & ReturnType< $mol_view['field'] >
-		attr( ): ({ 
-			'maxlength': ReturnType< $mol_string['length_max'] >,
-			'type': ReturnType< $mol_string['type'] >,
-		})  & ReturnType< $mol_view['attr'] >
-		event( ): ({ 
-			input( next?: ReturnType< $mol_string['event_change'] > ): ReturnType< $mol_string['event_change'] >,
-		})  & ReturnType< $mol_view['event'] >
-		plugins( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=string.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_string extends $.$mol_string {
-        event_change(next?: Event): void;
-        error_report(): void;
-        hint_visible(): string;
-        disabled(): boolean;
-        autocomplete_native(): "on" | "off";
-        selection_watcher(): $mol_dom_listener;
-        selection_change(event: Event): void;
-        selection_start(): number;
-        selection_end(): number;
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	export class $mol_icon_close extends $mol_icon {
-		path( ): string
-	}
-	
-}
-
-//# sourceMappingURL=close.view.tree.d.ts.map
-declare namespace $ {
-
-	type $mol_hotkey__key_mol_search_1 = $mol_type_enforce<
-		({ 
-			escape( next?: ReturnType< $mol_search['clear'] > ): ReturnType< $mol_search['clear'] >,
-		}) 
-		,
-		ReturnType< $mol_hotkey['key'] >
-	>
-	type $mol_nav__keys_y_mol_search_2 = $mol_type_enforce<
-		ReturnType< $mol_search['nav_components'] >
-		,
-		ReturnType< $mol_nav['keys_y'] >
-	>
-	type $mol_nav__current_y_mol_search_3 = $mol_type_enforce<
-		ReturnType< $mol_search['nav_focused'] >
-		,
-		ReturnType< $mol_nav['current_y'] >
-	>
-	type $mol_string__value_mol_search_4 = $mol_type_enforce<
-		ReturnType< $mol_search['query'] >
-		,
-		ReturnType< $mol_string['value'] >
-	>
-	type $mol_string__hint_mol_search_5 = $mol_type_enforce<
-		ReturnType< $mol_search['hint'] >
-		,
-		ReturnType< $mol_string['hint'] >
-	>
-	type $mol_string__submit_mol_search_6 = $mol_type_enforce<
-		ReturnType< $mol_search['submit'] >
-		,
-		ReturnType< $mol_string['submit'] >
-	>
-	type $mol_string__enabled_mol_search_7 = $mol_type_enforce<
-		ReturnType< $mol_search['enabled'] >
-		,
-		ReturnType< $mol_string['enabled'] >
-	>
-	type $mol_string__keyboard_mol_search_8 = $mol_type_enforce<
-		ReturnType< $mol_search['keyboard'] >
-		,
-		ReturnType< $mol_string['keyboard'] >
-	>
-	type $mol_string__enter_mol_search_9 = $mol_type_enforce<
-		ReturnType< $mol_search['enter'] >
-		,
-		ReturnType< $mol_string['enter'] >
-	>
-	type $mol_button_minor__hint_mol_search_10 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_button_minor['hint'] >
-	>
-	type $mol_button_minor__enabled_mol_search_11 = $mol_type_enforce<
-		ReturnType< $mol_search['enabled'] >
-		,
-		ReturnType< $mol_button_minor['enabled'] >
-	>
-	type $mol_button_minor__click_mol_search_12 = $mol_type_enforce<
-		ReturnType< $mol_search['clear'] >
-		,
-		ReturnType< $mol_button_minor['click'] >
-	>
-	type $mol_button_minor__sub_mol_search_13 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_button_minor['sub'] >
-	>
-	type $mol_list__rows_mol_search_14 = $mol_type_enforce<
-		ReturnType< $mol_search['menu_items'] >
-		,
-		ReturnType< $mol_list['rows'] >
-	>
-	type $mol_scroll__sub_mol_search_15 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_scroll['sub'] >
-	>
-	type $mol_dimmer__haystack_mol_search_16 = $mol_type_enforce<
-		ReturnType< $mol_search['suggest_label'] >
-		,
-		ReturnType< $mol_dimmer['haystack'] >
-	>
-	type $mol_dimmer__needle_mol_search_17 = $mol_type_enforce<
-		ReturnType< $mol_search['query'] >
-		,
-		ReturnType< $mol_dimmer['needle'] >
-	>
-	type $mol_search_plugins__18 = $mol_type_enforce<
-		ReturnType< $mol_pop['plugins'] >[number]
-		,
-		$mol_plugin
-	>
-	type $mol_view__sub_mol_search_19 = $mol_type_enforce<
-		ReturnType< $mol_search['anchor_content'] >
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_button_minor__click_mol_search_20 = $mol_type_enforce<
-		ReturnType< $mol_search['suggest_select'] >
-		,
-		ReturnType< $mol_button_minor['click'] >
-	>
-	type $mol_button_minor__sub_mol_search_21 = $mol_type_enforce<
-		ReturnType< $mol_search['suggest_content'] >
-		,
-		ReturnType< $mol_button_minor['sub'] >
-	>
-	export class $mol_search extends $mol_pop {
-		clear( next?: any ): any
-		Hotkey( ): $mol_hotkey
-		nav_components( ): readonly($mol_view)[]
-		nav_focused( next?: any ): any
-		Nav( ): $mol_nav
-		suggests_showed( next?: boolean ): boolean
-		query( next?: string ): string
-		hint( ): string
-		submit( next?: any ): any
-		enabled( ): boolean
-		keyboard( ): string
-		enter( ): string
-		bring( ): ReturnType< ReturnType< $mol_search['Query'] >['bring'] >
-		Query( ): $mol_string
-		Clear_icon( ): $mol_icon_close
-		Clear( ): $mol_button_minor
-		anchor_content( ): readonly(any)[]
-		menu_items( ): readonly($mol_view)[]
-		Menu( ): $mol_list
-		Bubble_pane( ): $mol_scroll
-		suggest_select( id: any, next?: any ): any
-		suggest_label( id: any): string
-		Suggest_label( id: any): $mol_dimmer
-		suggest_content( id: any): readonly($mol_view_content)[]
-		suggests( ): readonly(string)[]
-		plugins( ): readonly($mol_plugin)[]
-		showed( next?: ReturnType< $mol_search['suggests_showed'] > ): ReturnType< $mol_search['suggests_showed'] >
-		align_hor( ): string
-		Anchor( ): $mol_view
-		bubble_content( ): readonly($mol_view_content)[]
-		Suggest( id: any): $mol_button_minor
-	}
-	
-}
-
-//# sourceMappingURL=search.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_search extends $.$mol_search {
-        anchor_content(): ($mol_button_minor | $.$mol_string)[];
-        suggests_showed(next?: boolean): boolean;
-        suggest_selected(next?: string): void;
-        nav_components(): ($mol_button_minor | $.$mol_string)[];
-        nav_focused(component?: $mol_view): $mol_view | $.$mol_string | null;
-        suggest_label(key: string): string;
-        menu_items(): $mol_button_minor[];
-        suggest_select(id: string, event?: MouseEvent): void;
-        clear(event?: Event): void;
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-    function $mol_match_text<Variant>(query: string, values: (variant: Variant) => readonly string[]): (variant: Variant) => boolean;
-}
-
-declare namespace $ {
-
-	type $mol_search__query_mol_book2_catalog_1 = $mol_type_enforce<
-		ReturnType< $mol_book2_catalog['menu_filter'] >
-		,
-		ReturnType< $mol_search['query'] >
-	>
-	type $mol_dimmer__needle_mol_book2_catalog_2 = $mol_type_enforce<
-		ReturnType< $mol_book2_catalog['menu_filter'] >
-		,
-		ReturnType< $mol_dimmer['needle'] >
-	>
-	type $mol_dimmer__haystack_mol_book2_catalog_3 = $mol_type_enforce<
-		ReturnType< $mol_book2_catalog['spread_title'] >
-		,
-		ReturnType< $mol_dimmer['haystack'] >
-	>
-	type $mol_link__arg_mol_book2_catalog_4 = $mol_type_enforce<
-		ReturnType< $mol_book2_catalog['menu_link_arg'] >
-		,
-		ReturnType< $mol_link['arg'] >
-	>
-	type $mol_link__sub_mol_book2_catalog_5 = $mol_type_enforce<
-		ReturnType< $mol_book2_catalog['menu_link_content'] >
-		,
-		ReturnType< $mol_link['sub'] >
-	>
-	type $mol_view__sub_mol_book2_catalog_6 = $mol_type_enforce<
-		ReturnType< $mol_book2_catalog['menu_item_content'] >
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_list__Empty_mol_book2_catalog_7 = $mol_type_enforce<
-		ReturnType< $mol_book2_catalog['Menu_links_empty'] >
-		,
-		ReturnType< $mol_list['Empty'] >
-	>
-	type $mol_list__rows_mol_book2_catalog_8 = $mol_type_enforce<
-		ReturnType< $mol_book2_catalog['menu_links'] >
-		,
-		ReturnType< $mol_list['rows'] >
-	>
-	type $mol_page__title_mol_book2_catalog_9 = $mol_type_enforce<
-		ReturnType< $mol_book2_catalog['menu_title'] >
-		,
-		ReturnType< $mol_page['title'] >
-	>
-	type $mol_page__Logo_mol_book2_catalog_10 = $mol_type_enforce<
-		ReturnType< $mol_book2_catalog['Menu_logo'] >
-		,
-		ReturnType< $mol_page['Logo'] >
-	>
-	type $mol_page__tools_mol_book2_catalog_11 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_page['tools'] >
-	>
-	type $mol_page__head_mol_book2_catalog_12 = $mol_type_enforce<
-		ReturnType< $mol_book2_catalog['menu_head'] >
-		,
-		ReturnType< $mol_page['head'] >
-	>
-	type $mol_page__body_mol_book2_catalog_13 = $mol_type_enforce<
-		ReturnType< $mol_book2_catalog['menu_body'] >
-		,
-		ReturnType< $mol_page['body'] >
-	>
-	type $mol_page__foot_mol_book2_catalog_14 = $mol_type_enforce<
-		ReturnType< $mol_book2_catalog['menu_foot'] >
-		,
-		ReturnType< $mol_page['foot'] >
-	>
-	type $mol_link__arg_mol_book2_catalog_15 = $mol_type_enforce<
-		ReturnType< $mol_book2_catalog['spread_close_arg'] >
-		,
-		ReturnType< $mol_link['arg'] >
-	>
-	type $mol_link__hint_mol_book2_catalog_16 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_link['hint'] >
-	>
-	type $mol_link__sub_mol_book2_catalog_17 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_link['sub'] >
-	>
-	export class $mol_book2_catalog extends $mol_book2 {
-		Menu_title( ): ReturnType< ReturnType< $mol_book2_catalog['Menu'] >['Title'] >
-		menu_title( ): string
-		Menu_tools( ): ReturnType< ReturnType< $mol_book2_catalog['Menu'] >['Tools'] >
-		Menu_logo( ): any
-		menu_head( ): readonly($mol_view_content)[]
-		menu_filter( next?: string ): string
-		Menu_filter( ): $mol_search
-		Menu_links_empty( ): $mol_view
-		arg( id: any): Record<string, any>
-		menu_link_arg( id: any): ReturnType< $mol_book2_catalog['arg'] >
-		spread_title( id: any): string
-		Menu_link_title( id: any): $mol_dimmer
-		menu_link_content( id: any): readonly($mol_view_content)[]
-		Menu_link( id: any): $mol_link
-		menu_item_content( id: any): readonly($mol_view)[]
-		Menu_item( id: any): $mol_view
-		menu_links( ): readonly($mol_view)[]
-		Menu_links( ): $mol_list
-		menu_body( ): readonly($mol_view)[]
-		menu_foot( ): readonly($mol_view)[]
-		Menu( ): $mol_page
-		spread_close_arg( ): Record<string, any>
-		Spread_close_icon( ): $mol_icon_close
-		param( ): string
-		spread( next?: string ): string
-		spreads( ): Record<string, any>
-		Spread( id: any): $mol_view
-		Spread_default( ): any
-		spread_ids( ): readonly(string)[]
-		menu_filter_enabled( ): boolean
-		spread_ids_filtered( ): readonly(string)[]
-		spread_current( ): any
-		menu_tools( ): readonly(any)[]
-		addon_tools( ): readonly(any)[]
-		pages( ): readonly(any)[]
-		Spread_close( ): $mol_link
-	}
-	
-}
-
-//# sourceMappingURL=catalog.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_book2_catalog extends $.$mol_book2_catalog {
-        spread_current(): any;
-        pages(): any[];
-        auto(): void;
-        spread_ids(): readonly string[];
-        menu_body(): ($.$mol_list | $.$mol_search)[];
-        menu_filter_enabled(): boolean;
-        menu_links(): $mol_view[];
-        spread_ids_filtered(): string[];
-        Spread(id: string): $mol_view;
-        Spread_default(): any;
-        spread(next?: string): string;
-        arg(spread: string): {
-            [x: string]: string | null;
-        };
-        spread_close_arg(): {
-            [x: string]: null;
-        };
-        spread_title(spread: string): string;
-        spread_current_book(): $mol_book2 | null;
-        placeholders(): readonly $mol_view[];
-    }
-}
-
-declare namespace $.$$ {
-}
-
-declare namespace $ {
-
-	type $mol_text__text_bog_pay_app_page_components_1 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	type $bog_pay_app_page_components_sb_page__title_bog_pay_app_page_components_2 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $bog_pay_app_page_components_sb_page['title'] >
-	>
-	type $bog_pay_app_page_components_sb_page__body_bog_pay_app_page_components_3 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_pay_app_page_components_sb_page['body'] >
-	>
-	type $mol_text__text_bog_pay_app_page_components_4 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	type $bog_pay_app_page_components_sb_page__title_bog_pay_app_page_components_5 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $bog_pay_app_page_components_sb_page['title'] >
-	>
-	type $bog_pay_app_page_components_sb_page__body_bog_pay_app_page_components_6 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_pay_app_page_components_sb_page['body'] >
-	>
-	type $mol_book2_catalog__spreads_bog_pay_app_page_components_7 = $mol_type_enforce<
-		({ 
-			'surfaces': ReturnType< $bog_pay_app_page_components['Surfaces'] >,
-			'flex': ReturnType< $bog_pay_app_page_components['Flex'] >,
-			'buttons': ReturnType< $bog_pay_app_page_components['Buttons'] >,
-		}) 
-		,
-		ReturnType< $mol_book2_catalog['spreads'] >
-	>
-	type $mol_book2_catalog__Placeholder_bog_pay_app_page_components_8 = $mol_type_enforce<
-		any
-		,
-		ReturnType< $mol_book2_catalog['Placeholder'] >
-	>
-	export class $bog_pay_app_page_components extends $mol_page {
-		Surfaces_content( ): $mol_text
-		Surfaces( ): $bog_pay_app_page_components_sb_page
-		Flex( ): $bog_pay_app_page_components_flex
-		Buttons_content( ): $mol_text
-		Buttons( ): $bog_pay_app_page_components_sb_page
-		Nav_menu( ): $mol_book2_catalog
-		title( ): string
-		Head( ): any
-		body( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=components.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $bog_pay_app_page_components extends $.$bog_pay_app_page_components {
-        spread_title(id: string): string;
-        surface_color(id: string): string;
-        surface_interactive(id: string): string;
-        grid_header_text(state: string): string;
-        grid_row_text(color: string): string;
-    }
-}
-
-declare namespace $ {
-
-	type $mol_text__text_bog_pay_app_page_design_1 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	export class $bog_pay_app_page_design extends $mol_page {
-		Content( ): $mol_text
-		title( ): string
-		Head( ): any
-		body( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=design.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $bog_pay_app_page_design extends $.$bog_pay_app_page_design {
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	export class $mol_row extends $mol_view {
-	}
-	
-}
-
-//# sourceMappingURL=row.view.tree.d.ts.map
-declare namespace $ {
-
-	type $mol_string__value_bog_pay_app_color_1 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_color['value'] >
-		,
-		ReturnType< $mol_string['value'] >
-	>
-	type $mol_view__attr_bog_pay_app_color_2 = $mol_type_enforce<
-		({ 
-			'type': string,
-		}) 
-		,
-		ReturnType< $mol_view['attr'] >
-	>
-	type $mol_view__dom_name_bog_pay_app_color_3 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_view['dom_name'] >
-	>
-	type $mol_view__event_bog_pay_app_color_4 = $mol_type_enforce<
-		({ 
-			input( next?: ReturnType< $bog_pay_app_color['picker_input'] > ): ReturnType< $bog_pay_app_color['picker_input'] >,
-		}) 
-		,
-		ReturnType< $mol_view['event'] >
-	>
-	type $mol_view__sub_bog_pay_app_color_5 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	export class $bog_pay_app_color extends $mol_view {
-		Input( ): $mol_string
-		picker_input( next?: any ): any
-		Picker( ): $mol_view
-		Picker_wrapper( ): $mol_view
-		value( next?: string ): string
-		attr( ): ({ 
-			'ds_themer_color': string,
-		})  & ReturnType< $mol_view['attr'] >
-		sub( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=color.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $bog_pay_app_color extends $.$bog_pay_app_color {
-        hex_value(): string;
-        color_to_hex(color: string): string | null;
-        hex_to_oklch(hex: string): string;
-        picker_input(): void;
-        Picker(): $mol_view;
-    }
-}
-
-declare namespace $.$$ {
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	type $mol_view__minimal_height_mol_labeler_1 = $mol_type_enforce<
-		number
-		,
-		ReturnType< $mol_view['minimal_height'] >
-	>
-	type $mol_view__sub_mol_labeler_2 = $mol_type_enforce<
-		ReturnType< $mol_labeler['label'] >
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_view__minimal_height_mol_labeler_3 = $mol_type_enforce<
-		number
-		,
-		ReturnType< $mol_view['minimal_height'] >
-	>
-	type $mol_view__sub_mol_labeler_4 = $mol_type_enforce<
-		ReturnType< $mol_labeler['content'] >
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	export class $mol_labeler extends $mol_list {
-		label( ): readonly($mol_view_content)[]
-		Label( ): $mol_view
-		content( ): readonly(any)[]
-		Content( ): $mol_view
-		rows( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=labeler.view.tree.d.ts.map
-declare namespace $ {
-
-	type $mol_view__sub_mol_form_field_1 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	export class $mol_form_field extends $mol_labeler {
-		name( ): string
-		bid( ): string
-		Bid( ): $mol_view
-		control( ): any
-		bids( ): readonly(string)[]
-		label( ): readonly(any)[]
-		content( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=field.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_form_field extends $.$mol_form_field {
-        bid(): string;
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	type $mol_textarea_edit__value_mol_textarea_1 = $mol_type_enforce<
-		ReturnType< $mol_textarea['value'] >
-		,
-		ReturnType< $mol_textarea_edit['value'] >
-	>
-	type $mol_textarea_edit__hint_mol_textarea_2 = $mol_type_enforce<
-		ReturnType< $mol_textarea['hint'] >
-		,
-		ReturnType< $mol_textarea_edit['hint'] >
-	>
-	type $mol_textarea_edit__enabled_mol_textarea_3 = $mol_type_enforce<
-		ReturnType< $mol_textarea['enabled'] >
-		,
-		ReturnType< $mol_textarea_edit['enabled'] >
-	>
-	type $mol_textarea_edit__spellcheck_mol_textarea_4 = $mol_type_enforce<
-		ReturnType< $mol_textarea['spellcheck'] >
-		,
-		ReturnType< $mol_textarea_edit['spellcheck'] >
-	>
-	type $mol_textarea_edit__length_max_mol_textarea_5 = $mol_type_enforce<
-		ReturnType< $mol_textarea['length_max'] >
-		,
-		ReturnType< $mol_textarea_edit['length_max'] >
-	>
-	type $mol_textarea_edit__selection_mol_textarea_6 = $mol_type_enforce<
-		ReturnType< $mol_textarea['selection'] >
-		,
-		ReturnType< $mol_textarea_edit['selection'] >
-	>
-	type $mol_textarea_edit__submit_mol_textarea_7 = $mol_type_enforce<
-		ReturnType< $mol_textarea['submit'] >
-		,
-		ReturnType< $mol_textarea_edit['submit'] >
-	>
-	type $mol_textarea_edit__submit_with_ctrl_mol_textarea_8 = $mol_type_enforce<
-		ReturnType< $mol_textarea['submit_with_ctrl'] >
-		,
-		ReturnType< $mol_textarea_edit['submit_with_ctrl'] >
-	>
-	type $mol_text_code__text_mol_textarea_9 = $mol_type_enforce<
-		ReturnType< $mol_textarea['value'] >
-		,
-		ReturnType< $mol_text_code['text'] >
-	>
-	type $mol_text_code__render_visible_only_mol_textarea_10 = $mol_type_enforce<
-		boolean
-		,
-		ReturnType< $mol_text_code['render_visible_only'] >
-	>
-	type $mol_text_code__row_numb_mol_textarea_11 = $mol_type_enforce<
-		ReturnType< $mol_textarea['row_numb'] >
-		,
-		ReturnType< $mol_text_code['row_numb'] >
-	>
-	type $mol_text_code__sidebar_showed_mol_textarea_12 = $mol_type_enforce<
-		ReturnType< $mol_textarea['sidebar_showed'] >
-		,
-		ReturnType< $mol_text_code['sidebar_showed'] >
-	>
-	type $mol_text_code__highlight_mol_textarea_13 = $mol_type_enforce<
-		ReturnType< $mol_textarea['highlight'] >
-		,
-		ReturnType< $mol_text_code['highlight'] >
-	>
-	type $mol_text_code__syntax_mol_textarea_14 = $mol_type_enforce<
-		ReturnType< $mol_textarea['syntax'] >
-		,
-		ReturnType< $mol_text_code['syntax'] >
-	>
-	export class $mol_textarea extends $mol_stack {
-		clickable( next?: boolean ): boolean
-		sidebar_showed( ): boolean
-		press( next?: any ): any
-		hover( next?: any ): any
-		value( next?: string ): string
-		hint( ): string
-		enabled( ): boolean
-		spellcheck( ): boolean
-		length_max( ): number
-		selection( next?: readonly(number)[] ): readonly(number)[]
-		bring( ): ReturnType< ReturnType< $mol_textarea['Edit'] >['bring'] >
-		submit( next?: any ): any
-		submit_with_ctrl( ): boolean
-		Edit( ): $mol_textarea_edit
-		row_numb( id: any): number
-		highlight( ): string
-		syntax( ): $mol_syntax2
-		View( ): $mol_text_code
-		attr( ): ({ 
-			'mol_textarea_clickable': ReturnType< $mol_textarea['clickable'] >,
-			'mol_textarea_sidebar_showed': ReturnType< $mol_textarea['sidebar_showed'] >,
-		})  & ReturnType< $mol_stack['attr'] >
-		event( ): ({ 
-			keydown( next?: ReturnType< $mol_textarea['press'] > ): ReturnType< $mol_textarea['press'] >,
-			pointermove( next?: ReturnType< $mol_textarea['hover'] > ): ReturnType< $mol_textarea['hover'] >,
-		}) 
-		sub( ): readonly(any)[]
-		symbols_alt( ): Record<string, string>
-		symbols_alt_ctrl( ): Record<string, string>
-		symbols_alt_shift( ): Record<string, string>
-	}
-	
-	export class $mol_textarea_edit extends $mol_string {
-		dom_name( ): string
-		enter( ): string
-		field( ): ({ 
-			'scrollTop': number,
-		})  & ReturnType< $mol_string['field'] >
-	}
-	
-}
-
-//# sourceMappingURL=textarea.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_textarea extends $.$mol_textarea {
-        indent_inc(): void;
-        indent_dec(): void;
-        symbol_insert(event: KeyboardEvent): void;
-        clickable(next?: boolean): boolean;
-        hover(event: PointerEvent): void;
-        press(event: KeyboardEvent): void;
-        row_numb(index: number): number;
-        syntax(): $mol_syntax2<{
-            'code-indent': RegExp;
-            'code-docs': RegExp;
-            'code-comment-block': RegExp;
-            'code-link': RegExp;
-            'code-comment-inline': RegExp;
-            'code-string': RegExp;
-            'code-number': RegExp;
-            'code-call': RegExp;
-            'code-sexpr': RegExp;
-            'code-field': RegExp;
-            'code-keyword': RegExp;
-            'code-global': RegExp;
-            'code-word': RegExp;
-            'code-decorator': RegExp;
-            'code-tag': RegExp;
-            'code-punctuation': RegExp;
-        }>;
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	export class $mol_icon_tick extends $mol_icon {
-		path( ): string
-	}
-	
-}
-
-//# sourceMappingURL=tick.view.tree.d.ts.map
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	export class $mol_check_box extends $mol_check {
-		Icon( ): $mol_icon_tick
-	}
-	
-}
-
-//# sourceMappingURL=box.view.tree.d.ts.map
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	export class $mol_button_major extends $mol_button_minor {
-		theme( ): string
-	}
-	
-}
-
-//# sourceMappingURL=major.view.tree.d.ts.map
-declare namespace $ {
-
-	type $mol_button_minor__title_bog_pay_app_demo_1 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_button_minor['title'] >
-	>
-	type $mol_button_minor__title_bog_pay_app_demo_2 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_button_minor['title'] >
-	>
-	type $mol_dimmer__haystack_bog_pay_app_demo_3 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_dimmer['haystack'] >
-	>
-	type $mol_view__sub_bog_pay_app_demo_4 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_text__text_bog_pay_app_demo_5 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	type $mol_view__sub_bog_pay_app_demo_6 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_dimmer__haystack_bog_pay_app_demo_7 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_dimmer['haystack'] >
-	>
-	type $mol_view__sub_bog_pay_app_demo_8 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_dimmer__haystack_bog_pay_app_demo_9 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_dimmer['haystack'] >
-	>
-	type $mol_text__text_bog_pay_app_demo_10 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	type $mol_view__sub_bog_pay_app_demo_11 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_dimmer__haystack_bog_pay_app_demo_12 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_dimmer['haystack'] >
-	>
-	type $mol_text__text_bog_pay_app_demo_13 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	type $mol_view__sub_bog_pay_app_demo_14 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_dimmer__haystack_bog_pay_app_demo_15 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_dimmer['haystack'] >
-	>
-	type $mol_text__text_bog_pay_app_demo_16 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	type $mol_view__sub_bog_pay_app_demo_17 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_row__sub_bog_pay_app_demo_18 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_row['sub'] >
-	>
-	type $mol_list__rows_bog_pay_app_demo_19 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_list['rows'] >
-	>
-	type $mol_dimmer__haystack_bog_pay_app_demo_20 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_dimmer['haystack'] >
-	>
-	type $mol_view__sub_bog_pay_app_demo_21 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_string__hint_bog_pay_app_demo_22 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_string['hint'] >
-	>
-	type $mol_string__value_bog_pay_app_demo_23 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_demo['demo_name'] >
-		,
-		ReturnType< $mol_string['value'] >
-	>
-	type $mol_form_field__name_bog_pay_app_demo_24 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_form_field['name'] >
-	>
-	type $mol_form_field__Content_bog_pay_app_demo_25 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_demo['Name_input'] >
-		,
-		ReturnType< $mol_form_field['Content'] >
-	>
-	type $mol_string__hint_bog_pay_app_demo_26 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_string['hint'] >
-	>
-	type $mol_string__value_bog_pay_app_demo_27 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_demo['demo_email'] >
-		,
-		ReturnType< $mol_string['value'] >
-	>
-	type $mol_form_field__name_bog_pay_app_demo_28 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_form_field['name'] >
-	>
-	type $mol_form_field__Content_bog_pay_app_demo_29 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_demo['Email_input'] >
-		,
-		ReturnType< $mol_form_field['Content'] >
-	>
-	type $mol_textarea__hint_bog_pay_app_demo_30 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_textarea['hint'] >
-	>
-	type $mol_textarea__value_bog_pay_app_demo_31 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_demo['demo_message'] >
-		,
-		ReturnType< $mol_textarea['value'] >
-	>
-	type $mol_form_field__name_bog_pay_app_demo_32 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_form_field['name'] >
-	>
-	type $mol_form_field__Content_bog_pay_app_demo_33 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_demo['Message_input'] >
-		,
-		ReturnType< $mol_form_field['Content'] >
-	>
-	type $mol_check_box__title_bog_pay_app_demo_34 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_check_box['title'] >
-	>
-	type $mol_check_box__checked_bog_pay_app_demo_35 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_demo['demo_check1'] >
-		,
-		ReturnType< $mol_check_box['checked'] >
-	>
-	type $mol_check_box__title_bog_pay_app_demo_36 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_check_box['title'] >
-	>
-	type $mol_check_box__checked_bog_pay_app_demo_37 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_demo['demo_check2'] >
-		,
-		ReturnType< $mol_check_box['checked'] >
-	>
-	type $mol_check_box__title_bog_pay_app_demo_38 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_check_box['title'] >
-	>
-	type $mol_check_box__checked_bog_pay_app_demo_39 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_demo['demo_check3'] >
-		,
-		ReturnType< $mol_check_box['checked'] >
-	>
-	type $mol_row__sub_bog_pay_app_demo_40 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_row['sub'] >
-	>
-	type $mol_button_major__title_bog_pay_app_demo_41 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_button_major['title'] >
-	>
-	type $mol_button_minor__title_bog_pay_app_demo_42 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_button_minor['title'] >
-	>
-	type $mol_row__sub_bog_pay_app_demo_43 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_row['sub'] >
-	>
-	type $mol_list__rows_bog_pay_app_demo_44 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_list['rows'] >
-	>
-	type $mol_list__rows_bog_pay_app_demo_45 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_list['rows'] >
-	>
-	type $mol_dimmer__haystack_bog_pay_app_demo_46 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_dimmer['haystack'] >
-	>
-	type $mol_view__sub_bog_pay_app_demo_47 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_dimmer__haystack_bog_pay_app_demo_48 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_dimmer['haystack'] >
-	>
-	type $mol_dimmer__haystack_bog_pay_app_demo_49 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_dimmer['haystack'] >
-	>
-	type $mol_dimmer__haystack_bog_pay_app_demo_50 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_dimmer['haystack'] >
-	>
-	type $mol_row__sub_bog_pay_app_demo_51 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_row['sub'] >
-	>
-	type $mol_text__text_bog_pay_app_demo_52 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	type $mol_view__sub_bog_pay_app_demo_53 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_text__text_bog_pay_app_demo_54 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	type $mol_view__sub_bog_pay_app_demo_55 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_text__text_bog_pay_app_demo_56 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	type $mol_view__sub_bog_pay_app_demo_57 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_row__sub_bog_pay_app_demo_58 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_row['sub'] >
-	>
-	type $mol_text__text_bog_pay_app_demo_59 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	type $mol_view__sub_bog_pay_app_demo_60 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_text__text_bog_pay_app_demo_61 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	type $mol_view__sub_bog_pay_app_demo_62 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_text__text_bog_pay_app_demo_63 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	type $mol_view__sub_bog_pay_app_demo_64 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_row__sub_bog_pay_app_demo_65 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_row['sub'] >
-	>
-	type $mol_text__text_bog_pay_app_demo_66 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	type $mol_view__sub_bog_pay_app_demo_67 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_text__text_bog_pay_app_demo_68 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	type $mol_view__sub_bog_pay_app_demo_69 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_text__text_bog_pay_app_demo_70 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	type $mol_view__sub_bog_pay_app_demo_71 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_row__sub_bog_pay_app_demo_72 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_row['sub'] >
-	>
-	type $mol_list__rows_bog_pay_app_demo_73 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_list['rows'] >
-	>
-	type $mol_list__rows_bog_pay_app_demo_74 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_list['rows'] >
-	>
-	type $mol_list__rows_bog_pay_app_demo_75 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_list['rows'] >
-	>
-	export class $bog_pay_app_demo extends $mol_page {
-		Settings( ): $mol_button_minor
-		Profile( ): $mol_button_minor
-		Welcome_title_text( ): $mol_dimmer
-		Welcome_title( ): $mol_view
-		Welcome_text( ): $mol_text
-		Welcome_section( ): $mol_view
-		Cards_title_text( ): $mol_dimmer
-		Cards_title( ): $mol_view
-		Card1_title( ): $mol_dimmer
-		Card1_text( ): $mol_text
-		Card1( ): $mol_view
-		Card2_title( ): $mol_dimmer
-		Card2_text( ): $mol_text
-		Card2( ): $mol_view
-		Card3_title( ): $mol_dimmer
-		Card3_text( ): $mol_text
-		Card3( ): $mol_view
-		Cards_row( ): $mol_row
-		Cards_section( ): $mol_list
-		Forms_title_text( ): $mol_dimmer
-		Forms_title( ): $mol_view
-		demo_name( next?: string ): string
-		Name_input( ): $mol_string
-		Name_field( ): $mol_form_field
-		demo_email( next?: string ): string
-		Email_input( ): $mol_string
-		Email_field( ): $mol_form_field
-		demo_message( next?: string ): string
-		Message_input( ): $mol_textarea
-		Message_field( ): $mol_form_field
-		demo_check1( next?: boolean ): boolean
-		Check1( ): $mol_check_box
-		demo_check2( next?: boolean ): boolean
-		Check2( ): $mol_check_box
-		demo_check3( next?: boolean ): boolean
-		Check3( ): $mol_check_box
-		Options_row( ): $mol_row
-		Submit_button( ): $mol_button_major
-		Cancel_button( ): $mol_button_minor
-		Buttons_row( ): $mol_row
-		Form_demo( ): $mol_list
-		Forms_section( ): $mol_list
-		Table_title_text( ): $mol_dimmer
-		Table_title( ): $mol_view
-		Header1( ): $mol_dimmer
-		Header2( ): $mol_dimmer
-		Header3( ): $mol_dimmer
-		Table_header( ): $mol_row
-		Row1_col1_text( ): $mol_text
-		Row1_col1( ): $mol_view
-		Row1_col2_text( ): $mol_text
-		Row1_col2( ): $mol_view
-		Row1_col3_text( ): $mol_text
-		Row1_col3( ): $mol_view
-		Table_row1( ): $mol_row
-		Row2_col1_text( ): $mol_text
-		Row2_col1( ): $mol_view
-		Row2_col2_text( ): $mol_text
-		Row2_col2( ): $mol_view
-		Row2_col3_text( ): $mol_text
-		Row2_col3( ): $mol_view
-		Table_row2( ): $mol_row
-		Row3_col1_text( ): $mol_text
-		Row3_col1( ): $mol_view
-		Row3_col2_text( ): $mol_text
-		Row3_col2( ): $mol_view
-		Row3_col3_text( ): $mol_text
-		Row3_col3( ): $mol_view
-		Table_row3( ): $mol_row
-		Table_demo( ): $mol_list
-		Table_section( ): $mol_list
-		Demo_content( ): $mol_list
-		title( ): string
-		tools( ): readonly(any)[]
-		body( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=demo.view.tree.d.ts.map
-declare namespace $.$$ {
-}
-
-declare namespace $ {
-
-	export class $mol_status extends $mol_view {
-		message( ): string
-		status( ): ReturnType< $mol_status['title'] >
-		minimal_height( ): number
-		minimal_width( ): number
-		sub( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=status.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_status extends $.$mol_status {
-        message(): any;
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	type $mol_list__sub_mol_form_1 = $mol_type_enforce<
-		ReturnType< $mol_form['body'] >
-		,
-		ReturnType< $mol_list['sub'] >
-	>
-	type __mol_form_2 = $mol_type_enforce<
-		Parameters< $mol_form['submit_activate'] >[0]
-		,
-		Parameters< ReturnType< $mol_form['Submit'] >['activate'] >[0]
-	>
-	type $mol_button_major__title_mol_form_3 = $mol_type_enforce<
-		ReturnType< $mol_form['submit_title'] >
-		,
-		ReturnType< $mol_button_major['title'] >
-	>
-	type $mol_button_major__hint_mol_form_4 = $mol_type_enforce<
-		ReturnType< $mol_form['submit_hint'] >
-		,
-		ReturnType< $mol_button_major['hint'] >
-	>
-	type $mol_button_major__click_mol_form_5 = $mol_type_enforce<
-		ReturnType< $mol_form['submit'] >
-		,
-		ReturnType< $mol_button_major['click'] >
-	>
-	type $mol_status__message_mol_form_6 = $mol_type_enforce<
-		ReturnType< $mol_form['result'] >
-		,
-		ReturnType< $mol_status['message'] >
-	>
-	type $mol_row__sub_mol_form_7 = $mol_type_enforce<
-		ReturnType< $mol_form['foot'] >
-		,
-		ReturnType< $mol_row['sub'] >
-	>
-	export class $mol_form extends $mol_list {
-		keydown( next?: any ): any
-		form_fields( ): readonly($mol_form_field)[]
-		body( ): ReturnType< $mol_form['form_fields'] >
-		Body( ): $mol_list
-		submit_title( ): string
-		submit_hint( ): string
-		submit_activate( next?: ReturnType< ReturnType< $mol_form['Submit'] >['activate'] > ): ReturnType< ReturnType< $mol_form['Submit'] >['activate'] >
-		submit( next?: any ): any
-		Submit( ): $mol_button_major
-		result( next?: any ): any
-		Result( ): $mol_status
-		buttons( ): readonly($mol_view)[]
-		foot( ): ReturnType< $mol_form['buttons'] >
-		Foot( ): $mol_row
-		submit_allowed( ): boolean
-		submit_blocked( ): boolean
-		event( ): ({ 
-			keydown( next?: ReturnType< $mol_form['keydown'] > ): ReturnType< $mol_form['keydown'] >,
-		})  & ReturnType< $mol_list['event'] >
-		save( next?: any ): any
-		message_done( ): string
-		message_invalid( ): string
-		rows( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=form.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_form extends $.$mol_form {
-        form_fields(): readonly $mol_form_field[];
-        submit_allowed(): boolean;
-        submit_blocked(): boolean;
-        keydown(next: KeyboardEvent): void;
-        result(next?: string | Error): string;
-        buttons(): ($.$mol_status | $mol_button_major)[];
-        submit(next?: Event): boolean;
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	type $mol_view__sub_bog_pay_app_page_themer_colors_1 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_dimmer__haystack_bog_pay_app_page_themer_colors_2 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_dimmer['haystack'] >
-	>
-	type $mol_view__sub_bog_pay_app_page_themer_colors_3 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $bog_pay_app_color__value_bog_pay_app_page_themer_colors_4 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_page_themer_colors['color_back'] >
-		,
-		ReturnType< $bog_pay_app_color['value'] >
-	>
-	type $mol_form_field__name_bog_pay_app_page_themer_colors_5 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_form_field['name'] >
-	>
-	type $mol_form_field__Content_bog_pay_app_page_themer_colors_6 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_page_themer_colors['Back_color'] >
-		,
-		ReturnType< $mol_form_field['Content'] >
-	>
-	type $bog_pay_app_color__value_bog_pay_app_page_themer_colors_7 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_page_themer_colors['color_card'] >
-		,
-		ReturnType< $bog_pay_app_color['value'] >
-	>
-	type $mol_form_field__name_bog_pay_app_page_themer_colors_8 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_form_field['name'] >
-	>
-	type $mol_form_field__Content_bog_pay_app_page_themer_colors_9 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_page_themer_colors['Card_color'] >
-		,
-		ReturnType< $mol_form_field['Content'] >
-	>
-	type $bog_pay_app_color__value_bog_pay_app_page_themer_colors_10 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_page_themer_colors['color_field'] >
-		,
-		ReturnType< $bog_pay_app_color['value'] >
-	>
-	type $mol_form_field__name_bog_pay_app_page_themer_colors_11 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_form_field['name'] >
-	>
-	type $mol_form_field__Content_bog_pay_app_page_themer_colors_12 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_page_themer_colors['Field_color'] >
-		,
-		ReturnType< $mol_form_field['Content'] >
-	>
-	type $bog_pay_app_color__value_bog_pay_app_page_themer_colors_13 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_page_themer_colors['color_hover'] >
-		,
-		ReturnType< $bog_pay_app_color['value'] >
-	>
-	type $mol_form_field__name_bog_pay_app_page_themer_colors_14 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_form_field['name'] >
-	>
-	type $mol_form_field__Content_bog_pay_app_page_themer_colors_15 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_page_themer_colors['Hover_color'] >
-		,
-		ReturnType< $mol_form_field['Content'] >
-	>
-	type $mol_list__rows_bog_pay_app_page_themer_colors_16 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_list['rows'] >
-	>
-	type $mol_dimmer__haystack_bog_pay_app_page_themer_colors_17 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_dimmer['haystack'] >
-	>
-	type $mol_view__sub_bog_pay_app_page_themer_colors_18 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $bog_pay_app_color__value_bog_pay_app_page_themer_colors_19 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_page_themer_colors['color_text'] >
-		,
-		ReturnType< $bog_pay_app_color['value'] >
-	>
-	type $mol_form_field__name_bog_pay_app_page_themer_colors_20 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_form_field['name'] >
-	>
-	type $mol_form_field__Content_bog_pay_app_page_themer_colors_21 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_page_themer_colors['Text_color'] >
-		,
-		ReturnType< $mol_form_field['Content'] >
-	>
-	type $bog_pay_app_color__value_bog_pay_app_page_themer_colors_22 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_page_themer_colors['color_shade'] >
-		,
-		ReturnType< $bog_pay_app_color['value'] >
-	>
-	type $mol_form_field__name_bog_pay_app_page_themer_colors_23 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_form_field['name'] >
-	>
-	type $mol_form_field__Content_bog_pay_app_page_themer_colors_24 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_page_themer_colors['Shade_color'] >
-		,
-		ReturnType< $mol_form_field['Content'] >
-	>
-	type $bog_pay_app_color__value_bog_pay_app_page_themer_colors_25 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_page_themer_colors['color_line'] >
-		,
-		ReturnType< $bog_pay_app_color['value'] >
-	>
-	type $mol_form_field__name_bog_pay_app_page_themer_colors_26 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_form_field['name'] >
-	>
-	type $mol_form_field__Content_bog_pay_app_page_themer_colors_27 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_page_themer_colors['Line_color'] >
-		,
-		ReturnType< $mol_form_field['Content'] >
-	>
-	type $bog_pay_app_color__value_bog_pay_app_page_themer_colors_28 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_page_themer_colors['color_focus'] >
-		,
-		ReturnType< $bog_pay_app_color['value'] >
-	>
-	type $mol_form_field__name_bog_pay_app_page_themer_colors_29 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_form_field['name'] >
-	>
-	type $mol_form_field__Content_bog_pay_app_page_themer_colors_30 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_page_themer_colors['Focus_color'] >
-		,
-		ReturnType< $mol_form_field['Content'] >
-	>
-	type $mol_list__rows_bog_pay_app_page_themer_colors_31 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_list['rows'] >
-	>
-	type $mol_dimmer__haystack_bog_pay_app_page_themer_colors_32 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_dimmer['haystack'] >
-	>
-	type $mol_view__sub_bog_pay_app_page_themer_colors_33 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $bog_pay_app_color__value_bog_pay_app_page_themer_colors_34 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_page_themer_colors['color_control'] >
-		,
-		ReturnType< $bog_pay_app_color['value'] >
-	>
-	type $mol_form_field__name_bog_pay_app_page_themer_colors_35 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_form_field['name'] >
-	>
-	type $mol_form_field__Content_bog_pay_app_page_themer_colors_36 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_page_themer_colors['Control_color'] >
-		,
-		ReturnType< $mol_form_field['Content'] >
-	>
-	type $bog_pay_app_color__value_bog_pay_app_page_themer_colors_37 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_page_themer_colors['color_current'] >
-		,
-		ReturnType< $bog_pay_app_color['value'] >
-	>
-	type $mol_form_field__name_bog_pay_app_page_themer_colors_38 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_form_field['name'] >
-	>
-	type $mol_form_field__Content_bog_pay_app_page_themer_colors_39 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_page_themer_colors['Current_color'] >
-		,
-		ReturnType< $mol_form_field['Content'] >
-	>
-	type $bog_pay_app_color__value_bog_pay_app_page_themer_colors_40 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_page_themer_colors['color_special'] >
-		,
-		ReturnType< $bog_pay_app_color['value'] >
-	>
-	type $mol_form_field__name_bog_pay_app_page_themer_colors_41 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_form_field['name'] >
-	>
-	type $mol_form_field__Content_bog_pay_app_page_themer_colors_42 = $mol_type_enforce<
-		ReturnType< $bog_pay_app_page_themer_colors['Special_color'] >
-		,
-		ReturnType< $mol_form_field['Content'] >
-	>
-	type $mol_list__rows_bog_pay_app_page_themer_colors_43 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_list['rows'] >
-	>
-	type $mol_list__rows_bog_pay_app_page_themer_colors_44 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_list['rows'] >
-	>
-	type $mol_scroll__sub_bog_pay_app_page_themer_colors_45 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_scroll['sub'] >
-	>
-	type $mol_view__style_bog_pay_app_page_themer_colors_46 = $mol_type_enforce<
-		({ 
-			'--mol_theme_back': ReturnType< $bog_pay_app_page_themer_colors['color_back'] >,
-			'--mol_theme_card': ReturnType< $bog_pay_app_page_themer_colors['color_card'] >,
-			'--mol_theme_field': ReturnType< $bog_pay_app_page_themer_colors['color_field'] >,
-			'--mol_theme_hover': ReturnType< $bog_pay_app_page_themer_colors['color_hover'] >,
-			'--mol_theme_text': ReturnType< $bog_pay_app_page_themer_colors['color_text'] >,
-			'--mol_theme_shade': ReturnType< $bog_pay_app_page_themer_colors['color_shade'] >,
-			'--mol_theme_line': ReturnType< $bog_pay_app_page_themer_colors['color_line'] >,
-			'--mol_theme_focus': ReturnType< $bog_pay_app_page_themer_colors['color_focus'] >,
-			'--mol_theme_control': ReturnType< $bog_pay_app_page_themer_colors['color_control'] >,
-			'--mol_theme_current': ReturnType< $bog_pay_app_page_themer_colors['color_current'] >,
-			'--mol_theme_special': ReturnType< $bog_pay_app_page_themer_colors['color_special'] >,
-		}) 
-		,
-		ReturnType< $mol_view['style'] >
-	>
-	type $mol_view__sub_bog_pay_app_page_themer_colors_47 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_scroll__sub_bog_pay_app_page_themer_colors_48 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_scroll['sub'] >
-	>
-	export class $bog_pay_app_page_themer_colors extends $mol_row {
-		Controls_title_text( ): $mol_dimmer
-		Controls_title( ): $mol_view
-		Backgrounds_title_text( ): $mol_dimmer
-		Backgrounds_title( ): $mol_view
-		color_back( next?: string ): string
-		Back_color( ): $bog_pay_app_color
-		Back_field( ): $mol_form_field
-		color_card( next?: string ): string
-		Card_color( ): $bog_pay_app_color
-		Card_field( ): $mol_form_field
-		color_field( next?: string ): string
-		Field_color( ): $bog_pay_app_color
-		Field_field( ): $mol_form_field
-		color_hover( next?: string ): string
-		Hover_color( ): $bog_pay_app_color
-		Hover_field( ): $mol_form_field
-		Backgrounds_section( ): $mol_list
-		Text_title_text( ): $mol_dimmer
-		Text_title( ): $mol_view
-		color_text( next?: string ): string
-		Text_color( ): $bog_pay_app_color
-		Text_field( ): $mol_form_field
-		color_shade( next?: string ): string
-		Shade_color( ): $bog_pay_app_color
-		Shade_field( ): $mol_form_field
-		color_line( next?: string ): string
-		Line_color( ): $bog_pay_app_color
-		Line_field( ): $mol_form_field
-		color_focus( next?: string ): string
-		Focus_color( ): $bog_pay_app_color
-		Focus_field( ): $mol_form_field
-		Text_section( ): $mol_list
-		Controls_section_title_text( ): $mol_dimmer
-		Controls_section_title( ): $mol_view
-		color_control( next?: string ): string
-		Control_color( ): $bog_pay_app_color
-		Control_field( ): $mol_form_field
-		color_current( next?: string ): string
-		Current_color( ): $bog_pay_app_color
-		Current_field( ): $mol_form_field
-		color_special( next?: string ): string
-		Special_color( ): $bog_pay_app_color
-		Special_field( ): $mol_form_field
-		Controls_section( ): $mol_list
-		Controls_inner( ): $mol_list
-		Controls( ): $mol_scroll
-		Demo_site( ): $bog_pay_app_demo
-		Preview_inner( ): $mol_view
-		Preview( ): $mol_scroll
-		sub( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=colors.view.tree.d.ts.map
-declare namespace $ {
-
-	export class $bog_pay_app_page_themer extends $mol_page {
-		Colors( ): $bog_pay_app_page_themer_colors
-		title( ): string
-		Head( ): any
-		body( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=themer.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $bog_pay_app_page_themer extends $.$bog_pay_app_page_themer {
-    }
-}
-
-declare namespace $.$$ { }
-
+//# sourceMappingURL=account.view.tree.d.ts.map
 declare namespace $ {
 
 	type $mol_check__checked_mol_check_list_1 = $mol_type_enforce<
@@ -5567,62 +4006,388 @@ declare namespace $.$$ {
 
 declare namespace $ {
 
-	type $mol_switch__value_mol_deck_1 = $mol_type_enforce<
-		ReturnType< $mol_deck['current'] >
+	type $mol_view__sub_bog_pay_app_footer_1 = $mol_type_enforce<
+		readonly(any)[]
 		,
-		ReturnType< $mol_switch['value'] >
+		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_switch__options_mol_deck_2 = $mol_type_enforce<
-		ReturnType< $mol_deck['switch_options'] >
+	type $mol_link__arg_bog_pay_app_footer_2 = $mol_type_enforce<
+		Record<string, any>
 		,
-		ReturnType< $mol_switch['options'] >
+		ReturnType< $mol_link['arg'] >
 	>
-	export class $mol_deck extends $mol_list {
-		current( next?: string ): string
-		switch_options( ): Record<string, any>
-		Switch( ): $mol_switch
-		Content( ): $mol_view
-		items( ): readonly($mol_view)[]
-		rows( ): readonly($mol_view)[]
+	type $mol_link__sub_bog_pay_app_footer_3 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_link['sub'] >
+	>
+	type $mol_link__arg_bog_pay_app_footer_4 = $mol_type_enforce<
+		Record<string, any>
+		,
+		ReturnType< $mol_link['arg'] >
+	>
+	type $mol_link__sub_bog_pay_app_footer_5 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_link['sub'] >
+	>
+	type $mol_link__arg_bog_pay_app_footer_6 = $mol_type_enforce<
+		Record<string, any>
+		,
+		ReturnType< $mol_link['arg'] >
+	>
+	type $mol_link__sub_bog_pay_app_footer_7 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_link['sub'] >
+	>
+	type $mol_link__arg_bog_pay_app_footer_8 = $mol_type_enforce<
+		Record<string, any>
+		,
+		ReturnType< $mol_link['arg'] >
+	>
+	type $mol_link__sub_bog_pay_app_footer_9 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_link['sub'] >
+	>
+	type $mol_list__rows_bog_pay_app_footer_10 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_list['rows'] >
+	>
+	type $mol_view__sub_bog_pay_app_footer_11 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_footer_12 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_link__arg_bog_pay_app_footer_13 = $mol_type_enforce<
+		Record<string, any>
+		,
+		ReturnType< $mol_link['arg'] >
+	>
+	type $mol_link__sub_bog_pay_app_footer_14 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_link['sub'] >
+	>
+	type $mol_link__arg_bog_pay_app_footer_15 = $mol_type_enforce<
+		Record<string, any>
+		,
+		ReturnType< $mol_link['arg'] >
+	>
+	type $mol_link__sub_bog_pay_app_footer_16 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_link['sub'] >
+	>
+	type $mol_link__arg_bog_pay_app_footer_17 = $mol_type_enforce<
+		Record<string, any>
+		,
+		ReturnType< $mol_link['arg'] >
+	>
+	type $mol_link__sub_bog_pay_app_footer_18 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_link['sub'] >
+	>
+	type $mol_link__arg_bog_pay_app_footer_19 = $mol_type_enforce<
+		Record<string, any>
+		,
+		ReturnType< $mol_link['arg'] >
+	>
+	type $mol_link__sub_bog_pay_app_footer_20 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_link['sub'] >
+	>
+	type $mol_list__rows_bog_pay_app_footer_21 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_list['rows'] >
+	>
+	type $mol_view__sub_bog_pay_app_footer_22 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_footer_23 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_link__arg_bog_pay_app_footer_24 = $mol_type_enforce<
+		Record<string, any>
+		,
+		ReturnType< $mol_link['arg'] >
+	>
+	type $mol_link__sub_bog_pay_app_footer_25 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_link['sub'] >
+	>
+	type $mol_link__arg_bog_pay_app_footer_26 = $mol_type_enforce<
+		Record<string, any>
+		,
+		ReturnType< $mol_link['arg'] >
+	>
+	type $mol_link__sub_bog_pay_app_footer_27 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_link['sub'] >
+	>
+	type $mol_link__arg_bog_pay_app_footer_28 = $mol_type_enforce<
+		Record<string, any>
+		,
+		ReturnType< $mol_link['arg'] >
+	>
+	type $mol_link__sub_bog_pay_app_footer_29 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_link['sub'] >
+	>
+	type $mol_list__rows_bog_pay_app_footer_30 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_list['rows'] >
+	>
+	type $mol_view__sub_bog_pay_app_footer_31 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_footer_32 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_link__arg_bog_pay_app_footer_33 = $mol_type_enforce<
+		Record<string, any>
+		,
+		ReturnType< $mol_link['arg'] >
+	>
+	type $mol_link__sub_bog_pay_app_footer_34 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_link['sub'] >
+	>
+	type $mol_link__arg_bog_pay_app_footer_35 = $mol_type_enforce<
+		Record<string, any>
+		,
+		ReturnType< $mol_link['arg'] >
+	>
+	type $mol_link__sub_bog_pay_app_footer_36 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_link['sub'] >
+	>
+	type $mol_link__arg_bog_pay_app_footer_37 = $mol_type_enforce<
+		Record<string, any>
+		,
+		ReturnType< $mol_link['arg'] >
+	>
+	type $mol_link__sub_bog_pay_app_footer_38 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_link['sub'] >
+	>
+	type $mol_link__arg_bog_pay_app_footer_39 = $mol_type_enforce<
+		Record<string, any>
+		,
+		ReturnType< $mol_link['arg'] >
+	>
+	type $mol_link__sub_bog_pay_app_footer_40 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_link['sub'] >
+	>
+	type $mol_list__rows_bog_pay_app_footer_41 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_list['rows'] >
+	>
+	type $mol_view__sub_bog_pay_app_footer_42 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_footer_43 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_bog_pay_app_footer_44 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_text__text_bog_pay_app_footer_45 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_text['text'] >
+	>
+	type $mol_view__sub_bog_pay_app_footer_46 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	export class $bog_pay_app_footer extends $mol_view {
+		products_title( ): string
+		Products_title( ): $mol_view
+		product1_text( ): string
+		Product1( ): $mol_link
+		product2_text( ): string
+		Product2( ): $mol_link
+		product3_text( ): string
+		Product3( ): $mol_link
+		product4_text( ): string
+		Product4( ): $mol_link
+		Products_list( ): $mol_list
+		Products_section( ): $mol_view
+		company_title( ): string
+		Company_title( ): $mol_view
+		company1_text( ): string
+		Company1( ): $mol_link
+		company2_text( ): string
+		Company2( ): $mol_link
+		company3_text( ): string
+		Company3( ): $mol_link
+		company4_text( ): string
+		Company4( ): $mol_link
+		Company_list( ): $mol_list
+		Company_section( ): $mol_view
+		support_title( ): string
+		Support_title( ): $mol_view
+		support1_text( ): string
+		Support1( ): $mol_link
+		support2_text( ): string
+		Support2( ): $mol_link
+		support3_text( ): string
+		Support3( ): $mol_link
+		Support_list( ): $mol_list
+		Support_section( ): $mol_view
+		community_title( ): string
+		Community_title( ): $mol_view
+		community1_text( ): string
+		Community1( ): $mol_link
+		community2_text( ): string
+		Community2( ): $mol_link
+		community3_text( ): string
+		Community3( ): $mol_link
+		community4_text( ): string
+		Community4( ): $mol_link
+		Community_list( ): $mol_list
+		Community_section( ): $mol_view
+		Footer_sections( ): $mol_view
+		Footer_content( ): $mol_view
+		Copyright( ): $mol_text
+		Footer_bottom( ): $mol_view
+		sub( ): readonly(any)[]
 	}
 	
 }
 
-//# sourceMappingURL=deck.view.tree.d.ts.map
+//# sourceMappingURL=footer.view.tree.d.ts.map
 declare namespace $.$$ {
-    class $mol_deck extends $.$mol_deck {
-        current(next?: string): string;
-        switch_options(): Record<string, string>;
-        Content(): $mol_view;
-    }
+}
+
+declare namespace $ {
+    function $mol_offline(): void;
+}
+
+declare namespace $ {
+    function $mol_offline_web(): void;
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
 
-	type $mol_deck__items_bog_pay_app_1 = $mol_type_enforce<
+	type $mol_button_minor__sub_bog_pay_app_1 = $mol_type_enforce<
 		readonly(any)[]
 		,
-		ReturnType< $mol_deck['items'] >
+		ReturnType< $mol_button_minor['sub'] >
+	>
+	type $mol_button_minor__click_bog_pay_app_2 = $mol_type_enforce<
+		ReturnType< $bog_pay_app['to_games'] >
+		,
+		ReturnType< $mol_button_minor['click'] >
+	>
+	type $mol_button_minor__sub_bog_pay_app_3 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_button_minor['sub'] >
+	>
+	type $mol_button_minor__click_bog_pay_app_4 = $mol_type_enforce<
+		ReturnType< $bog_pay_app['to_account'] >
+		,
+		ReturnType< $mol_button_minor['click'] >
+	>
+	type $mol_switch__value_bog_pay_app_5 = $mol_type_enforce<
+		ReturnType< $bog_pay_app['page'] >
+		,
+		ReturnType< $mol_switch['value'] >
+	>
+	type $mol_switch__options_bog_pay_app_6 = $mol_type_enforce<
+		({ 
+			'home': ReturnType< $bog_pay_app['Home_page'] >,
+			'games': ReturnType< $bog_pay_app['Games_page'] >,
+			'account': ReturnType< $bog_pay_app['Account_page'] >,
+		}) 
+		,
+		ReturnType< $mol_switch['options'] >
+	>
+	type $mol_link__arg_bog_pay_app_7 = $mol_type_enforce<
+		Record<string, any>
+		,
+		ReturnType< $mol_link['arg'] >
+	>
+	type $mol_link__sub_bog_pay_app_8 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_link['sub'] >
 	>
 	export class $bog_pay_app extends $mol_page {
 		Theme( ): $mol_theme_auto
-		Switch( ): ReturnType< ReturnType< $bog_pay_app['Deck'] >['Switch'] >
-		Content( ): ReturnType< ReturnType< $bog_pay_app['Deck'] >['Content'] >
-		Libraries( ): $bog_pay_app_page_libraries
-		Components_page( ): $bog_pay_app_page_components
-		Design_page( ): $bog_pay_app_page_design
-		Themer_page( ): $bog_pay_app_page_themer
-		plugins( ): readonly(any)[]
 		title( ): string
+		games_button_title( ): string
+		to_games( next?: any ): any
+		Games_button( ): $mol_button_minor
+		account_button_title( ): string
+		to_account( next?: any ): any
+		Account_button( ): $mol_button_minor
+		page( ): string
+		Home_page( ): $bog_pay_app_page_home
+		Games_page( ): $bog_pay_app_page_games
+		Account_page( ): $bog_pay_app_page_account
+		Pages( ): $mol_switch
+		Footer( ): $bog_pay_app_footer
+		plugins( ): readonly(any)[]
+		Title( ): $mol_link
 		head( ): readonly(any)[]
+		tools( ): readonly(any)[]
 		body( ): readonly(any)[]
-		Deck( ): $mol_deck
 	}
 	
 }
 
 //# sourceMappingURL=app.view.tree.d.ts.map
-declare namespace $.$$ { }
+declare namespace $.$$ {
+    class $bog_pay_app extends $.$bog_pay_app {
+        page(next?: string): string;
+        to_games(): void;
+        to_account(): void;
+    }
+}
+
+declare namespace $.$$ {
+}
 
 export = $;
 //# sourceMappingURL=web.d.ts.map
