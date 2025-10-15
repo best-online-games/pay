@@ -88,7 +88,7 @@ namespace $.$$ {
 			background: {
 				image: [['linear-gradient(135deg, #6d4aff, #9d7aff)']],
 			},
-			height: `clamp(${rem(15)}, 40vw, ${rem(25)})`,
+			height: `clamp(${rem(15)}, 40vw, ${rem(25)})` as any,
 			borderRadius: rem(1),
 			display: 'flex',
 			alignItems: 'center',
