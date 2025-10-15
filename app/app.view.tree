@@ -3,12 +3,13 @@ $bog_pay_app $mol_page
 		<= Theme $mol_theme_auto
 	head /
 		<= Switch
+		<= Lights $mol_lights_toggle
 	body /
 		<= Content
 	Deck $mol_deck
 		Switch => Switch
 		Content => Content
 		items /
-			<= Home $bog_pay_app_page_home
-			<= Games $bog_pay_app_page_games
-			<= Personal_cabinet $bog_pay_app_page_account
+			<= Home $bog_pay_app_home
+			<= Games $bog_pay_app_games
+			<= Personal_cabinet $bog_pay_app_account
