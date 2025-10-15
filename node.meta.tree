@@ -22,4 +22,3 @@
 \/bog/pay/app
 	include \/mol/offline/install
 	deploy \/bog/pay/assets
-	deploy \/bog/pay/server
