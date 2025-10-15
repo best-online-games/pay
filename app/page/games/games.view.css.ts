@@ -47,7 +47,7 @@ namespace $.$$ {
 			width: rem(5),
 			height: rem(5),
 			background: {
-				image: 'linear-gradient(135deg, #6d4aff, #9d7aff)',
+				image: [['linear-gradient(135deg, #6d4aff, #9d7aff)']],
 			},
 			borderRadius: '50%',
 			margin: {
@@ -67,10 +67,15 @@ namespace $.$$ {
 			width: rem(5),
 			height: rem(5),
 			background: {
-				image: 'linear-gradient(135deg, #6d4aff, #9d7aff)',
+				image: [['linear-gradient(135deg, #6d4aff, #9d7aff)']],
 			},
 			borderRadius: '50%',
-			margin: [0, 'auto', rem(1.5)],
+			margin: {
+				top: 0,
+				left: 'auto',
+				right: 'auto',
+				bottom: rem(1.5),
+			},
 			display: 'flex',
 			alignItems: 'center',
 			justifyContent: 'center',
@@ -82,10 +87,15 @@ namespace $.$$ {
 			width: rem(5),
 			height: rem(5),
 			background: {
-				image: 'linear-gradient(135deg, #6d4aff, #9d7aff)',
+				image: [['linear-gradient(135deg, #6d4aff, #9d7aff)']],
 			},
 			borderRadius: '50%',
-			margin: [0, 'auto', rem(1.5)],
+			margin: {
+				top: 0,
+				left: 'auto',
+				right: 'auto',
+				bottom: rem(1.5),
+			},
 			display: 'flex',
 			alignItems: 'center',
 			justifyContent: 'center',
@@ -130,7 +140,12 @@ namespace $.$$ {
 		},
 
 		Why_section: {
-			padding: `${rem(3)} ${rem(1.5)}`,
+			padding: {
+				top: rem(3),
+				bottom: rem(3),
+				left: rem(1.5),
+				right: rem(1.5),
+			},
 			maxWidth: rem(75),
 			width: '100%',
 			margin: [0, 'auto'],
@@ -171,10 +186,15 @@ namespace $.$$ {
 			width: rem(5),
 			height: rem(5),
 			background: {
-				image: 'linear-gradient(135deg, #6d4aff, #9d7aff)',
+				image: [['linear-gradient(135deg, #6d4aff, #9d7aff)']],
 			},
 			borderRadius: '50%',
-			margin: [0, 'auto', rem(1.5)],
+			margin: {
+				top: 0,
+				left: 'auto',
+				right: 'auto',
+				bottom: rem(1.5),
+			},
 			display: 'flex',
 			alignItems: 'center',
 			justifyContent: 'center',
@@ -186,10 +206,15 @@ namespace $.$$ {
 			width: rem(5),
 			height: rem(5),
 			background: {
-				image: 'linear-gradient(135deg, #6d4aff, #9d7aff)',
+				image: [['linear-gradient(135deg, #6d4aff, #9d7aff)']],
 			},
 			borderRadius: '50%',
-			margin: [0, 'auto', rem(1.5)],
+			margin: {
+				top: 0,
+				left: 'auto',
+				right: 'auto',
+				bottom: rem(1.5),
+			},
 			display: 'flex',
 			alignItems: 'center',
 			justifyContent: 'center',
@@ -201,10 +226,15 @@ namespace $.$$ {
 			width: rem(5),
 			height: rem(5),
 			background: {
-				image: 'linear-gradient(135deg, #6d4aff, #9d7aff)',
+				image: [['linear-gradient(135deg, #6d4aff, #9d7aff)']],
 			},
 			borderRadius: '50%',
-			margin: [0, 'auto', rem(1.5)],
+			margin: {
+				top: 0,
+				left: 'auto',
+				right: 'auto',
+				bottom: rem(1.5),
+			},
 			display: 'flex',
 			alignItems: 'center',
 			justifyContent: 'center',

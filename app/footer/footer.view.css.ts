@@ -6,7 +6,12 @@ namespace $.$$ {
 			color: '#1a1a1a',
 		},
 		color: 'white',
-		padding: [rem(3.75), rem(1.5), rem(1.5)],
+		padding: {
+			top: rem(3.75),
+			left: rem(1.5),
+			right: rem(1.5),
+			bottom: rem(1.5),
+		},
 
 		Footer_content: {
 			maxWidth: rem(75),

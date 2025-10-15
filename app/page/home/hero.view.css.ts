@@ -10,9 +10,14 @@ namespace $.$$ {
 
 		Hero_section: {
 			background: {
-				image: 'linear-gradient(135deg, #f5f2ff 0%, #fff 100%)',
+				image: [['linear-gradient(135deg, #f5f2ff 0%, #fff 100%)']],
 			},
-			padding: `${rem(3)} ${rem(1.5)}`,
+			padding: {
+				top: rem(3),
+				bottom: rem(3),
+				left: rem(1.5),
+				right: rem(1.5),
+			},
 			textAlign: 'center',
 			width: '100%',
 			boxSizing: 'border-box',
@@ -27,7 +32,12 @@ namespace $.$$ {
 				left: 'auto',
 				right: 'auto',
 			},
-			padding: `0 ${rem(1)}`,
+			padding: {
+				top: 0,
+				bottom: 0,
+				left: rem(1),
+				right: rem(1),
+			},
 			boxSizing: 'border-box',
 		},
 
@@ -50,7 +60,12 @@ namespace $.$$ {
 
 		Download_button: {
 			fontSize: rem(1.125),
-			padding: `${rem(1)} ${rem(2.5)}`,
+			padding: {
+				top: rem(1),
+				bottom: rem(1),
+				left: rem(2.5),
+				right: rem(2.5),
+			},
 			marginBottom: rem(1),
 		},
 
@@ -71,7 +86,7 @@ namespace $.$$ {
 				bottom: 0,
 			},
 			background: {
-				image: 'linear-gradient(135deg, #6d4aff, #9d7aff)',
+				image: [['linear-gradient(135deg, #6d4aff, #9d7aff)']],
 			},
 			height: `clamp(${rem(15)}, 40vw, ${rem(25)})`,
 			borderRadius: rem(1),
@@ -95,31 +110,57 @@ namespace $.$$ {
 		},
 
 		Badge1: {
-			padding: `${rem(0.75)} ${rem(1.5)}`,
-			background: 'white',
+			padding: {
+				top: rem(0.75),
+				bottom: rem(0.75),
+				left: rem(1.5),
+				right: rem(1.5),
+			},
+			background: {
+				color: 'white',
+			},
 			borderRadius: rem(0.5),
 			boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
 			fontWeight: '600',
 		},
 
 		Badge2: {
-			padding: `${rem(0.75)} ${rem(1.5)}`,
-			background: 'white',
+			padding: {
+				top: rem(0.75),
+				bottom: rem(0.75),
+				left: rem(1.5),
+				right: rem(1.5),
+			},
+			background: {
+				color: 'white',
+			},
 			borderRadius: rem(0.5),
 			boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
 			fontWeight: '600',
 		},
 
 		Badge3: {
-			padding: `${rem(0.75)} ${rem(1.5)}`,
-			background: 'white',
+			padding: {
+				top: rem(0.75),
+				bottom: rem(0.75),
+				left: rem(1.5),
+				right: rem(1.5),
+			},
+			background: {
+				color: 'white',
+			},
 			borderRadius: rem(0.5),
 			boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
 			fontWeight: '600',
 		},
 
 		Stats_section: {
-			padding: `${rem(3)} ${rem(1.5)}`,
+			padding: {
+				top: rem(3),
+				bottom: rem(3),
+				left: rem(1.5),
+				right: rem(1.5),
+			},
 			maxWidth: rem(75),
 			width: '100%',
 			margin: {
