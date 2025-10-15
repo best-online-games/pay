@@ -1,18 +1,14 @@
 $bog_pay_app $mol_page
 	plugins /
 		<= Theme $mol_theme_auto
-	Title $mol_link
-		uri \
-		sub / <= title \Bog Ping
 	head /
-		<= Title
 		<= Switch
-		<= Tools
 	body /
 		<= Content
 	Deck $mol_deck
 		Switch => Switch
 		Content => Content
 		items /
+			<= Home $bog_pay_app_page_home
 			<= Games $bog_pay_app_page_games
 			<= Personal_cabinet $bog_pay_app_page_account
