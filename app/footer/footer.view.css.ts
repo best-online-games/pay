@@ -12,17 +12,24 @@ namespace $.$$ {
 			right: rem(1.5),
 			bottom: rem(1.5),
 		},
+		width: '100%',
+		maxWidth: '100vw',
+		boxSizing: 'border-box',
+		overflowX: 'hidden',
 
 		Footer_content: {
 			maxWidth: rem(75),
 			margin: [0, 'auto'],
+			width: '100%',
+			boxSizing: 'border-box',
 		},
 
 		Footer_sections: {
 			display: 'grid',
-			gridTemplateColumns: 'repeat(4, 1fr)',
+			gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
 			gap: rem(2.5),
 			marginBottom: rem(2.5),
+			width: '100%',
 		},
 
 		Products_section: {
