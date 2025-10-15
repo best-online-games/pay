@@ -38,37 +38,6 @@ $mol_theme_auto $mol_plugin
 	light \$mol_theme_light
 	attr * mol_theme <= theme <= dark \$mol_theme_dark
 
-$mol_speck $mol_view
-	theme \$mol_theme_accent
-	sub /
-		<= value null
-
-$mol_button $mol_view
-	enabled true
-	click?event null
-	event_click?event null
-	event *
-		^
-		click?event <=> activate?event <=> event_activate?event null
-		dblclick?event <=> clicks?event null
-		keydown?event <=> key_press?event <=> event_key_press?event null
-	attr *
-		^
-		disabled <= disabled false
-		role \button
-		tabindex <= tab_index 0
-		title <= hint_safe <= hint \
-	sub /$mol_view_content
-		<= title
-	Speck $mol_speck
-		value <= error \
-
-$mol_button_typed $mol_button
-	minimal_height 40
-	minimal_width 40
-
-$mol_button_minor $mol_button_typed
-
 $mol_list $mol_view
 	render_visible_only true
 	render_over 0.1
@@ -134,6 +103,37 @@ $mol_text_code_line $mol_paragraph
 		needle <= highlight \
 		uri <= token_uri* \
 	find_pos* null
+
+$mol_speck $mol_view
+	theme \$mol_theme_accent
+	sub /
+		<= value null
+
+$mol_button $mol_view
+	enabled true
+	click?event null
+	event_click?event null
+	event *
+		^
+		click?event <=> activate?event <=> event_activate?event null
+		dblclick?event <=> clicks?event null
+		keydown?event <=> key_press?event <=> event_key_press?event null
+	attr *
+		^
+		disabled <= disabled false
+		role \button
+		tabindex <= tab_index 0
+		title <= hint_safe <= hint \
+	sub /$mol_view_content
+		<= title
+	Speck $mol_speck
+		value <= error \
+
+$mol_button_typed $mol_button
+	minimal_height 40
+	minimal_width 40
+
+$mol_button_minor $mol_button_typed
 
 $mol_svg $mol_view
 	dom_name \svg
@@ -515,9 +515,6 @@ $mol_text_span $mol_paragraph
 		^
 		mol_text_type <= type \
 
-$mol_button_major $mol_button_minor
-	theme \$mol_theme_base
-
 $mol_text_list $mol_text
 	auto_scroll null
 	attr *
@@ -531,62 +528,6 @@ $mol_text_list_item $mol_paragraph
 	attr *
 		^
 		mol_text_list_item_index <= index 0
-
-$bog_pay_app_page_hero $mol_page
-	title \Bog Ping
-	Head null
-	body /
-		<= Hero_section $mol_view
-			sub /
-				<= Hero_content $mol_view
-					sub /
-						<= Hero_title $mol_view
-							sub / <= hero_title_text @ \Один клик. Минимальный пинг.
-						<= Hero_description $mol_text
-							text @ \
-								\Ощутите настоящее преимущество в онлайн-играх. Снизьте пинг до минимума, устраните лаги и доминируйте на поле боя благодаря интеллектуальной маршрутизации и оптимизации сетевого трафика.
-						<= Download_button $mol_button_major
-							sub / <= download_text @ \Скачать Bog Ping
-						<= Guarantee_text $mol_text
-							text @ \Гарантируем возврат средств в течение 30 дней
-						<= Hero_image $mol_view
-							sub / <= hero_image_text \⚡ LOW PING
-						<= Trust_badges $mol_view
-							sub /
-								<= Badge1 $mol_view
-									sub / <= badge1_text \⭐ IGN Gaming
-								<= Badge2 $mol_view
-									sub / <= badge2_text \⭐ PC Gamer
-								<= Badge3 $mol_view
-									sub / <= badge3_text \⭐ GameSpot
-		<= Stats_section $mol_view
-			sub /
-				<= Stats_title $mol_view
-					sub / <= stats_title_text @ \Оптимизируйте каждое соединение
-				<= Stats_subtitle $mol_text
-					text @ \Скачайте Bog Ping сегодня и подключите до 10 устройств с одной подпиской.
-				<= Stats_grid $mol_view
-					sub /
-						<= Stat1 $mol_view
-							sub /
-								<= Stat1_value $mol_view
-									sub / <= stat1_value \500+
-								<= Stat1_label $mol_text
-									text @ \игровых серверов
-						<= Stat2 $mol_view
-							sub /
-								<= Stat2_value $mol_view
-									sub / <= stat2_value \-70%
-								<= Stat2_label $mol_text
-									text @ \снижение пинга
-						<= Stat3 $mol_view
-							sub /
-								<= Stat3_value $mol_view
-									sub / <= stat3_value \10
-								<= Stat3_label $mol_text
-									text @ \устройств
-
-$bog_pay_app_page_home $bog_pay_app_page_hero
 
 $bog_pay_app_page_games $mol_page
 	title \Игры
@@ -682,26 +623,29 @@ $mol_check_list $mol_view
 $mol_switch $mol_check_list
 	value? \
 
+$mol_deck $mol_list
+	items /$mol_view
+	rows /$mol_view
+		<= Switch $mol_switch
+			value? <=> current? \0
+			options <= switch_options *
+		<= Content $mol_view
+
 $bog_pay_app $mol_page
 	plugins /
 		<= Theme $mol_theme_auto
 	Title $mol_link
-		arg *
+		uri \
 		sub / <= title \Bog Ping
 	head /
 		<= Title
-		<= Games_button $mol_button_minor
-			sub / <= games_button_title @ \Игры
-			click? <=> to_games? null
+		<= Switch
 		<= Tools
-	tools /
-		<= Account_button $mol_button_minor
-			sub / <= account_button_title @ \Личный кабинет
-			click? <=> to_account? null
 	body /
-		<= Pages $mol_switch
-			value <= page \
-			options *
-				home <= Home_page $bog_pay_app_page_home
-				games <= Games_page $bog_pay_app_page_games
-				account <= Account_page $bog_pay_app_page_account
+		<= Content
+	Deck $mol_deck
+		Switch => Switch
+		Content => Content
+		items /
+			<= Games $bog_pay_app_page_games
+			<= Personal_cabinet $bog_pay_app_page_account

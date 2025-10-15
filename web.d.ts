@@ -1538,106 +1538,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    let $mol_layer: Record<"float" | "focus" | "hover" | "speck" | "popup", $mol_style_func<"var", unknown>>;
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	export class $mol_speck extends $mol_view {
-		value( ): any
-		theme( ): string
-		sub( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=speck.view.tree.d.ts.map
-declare namespace $ {
-
-	type $mol_speck__value_mol_button_1 = $mol_type_enforce<
-		ReturnType< $mol_button['error'] >
-		,
-		ReturnType< $mol_speck['value'] >
-	>
-	export class $mol_button extends $mol_view {
-		event_activate( next?: any ): any
-		activate( next?: ReturnType< $mol_button['event_activate'] > ): ReturnType< $mol_button['event_activate'] >
-		clicks( next?: any ): any
-		event_key_press( next?: any ): any
-		key_press( next?: ReturnType< $mol_button['event_key_press'] > ): ReturnType< $mol_button['event_key_press'] >
-		disabled( ): boolean
-		tab_index( ): number
-		hint( ): string
-		hint_safe( ): ReturnType< $mol_button['hint'] >
-		error( ): string
-		enabled( ): boolean
-		click( next?: any ): any
-		event_click( next?: any ): any
-		event( ): ({ 
-			click( next?: ReturnType< $mol_button['activate'] > ): ReturnType< $mol_button['activate'] >,
-			dblclick( next?: ReturnType< $mol_button['clicks'] > ): ReturnType< $mol_button['clicks'] >,
-			keydown( next?: ReturnType< $mol_button['key_press'] > ): ReturnType< $mol_button['key_press'] >,
-		})  & ReturnType< $mol_view['event'] >
-		attr( ): ({ 
-			'disabled': ReturnType< $mol_button['disabled'] >,
-			'role': string,
-			'tabindex': ReturnType< $mol_button['tab_index'] >,
-			'title': ReturnType< $mol_button['hint_safe'] >,
-		})  & ReturnType< $mol_view['attr'] >
-		sub( ): readonly($mol_view_content)[]
-		Speck( ): $mol_speck
-	}
-	
-}
-
-//# sourceMappingURL=button.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_button extends $.$mol_button {
-        status(next?: any[]): any[];
-        disabled(): boolean;
-        event_activate(next: Event): void;
-        event_key_press(event: KeyboardEvent): any;
-        tab_index(): number;
-        error(): string;
-        hint_safe(): string;
-        sub_visible(): ($mol_view_content | $mol_speck)[];
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	export class $mol_button_typed extends $mol_button {
-		minimal_height( ): number
-		minimal_width( ): number
-	}
-	
-}
-
-//# sourceMappingURL=typed.view.tree.d.ts.map
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	export class $mol_button_minor extends $mol_button_typed {
-	}
-	
-}
-
-//# sourceMappingURL=minor.view.tree.d.ts.map
-declare namespace $ {
     function $mol_support_css_overflow_anchor(this: $): boolean;
 }
 
@@ -2064,6 +1964,106 @@ declare namespace $.$$ {
 declare namespace $.$$ {
 }
 
+declare namespace $ {
+    let $mol_layer: Record<"float" | "focus" | "hover" | "speck" | "popup", $mol_style_func<"var", unknown>>;
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	export class $mol_speck extends $mol_view {
+		value( ): any
+		theme( ): string
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=speck.view.tree.d.ts.map
+declare namespace $ {
+
+	type $mol_speck__value_mol_button_1 = $mol_type_enforce<
+		ReturnType< $mol_button['error'] >
+		,
+		ReturnType< $mol_speck['value'] >
+	>
+	export class $mol_button extends $mol_view {
+		event_activate( next?: any ): any
+		activate( next?: ReturnType< $mol_button['event_activate'] > ): ReturnType< $mol_button['event_activate'] >
+		clicks( next?: any ): any
+		event_key_press( next?: any ): any
+		key_press( next?: ReturnType< $mol_button['event_key_press'] > ): ReturnType< $mol_button['event_key_press'] >
+		disabled( ): boolean
+		tab_index( ): number
+		hint( ): string
+		hint_safe( ): ReturnType< $mol_button['hint'] >
+		error( ): string
+		enabled( ): boolean
+		click( next?: any ): any
+		event_click( next?: any ): any
+		event( ): ({ 
+			click( next?: ReturnType< $mol_button['activate'] > ): ReturnType< $mol_button['activate'] >,
+			dblclick( next?: ReturnType< $mol_button['clicks'] > ): ReturnType< $mol_button['clicks'] >,
+			keydown( next?: ReturnType< $mol_button['key_press'] > ): ReturnType< $mol_button['key_press'] >,
+		})  & ReturnType< $mol_view['event'] >
+		attr( ): ({ 
+			'disabled': ReturnType< $mol_button['disabled'] >,
+			'role': string,
+			'tabindex': ReturnType< $mol_button['tab_index'] >,
+			'title': ReturnType< $mol_button['hint_safe'] >,
+		})  & ReturnType< $mol_view['attr'] >
+		sub( ): readonly($mol_view_content)[]
+		Speck( ): $mol_speck
+	}
+	
+}
+
+//# sourceMappingURL=button.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_button extends $.$mol_button {
+        status(next?: any[]): any[];
+        disabled(): boolean;
+        event_activate(next: Event): void;
+        event_key_press(event: KeyboardEvent): any;
+        tab_index(): number;
+        error(): string;
+        hint_safe(): string;
+        sub_visible(): ($mol_view_content | $mol_speck)[];
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	export class $mol_button_typed extends $mol_button {
+		minimal_height( ): number
+		minimal_width( ): number
+	}
+	
+}
+
+//# sourceMappingURL=typed.view.tree.d.ts.map
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	export class $mol_button_minor extends $mol_button_typed {
+	}
+	
+}
+
+//# sourceMappingURL=minor.view.tree.d.ts.map
 declare namespace $ {
     type $mol_blob = Blob;
     let $mol_blob: {
@@ -3485,18 +3485,6 @@ declare namespace $ {
 
 declare namespace $ {
 
-	export class $mol_button_major extends $mol_button_minor {
-		theme( ): string
-	}
-	
-}
-
-//# sourceMappingURL=major.view.tree.d.ts.map
-declare namespace $ {
-}
-
-declare namespace $ {
-
 	type $mol_text_list_item__index_mol_text_list_1 = $mol_type_enforce<
 		ReturnType< $mol_text_list['item_index'] >
 		,
@@ -3526,182 +3514,6 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=list.view.tree.d.ts.map
-declare namespace $ {
-
-	type $mol_view__sub_bog_pay_app_page_hero_1 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_text__text_bog_pay_app_page_hero_2 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	type $mol_button_major__sub_bog_pay_app_page_hero_3 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_button_major['sub'] >
-	>
-	type $mol_text__text_bog_pay_app_page_hero_4 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	type $mol_view__sub_bog_pay_app_page_hero_5 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_view__sub_bog_pay_app_page_hero_6 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_view__sub_bog_pay_app_page_hero_7 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_view__sub_bog_pay_app_page_hero_8 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_view__sub_bog_pay_app_page_hero_9 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_view__sub_bog_pay_app_page_hero_10 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_view__sub_bog_pay_app_page_hero_11 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_view__sub_bog_pay_app_page_hero_12 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_text__text_bog_pay_app_page_hero_13 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	type $mol_view__sub_bog_pay_app_page_hero_14 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_text__text_bog_pay_app_page_hero_15 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	type $mol_view__sub_bog_pay_app_page_hero_16 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_view__sub_bog_pay_app_page_hero_17 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_text__text_bog_pay_app_page_hero_18 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	type $mol_view__sub_bog_pay_app_page_hero_19 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_view__sub_bog_pay_app_page_hero_20 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_text__text_bog_pay_app_page_hero_21 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	type $mol_view__sub_bog_pay_app_page_hero_22 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_view__sub_bog_pay_app_page_hero_23 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_view__sub_bog_pay_app_page_hero_24 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	export class $bog_pay_app_page_hero extends $mol_page {
-		hero_title_text( ): string
-		Hero_title( ): $mol_view
-		Hero_description( ): $mol_text
-		download_text( ): string
-		Download_button( ): $mol_button_major
-		Guarantee_text( ): $mol_text
-		hero_image_text( ): string
-		Hero_image( ): $mol_view
-		badge1_text( ): string
-		Badge1( ): $mol_view
-		badge2_text( ): string
-		Badge2( ): $mol_view
-		badge3_text( ): string
-		Badge3( ): $mol_view
-		Trust_badges( ): $mol_view
-		Hero_content( ): $mol_view
-		Hero_section( ): $mol_view
-		stats_title_text( ): string
-		Stats_title( ): $mol_view
-		Stats_subtitle( ): $mol_text
-		stat1_value( ): string
-		Stat1_value( ): $mol_view
-		Stat1_label( ): $mol_text
-		Stat1( ): $mol_view
-		stat2_value( ): string
-		Stat2_value( ): $mol_view
-		Stat2_label( ): $mol_text
-		Stat2( ): $mol_view
-		stat3_value( ): string
-		Stat3_value( ): $mol_view
-		Stat3_label( ): $mol_text
-		Stat3( ): $mol_view
-		Stats_grid( ): $mol_view
-		Stats_section( ): $mol_view
-		title( ): string
-		Head( ): any
-		body( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=hero.view.tree.d.ts.map
-declare namespace $ {
-
-	export class $bog_pay_app_page_home extends $bog_pay_app_page_hero {
-	}
-	
-}
-
-//# sourceMappingURL=home.view.tree.d.ts.map
-declare namespace $.$$ {
-}
-
 declare namespace $ {
 
 	type $mol_view__sub_bog_pay_app_page_games_1 = $mol_type_enforce<
@@ -4005,6 +3817,38 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+
+	type $mol_switch__value_mol_deck_1 = $mol_type_enforce<
+		ReturnType< $mol_deck['current'] >
+		,
+		ReturnType< $mol_switch['value'] >
+	>
+	type $mol_switch__options_mol_deck_2 = $mol_type_enforce<
+		ReturnType< $mol_deck['switch_options'] >
+		,
+		ReturnType< $mol_switch['options'] >
+	>
+	export class $mol_deck extends $mol_list {
+		current( next?: string ): string
+		switch_options( ): Record<string, any>
+		Switch( ): $mol_switch
+		Content( ): $mol_view
+		items( ): readonly($mol_view)[]
+		rows( ): readonly($mol_view)[]
+	}
+	
+}
+
+//# sourceMappingURL=deck.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_deck extends $.$mol_deck {
+        current(next?: string): string;
+        switch_options(): Record<string, string>;
+        Content(): $mol_view;
+    }
+}
+
+declare namespace $ {
     function $mol_offline(): void;
 }
 
@@ -4017,69 +3861,33 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_button_minor__sub_bog_pay_app_1 = $mol_type_enforce<
-		readonly(any)[]
+	type $mol_link__uri_bog_pay_app_1 = $mol_type_enforce<
+		string
 		,
-		ReturnType< $mol_button_minor['sub'] >
+		ReturnType< $mol_link['uri'] >
 	>
-	type $mol_button_minor__click_bog_pay_app_2 = $mol_type_enforce<
-		ReturnType< $bog_pay_app['to_games'] >
-		,
-		ReturnType< $mol_button_minor['click'] >
-	>
-	type $mol_button_minor__sub_bog_pay_app_3 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_button_minor['sub'] >
-	>
-	type $mol_button_minor__click_bog_pay_app_4 = $mol_type_enforce<
-		ReturnType< $bog_pay_app['to_account'] >
-		,
-		ReturnType< $mol_button_minor['click'] >
-	>
-	type $mol_switch__value_bog_pay_app_5 = $mol_type_enforce<
-		ReturnType< $bog_pay_app['page'] >
-		,
-		ReturnType< $mol_switch['value'] >
-	>
-	type $mol_switch__options_bog_pay_app_6 = $mol_type_enforce<
-		({ 
-			'home': ReturnType< $bog_pay_app['Home_page'] >,
-			'games': ReturnType< $bog_pay_app['Games_page'] >,
-			'account': ReturnType< $bog_pay_app['Account_page'] >,
-		}) 
-		,
-		ReturnType< $mol_switch['options'] >
-	>
-	type $mol_link__arg_bog_pay_app_7 = $mol_type_enforce<
-		Record<string, any>
-		,
-		ReturnType< $mol_link['arg'] >
-	>
-	type $mol_link__sub_bog_pay_app_8 = $mol_type_enforce<
+	type $mol_link__sub_bog_pay_app_2 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >
 	>
+	type $mol_deck__items_bog_pay_app_3 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_deck['items'] >
+	>
 	export class $bog_pay_app extends $mol_page {
 		Theme( ): $mol_theme_auto
 		title( ): string
-		games_button_title( ): string
-		to_games( next?: any ): any
-		Games_button( ): $mol_button_minor
-		account_button_title( ): string
-		to_account( next?: any ): any
-		Account_button( ): $mol_button_minor
-		page( ): string
-		Home_page( ): $bog_pay_app_page_home
-		Games_page( ): $bog_pay_app_page_games
-		Account_page( ): $bog_pay_app_page_account
-		Pages( ): $mol_switch
+		Switch( ): ReturnType< ReturnType< $bog_pay_app['Deck'] >['Switch'] >
+		Content( ): ReturnType< ReturnType< $bog_pay_app['Deck'] >['Content'] >
+		Games( ): $bog_pay_app_page_games
+		Personal_cabinet( ): $bog_pay_app_page_account
 		plugins( ): readonly(any)[]
 		Title( ): $mol_link
 		head( ): readonly(any)[]
-		tools( ): readonly(any)[]
 		body( ): readonly(any)[]
+		Deck( ): $mol_deck
 	}
 	
 }
@@ -4087,9 +3895,6 @@ declare namespace $ {
 //# sourceMappingURL=app.view.tree.d.ts.map
 declare namespace $.$$ {
     class $bog_pay_app extends $.$bog_pay_app {
-        page(next?: string): string;
-        to_games(): void;
-        to_account(): void;
     }
 }
 
