@@ -1,17 +1,17 @@
 namespace $.$$ {
+	const { rem } = $mol_style_unit
+
 	$mol_style_define($bog_pay_app, {
-		Body: {
-			padding: 0,
+		Head: {
+			display: 'flex',
+			alignItems: 'center',
+			justifyContent: 'space-between',
 		},
 
-		Body_content: {
-			padding: 0,
-			maxWidth: '100%',
-			overflow: 'hidden',
-		},
-
-		Foot: {
-			padding: 0,
+		Games_button: {
+			position: 'absolute',
+			left: '50%',
+			transform: 'translateX(-50%)',
 		},
 	})
 }

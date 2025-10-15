@@ -3,16 +3,16 @@ namespace $.$$ {
 		
 		@$mol_mem
 		page() {
-			return this.$.$mol_state_arg.value('page') || 'home'
+			return this.$.$mol_state_arg.value('page') || ''
 		}
 		
 		@$mol_action
-		games_click() {
+		to_games() {
 			this.$.$mol_state_arg.value('page', 'games')
 		}
 		
 		@$mol_action
-		account_click() {
+		to_account() {
 			this.$.$mol_state_arg.value('page', 'account')
 		}
 		

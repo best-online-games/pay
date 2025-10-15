@@ -1,14 +1,19 @@
 $bog_pay_app $mol_page
 	plugins /
 		<= Theme $mol_theme_auto
-	title \Bog Ping
+	Title $mol_link
+		arg *
+		sub / <= title \Bog Ping
+	head /
+		<= Title
+		<= Games_button $mol_button_minor
+			sub / <= games_button_title @ \Игры
+			click? <=> to_games? null
+		<= Tools
 	tools /
-		<= Games_link $mol_button_minor
-			click? <=> games_click? null
-			sub / <= games_link_title @ \Игры
-		<= Account_link $mol_button_minor
-			click? <=> account_click? null
-			sub / <= account_link_title @ \Личный кабинет
+		<= Account_button $mol_button_minor
+			sub / <= account_button_title @ \Личный кабинет
+			click? <=> to_account? null
 	body /
 		<= Content
 		<= Footer $bog_pay_app_footer
