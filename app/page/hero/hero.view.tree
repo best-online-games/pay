@@ -1,0 +1,53 @@
+$bog_pay_app_page_hero $mol_page
+	title \Bog Ping
+	Head null
+	body /
+		<= Hero_section $mol_view
+			sub /
+				<= Hero_content $mol_view
+					sub /
+						<= Hero_title $mol_view
+							sub / <= hero_title_text @ \Один клик. Минимальный пинг.
+						<= Hero_description $mol_text
+							text @ \
+								\Ощутите настоящее преимущество в онлайн-играх. Снизьте пинг до минимума, устраните лаги и доминируйте на поле боя благодаря интеллектуальной маршрутизации и оптимизации сетевого трафика.
+						<= Download_button $mol_button_major
+							sub / <= download_text @ \Скачать Bog Ping
+						<= Guarantee_text $mol_text
+							text @ \Гарантируем возврат средств в течение 30 дней
+						<= Hero_image $mol_view
+							sub / <= hero_image_text \⚡ LOW PING
+						<= Trust_badges $mol_view
+							sub /
+								<= Badge1 $mol_view
+									sub / <= badge1_text \⭐ IGN Gaming
+								<= Badge2 $mol_view
+									sub / <= badge2_text \⭐ PC Gamer
+								<= Badge3 $mol_view
+									sub / <= badge3_text \⭐ GameSpot
+		<= Stats_section $mol_view
+			sub /
+				<= Stats_title $mol_view
+					sub / <= stats_title_text @ \Оптимизируйте каждое соединение
+				<= Stats_subtitle $mol_text
+					text @ \Скачайте Bog Ping сегодня и подключите до 10 устройств с одной подпиской.
+				<= Stats_grid $mol_view
+					sub /
+						<= Stat1 $mol_view
+							sub /
+								<= Stat1_value $mol_view
+									sub / <= stat1_value \500+
+								<= Stat1_label $mol_text
+									text @ \игровых серверов
+						<= Stat2 $mol_view
+							sub /
+								<= Stat2_value $mol_view
+									sub / <= stat2_value \-70%
+								<= Stat2_label $mol_text
+									text @ \снижение пинга
+						<= Stat3 $mol_view
+							sub /
+								<= Stat3_value $mol_view
+									sub / <= stat3_value \10
+								<= Stat3_label $mol_text
+									text @ \устройств

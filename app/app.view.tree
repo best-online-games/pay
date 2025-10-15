@@ -1,7 +1,7 @@
 $bog_pay_app $mol_page
 	plugins /
 		<= Theme $mol_theme_auto
-	title \$MOL UI
+	title \Bog Ping
 	head /
 		<= Title
 		<= Switch
@@ -12,7 +12,7 @@ $bog_pay_app $mol_page
 		Switch => Switch
 		Content => Content
 		items /
-			<= Libraries $bog_pay_app_page_libraries
-			<= Components_page $bog_pay_app_page_components
-			<= Design_page $bog_pay_app_page_design
-			<= Themer_page $bog_pay_app_page_themer
+			<= Hero_page $bog_pay_app_page_hero
+			<= Features_page $bog_pay_app_page_features
+			<= Games_page $bog_pay_app_page_games
+			<= About_page $bog_pay_app_page_about

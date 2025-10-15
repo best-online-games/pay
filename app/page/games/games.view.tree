@@ -1,0 +1,70 @@
+$bog_pay_app_page_games $mol_page
+	title \Игры
+	Head null
+	body /
+		<= Games_section $mol_view
+			sub /
+				<= Games_title $mol_view
+					sub / <= games_title @ \Для каких игр подходит Bog Ping?
+				<= Games_grid $mol_view
+					sub /
+						<= Game1 $mol_view
+							sub /
+								<= Game1_icon $mol_view
+									sub / <= game1_icon_text \🎯
+								<= Game1_title $mol_view
+									sub / <= game1_title @ \Шутеры
+								<= Game1_text $mol_text
+									text @ \
+										\Counter-Strike 2, Valorant, Call of Duty, Apex Legends, Overwatch 2 — снизьте пинг и получите конкурентное преимущество в быстрых PvP-сражениях.
+						<= Game2 $mol_view
+							sub /
+								<= Game2_icon $mol_view
+									sub / <= game2_icon_text \⚔️
+								<= Game2_title $mol_view
+									sub / <= game2_title @ \MOBA
+								<= Game2_text $mol_text
+									text @ \
+										\Dota 2, League of Legends, Mobile Legends — каждая миллисекунда имеет значение. Реагируйте быстрее соперников и выигрывайте решающие файты.
+						<= Game3 $mol_view
+							sub /
+								<= Game3_icon $mol_view
+									sub / <= game3_icon_text \🏆
+								<= Game3_title $mol_view
+									sub / <= game3_title @ \Battle Royale
+								<= Game3_text $mol_text
+									text @ \
+										\PUBG, Fortnite, Warzone — стабильное соединение без лагов в критические моменты. Будьте первым, кто заметит врага и сделает выстрел.
+		<= Why_section $mol_view
+			sub /
+				<= Why_title $mol_view
+					sub / <= why_title @ \Почему геймеры выбирают нас
+				<= Why_grid $mol_view
+					sub /
+						<= Why1 $mol_view
+							sub /
+								<= Why1_icon $mol_view
+									sub / <= why1_icon_text \🌍
+								<= Why1_title $mol_view
+									sub / <= why1_title @ \Доступно для всех
+								<= Why1_text $mol_text
+									text @ \
+										\Мы считаем, что каждый геймер заслуживает стабильного соединения, поэтому предлагаем бесплатную версию Bog Ping наряду с премиум-планами.
+						<= Why2 $mol_view
+							sub /
+								<= Why2_icon $mol_view
+									sub / <= why2_icon_text \📊
+								<= Why2_title $mol_view
+									sub / <= why2_title @ \Прозрачная статистика
+								<= Why2_text $mol_text
+									text @ \
+										\Отслеживайте ваш пинг, джиттер и потерю пакетов в реальном времени. Подробная аналитика каждого игрового сеанса доступна в личном кабинете.
+						<= Why3 $mol_view
+							sub /
+								<= Why3_icon $mol_view
+									sub / <= why3_icon_text \💚
+								<= Why3_title $mol_view
+									sub / <= why3_title @ \Геймеры для геймеров
+								<= Why3_text $mol_text
+									text @ \
+										\Bog Ping создан командой энтузиастов киберспорта, которые понимают важность каждой миллисекунды в соревновательных играх.
