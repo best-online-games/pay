@@ -8,6 +8,7 @@ $bog_pay_app $mol_page
 		<= Tools
 	body /
 		<= Content
+		<= Footer $bog_pay_app_footer
 	Deck $mol_deck
 		Switch => Switch
 		Content => Content
@@ -16,5 +17,3 @@ $bog_pay_app $mol_page
 			<= Features_page $bog_pay_app_page_features
 			<= Games_page $bog_pay_app_page_games
 			<= About_page $bog_pay_app_page_about
-	foot /
-		<= Footer $bog_pay_app_footer
