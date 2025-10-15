@@ -12,9 +12,9 @@ namespace $.$$ {
 		},
 
 		Footer_sections: {
-			display: 'flex',
-			flexDirection: 'column',
-			gap: rem(2),
+			display: 'grid',
+			gridTemplateColumns: 'repeat(4, 1fr)',
+			gap: rem(2.5),
 			marginBottom: rem(2.5),
 		},
 
