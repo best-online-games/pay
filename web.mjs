@@ -7713,6 +7713,34 @@ var $;
 })($ || ($ = {}));
 
 ;
+"use strict";
+var $;
+(function ($) {
+    $.$bog_pay_theme = $mol_style_prop('mol_theme', [
+        'back',
+        'hover',
+        'card',
+        'current',
+        'special',
+        'text',
+        'control',
+        'shade',
+        'line',
+        'focus',
+        'field',
+        'image',
+        'spirit',
+    ]);
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("bog/pay/theme/theme.css", ":root {\n\t--mol_theme_hue: 645deg;\n\t--mol_theme_hue_spread: 90deg;\n\n\t/* алиасы фиксами, чтобы не ломать совместимость */\n\t--mol_theme_primary_hue: 645deg;\n\t--mol_theme_secondary_hue: 735deg;\n\t--mol_theme_tertiary_hue: 555deg;\n\t--mol_theme_accent_hue: 180deg;\n}\n\n:where([mol_theme]) {\n\tcolor: var(--mol_theme_text);\n\tfill: var(--mol_theme_text);\n\tbackground-color: var(--mol_theme_back);\n}\n\n/* ===================== DARK ===================== */\n\n:root,\n[mol_theme='$mol_theme_dark'],\n:where([mol_theme='$mol_theme_dark']) [mol_theme] {\n\t--mol_theme_luma: -1;\n\t--mol_theme_image: invert(1) hue-rotate(180deg);\n\t--mol_theme_spirit: #000000bf;\n\n\t/* ВАЖНО: mol_* — именно их читает демка */\n\t--mol_theme_back: #121317;\n\t--mol_theme_card: #1d202540; /* 25% */\n\t--mol_theme_field: #181b2040; /* 25% */\n\t--mol_theme_hover: #8080801a; /* 10% */\n\n\t--mol_theme_text: #e5e7eb;\n\t--mol_theme_shade: #9ca3b0;\n\t--mol_theme_line: #737b8c40; /* 25% */\n\t--mol_theme_focus: #4da3ff;\n\n\t--mol_theme_control: #4da3ff;\n\t--mol_theme_current: #20d3ee;\n\t--mol_theme_special: #f59f0a;\n}\n\n/* можно оставить дубликат в @supports — тоже mol_* */\n@supports (color: oklch(0% 0 0deg)) {\n\t:root,\n\t[mol_theme='$mol_theme_dark'],\n\t:where([mol_theme='$mol_theme_dark']) [mol_theme] {\n\t\t--mol_theme_back: #121317;\n\t\t--mol_theme_card: #1d202540;\n\t\t--mol_theme_field: #181b2040;\n\t\t--mol_theme_hover: #8080801a;\n\n\t\t--mol_theme_text: #e5e7eb;\n\t\t--mol_theme_shade: #9ca3b0;\n\t\t--mol_theme_line: #737b8c40;\n\t\t--mol_theme_focus: #4da3ff;\n\n\t\t--mol_theme_control: #4da3ff;\n\t\t--mol_theme_current: #20d3ee;\n\t\t--mol_theme_special: #f59f0a;\n\t}\n}\n\n/* ===================== LIGHT ===================== */\n\n[mol_theme='$mol_theme_light'],\n:where([mol_theme='$mol_theme_light']) [mol_theme] {\n\t--mol_theme_luma: 1;\n\t--mol_theme_image: none;\n\t--mol_theme_spirit: #ffffffbf; /* 75% */\n\n\t--mol_theme_back: #f6f7f9; /* #F5F6F8 близко */\n\t--mol_theme_card: #ffffff80; /* 50% */\n\t--mol_theme_field: #ffffffbf; /* 75% */\n\t--mol_theme_hover: #8080801a; /* 10% */\n\n\t--mol_theme_text: #1a1a1a;\n\t--mol_theme_shade: #666666;\n\t--mol_theme_line: #80808040; /* 25% */\n\t--mol_theme_focus: #297eff; /* ≈ #2A7FFF */\n\n\t--mol_theme_control: #297eff;\n\t--mol_theme_current: #1db9a4;\n\t--mol_theme_special: #ffb01f;\n}\n\n@supports (color: oklch(0% 0 0deg)) {\n\t[mol_theme='$mol_theme_light'],\n\t:where([mol_theme='$mol_theme_light']) [mol_theme] {\n\t\t--mol_theme_back: #f6f7f9;\n\t\t--mol_theme_card: #ffffff80;\n\t\t--mol_theme_field: #ffffffbf;\n\t\t--mol_theme_hover: #8080801a;\n\n\t\t--mol_theme_text: #1a1a1a;\n\t\t--mol_theme_shade: #666666;\n\t\t--mol_theme_line: #80808040;\n\t\t--mol_theme_focus: #297eff;\n\n\t\t--mol_theme_control: #297eff;\n\t\t--mol_theme_current: #1db9a4;\n\t\t--mol_theme_special: #ffb01f;\n\t}\n}\n");
+})($ || ($ = {}));
+
+;
 	($.$mol_theme_auto) = class $mol_theme_auto extends ($.$mol_plugin) {
 		dark(){
 			return "$mol_theme_dark";
@@ -7746,6 +7774,20 @@ var $;
         $$.$mol_theme_auto = $mol_theme_auto;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
+
+;
+	($.$bog_pay_theme_auto) = class $bog_pay_theme_auto extends ($.$mol_theme_auto) {
+		light(){
+			return "$mol_theme_light";
+		}
+		dark(){
+			return "$mol_theme_dark";
+		}
+	};
+
+
+;
+"use strict";
 
 ;
 	($.$bog_pay_app_home) = class $bog_pay_app_home extends ($.$mol_page) {
@@ -10689,24 +10731,13 @@ var $;
 "use strict";
 
 ;
-	($.$mol_icon_newspaper) = class $mol_icon_newspaper extends ($.$mol_icon) {
-		path(){
-			return "M20,11H4V8H20M20,15H13V13H20M20,19H13V17H20M11,19H4V13H11M20.33,4.67L18.67,3L17,4.67L15.33,3L13.67,4.67L12,3L10.33,4.67L8.67,3L7,4.67L5.33,3L3.67,4.67L2,3V19A2,2 0 0,0 4,21H20A2,2 0 0,0 22,19V3L20.33,4.67Z";
-		}
-	};
-
-
-;
-"use strict";
-
-;
 	($.$bog_pay_app) = class $bog_pay_app extends ($.$mol_book2_catalog) {
 		Lights(){
 			const obj = new this.$.$mol_lights_toggle();
 			return obj;
 		}
 		Theme(){
-			const obj = new this.$.$mol_theme_auto();
+			const obj = new this.$.$bog_pay_theme_auto();
 			return obj;
 		}
 		Home(){
@@ -10719,13 +10750,6 @@ var $;
 		}
 		Account(){
 			const obj = new this.$.$bog_pay_app_account();
-			return obj;
-		}
-		Placeholder(){
-			return null;
-		}
-		Menu_logo(){
-			const obj = new this.$.$mol_icon_newspaper();
 			return obj;
 		}
 		menu_title(){
@@ -10750,7 +10774,6 @@ var $;
 	($mol_mem(($.$bog_pay_app.prototype), "Home"));
 	($mol_mem(($.$bog_pay_app.prototype), "Games"));
 	($mol_mem(($.$bog_pay_app.prototype), "Account"));
-	($mol_mem(($.$bog_pay_app.prototype), "Menu_logo"));
 
 
 ;

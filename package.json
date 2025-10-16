@@ -185,6 +185,8 @@
     "$mol_check",
     "$mol_icon_brightness_4",
     "$mol_icon_brightness",
+    "$bog_pay_theme_auto",
+    "$bog_pay_theme",
     "$mol_theme_auto",
     "$bog_pay_app_home",
     "$bog_pay_app_games",
@@ -222,7 +224,6 @@
     "$mol_embed_rutube",
     "$mol_expander",
     "$bog_pay_app_account",
-    "$mol_icon_newspaper",
     "$mol_offline_install",
     "$mol_offline"
   ],

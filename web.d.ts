@@ -2644,6 +2644,13 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    const $bog_pay_theme: Record<"image" | "line" | "text" | "field" | "focus" | "back" | "hover" | "card" | "current" | "special" | "control" | "shade" | "spirit", $mol_style_func<"var", unknown>>;
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
 
 	export class $mol_theme_auto extends $mol_plugin {
 		dark( ): string
@@ -2663,6 +2670,16 @@ declare namespace $.$$ {
     }
 }
 
+declare namespace $ {
+
+	export class $bog_pay_theme_auto extends $mol_theme_auto {
+		light( ): string
+		dark( ): string
+	}
+	
+}
+
+//# sourceMappingURL=auto.view.tree.d.ts.map
 declare namespace $ {
 
 	export class $bog_pay_app_home extends $mol_page {
@@ -4385,15 +4402,6 @@ declare namespace $ {
 
 //# sourceMappingURL=account.view.tree.d.ts.map
 declare namespace $ {
-
-	export class $mol_icon_newspaper extends $mol_icon {
-		path( ): string
-	}
-	
-}
-
-//# sourceMappingURL=newspaper.view.tree.d.ts.map
-declare namespace $ {
     function $mol_offline(): void;
 }
 
@@ -4408,12 +4416,10 @@ declare namespace $ {
 
 	export class $bog_pay_app extends $mol_book2_catalog {
 		Lights( ): $mol_lights_toggle
-		Theme( ): $mol_theme_auto
+		Theme( ): $bog_pay_theme_auto
 		Home( ): $bog_pay_app_home
 		Games( ): $bog_pay_app_games
 		Account( ): $bog_pay_app_account
-		Placeholder( ): any
-		Menu_logo( ): $mol_icon_newspaper
 		menu_title( ): string
 		menu_tools( ): readonly(any)[]
 		plugins( ): readonly(any)[]

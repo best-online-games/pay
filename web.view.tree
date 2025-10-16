@@ -357,6 +357,10 @@ $mol_theme_auto $mol_plugin
 	light \$mol_theme_light
 	attr * mol_theme <= theme <= dark \$mol_theme_dark
 
+$bog_pay_theme_auto $mol_theme_auto
+	light \$mol_theme_light
+	dark \$mol_theme_dark
+
 $bog_pay_app_home $mol_page
 	title \Bog Ping
 	Head null
@@ -804,16 +808,12 @@ $bog_pay_app_account $mol_page
 		<= Content $mol_text
 			text @ \Личный кабинет - в разработке
 
-$mol_icon_newspaper $mol_icon path \M20,11H4V8H20M20,15H13V13H20M20,19H13V17H20M11,19H4V13H11M20.33,4.67L18.67,3L17,4.67L15.33,3L13.67,4.67L12,3L10.33,4.67L8.67,3L7,4.67L5.33,3L3.67,4.67L2,3V19A2,2 0 0,0 4,21H20A2,2 0 0,0 22,19V3L20.33,4.67Z
-
 $bog_pay_app $mol_book2_catalog
-	Placeholder null
-	Menu_logo $mol_icon_newspaper
-	menu_title @ \VibeNews - your favorites 
+	menu_title @ \Bog Ping 
 	menu_tools /
 		<= Lights $mol_lights_toggle
 	plugins /
-		<= Theme $mol_theme_auto
+		<= Theme $bog_pay_theme_auto
 	spreads *
 		home <= Home $bog_pay_app_home
 		games <= Games $bog_pay_app_games
