@@ -1,6 +1,6 @@
 $bog_pay_app $mol_page
 	plugins /
-		<= Theme $mol_theme_auto
+		<= Theme $bog_pay_theme_auto
 	head /
 		<= Switch
 		<= Lights $mol_lights_toggle
