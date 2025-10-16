@@ -9915,6 +9915,9 @@ var $;
                 alignItems: 'center',
                 justifyContent: 'center',
             },
+            Body: {
+                contain: 'none',
+            },
         });
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -10291,6 +10294,9 @@ var $;
                             font: {
                                 size: 'larger',
                                 weight: 'bold',
+                            },
+                            ':hover': {
+                                background: { color: '#667eea00' },
                             },
                         },
                         ':nth-of-type(2)': {
