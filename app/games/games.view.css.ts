@@ -51,5 +51,8 @@ namespace $.$$ {
 			alignItems: 'center',
 			justifyContent: 'center',
 		},
+		Body: {
+			contain: 'none',
+		},
 	})
 }
