@@ -1,17 +1,22 @@
-$bog_pay_app_deck $mol_deck
-	items /
-		<= Home_page
-		<= Games_page
-		<= Account_page
-	Home_page $mol_page
-		title @ \Главная
-		body /
-			<= Home $bog_pay_app_home
-	Games_page $mol_page
-		title @ \Игры
-		body /
-			<= Games $bog_pay_app_games
-	Account_page $mol_page
-		title @ \Личный кабинет
-		body /
-			<= Account $bog_pay_app_account
+$bog_pay_app_deck $mol_page
+	head /
+		<= Tabs $mol_bar
+			sub /
+				<= Home_btn $bog_pay_app_deck_homebtn
+					select? <=> home_select?
+				<= Games_btn $bog_pay_app_deck_gamesbtn
+					select? <=> games_select?
+				<= Account_btn $bog_pay_app_deck_accountbtn
+					select? <=> account_select?
+	body /
+		<= Page_content $mol_view
+			sub <= page_current /
+				<= Home_page $mol_page
+					body /
+						<= Home $bog_pay_app_home
+				<= Games_page $mol_page
+					body /
+						<= Games $bog_pay_app_games
+				<= Account_page $mol_page
+					body /
+						<= Account $bog_pay_app_account

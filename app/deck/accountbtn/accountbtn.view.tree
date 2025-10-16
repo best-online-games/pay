@@ -1,0 +1,4 @@
+$bog_pay_app_deck_accountbtn $mol_button_minor
+	click? <=> select?
+	sub /
+		<= Title @ \Личный кабинет

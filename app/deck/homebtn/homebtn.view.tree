@@ -1,0 +1,4 @@
+$bog_pay_app_deck_homebtn $mol_button_minor
+	click? <=> select?
+	sub /
+		<= Title @ \Главная

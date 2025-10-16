@@ -2,10 +2,10 @@ $bog_pay_app $mol_page
 	plugins /
 		<= Theme $bog_pay_theme_auto
 	head /
-		<= Menu_switch
+		<= Menu_tabs
 		<= Lights $mol_lights_toggle
 	body /
-		<= Menu_content
+		<= Menu_body
 	Menu $bog_pay_app_deck
-		Switch => Menu_switch
-		Content => Menu_content
+		Tabs => Menu_tabs
+		Page_content => Menu_body
