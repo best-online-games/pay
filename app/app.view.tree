@@ -7,6 +7,6 @@ $bog_pay_app $mol_book2_catalog
 	plugins /
 		<= Theme $mol_theme_auto
 	spreads *
-		<= Home $bog_pay_app_home
-		<= Games $bog_pay_app_games
-		<= Account $bog_pay_app_account
+		home <= Home $bog_pay_app_home
+		games <= Games $bog_pay_app_games
+		account <= Account $bog_pay_app_account
