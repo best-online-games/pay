@@ -5,13 +5,13 @@ $bog_pay_app $mol_page
 		<= Nav_buttons $mol_bar
 			sub /
 				<= Home_button $mol_button_minor
-					click? <=> home_open?
+					click? <=> home_open? null
 					sub / <= Home_title @ \Bog Ping
 				<= Games_button $mol_button_minor
-					click? <=> games_open?
+					click? <=> games_open? null
 					sub / <= Games_title @ \Игры
 				<= Account_button $mol_button_minor
-					click? <=> account_open?
+					click? <=> account_open? null
 					sub / <= Account_title @ \Личный кабинет
 		<= Lights $mol_lights_toggle
 	body /

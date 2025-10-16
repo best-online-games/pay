@@ -12,7 +12,7 @@ namespace $.$$ {
 				color: 'orange',
 			},
 			color: 'white',
-			padding: '12px 20px',
+			padding: ['12px', '20px'],
 			border: {
 				radius: '8px',
 			},
@@ -30,7 +30,7 @@ namespace $.$$ {
 				color: 'blue',
 			},
 			color: 'white',
-			padding: '12px 20px',
+			padding: ['12px', '20px'],
 			border: {
 				radius: '8px',
 			},
@@ -48,7 +48,7 @@ namespace $.$$ {
 				color: 'green',
 			},
 			color: 'white',
-			padding: '12px 20px',
+			padding: ['12px', '20px'],
 			border: {
 				radius: '8px',
 			},
