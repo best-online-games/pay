@@ -38,10 +38,6 @@ $mol_theme_auto $mol_plugin
 	light \$mol_theme_light
 	attr * mol_theme <= theme <= dark \$mol_theme_dark
 
-$bog_pay_theme_auto $mol_theme_auto
-	light \$mol_theme_light
-	dark \$mol_theme_dark
-
 $mol_speck $mol_view
 	theme \$mol_theme_accent
 	sub /
@@ -72,8 +68,6 @@ $mol_button_typed $mol_button
 	minimal_width 40
 
 $mol_button_minor $mol_button_typed
-
-$mol_bar $mol_view
 
 $mol_check $mol_button_minor
 	attr *
@@ -125,25 +119,6 @@ $mol_lights_toggle $mol_check_icon
 	Icon <= Lights_icon $mol_icon_brightness_4
 	hint @ \Toggle lights
 	checked? <=> lights? false
-
-$bog_pay_app $mol_page
-	plugins /
-		<= Theme $bog_pay_theme_auto
-	head /
-		<= Nav_buttons $mol_bar
-			sub /
-				<= Home_button $mol_button_minor
-					click? <=> home_open? null
-					sub / <= Home_title @ \Bog Ping
-				<= Games_button $mol_button_minor
-					click? <=> games_open? null
-					sub / <= Games_title @ \Игры
-				<= Account_button $mol_button_minor
-					click? <=> account_open? null
-					sub / <= Account_title @ \Личный кабинет
-		<= Lights $mol_lights_toggle
-	body /
-		<= Page_content
 
 $bog_pay_app_home $mol_page
 	title \Bog Ping
@@ -644,3 +619,43 @@ $bog_pay_app_account $mol_page
 	body /
 		<= Content $mol_text
 			text @ \Личный кабинет - в разработке
+
+$mol_check_list $mol_view
+	dictionary *
+	Option* $mol_check
+		checked? <=> option_checked*? false
+		label <= option_label* /
+			<= option_title* \
+		enabled <= option_enabled* <= enabled true
+		hint <= option_hint* \
+		minimal_height 24
+	options *
+	keys /string
+	sub <= items /$mol_check
+
+$mol_switch $mol_check_list
+	value? \
+
+$mol_deck $mol_list
+	items /$mol_view
+	rows /$mol_view
+		<= Switch $mol_switch
+			value? <=> current? \0
+			options <= switch_options *
+		<= Content $mol_view
+
+$bog_pay_app $mol_page
+	plugins /
+		<= Theme $mol_theme_auto
+	head /
+		<= Switch
+		<= Lights $mol_lights_toggle
+	body /
+		<= Content
+	Deck $mol_deck
+		Switch => Switch
+		Content => Content
+		items /
+			<= Home $bog_pay_app_home
+			<= Games $bog_pay_app_games
+			<= Personal_cabinet $bog_pay_app_account
