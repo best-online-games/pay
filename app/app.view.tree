@@ -2,7 +2,7 @@ $bog_pay_app $mol_page
 	plugins /
 		<= Theme $bog_pay_theme_auto
 	head /
-		<= Deck_switchMenu_switch
+		<= Menu_switch
 		<= Lights $mol_lights_toggle
 	body /
 		<= Menu_content
