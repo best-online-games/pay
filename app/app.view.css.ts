@@ -2,8 +2,6 @@ namespace $.$$ {
 	$mol_style_define($bog_pay_app, {
 		Deck: {
 			Switch: {
-				display: 'flex',
-				flexDirection: 'row',
 				justifyContent: 'space-between',
 				Option: {
 					':nth-of-type(1)': {
