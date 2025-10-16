@@ -5323,72 +5323,6 @@ var $;
 "use strict";
 
 ;
-"use strict";
-var $;
-(function ($) {
-    class $mol_locale extends $mol_object {
-        static lang_default() {
-            return 'en';
-        }
-        static lang(next) {
-            return this.$.$mol_state_local.value('locale', next) || $mol_dom_context.navigator.language.replace(/-.*/, '') || this.lang_default();
-        }
-        static source(lang) {
-            return JSON.parse(this.$.$mol_file.relative(`web.locale=${lang}.json`).text().toString());
-        }
-        static texts(lang, next) {
-            if (next)
-                return next;
-            try {
-                return this.source(lang).valueOf();
-            }
-            catch (error) {
-                if ($mol_fail_catch(error)) {
-                    const def = this.lang_default();
-                    if (lang === def)
-                        throw error;
-                }
-            }
-            return {};
-        }
-        static text(key) {
-            const lang = this.lang();
-            const target = this.texts(lang)[key];
-            if (target)
-                return target;
-            this.warn(key);
-            const en = this.texts('en')[key];
-            if (!en)
-                return key;
-            return en;
-        }
-        static warn(key) {
-            console.warn(`Not translated to "${this.lang()}": ${key}`);
-            return null;
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_locale, "lang_default", null);
-    __decorate([
-        $mol_mem
-    ], $mol_locale, "lang", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_locale, "source", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_locale, "texts", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_locale, "text", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_locale, "warn", null);
-    $.$mol_locale = $mol_locale;
-})($ || ($ = {}));
-
-;
 	($.$mol_speck) = class $mol_speck extends ($.$mol_view) {
 		value(){
 			return null;
@@ -5733,20 +5667,6 @@ var $;
 "use strict";
 
 ;
-	($.$mol_bar) = class $mol_bar extends ($.$mol_view) {};
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/bar/bar.view.css", "[mol_bar] {\n\tdisplay: flex;\n\t/* box-shadow: inset 0 0 0 1px var(--mol_theme_line); */\n\tborder-radius: var(--mol_gap_round);\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-;
 	($.$mol_check) = class $mol_check extends ($.$mol_button_minor) {
 		checked(next){
 			if(next !== undefined) return next;
@@ -6023,6 +5943,72 @@ var $;
 "use strict";
 
 ;
+"use strict";
+var $;
+(function ($) {
+    class $mol_locale extends $mol_object {
+        static lang_default() {
+            return 'en';
+        }
+        static lang(next) {
+            return this.$.$mol_state_local.value('locale', next) || $mol_dom_context.navigator.language.replace(/-.*/, '') || this.lang_default();
+        }
+        static source(lang) {
+            return JSON.parse(this.$.$mol_file.relative(`web.locale=${lang}.json`).text().toString());
+        }
+        static texts(lang, next) {
+            if (next)
+                return next;
+            try {
+                return this.source(lang).valueOf();
+            }
+            catch (error) {
+                if ($mol_fail_catch(error)) {
+                    const def = this.lang_default();
+                    if (lang === def)
+                        throw error;
+                }
+            }
+            return {};
+        }
+        static text(key) {
+            const lang = this.lang();
+            const target = this.texts(lang)[key];
+            if (target)
+                return target;
+            this.warn(key);
+            const en = this.texts('en')[key];
+            if (!en)
+                return key;
+            return en;
+        }
+        static warn(key) {
+            console.warn(`Not translated to "${this.lang()}": ${key}`);
+            return null;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_locale, "lang_default", null);
+    __decorate([
+        $mol_mem
+    ], $mol_locale, "lang", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_locale, "source", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_locale, "texts", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_locale, "text", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_locale, "warn", null);
+    $.$mol_locale = $mol_locale;
+})($ || ($ = {}));
+
+;
 	($.$mol_lights_toggle) = class $mol_lights_toggle extends ($.$mol_check_icon) {
 		Lights_icon(){
 			const obj = new this.$.$mol_icon_brightness_4();
@@ -6063,85 +6049,6 @@ var $;
         $$.$mol_lights_toggle = $mol_lights_toggle;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
-
-;
-	($.$bog_pay_app) = class $bog_pay_app extends ($.$mol_page) {
-		Theme(){
-			const obj = new this.$.$bog_pay_theme_auto();
-			return obj;
-		}
-		home_open(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Home_title(){
-			return (this.$.$mol_locale.text("$bog_pay_app_Home_title"));
-		}
-		Home_button(){
-			const obj = new this.$.$mol_button_minor();
-			(obj.click) = (next) => ((this.home_open(next)));
-			(obj.sub) = () => ([(this.Home_title())]);
-			return obj;
-		}
-		games_open(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Games_title(){
-			return (this.$.$mol_locale.text("$bog_pay_app_Games_title"));
-		}
-		Games_button(){
-			const obj = new this.$.$mol_button_minor();
-			(obj.click) = (next) => ((this.games_open(next)));
-			(obj.sub) = () => ([(this.Games_title())]);
-			return obj;
-		}
-		account_open(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Account_title(){
-			return (this.$.$mol_locale.text("$bog_pay_app_Account_title"));
-		}
-		Account_button(){
-			const obj = new this.$.$mol_button_minor();
-			(obj.click) = (next) => ((this.account_open(next)));
-			(obj.sub) = () => ([(this.Account_title())]);
-			return obj;
-		}
-		Nav_buttons(){
-			const obj = new this.$.$mol_bar();
-			(obj.sub) = () => ([
-				(this.Home_button()), 
-				(this.Games_button()), 
-				(this.Account_button())
-			]);
-			return obj;
-		}
-		Lights(){
-			const obj = new this.$.$mol_lights_toggle();
-			return obj;
-		}
-		plugins(){
-			return [(this.Theme())];
-		}
-		head(){
-			return [(this.Nav_buttons()), (this.Lights())];
-		}
-		body(){
-			return [(this.Page_content())];
-		}
-	};
-	($mol_mem(($.$bog_pay_app.prototype), "Theme"));
-	($mol_mem(($.$bog_pay_app.prototype), "home_open"));
-	($mol_mem(($.$bog_pay_app.prototype), "Home_button"));
-	($mol_mem(($.$bog_pay_app.prototype), "games_open"));
-	($mol_mem(($.$bog_pay_app.prototype), "Games_button"));
-	($mol_mem(($.$bog_pay_app.prototype), "account_open"));
-	($mol_mem(($.$bog_pay_app.prototype), "Account_button"));
-	($mol_mem(($.$bog_pay_app.prototype), "Nav_buttons"));
-	($mol_mem(($.$bog_pay_app.prototype), "Lights"));
-
 
 ;
 	($.$bog_pay_app_home) = class $bog_pay_app_home extends ($.$mol_page) {
@@ -10020,6 +9927,259 @@ var $;
 "use strict";
 
 ;
+	($.$mol_check_list) = class $mol_check_list extends ($.$mol_view) {
+		option_checked(id, next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		option_title(id){
+			return "";
+		}
+		option_label(id){
+			return [(this.option_title(id))];
+		}
+		enabled(){
+			return true;
+		}
+		option_enabled(id){
+			return (this.enabled());
+		}
+		option_hint(id){
+			return "";
+		}
+		items(){
+			return [];
+		}
+		dictionary(){
+			return {};
+		}
+		Option(id){
+			const obj = new this.$.$mol_check();
+			(obj.checked) = (next) => ((this.option_checked(id, next)));
+			(obj.label) = () => ((this.option_label(id)));
+			(obj.enabled) = () => ((this.option_enabled(id)));
+			(obj.hint) = () => ((this.option_hint(id)));
+			(obj.minimal_height) = () => (24);
+			return obj;
+		}
+		options(){
+			return {};
+		}
+		keys(){
+			return [];
+		}
+		sub(){
+			return (this.items());
+		}
+	};
+	($mol_mem_key(($.$mol_check_list.prototype), "option_checked"));
+	($mol_mem_key(($.$mol_check_list.prototype), "Option"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_check_list extends $.$mol_check_list {
+            options() {
+                return {};
+            }
+            dictionary(next) {
+                return next ?? {};
+            }
+            option_checked(id, next) {
+                const prev = this.dictionary();
+                if (next === undefined)
+                    return prev[id] ?? null;
+                const next_rec = { ...prev, [id]: next };
+                if (next === null)
+                    delete next_rec[id];
+                return this.dictionary(next_rec)[id] ?? null;
+            }
+            keys() {
+                return Object.keys(this.options());
+            }
+            items() {
+                return this.keys().map(key => this.Option(key));
+            }
+            option_title(key) {
+                return this.options()[key] || key;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_check_list.prototype, "keys", null);
+        __decorate([
+            $mol_mem
+        ], $mol_check_list.prototype, "items", null);
+        $$.$mol_check_list = $mol_check_list;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/check/list/list.view.css", "[mol_check_list] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tflex: 1 1 auto;\n\tborder-radius: var(--mol_gap_round);\n\tgap: 1px;\n}\n\n[mol_check_list_option] {\n\tflex: 0 1 auto;\n}\n\n[mol_check_list_option]:where([mol_check_checked=\"true\"]) {\n\ttext-shadow: 0 0;\n\tcolor: var(--mol_theme_current);\n}\n\n[mol_check_list_option]:where([mol_check_checked=\"true\"][disabled]) {\n\tcolor: var(--mol_theme_text);\n}\n");
+})($ || ($ = {}));
+
+;
+	($.$mol_switch) = class $mol_switch extends ($.$mol_check_list) {
+		value(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+	};
+	($mol_mem(($.$mol_switch.prototype), "value"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_switch extends $.$mol_switch {
+            value(next) {
+                return $mol_state_session.value(`${this}.value()`, next) ?? '';
+            }
+            option_checked(key, next) {
+                if (next === undefined)
+                    return this.value() == key;
+                this.value(next ? key : '');
+                return next;
+            }
+        }
+        $$.$mol_switch = $mol_switch;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$mol_deck) = class $mol_deck extends ($.$mol_list) {
+		current(next){
+			if(next !== undefined) return next;
+			return "0";
+		}
+		switch_options(){
+			return {};
+		}
+		Switch(){
+			const obj = new this.$.$mol_switch();
+			(obj.value) = (next) => ((this.current(next)));
+			(obj.options) = () => ((this.switch_options()));
+			return obj;
+		}
+		Content(){
+			const obj = new this.$.$mol_view();
+			return obj;
+		}
+		items(){
+			return [];
+		}
+		rows(){
+			return [(this.Switch()), (this.Content())];
+		}
+	};
+	($mol_mem(($.$mol_deck.prototype), "current"));
+	($mol_mem(($.$mol_deck.prototype), "Switch"));
+	($mol_mem(($.$mol_deck.prototype), "Content"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_deck extends $.$mol_deck {
+            current(next) {
+                return $mol_state_session.value(`${this}.current()`, next) || '0';
+            }
+            switch_options() {
+                let options = {};
+                this.items().forEach((item, index) => {
+                    options[String(index)] = item.title();
+                });
+                return options;
+            }
+            Content() {
+                return this.items()[Number(this.current())];
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_deck.prototype, "Content", null);
+        $$.$mol_deck = $mol_deck;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$bog_pay_app) = class $bog_pay_app extends ($.$mol_page) {
+		Theme(){
+			const obj = new this.$.$bog_pay_theme_auto();
+			return obj;
+		}
+		Lights(){
+			const obj = new this.$.$mol_lights_toggle();
+			return obj;
+		}
+		Switch(){
+			return (this.Deck().Switch());
+		}
+		Content(){
+			return (this.Deck().Content());
+		}
+		Home(){
+			const obj = new this.$.$bog_pay_app_home();
+			return obj;
+		}
+		Games(){
+			const obj = new this.$.$bog_pay_app_games();
+			return obj;
+		}
+		Personal_cabinet(){
+			const obj = new this.$.$bog_pay_app_account();
+			return obj;
+		}
+		plugins(){
+			return [(this.Theme())];
+		}
+		head(){
+			return [(this.Switch()), (this.Lights())];
+		}
+		body(){
+			return [(this.Content())];
+		}
+		Deck(){
+			const obj = new this.$.$mol_deck();
+			(obj.items) = () => ([
+				(this.Home()), 
+				(this.Games()), 
+				(this.Personal_cabinet())
+			]);
+			return obj;
+		}
+	};
+	($mol_mem(($.$bog_pay_app.prototype), "Theme"));
+	($mol_mem(($.$bog_pay_app.prototype), "Lights"));
+	($mol_mem(($.$bog_pay_app.prototype), "Home"));
+	($mol_mem(($.$bog_pay_app.prototype), "Games"));
+	($mol_mem(($.$bog_pay_app.prototype), "Personal_cabinet"));
+	($mol_mem(($.$bog_pay_app.prototype), "Deck"));
+
+
+;
 "use strict";
 var $;
 (function ($) {
@@ -10107,62 +10267,15 @@ var $;
     var $$;
     (function ($$) {
         $mol_style_define($bog_pay_app, {
-            flex: {
-                grow: 1,
-            },
-            display: 'flex',
-            flexDirection: 'column',
-            Home_button: {
-                background: {
-                    color: 'orange',
-                },
-                color: 'white',
-                padding: ['12px', '20px'],
-                border: {
-                    radius: '8px',
-                },
-                fontWeight: 'bold',
-                ':hover': {
-                    background: {
-                        color: 'darkorange',
+            Deck: {
+                Switch: {
+                    Option: {
+                        ':first-of-type': {
+                            color: 'black',
+                        },
+                        color: 'aliceblue',
                     },
                 },
-            },
-            Games_button: {
-                background: {
-                    color: 'blue',
-                },
-                color: 'white',
-                padding: ['12px', '20px'],
-                border: {
-                    radius: '8px',
-                },
-                fontWeight: 'bold',
-                ':hover': {
-                    background: {
-                        color: 'darkblue',
-                    },
-                },
-            },
-            Account_button: {
-                background: {
-                    color: 'green',
-                },
-                color: 'white',
-                padding: ['12px', '20px'],
-                border: {
-                    radius: '8px',
-                },
-                fontWeight: 'bold',
-                ':hover': {
-                    background: {
-                        color: 'darkgreen',
-                    },
-                },
-            },
-            Nav_buttons: {
-                gap: '10px',
-                padding: '10px',
             },
         });
     })($$ = $.$$ || ($.$$ = {}));
