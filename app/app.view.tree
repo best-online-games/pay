@@ -1,10 +1,30 @@
-$bog_pay_app $mol_book2_catalog
-	menu_title @ \Bog Ping 
-	menu_tools /
-		<= Lights $mol_lights_toggle
+$bog_pay_app $mol_page
 	plugins /
 		<= Theme $bog_pay_theme_auto
-	spreads *
-		home <= Home $bog_pay_app_home
-		games <= Games $bog_pay_app_games
-		account <= Account $bog_pay_app_account
+	head /
+		<= Deck_switch
+		<= Lights $mol_lights_toggle
+	body /
+		<= Deck_content
+	Deck $mol_deck
+		Switch => Deck_switch
+		Content => Deck_content
+		items /
+			<= Home_tab
+			<= Games_tab
+			<= Account_tab
+	Home_tab $mol_page
+		Head null
+		title @ \Главная
+		body /
+			<= Home $bog_pay_app_home
+	Games_tab $mol_page
+		Head null
+		title @ \Игры
+		body /
+			<= Games $bog_pay_app_games
+	Account_tab $mol_page
+		Head null
+		title @ \Личный кабинет
+		body /
+			<= Account $bog_pay_app_account
