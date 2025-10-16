@@ -3,8 +3,8 @@ namespace $.$$ {
 		Deck: {
 			Switch: {
 				display: 'flex',
+				flexDirection: 'row',
 				justifyContent: 'space-between',
-				width: '100%',
 				Option: {
 					':nth-of-type(1)': {
 						color: '#667eea',
