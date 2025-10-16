@@ -1,11 +1,9 @@
 $bog_pay_app $mol_book2_catalog
-	Placeholder null
-	Menu_logo $mol_icon_newspaper
-	menu_title @ \VibeNews - your favorites 
+	menu_title @ \Bog Ping 
 	menu_tools /
 		<= Lights $mol_lights_toggle
 	plugins /
-		<= Theme $mol_theme_auto
+		<= Theme $bog_pay_theme_auto
 	spreads *
 		home <= Home $bog_pay_app_home
 		games <= Games $bog_pay_app_games
