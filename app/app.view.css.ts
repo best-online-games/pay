@@ -10,7 +10,7 @@ namespace $.$$ {
 							weight: 'bold',
 						},
 						':hover': {
-							background: { color: '#667eea00`' },
+							background: { color: '#667eea00' },
 						},
 					},
 					':nth-of-type(2)': {
