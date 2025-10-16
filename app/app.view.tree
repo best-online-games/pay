@@ -8,7 +8,7 @@ $bog_pay_app $mol_page
 		<= Content
 	Deck $mol_deck
 		Switch => Switch
-		Content => Content
+		Content => Content 
 		items /
 			<= Home $bog_pay_app_home
 			<= Games $bog_pay_app_games
