@@ -1813,19 +1813,6 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-
-	export class $bog_pay_app_home extends $mol_page {
-		title( ): string
-		Head( ): any
-	}
-	
-}
-
-//# sourceMappingURL=home.view.tree.d.ts.map
-declare namespace $.$$ {
-}
-
-declare namespace $ {
     function $mol_support_css_overflow_anchor(this: $): boolean;
 }
 
@@ -3583,6 +3570,26 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=list.view.tree.d.ts.map
+declare namespace $ {
+
+	type $mol_text__text_bog_pay_app_home_1 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_text['text'] >
+	>
+	export class $bog_pay_app_home extends $mol_page {
+		Content( ): $mol_text
+		title( ): string
+		Head( ): any
+		body( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=home.view.tree.d.ts.map
+declare namespace $.$$ {
+}
+
 declare namespace $ {
 
 	type $mol_view__sub_bog_pay_app_games_1 = $mol_type_enforce<
