@@ -9908,7 +9908,7 @@ var $;
                 Switch: {
                     Option: {
                         ':nth-of-type(1)': {
-                            background: { color: '#667eea' },
+                            backgroundImage: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                             color: 'white',
                             borderRadius: '8px',
                             padding: { top: '12px', right: '24px', bottom: '12px', left: '24px' },
