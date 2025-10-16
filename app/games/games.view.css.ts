@@ -7,8 +7,24 @@ namespace $.$$ {
 			gridGap: '10px',
 			padding: '10px',
 		},
+		// кнопка описания для каких игр
+		Games_title: {
+			position: 'absolute',
+			top: '10%',
+			left: '50%',
+			transform: 'translate(-50%, -50%)',
+			color: 'black',
+			fontSize: '40px',
+			fontWeight: '700',
+			margin: '10px',
+			fontFamily: 'Arial, sans-serif',
+		},
 
 		Games_grid: {
+			position: 'absolute',
+			top: '150%',
+			left: '50%',
+			transform: 'translate(-50%, -50%)',
 			display: 'flex',
 			flexDirection: 'column',
 			gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
@@ -17,6 +33,7 @@ namespace $.$$ {
 		},
 
 		Body_content: {
+			contain: 'none',
 			display: 'flex',
 			flexDirection: 'column',
 			alignItems: 'center',
