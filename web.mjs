@@ -9898,10 +9898,15 @@ var $;
             Deck: {
                 Switch: {
                     Option: {
-                        ':first-of-type': {
+                        ':nth-of-type(1)': {
+                            color: 'azure',
+                        },
+                        ':nth-of-type(2)': {
                             color: 'black',
                         },
-                        color: 'aliceblue',
+                        ':nth-of-type(3)': {
+                            color: 'red',
+                        },
                     },
                 },
             },
