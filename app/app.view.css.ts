@@ -3,7 +3,13 @@ namespace $.$$ {
 		Deck: {
 			Switch: {
 				Option: {
-					':nth-of-type(1)': {},
+					':nth-of-type(1)': {
+						color: '#667eea',
+						font: {
+							size: 'larger',
+							weight: 'bold',
+						},
+					},
 					':nth-of-type(2)': {
 						color: 'black',
 					},
@@ -12,7 +18,10 @@ namespace $.$$ {
 						color: 'white',
 						borderRadius: '8px',
 						padding: { top: '12px', right: '24px', bottom: '12px', left: '24px' },
-						fontWeight: '500',
+						font: {
+							size: 'large',
+							weight: 'bold',
+						},
 					},
 				},
 			},
