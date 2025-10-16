@@ -5237,6 +5237,34 @@ var $;
 })($ || ($ = {}));
 
 ;
+"use strict";
+var $;
+(function ($) {
+    $.$bog_pay_theme = $mol_style_prop('mol_theme', [
+        'back',
+        'hover',
+        'card',
+        'current',
+        'special',
+        'text',
+        'control',
+        'shade',
+        'line',
+        'focus',
+        'field',
+        'image',
+        'spirit',
+    ]);
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("bog/pay/theme/theme.css", ":root {\n\t--mol_theme_hue: 645deg;\n\t--mol_theme_hue_spread: 90deg;\n\n\t/* алиасы фиксами, чтобы не ломать совместимость */\n\t--mol_theme_primary_hue: 645deg;\n\t--mol_theme_secondary_hue: 735deg;\n\t--mol_theme_tertiary_hue: 555deg;\n\t--mol_theme_accent_hue: 180deg;\n}\n\n:where([mol_theme]) {\n\tcolor: var(--mol_theme_text);\n\tfill: var(--mol_theme_text);\n\tbackground-color: var(--mol_theme_back);\n}\n\n/* ===================== DARK ===================== */\n\n:root,\n[mol_theme='$mol_theme_dark'],\n:where([mol_theme='$mol_theme_dark']) [mol_theme] {\n\t--mol_theme_luma: -1;\n\t--mol_theme_image: invert(1) hue-rotate(180deg);\n\t--mol_theme_spirit: #000000bf;\n\n\t/* ВАЖНО: mol_* — именно их читает демка */\n\t--mol_theme_back: #121317;\n\t--mol_theme_card: #1d202540; /* 25% */\n\t--mol_theme_field: #181b2040; /* 25% */\n\t--mol_theme_hover: #8080801a; /* 10% */\n\n\t--mol_theme_text: #e5e7eb;\n\t--mol_theme_shade: #9ca3b0;\n\t--mol_theme_line: #737b8c40; /* 25% */\n\t--mol_theme_focus: #4da3ff;\n\n\t--mol_theme_control: #4da3ff;\n\t--mol_theme_current: #20d3ee;\n\t--mol_theme_special: #f59f0a;\n}\n\n/* можно оставить дубликат в @supports — тоже mol_* */\n@supports (color: oklch(0% 0 0deg)) {\n\t:root,\n\t[mol_theme='$mol_theme_dark'],\n\t:where([mol_theme='$mol_theme_dark']) [mol_theme] {\n\t\t--mol_theme_back: #121317;\n\t\t--mol_theme_card: #1d202540;\n\t\t--mol_theme_field: #181b2040;\n\t\t--mol_theme_hover: #8080801a;\n\n\t\t--mol_theme_text: #e5e7eb;\n\t\t--mol_theme_shade: #9ca3b0;\n\t\t--mol_theme_line: #737b8c40;\n\t\t--mol_theme_focus: #4da3ff;\n\n\t\t--mol_theme_control: #4da3ff;\n\t\t--mol_theme_current: #20d3ee;\n\t\t--mol_theme_special: #f59f0a;\n\t}\n}\n\n/* ===================== LIGHT ===================== */\n\n[mol_theme='$mol_theme_light'],\n:where([mol_theme='$mol_theme_light']) [mol_theme] {\n\t--mol_theme_luma: 1;\n\t--mol_theme_image: none;\n\t--mol_theme_spirit: #ffffffbf; /* 75% */\n\n\t--mol_theme_back: #f6f7f9; /* #F5F6F8 близко */\n\t--mol_theme_card: #ffffff80; /* 50% */\n\t--mol_theme_field: #ffffffbf; /* 75% */\n\t--mol_theme_hover: #8080801a; /* 10% */\n\n\t--mol_theme_text: #1a1a1a;\n\t--mol_theme_shade: #666666;\n\t--mol_theme_line: #80808040; /* 25% */\n\t--mol_theme_focus: #297eff; /* ≈ #2A7FFF */\n\n\t--mol_theme_control: #297eff;\n\t--mol_theme_current: #1db9a4;\n\t--mol_theme_special: #ffb01f;\n}\n\n@supports (color: oklch(0% 0 0deg)) {\n\t[mol_theme='$mol_theme_light'],\n\t:where([mol_theme='$mol_theme_light']) [mol_theme] {\n\t\t--mol_theme_back: #f6f7f9;\n\t\t--mol_theme_card: #ffffff80;\n\t\t--mol_theme_field: #ffffffbf;\n\t\t--mol_theme_hover: #8080801a;\n\n\t\t--mol_theme_text: #1a1a1a;\n\t\t--mol_theme_shade: #666666;\n\t\t--mol_theme_line: #80808040;\n\t\t--mol_theme_focus: #297eff;\n\n\t\t--mol_theme_control: #297eff;\n\t\t--mol_theme_current: #1db9a4;\n\t\t--mol_theme_special: #ffb01f;\n\t}\n}\n");
+})($ || ($ = {}));
+
+;
 	($.$mol_theme_auto) = class $mol_theme_auto extends ($.$mol_plugin) {
 		dark(){
 			return "$mol_theme_dark";
@@ -5269,6 +5297,86 @@ var $;
         }
         $$.$mol_theme_auto = $mol_theme_auto;
     })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$bog_pay_theme_auto) = class $bog_pay_theme_auto extends ($.$mol_theme_auto) {
+		light(){
+			return "$mol_theme_light";
+		}
+		dark(){
+			return "$mol_theme_dark";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_locale extends $mol_object {
+        static lang_default() {
+            return 'en';
+        }
+        static lang(next) {
+            return this.$.$mol_state_local.value('locale', next) || $mol_dom_context.navigator.language.replace(/-.*/, '') || this.lang_default();
+        }
+        static source(lang) {
+            return JSON.parse(this.$.$mol_file.relative(`web.locale=${lang}.json`).text().toString());
+        }
+        static texts(lang, next) {
+            if (next)
+                return next;
+            try {
+                return this.source(lang).valueOf();
+            }
+            catch (error) {
+                if ($mol_fail_catch(error)) {
+                    const def = this.lang_default();
+                    if (lang === def)
+                        throw error;
+                }
+            }
+            return {};
+        }
+        static text(key) {
+            const lang = this.lang();
+            const target = this.texts(lang)[key];
+            if (target)
+                return target;
+            this.warn(key);
+            const en = this.texts('en')[key];
+            if (!en)
+                return key;
+            return en;
+        }
+        static warn(key) {
+            console.warn(`Not translated to "${this.lang()}": ${key}`);
+            return null;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_locale, "lang_default", null);
+    __decorate([
+        $mol_mem
+    ], $mol_locale, "lang", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_locale, "source", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_locale, "texts", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_locale, "text", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_locale, "warn", null);
+    $.$mol_locale = $mol_locale;
 })($ || ($ = {}));
 
 ;
@@ -5616,6 +5724,20 @@ var $;
 "use strict";
 
 ;
+	($.$mol_bar) = class $mol_bar extends ($.$mol_view) {};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/bar/bar.view.css", "[mol_bar] {\n\tdisplay: flex;\n\t/* box-shadow: inset 0 0 0 1px var(--mol_theme_line); */\n\tborder-radius: var(--mol_gap_round);\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
 	($.$mol_check) = class $mol_check extends ($.$mol_button_minor) {
 		checked(next){
 			if(next !== undefined) return next;
@@ -5892,72 +6014,6 @@ var $;
 "use strict";
 
 ;
-"use strict";
-var $;
-(function ($) {
-    class $mol_locale extends $mol_object {
-        static lang_default() {
-            return 'en';
-        }
-        static lang(next) {
-            return this.$.$mol_state_local.value('locale', next) || $mol_dom_context.navigator.language.replace(/-.*/, '') || this.lang_default();
-        }
-        static source(lang) {
-            return JSON.parse(this.$.$mol_file.relative(`web.locale=${lang}.json`).text().toString());
-        }
-        static texts(lang, next) {
-            if (next)
-                return next;
-            try {
-                return this.source(lang).valueOf();
-            }
-            catch (error) {
-                if ($mol_fail_catch(error)) {
-                    const def = this.lang_default();
-                    if (lang === def)
-                        throw error;
-                }
-            }
-            return {};
-        }
-        static text(key) {
-            const lang = this.lang();
-            const target = this.texts(lang)[key];
-            if (target)
-                return target;
-            this.warn(key);
-            const en = this.texts('en')[key];
-            if (!en)
-                return key;
-            return en;
-        }
-        static warn(key) {
-            console.warn(`Not translated to "${this.lang()}": ${key}`);
-            return null;
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_locale, "lang_default", null);
-    __decorate([
-        $mol_mem
-    ], $mol_locale, "lang", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_locale, "source", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_locale, "texts", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_locale, "text", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_locale, "warn", null);
-    $.$mol_locale = $mol_locale;
-})($ || ($ = {}));
-
-;
 	($.$mol_lights_toggle) = class $mol_lights_toggle extends ($.$mol_check_icon) {
 		Lights_icon(){
 			const obj = new this.$.$mol_icon_brightness_4();
@@ -5998,6 +6054,85 @@ var $;
         $$.$mol_lights_toggle = $mol_lights_toggle;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
+
+;
+	($.$bog_pay_app) = class $bog_pay_app extends ($.$mol_page) {
+		Theme(){
+			const obj = new this.$.$bog_pay_theme_auto();
+			return obj;
+		}
+		home_open(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Home_title(){
+			return (this.$.$mol_locale.text("$bog_pay_app_Home_title"));
+		}
+		Home_button(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.click) = (next) => ((this.home_open(next)));
+			(obj.sub) = () => ([(this.Home_title())]);
+			return obj;
+		}
+		games_open(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Games_title(){
+			return (this.$.$mol_locale.text("$bog_pay_app_Games_title"));
+		}
+		Games_button(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.click) = (next) => ((this.games_open(next)));
+			(obj.sub) = () => ([(this.Games_title())]);
+			return obj;
+		}
+		account_open(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Account_title(){
+			return (this.$.$mol_locale.text("$bog_pay_app_Account_title"));
+		}
+		Account_button(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.click) = (next) => ((this.account_open(next)));
+			(obj.sub) = () => ([(this.Account_title())]);
+			return obj;
+		}
+		Nav_buttons(){
+			const obj = new this.$.$mol_bar();
+			(obj.sub) = () => ([
+				(this.Home_button()), 
+				(this.Games_button()), 
+				(this.Account_button())
+			]);
+			return obj;
+		}
+		Lights(){
+			const obj = new this.$.$mol_lights_toggle();
+			return obj;
+		}
+		plugins(){
+			return [(this.Theme())];
+		}
+		head(){
+			return [(this.Nav_buttons()), (this.Lights())];
+		}
+		body(){
+			return [(this.Page_content())];
+		}
+	};
+	($mol_mem(($.$bog_pay_app.prototype), "Theme"));
+	($mol_mem(($.$bog_pay_app.prototype), "home_open"));
+	($mol_mem(($.$bog_pay_app.prototype), "Home_button"));
+	($mol_mem(($.$bog_pay_app.prototype), "games_open"));
+	($mol_mem(($.$bog_pay_app.prototype), "Games_button"));
+	($mol_mem(($.$bog_pay_app.prototype), "account_open"));
+	($mol_mem(($.$bog_pay_app.prototype), "Account_button"));
+	($mol_mem(($.$bog_pay_app.prototype), "Nav_buttons"));
+	($mol_mem(($.$bog_pay_app.prototype), "Lights"));
+
 
 ;
 	($.$bog_pay_app_home) = class $bog_pay_app_home extends ($.$mol_page) {
@@ -9815,7 +9950,40 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
-        $mol_style_define($bog_pay_app_games, {});
+        $mol_style_define($bog_pay_app_games, {
+            Why_grid: {
+                display: 'flex',
+                flexDirection: 'column',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                gridGap: '10px',
+                padding: '10px',
+            },
+            Games_grid: {
+                display: 'flex',
+                flexDirection: 'column',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                gridGap: '10px',
+                padding: '10px',
+            },
+            Body_content: {
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+            },
+            Game1_text: {
+                color: 'red',
+                fontSize: '20px',
+                margin: '10px',
+            },
+            Game2_text: {
+                color: 'blue',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+            },
+        });
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
@@ -9841,259 +10009,6 @@ var $;
 
 ;
 "use strict";
-
-;
-	($.$mol_check_list) = class $mol_check_list extends ($.$mol_view) {
-		option_checked(id, next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		option_title(id){
-			return "";
-		}
-		option_label(id){
-			return [(this.option_title(id))];
-		}
-		enabled(){
-			return true;
-		}
-		option_enabled(id){
-			return (this.enabled());
-		}
-		option_hint(id){
-			return "";
-		}
-		items(){
-			return [];
-		}
-		dictionary(){
-			return {};
-		}
-		Option(id){
-			const obj = new this.$.$mol_check();
-			(obj.checked) = (next) => ((this.option_checked(id, next)));
-			(obj.label) = () => ((this.option_label(id)));
-			(obj.enabled) = () => ((this.option_enabled(id)));
-			(obj.hint) = () => ((this.option_hint(id)));
-			(obj.minimal_height) = () => (24);
-			return obj;
-		}
-		options(){
-			return {};
-		}
-		keys(){
-			return [];
-		}
-		sub(){
-			return (this.items());
-		}
-	};
-	($mol_mem_key(($.$mol_check_list.prototype), "option_checked"));
-	($mol_mem_key(($.$mol_check_list.prototype), "Option"));
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_check_list extends $.$mol_check_list {
-            options() {
-                return {};
-            }
-            dictionary(next) {
-                return next ?? {};
-            }
-            option_checked(id, next) {
-                const prev = this.dictionary();
-                if (next === undefined)
-                    return prev[id] ?? null;
-                const next_rec = { ...prev, [id]: next };
-                if (next === null)
-                    delete next_rec[id];
-                return this.dictionary(next_rec)[id] ?? null;
-            }
-            keys() {
-                return Object.keys(this.options());
-            }
-            items() {
-                return this.keys().map(key => this.Option(key));
-            }
-            option_title(key) {
-                return this.options()[key] || key;
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_check_list.prototype, "keys", null);
-        __decorate([
-            $mol_mem
-        ], $mol_check_list.prototype, "items", null);
-        $$.$mol_check_list = $mol_check_list;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/check/list/list.view.css", "[mol_check_list] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tflex: 1 1 auto;\n\tborder-radius: var(--mol_gap_round);\n\tgap: 1px;\n}\n\n[mol_check_list_option] {\n\tflex: 0 1 auto;\n}\n\n[mol_check_list_option]:where([mol_check_checked=\"true\"]) {\n\ttext-shadow: 0 0;\n\tcolor: var(--mol_theme_current);\n}\n\n[mol_check_list_option]:where([mol_check_checked=\"true\"][disabled]) {\n\tcolor: var(--mol_theme_text);\n}\n");
-})($ || ($ = {}));
-
-;
-	($.$mol_switch) = class $mol_switch extends ($.$mol_check_list) {
-		value(next){
-			if(next !== undefined) return next;
-			return "";
-		}
-	};
-	($mol_mem(($.$mol_switch.prototype), "value"));
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_switch extends $.$mol_switch {
-            value(next) {
-                return $mol_state_session.value(`${this}.value()`, next) ?? '';
-            }
-            option_checked(key, next) {
-                if (next === undefined)
-                    return this.value() == key;
-                this.value(next ? key : '');
-                return next;
-            }
-        }
-        $$.$mol_switch = $mol_switch;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-	($.$mol_deck) = class $mol_deck extends ($.$mol_list) {
-		current(next){
-			if(next !== undefined) return next;
-			return "0";
-		}
-		switch_options(){
-			return {};
-		}
-		Switch(){
-			const obj = new this.$.$mol_switch();
-			(obj.value) = (next) => ((this.current(next)));
-			(obj.options) = () => ((this.switch_options()));
-			return obj;
-		}
-		Content(){
-			const obj = new this.$.$mol_view();
-			return obj;
-		}
-		items(){
-			return [];
-		}
-		rows(){
-			return [(this.Switch()), (this.Content())];
-		}
-	};
-	($mol_mem(($.$mol_deck.prototype), "current"));
-	($mol_mem(($.$mol_deck.prototype), "Switch"));
-	($mol_mem(($.$mol_deck.prototype), "Content"));
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_deck extends $.$mol_deck {
-            current(next) {
-                return $mol_state_session.value(`${this}.current()`, next) || '0';
-            }
-            switch_options() {
-                let options = {};
-                this.items().forEach((item, index) => {
-                    options[String(index)] = item.title();
-                });
-                return options;
-            }
-            Content() {
-                return this.items()[Number(this.current())];
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_deck.prototype, "Content", null);
-        $$.$mol_deck = $mol_deck;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-	($.$bog_pay_app) = class $bog_pay_app extends ($.$mol_page) {
-		Theme(){
-			const obj = new this.$.$mol_theme_auto();
-			return obj;
-		}
-		Lights(){
-			const obj = new this.$.$mol_lights_toggle();
-			return obj;
-		}
-		Switch(){
-			return (this.Deck().Switch());
-		}
-		Content(){
-			return (this.Deck().Content());
-		}
-		Home(){
-			const obj = new this.$.$bog_pay_app_home();
-			return obj;
-		}
-		Games(){
-			const obj = new this.$.$bog_pay_app_games();
-			return obj;
-		}
-		Personal_cabinet(){
-			const obj = new this.$.$bog_pay_app_account();
-			return obj;
-		}
-		plugins(){
-			return [(this.Theme())];
-		}
-		head(){
-			return [(this.Switch()), (this.Lights())];
-		}
-		body(){
-			return [(this.Content())];
-		}
-		Deck(){
-			const obj = new this.$.$mol_deck();
-			(obj.items) = () => ([
-				(this.Home()), 
-				(this.Games()), 
-				(this.Personal_cabinet())
-			]);
-			return obj;
-		}
-	};
-	($mol_mem(($.$bog_pay_app.prototype), "Theme"));
-	($mol_mem(($.$bog_pay_app.prototype), "Lights"));
-	($mol_mem(($.$bog_pay_app.prototype), "Home"));
-	($mol_mem(($.$bog_pay_app.prototype), "Games"));
-	($mol_mem(($.$bog_pay_app.prototype), "Personal_cabinet"));
-	($mol_mem(($.$bog_pay_app.prototype), "Deck"));
-
 
 ;
 "use strict";
@@ -10125,7 +10040,53 @@ var $;
     var $$;
     (function ($$) {
         class $bog_pay_app extends $.$bog_pay_app {
+            current_page(next) {
+                return next ?? 'home';
+            }
+            home_open(next) {
+                if (next !== undefined) {
+                    this.current_page('home');
+                }
+            }
+            games_open(next) {
+                if (next !== undefined) {
+                    this.current_page('games');
+                }
+            }
+            account_open(next) {
+                if (next !== undefined) {
+                    this.current_page('account');
+                }
+            }
+            Page_content() {
+                const page = this.current_page();
+                switch (page) {
+                    case 'home':
+                        return this.Home();
+                    case 'games':
+                        return this.Games();
+                    case 'account':
+                        return this.Account();
+                    default:
+                        return this.Home();
+                }
+            }
+            Home() {
+                return new this.$.$bog_pay_app_home();
+            }
+            Games() {
+                return new this.$.$bog_pay_app_games();
+            }
+            Account() {
+                return new this.$.$bog_pay_app_account();
+            }
         }
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app.prototype, "current_page", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app.prototype, "Page_content", null);
         $$.$bog_pay_app = $bog_pay_app;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -10136,7 +10097,65 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
-        $mol_style_define($bog_pay_app, {});
+        $mol_style_define($bog_pay_app, {
+            flex: {
+                grow: 1,
+            },
+            display: 'flex',
+            flexDirection: 'column',
+            Home_button: {
+                background: {
+                    color: 'orange',
+                },
+                color: 'white',
+                padding: ['12px', '20px'],
+                border: {
+                    radius: '8px',
+                },
+                fontWeight: 'bold',
+                ':hover': {
+                    background: {
+                        color: 'darkorange',
+                    },
+                },
+            },
+            Games_button: {
+                background: {
+                    color: 'blue',
+                },
+                color: 'white',
+                padding: ['12px', '20px'],
+                border: {
+                    radius: '8px',
+                },
+                fontWeight: 'bold',
+                ':hover': {
+                    background: {
+                        color: 'darkblue',
+                    },
+                },
+            },
+            Account_button: {
+                background: {
+                    color: 'green',
+                },
+                color: 'white',
+                padding: ['12px', '20px'],
+                border: {
+                    radius: '8px',
+                },
+                fontWeight: 'bold',
+                ':hover': {
+                    background: {
+                        color: 'darkgreen',
+                    },
+                },
+            },
+            Nav_buttons: {
+                gap: '10px',
+                padding: '10px',
+            },
+        });
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
@@ -13141,6 +13160,27 @@ var $;
 "use strict";
 var $;
 (function ($_1) {
+    $mol_test_mocks.push($ => {
+        class $mol_locale_mock extends $mol_locale {
+            lang(next = 'en') { return next; }
+            static source(lang) {
+                return {};
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_locale_mock.prototype, "lang", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_locale_mock, "source", null);
+        $.$mol_locale = $mol_locale_mock;
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
     var $$;
     (function ($$) {
         $mol_test({
@@ -13181,27 +13221,6 @@ var $;
             },
         });
     })($$ = $_1.$$ || ($_1.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($_1) {
-    $mol_test_mocks.push($ => {
-        class $mol_locale_mock extends $mol_locale {
-            lang(next = 'en') { return next; }
-            static source(lang) {
-                return {};
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_locale_mock.prototype, "lang", null);
-        __decorate([
-            $mol_mem_key
-        ], $mol_locale_mock, "source", null);
-        $.$mol_locale = $mol_locale_mock;
-    });
 })($ || ($ = {}));
 
 ;
