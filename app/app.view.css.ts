@@ -9,6 +9,9 @@ namespace $.$$ {
 							size: 'larger',
 							weight: 'bold',
 						},
+						':hover': {
+							background: { color: '#667eea00`' },
+						},
 					},
 					':nth-of-type(2)': {
 						color: 'black',
