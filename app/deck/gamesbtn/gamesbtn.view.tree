@@ -1,4 +1,0 @@
-$bog_pay_app_deck_gamesbtn $mol_button_minor
-	click? <=> select?
-	sub /
-		<= Title @ \Игры
