@@ -9,11 +9,9 @@ namespace $ {
 	}
 
 	// Запуск сервера
-	setTimeout(() => {
-		const build = $bog_pay_server_build.make({
-			root: () => $mol_file.absolute('.'),
-		})
-
-		build.server().start()
+	const build = $bog_pay_server_build.make({
+		root: () => $mol_file.absolute('.'),
 	})
+
+	build.server().start()
 }
