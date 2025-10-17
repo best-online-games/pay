@@ -1,6 +1,6 @@
 $bog_pay_app_account $mol_page
-	title @ \Личный кабинет
+	title @ \Personal Cabinet
 	Head null
 	body /
 		<= Content $mol_text
-			text @ \Личный кабинет - в разработке
+			text @ \Personal Cabinet in progress

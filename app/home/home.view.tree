@@ -1,5 +1,5 @@
 $bog_pay_app_home $mol_page
-	title \Bog Ping
+	title @ \Bog Ping
 	Head null
 	body /
 		<= Content $mol_text

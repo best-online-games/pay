@@ -1,5 +1,5 @@
 $bog_pay_app_games $mol_page
-	title \Игры
+	title @ \Games
 	Head null
 	body /
 		<= Games_section $mol_view
