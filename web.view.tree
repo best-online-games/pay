@@ -543,14 +543,14 @@ $mol_text_list_item $mol_paragraph
 		mol_text_list_item_index <= index 0
 
 $bog_pay_app_home $mol_page
-	title \Bog Ping
+	title @ \Bog Ping
 	Head null
 	body /
 		<= Content $mol_text
 			text @ \ГЛАВНАЯ - в разработке
 
 $bog_pay_app_games $mol_page
-	title \Игры
+	title @ \Games
 	Head null
 	body /
 		<= Games_section $mol_view
@@ -621,11 +621,11 @@ $bog_pay_app_games $mol_page
 										\Bog Ping создан командой энтузиастов киберспорта, которые понимают важность каждой миллисекунды в соревновательных играх.
 
 $bog_pay_app_account $mol_page
-	title @ \Личный кабинет
+	title @ \Personal Cabinet
 	Head null
 	body /
 		<= Content $mol_text
-			text @ \Личный кабинет - в разработке
+			text @ \Personal Cabinet in progress
 
 $mol_check_list $mol_view
 	dictionary *

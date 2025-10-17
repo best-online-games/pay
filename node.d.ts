@@ -3703,6 +3703,11 @@ declare namespace $ {
 
 //# sourceMappingURL=home.view.tree.d.ts.map
 declare namespace $.$$ {
+    class $bog_pay_app_home extends $.$bog_pay_app_home {
+    }
+}
+
+declare namespace $.$$ {
 }
 
 declare namespace $ {
@@ -3913,6 +3918,11 @@ declare namespace $ {
 declare namespace $.$$ {
 }
 
+declare namespace $.$$ {
+    class $bog_pay_app_games extends $.$bog_pay_app_games {
+    }
+}
+
 declare namespace $ {
 
 	type $mol_text__text_bog_pay_app_account_1 = $mol_type_enforce<
@@ -3930,6 +3940,11 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=account.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $bog_pay_app_account extends $.$bog_pay_app_account {
+    }
+}
+
 declare namespace $ {
 
 	type $mol_check__checked_mol_check_list_1 = $mol_type_enforce<
@@ -4072,14 +4087,7 @@ declare namespace $ {
 //# sourceMappingURL=app.view.tree.d.ts.map
 declare namespace $.$$ {
     class $bog_pay_app extends $.$bog_pay_app {
-        current_page(next?: string): string;
-        home_open(next?: any): void;
-        games_open(next?: any): void;
-        account_open(next?: any): void;
-        Page_content(): $bog_pay_app_home | $bog_pay_app_games | $bog_pay_app_account;
-        Home(): $bog_pay_app_home;
-        Games(): $bog_pay_app_games;
-        Account(): $bog_pay_app_account;
+        body(): $mol_view[];
     }
 }
 

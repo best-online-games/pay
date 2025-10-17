@@ -9518,26 +9518,6 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$bog_pay_app_home) = class $bog_pay_app_home extends ($.$mol_page) {
-		Content(){
-			const obj = new this.$.$mol_text();
-			(obj.text) = () => ((this.$.$mol_locale.text("$bog_pay_app_home_Content_text")));
-			return obj;
-		}
-		title(){
-			return "Bog Ping";
-		}
-		Head(){
-			return null;
-		}
-		body(){
-			return [(this.Content())];
-		}
-	};
-	($mol_mem(($.$bog_pay_app_home.prototype), "Content"));
-
-
-;
 	($.$mol_text_list) = class $mol_text_list extends ($.$mol_text) {
 		type(){
 			return "";
@@ -9577,7 +9557,39 @@ var $;
 "use strict";
 
 ;
+	($.$bog_pay_app_home) = class $bog_pay_app_home extends ($.$mol_page) {
+		Content(){
+			const obj = new this.$.$mol_text();
+			(obj.text) = () => ((this.$.$mol_locale.text("$bog_pay_app_home_Content_text")));
+			return obj;
+		}
+		title(){
+			return (this.$.$mol_locale.text("$bog_pay_app_home_title"));
+		}
+		Head(){
+			return null;
+		}
+		body(){
+			return [(this.Content())];
+		}
+	};
+	($mol_mem(($.$bog_pay_app_home.prototype), "Content"));
+
+
+;
 "use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_pay_app_home extends $.$bog_pay_app_home {
+        }
+        $$.$bog_pay_app_home = $bog_pay_app_home;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
 
 ;
 "use strict";
@@ -9816,7 +9828,7 @@ var $;
 			return obj;
 		}
 		title(){
-			return "Игры";
+			return (this.$.$mol_locale.text("$bog_pay_app_games_title"));
 		}
 		Head(){
 			return null;
@@ -9923,6 +9935,18 @@ var $;
 })($ || ($ = {}));
 
 ;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_pay_app_games extends $.$bog_pay_app_games {
+        }
+        $$.$bog_pay_app_games = $bog_pay_app_games;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
 	($.$bog_pay_app_account) = class $bog_pay_app_account extends ($.$mol_page) {
 		Content(){
 			const obj = new this.$.$mol_text();
@@ -9944,6 +9968,18 @@ var $;
 
 ;
 "use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_pay_app_account extends $.$bog_pay_app_account {
+        }
+        $$.$bog_pay_app_account = $bog_pay_app_account;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
 
 ;
 	($.$mol_check_list) = class $mol_check_list extends ($.$mol_view) {
@@ -10228,53 +10264,14 @@ var $;
     var $$;
     (function ($$) {
         class $bog_pay_app extends $.$bog_pay_app {
-            current_page(next) {
-                return next ?? 'home';
-            }
-            home_open(next) {
-                if (next !== undefined) {
-                    this.current_page('home');
-                }
-            }
-            games_open(next) {
-                if (next !== undefined) {
-                    this.current_page('games');
-                }
-            }
-            account_open(next) {
-                if (next !== undefined) {
-                    this.current_page('account');
-                }
-            }
-            Page_content() {
-                const page = this.current_page();
-                switch (page) {
-                    case 'home':
-                        return this.Home();
-                    case 'games':
-                        return this.Games();
-                    case 'account':
-                        return this.Account();
-                    default:
-                        return this.Home();
-                }
-            }
-            Home() {
-                return new this.$.$bog_pay_app_home();
-            }
-            Games() {
-                return new this.$.$bog_pay_app_games();
-            }
-            Account() {
-                return new this.$.$bog_pay_app_account();
+            body() {
+                const originalLang = this.$.$mol_locale.lang();
+                this.$.$mol_locale.lang('en');
+                this.$.$mol_state_arg.value('page', this.Deck().Content().title().replaceAll(' ', '_'));
+                this.$.$mol_locale.lang(originalLang);
+                return [this.Content()];
             }
         }
-        __decorate([
-            $mol_mem
-        ], $bog_pay_app.prototype, "current_page", null);
-        __decorate([
-            $mol_mem
-        ], $bog_pay_app.prototype, "Page_content", null);
         $$.$bog_pay_app = $bog_pay_app;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
