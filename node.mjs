@@ -17178,23 +17178,54 @@ var $;
             people() {
                 const glob = this.$.$hyoo_crus_glob;
                 const land_refs_snapshot = Array.from(glob.lands_touched.values());
+                console.log('>>> Admin.people() - checking lands', {
+                    total_lands: land_refs_snapshot.length,
+                    land_refs: land_refs_snapshot.map(ref => ref.description ?? ref.toString()),
+                });
                 const all_people = [];
                 const seen_peers = new Set();
                 for (const land_ref of land_refs_snapshot) {
                     try {
                         const land = glob.Land(land_ref);
                         const peer = land.auth().peer();
-                        if (seen_peers.has(peer))
+                        console.log('>>> Checking land', {
+                            land_ref: land_ref.description ?? land_ref.toString(),
+                            peer,
+                            seen_before: seen_peers.has(peer),
+                        });
+                        if (seen_peers.has(peer)) {
+                            console.log('>>> SKIPPED - peer already seen');
                             continue;
+                        }
                         const person = land.home().hall_by($bog_pay_app_person, {});
+                        console.log('>>> Got person from land.home().hall_by', {
+                            person_exists: !!person,
+                            person_land_ref: person?.land().ref().description,
+                            person_peer: person?.land().auth().peer(),
+                            person_name: person?.Name()?.str() || '(no name)',
+                            person_email: person?.Email()?.str() || '(no email)',
+                        });
                         if (person) {
                             all_people.push(person);
                             seen_peers.add(peer);
+                            console.log('>>> ADDED person to list', { total_now: all_people.length });
+                        }
+                        else {
+                            console.log('>>> NO PERSON found in this land');
                         }
                     }
                     catch (e) {
+                        console.log('>>> ERROR processing land', {
+                            land_ref: land_ref.description ?? land_ref.toString(),
+                            error: e,
+                        });
                     }
                 }
+                console.log('>>> Admin.people() - FINAL RESULT', {
+                    lands_checked: land_refs_snapshot.length,
+                    people_found: all_people.length,
+                    peers: Array.from(seen_peers),
+                });
                 this.$.$mol_log3_rise({
                     place: this,
                     message: 'People collected from home lands',
