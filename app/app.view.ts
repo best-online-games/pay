@@ -7,6 +7,14 @@ namespace $.$$ {
 			this.$.$mol_locale.lang(originalLang)
 			return [this.Content()]
 		}
+
+		Admin_link() {
+			// Show admin link only if current user is in admins registry
+			const link = super.Admin_link()
+			const my_pub = this.$.$hyoo_crus_glob.home().land().auth().public().toString()
+			const peers = (this.$ as any).$bog_pay_app_admins?.peers?.() ?? []
+			return peers.includes(my_pub) ? link : (null as any)
+		}
 	}
 
 	export const $bog_pay_person = $.$bog_pay_app_person

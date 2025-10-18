@@ -4,6 +4,7 @@ $bog_pay_app $mol_page
 	head /
 		<= Switch
 		<= Lights $mol_lights_toggle
+		<= Admin_link $bog_pay_app_admin_link
 	body /
 		<= Content
 	Deck $mol_deck
@@ -13,3 +14,4 @@ $bog_pay_app $mol_page
 			<= Home $bog_pay_app_home
 			<= Games $bog_pay_app_games
 			<= Personal_cabinet $bog_pay_app_account
+			<= Admin $bog_pay_app_admin_page

@@ -1,0 +1,13 @@
+$bog_pay_app_admin_page $mol_page
+	title @ \Admin
+	Head null
+	body /
+		<= Head_bar
+		<= Body_list
+
+$bog_pay_app_admin_link $mol_link
+	uri \#!page=Admin
+	hint @ \Open Admin (Users)
+	sub /
+		<= Label $mol_text
+			text @ \Users (Admin)
