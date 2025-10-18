@@ -3597,47 +3597,6 @@ declare namespace $.$$ {
 
 declare namespace $ {
 
-	type $mol_view__sub_mol_card_1 = $mol_type_enforce<
-		ReturnType< $mol_card['content'] >
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_view__minimal_height_mol_card_2 = $mol_type_enforce<
-		number
-		,
-		ReturnType< $mol_view['minimal_height'] >
-	>
-	type $mol_view__sub_mol_card_3 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	export class $mol_card extends $mol_list {
-		status( ): string
-		content( ): readonly($mol_view_content)[]
-		Content( ): $mol_view
-		status_text( ): ReturnType< $mol_card['status'] >
-		Status( ): $mol_view
-		attr( ): ({ 
-			'mol_card_status_type': ReturnType< $mol_card['status'] >,
-		})  & ReturnType< $mol_list['attr'] >
-		rows( ): readonly($mol_view)[]
-	}
-	
-}
-
-//# sourceMappingURL=card.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_card extends $.$mol_card {
-        rows(): readonly $mol_view[];
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-
 	type $mol_paragraph__dom_name_mol_section_1 = $mol_type_enforce<
 		ReturnType< $mol_section['title_dom_name'] >
 		,
@@ -3690,157 +3649,125 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_paragraph__title_bog_pay_app_games_1 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_paragraph['title'] >
-	>
-	type $mol_paragraph__title_bog_pay_app_games_2 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_paragraph['title'] >
-	>
-	type $mol_text__text_bog_pay_app_games_3 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	type $mol_card__content_bog_pay_app_games_4 = $mol_type_enforce<
-		readonly(any)[]
-		,
+	type $mol_view__sub_mol_card_1 = $mol_type_enforce<
 		ReturnType< $mol_card['content'] >
-	>
-	type $mol_paragraph__title_bog_pay_app_games_5 = $mol_type_enforce<
-		string
 		,
-		ReturnType< $mol_paragraph['title'] >
+		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_paragraph__title_bog_pay_app_games_6 = $mol_type_enforce<
-		string
+	type $mol_view__minimal_height_mol_card_2 = $mol_type_enforce<
+		number
 		,
-		ReturnType< $mol_paragraph['title'] >
+		ReturnType< $mol_view['minimal_height'] >
 	>
-	type $mol_text__text_bog_pay_app_games_7 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	type $mol_card__content_bog_pay_app_games_8 = $mol_type_enforce<
+	type $mol_view__sub_mol_card_3 = $mol_type_enforce<
 		readonly(any)[]
 		,
-		ReturnType< $mol_card['content'] >
+		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_paragraph__title_bog_pay_app_games_9 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_paragraph['title'] >
-	>
-	type $mol_paragraph__title_bog_pay_app_games_10 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_paragraph['title'] >
-	>
-	type $mol_text__text_bog_pay_app_games_11 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	type $mol_card__content_bog_pay_app_games_12 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_card['content'] >
-	>
-	type $mol_list__rows_bog_pay_app_games_13 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_list['rows'] >
-	>
-	type $mol_section__title_bog_pay_app_games_14 = $mol_type_enforce<
+	export class $mol_card extends $mol_list {
+		status( ): string
+		content( ): readonly($mol_view_content)[]
+		Content( ): $mol_view
+		status_text( ): ReturnType< $mol_card['status'] >
+		Status( ): $mol_view
+		attr( ): ({ 
+			'mol_card_status_type': ReturnType< $mol_card['status'] >,
+		})  & ReturnType< $mol_list['attr'] >
+		rows( ): readonly($mol_view)[]
+	}
+	
+}
+
+//# sourceMappingURL=card.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_card extends $.$mol_card {
+        rows(): readonly $mol_view[];
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	type $mol_section__title_bog_pay_app_games_1 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_section['title'] >
 	>
-	type $mol_section__content_bog_pay_app_games_15 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_section['content'] >
-	>
-	type $mol_paragraph__title_bog_pay_app_games_16 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_paragraph['title'] >
-	>
-	type $mol_paragraph__title_bog_pay_app_games_17 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_paragraph['title'] >
-	>
-	type $mol_text__text_bog_pay_app_games_18 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	type $mol_card__content_bog_pay_app_games_19 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_card['content'] >
-	>
-	type $mol_paragraph__title_bog_pay_app_games_20 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_paragraph['title'] >
-	>
-	type $mol_paragraph__title_bog_pay_app_games_21 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_paragraph['title'] >
-	>
-	type $mol_text__text_bog_pay_app_games_22 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	type $mol_card__content_bog_pay_app_games_23 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_card['content'] >
-	>
-	type $mol_paragraph__title_bog_pay_app_games_24 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_paragraph['title'] >
-	>
-	type $mol_paragraph__title_bog_pay_app_games_25 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_paragraph['title'] >
-	>
-	type $mol_text__text_bog_pay_app_games_26 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	type $mol_card__content_bog_pay_app_games_27 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_card['content'] >
-	>
-	type $mol_list__rows_bog_pay_app_games_28 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_list['rows'] >
-	>
-	type $mol_section__title_bog_pay_app_games_29 = $mol_type_enforce<
+	type $mol_section__title_bog_pay_app_games_2 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_section['title'] >
 	>
-	type $mol_section__content_bog_pay_app_games_30 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_pay_app_games_3 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_paragraph['title'] >
+	>
+	type $mol_paragraph__title_bog_pay_app_games_4 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_paragraph['title'] >
+	>
+	type $mol_text__text_bog_pay_app_games_5 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_text['text'] >
+	>
+	type $mol_card__content_bog_pay_app_games_6 = $mol_type_enforce<
 		readonly(any)[]
 		,
-		ReturnType< $mol_section['content'] >
+		ReturnType< $mol_card['content'] >
+	>
+	type $mol_paragraph__title_bog_pay_app_games_7 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_paragraph['title'] >
+	>
+	type $mol_paragraph__title_bog_pay_app_games_8 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_paragraph['title'] >
+	>
+	type $mol_text__text_bog_pay_app_games_9 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_text['text'] >
+	>
+	type $mol_card__content_bog_pay_app_games_10 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_card['content'] >
+	>
+	type $mol_paragraph__title_bog_pay_app_games_11 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_paragraph['title'] >
+	>
+	type $mol_paragraph__title_bog_pay_app_games_12 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_paragraph['title'] >
+	>
+	type $mol_text__text_bog_pay_app_games_13 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_text['text'] >
+	>
+	type $mol_card__content_bog_pay_app_games_14 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_card['content'] >
+	>
+	type $mol_list__rows_bog_pay_app_games_15 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_list['rows'] >
 	>
 	export class $bog_pay_app_games extends $mol_page {
+		Games_section( ): $mol_section
+		Bog_ping( ): $mol_section
 		Game1_icon( ): $mol_paragraph
 		Game1_title( ): $mol_paragraph
 		Game1_text( ): $mol_text
@@ -3854,21 +3781,6 @@ declare namespace $ {
 		Game3_text( ): $mol_text
 		Game3( ): $mol_card
 		Games_grid( ): $mol_list
-		Games_section( ): $mol_section
-		Why1_icon( ): $mol_paragraph
-		Why1_title( ): $mol_paragraph
-		Why1_text( ): $mol_text
-		Why1( ): $mol_card
-		Why2_icon( ): $mol_paragraph
-		Why2_title( ): $mol_paragraph
-		Why2_text( ): $mol_text
-		Why2( ): $mol_card
-		Why3_icon( ): $mol_paragraph
-		Why3_title( ): $mol_paragraph
-		Why3_text( ): $mol_text
-		Why3( ): $mol_card
-		Why_grid( ): $mol_list
-		Why_section( ): $mol_section
 		title( ): string
 		Head( ): any
 		body( ): readonly(any)[]
@@ -8315,12 +8227,120 @@ declare namespace $ {
     };
     export class $bog_pay_app_person extends $bog_pay_app_person_base {
         active_sub(): $bog_pay_app_subscription | null;
-        ensure_registered(): boolean;
     }
     export {};
 }
 
+declare namespace $.$$ {
+    class $bog_pay_app_account_avatar extends $.$mol_button_open {
+        profile(): $bog_pay_app_person | null;
+        accept(): string;
+        multiple(): boolean;
+        image_data(): Uint8Array<ArrayBuffer> | null;
+        image_uri(): string;
+        sub(): ($mol_image | $.$mol_button_open_native | $mol_icon_upload)[];
+        Image(): $mol_image;
+        Icon(): $mol_icon_upload;
+        files(next?: readonly File[]): never[];
+    }
+}
+
+declare namespace $.$$ {
+}
+
 declare namespace $ {
+
+	export class $mol_icon_download extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=download.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_button_download extends $.$mol_button_download {
+        uri(): string;
+        click(): void;
+    }
+}
+
+declare namespace $ {
+
+	export class $mol_button_download extends $mol_button_minor {
+		Icon( ): $mol_icon_download
+		title( ): string
+		blob( ): any
+		uri( ): string
+		file_name( ): string
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=download.view.tree.d.ts.map
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	export class $mol_row extends $mol_view {
+	}
+	
+}
+
+//# sourceMappingURL=row.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $bog_pay_app_account extends $mol_page {
+		title( ): string
+		Head( ): any
+		body( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=account.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $bog_pay_app_account extends $.$bog_pay_app_account {
+        account(): $bog_pay_app_account_domain;
+        enforce(): void;
+        enforce_loop(): any;
+        status_text(): string;
+        period_text(): string;
+        renewal_text(): string;
+        vpn_text(): "VPN доступен" | "VPN недоступен";
+        Subscribe_btn(): $mol_button_major;
+        Renew_btn(): $mol_button_minor;
+        Cancel_btn(): $mol_button_minor;
+        Info_status(): $mol_text;
+        Info_period(): $mol_text;
+        Info_renewal(): $mol_text;
+        Info_vpn(): $mol_text;
+        Info_peer(): $mol_text;
+        Info_balance(): $mol_text;
+        images(): string[];
+        attach_add_files(files: File[]): void;
+        attach_remove_index(index: number): void;
+        Attach_images(): $bog_pay_app_account_avatar;
+        Download_ovpn_btn(): $mol_button_download;
+        Topup_btn(): $mol_button_minor;
+        Actions(): $mol_row;
+        body(): ($mol_text | $bog_pay_app_account_avatar | $mol_row)[];
+    }
+}
+
+declare namespace $.$$ {
+}
+
+declare namespace $ {
+    const $bog_pay_app_admin_peers: readonly ["NRMoJk9R", "mcBM6jhX", "SSCOg7yi"];
+    class $bog_pay_app_admin extends $mol_object2 {
+        static is_me(): boolean;
+    }
+}
+
+declare namespace $ {
+    export const $bog_pay_app_people_registry_land = "SSCOg7yi_erVXV8hP_Shared0P";
     const $bog_pay_app_people_base: Omit<typeof $hyoo_crus_entity, "prototype"> & (new (...args: any[]) => $mol_type_override<$hyoo_crus_entity, {
         readonly List: (auto?: any) => {
             remote_list(next?: readonly $bog_pay_app_person[] | undefined): readonly $bog_pay_app_person[];
@@ -8437,117 +8457,10 @@ declare namespace $ {
         };
     };
     export class $bog_pay_app_people extends $bog_pay_app_people_base {
+        static init_registry(): string | undefined;
         static hall(): $bog_pay_app_people;
     }
     export {};
-}
-
-declare namespace $.$$ {
-    class $bog_pay_app_account_avatar extends $.$mol_button_open {
-        profile(): $bog_pay_app_person | null;
-        accept(): string;
-        multiple(): boolean;
-        image_data(): Uint8Array<ArrayBuffer> | null;
-        image_uri(): string;
-        sub(): ($mol_image | $.$mol_button_open_native | $mol_icon_upload)[];
-        Image(): $mol_image;
-        Icon(): $mol_icon_upload;
-        files(next?: readonly File[]): never[];
-    }
-}
-
-declare namespace $.$$ {
-}
-
-declare namespace $ {
-
-	export class $mol_icon_download extends $mol_icon {
-		path( ): string
-	}
-	
-}
-
-//# sourceMappingURL=download.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_button_download extends $.$mol_button_download {
-        uri(): string;
-        click(): void;
-    }
-}
-
-declare namespace $ {
-
-	export class $mol_button_download extends $mol_button_minor {
-		Icon( ): $mol_icon_download
-		title( ): string
-		blob( ): any
-		uri( ): string
-		file_name( ): string
-		sub( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=download.view.tree.d.ts.map
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	export class $mol_row extends $mol_view {
-	}
-	
-}
-
-//# sourceMappingURL=row.view.tree.d.ts.map
-declare namespace $ {
-
-	export class $bog_pay_app_account extends $mol_page {
-		title( ): string
-		Head( ): any
-		body( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=account.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $bog_pay_app_account extends $.$bog_pay_app_account {
-        account(): $bog_pay_app_account_domain;
-        enforce(): void;
-        enforce_loop(): any;
-        status_text(): string;
-        period_text(): string;
-        renewal_text(): string;
-        vpn_text(): "VPN доступен" | "VPN недоступен";
-        Subscribe_btn(): $mol_button_major;
-        Renew_btn(): $mol_button_minor;
-        Cancel_btn(): $mol_button_minor;
-        Info_status(): $mol_text;
-        Info_period(): $mol_text;
-        Info_renewal(): $mol_text;
-        Info_vpn(): $mol_text;
-        Info_peer(): $mol_text;
-        Info_balance(): $mol_text;
-        images(): string[];
-        attach_add_files(files: File[]): void;
-        attach_remove_index(index: number): void;
-        Attach_images(): $bog_pay_app_account_avatar;
-        Download_ovpn_btn(): $mol_button_download;
-        Topup_btn(): $mol_button_minor;
-        Actions(): $mol_row;
-        body(): ($mol_text | $bog_pay_app_account_avatar | $mol_row)[];
-    }
-}
-
-declare namespace $.$$ {
-}
-
-declare namespace $ {
-    const $bog_pay_app_admin_peers: readonly ["6E71EH2t", "mcBM6jhX", "SSCOg7yi"];
-    class $bog_pay_app_admin extends $mol_object2 {
-        static is_me(): boolean;
-    }
 }
 
 declare namespace $ {

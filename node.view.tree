@@ -549,6 +549,18 @@ $bog_pay_app_home $mol_page
 		<= Content $mol_text
 			text @ \ГЛАВНАЯ - в разработке
 
+$mol_section $mol_list
+	level 1
+	rows /
+		<= Head $mol_view
+			sub <= head /
+				<= Title $mol_paragraph
+					dom_name <= title_dom_name \h1
+					title <= title
+				<= Tools $mol_view sub <= tools /
+		<= Content $mol_list
+			rows <= content /
+
 $mol_card $mol_list
 	attr *
 		^
@@ -562,80 +574,40 @@ $mol_card $mol_list
 			sub /
 				<= status_text <= status \
 
-$mol_section $mol_list
-	level 1
-	rows /
-		<= Head $mol_view
-			sub <= head /
-				<= Title $mol_paragraph
-					dom_name <= title_dom_name \h1
-					title <= title
-				<= Tools $mol_view sub <= tools /
-		<= Content $mol_list
-			rows <= content /
-
 $bog_pay_app_games $mol_page
 	title @ \Games
 	Head null
 	body /
 		<= Games_section $mol_section
-			title @ \Для каких игр подходит Bog Ping?
-			content /
-				<= Games_grid $mol_list
-					rows /
-						<= Game1 $mol_card
-							content /
-								<= Game1_icon $mol_paragraph
-									title \🎯
-								<= Game1_title $mol_paragraph
-									title @ \Шутеры
-								<= Game1_text $mol_text
-									text @ \Counter-Strike 2, Valorant, Call of Duty, Apex Legends, Overwatch 2 — снизьте пинг и получите конкурентное преимущество в быстрых PvP-сражениях.
-						<= Game2 $mol_card
-							content /
-								<= Game2_icon $mol_paragraph
-									title \⚔️
-								<= Game2_title $mol_paragraph
-									title @ \MOBA
-								<= Game2_text $mol_text
-									text @ \Dota 2, League of Legends, Mobile Legends — каждая миллисекунда имеет значение. Реагируйте быстрее соперников и выигрывайте решающие файты.
-						<= Game3 $mol_card
-							content /
-								<= Game3_icon $mol_paragraph
-									title \🏆
-								<= Game3_title $mol_paragraph
-									title @ \Battle Royale
-								<= Game3_text $mol_text
-									text @ \PUBG, Fortnite, Warzone — стабильное соединение без лагов в критические моменты. Будьте первым, кто заметит врага и сделает выстрел.
-		<= Why_section $mol_section
-			title @ \Почему геймеры выбирают нас
-			content /
-				<= Why_grid $mol_list
-					rows /
-						<= Why1 $mol_card
-							content /
-								<= Why1_icon $mol_paragraph
-									title \🌍
-								<= Why1_title $mol_paragraph
-									title @ \Доступно для всех
-								<= Why1_text $mol_text
-									text @ \Мы считаем, что каждый геймер заслуживает стабильного соединения, поэтому предлагаем бесплатную версию Bog Ping наряду с премиум-планами.
-						<= Why2 $mol_card
-							content /
-								<= Why2_icon $mol_paragraph
-									title \📊
-								<= Why2_title $mol_paragraph
-									title @ \Прозрачная статистика
-								<= Why2_text $mol_text
-									text @ \Отслеживайте ваш пинг, джиттер и потерю пакетов в реальном времени. Подробная аналитика каждого игрового сеанса доступна в личном кабинете.
-						<= Why3 $mol_card
-							content /
-								<= Why3_icon $mol_paragraph
-									title \💚
-								<= Why3_title $mol_paragraph
-									title @ \Геймеры для геймеров
-								<= Why3_text $mol_text
-									text @ \Bog Ping создан командой энтузиастов киберспорта, которые понимают важность каждой миллисекунды в соревновательных играх.
+			title @ \Для каких игр подходит 
+		<= Bog_ping $mol_section
+			title @ \Bog Ping
+		<= Games_grid $mol_list
+			rows /
+				<= Game1 $mol_card
+					content /
+						<= Game1_icon $mol_paragraph
+							title \🎯
+						<= Game1_title $mol_paragraph
+							title @ \Шутеры
+						<= Game1_text $mol_text
+							text @ \Counter-Strike 2, Valorant, Call of Duty, Apex Legends, Overwatch 2 — снизьте пинг и получите конкурентное преимущество в быстрых PvP-сражениях.
+				<= Game2 $mol_card
+					content /
+						<= Game2_icon $mol_paragraph
+							title \⚔️
+						<= Game2_title $mol_paragraph
+							title @ \MOBA
+						<= Game2_text $mol_text
+							text @ \Dota 2, League of Legends, Mobile Legends — каждая миллисекунда имеет значение. Реагируйте быстрее соперников и выигрывайте решающие файты.
+				<= Game3 $mol_card
+					content /
+						<= Game3_icon $mol_paragraph
+							title \🏆
+						<= Game3_title $mol_paragraph
+							title @ \Battle Royale
+						<= Game3_text $mol_text
+							text @ \PUBG, Fortnite, Warzone — стабильное соединение без лагов в критические моменты. Будьте первым, кто заметит врага и сделает выстрел.
 
 $bog_pay_app_account $mol_page
 	title @ \Personal Cabinet

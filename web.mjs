@@ -9145,67 +9145,6 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$mol_card) = class $mol_card extends ($.$mol_list) {
-		status(){
-			return "";
-		}
-		content(){
-			return [(this.title())];
-		}
-		Content(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ((this.content()));
-			return obj;
-		}
-		status_text(){
-			return (this.status());
-		}
-		Status(){
-			const obj = new this.$.$mol_view();
-			(obj.minimal_height) = () => (30);
-			(obj.sub) = () => ([(this.status_text())]);
-			return obj;
-		}
-		attr(){
-			return {...(super.attr()), "mol_card_status_type": (this.status())};
-		}
-		rows(){
-			return [(this.Content()), (this.Status())];
-		}
-	};
-	($mol_mem(($.$mol_card.prototype), "Content"));
-	($mol_mem(($.$mol_card.prototype), "Status"));
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_card extends $.$mol_card {
-            rows() {
-                return [
-                    this.Content(),
-                    ...this.status_text() ? [this.Status()] : [],
-                ];
-            }
-        }
-        $$.$mol_card = $mol_card;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/card/card.view.css", "[mol_card] {\n\tbackground: var(--mol_theme_card);\n\tcolor: var(--mol_theme_text);\n\tborder-radius: var(--mol_gap_round);\n\tdisplay: flex;\n\tflex: 0 1 auto;\n\tflex-direction: column;\n\tposition: relative;\n\tbox-shadow: 0 0 0.5rem 0rem hsla(0,0%,0%,.125);\n\t/* overflow: hidden; */\n}\n\n[mol_card_content] {\n\tflex: 1 1 auto;\n\tborder-radius: var(--mol_gap_round);\n\tmargin: 0;\n\tpadding: var(--mol_gap_block);\n}\n\n[mol_card_status] {\n\tbackground: var(--mol_theme_line);\n\tpadding: var(--mol_gap_text);\n\tmargin: 0;\n}\n\n[mol_card_status] {\n\tbackground: var(--mol_theme_line);\n}\n");
-})($ || ($ = {}));
-
-;
 	($.$mol_section) = class $mol_section extends ($.$mol_list) {
 		title_dom_name(){
 			return "h1";
@@ -9279,7 +9218,78 @@ var $;
 })($ || ($ = {}));
 
 ;
+	($.$mol_card) = class $mol_card extends ($.$mol_list) {
+		status(){
+			return "";
+		}
+		content(){
+			return [(this.title())];
+		}
+		Content(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.content()));
+			return obj;
+		}
+		status_text(){
+			return (this.status());
+		}
+		Status(){
+			const obj = new this.$.$mol_view();
+			(obj.minimal_height) = () => (30);
+			(obj.sub) = () => ([(this.status_text())]);
+			return obj;
+		}
+		attr(){
+			return {...(super.attr()), "mol_card_status_type": (this.status())};
+		}
+		rows(){
+			return [(this.Content()), (this.Status())];
+		}
+	};
+	($mol_mem(($.$mol_card.prototype), "Content"));
+	($mol_mem(($.$mol_card.prototype), "Status"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_card extends $.$mol_card {
+            rows() {
+                return [
+                    this.Content(),
+                    ...this.status_text() ? [this.Status()] : [],
+                ];
+            }
+        }
+        $$.$mol_card = $mol_card;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/card/card.view.css", "[mol_card] {\n\tbackground: var(--mol_theme_card);\n\tcolor: var(--mol_theme_text);\n\tborder-radius: var(--mol_gap_round);\n\tdisplay: flex;\n\tflex: 0 1 auto;\n\tflex-direction: column;\n\tposition: relative;\n\tbox-shadow: 0 0 0.5rem 0rem hsla(0,0%,0%,.125);\n\t/* overflow: hidden; */\n}\n\n[mol_card_content] {\n\tflex: 1 1 auto;\n\tborder-radius: var(--mol_gap_round);\n\tmargin: 0;\n\tpadding: var(--mol_gap_block);\n}\n\n[mol_card_status] {\n\tbackground: var(--mol_theme_line);\n\tpadding: var(--mol_gap_text);\n\tmargin: 0;\n}\n\n[mol_card_status] {\n\tbackground: var(--mol_theme_line);\n}\n");
+})($ || ($ = {}));
+
+;
 	($.$bog_pay_app_games) = class $bog_pay_app_games extends ($.$mol_page) {
+		Games_section(){
+			const obj = new this.$.$mol_section();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_pay_app_games_Games_section_title")));
+			return obj;
+		}
+		Bog_ping(){
+			const obj = new this.$.$mol_section();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_pay_app_games_Bog_ping_title")));
+			return obj;
+		}
 		Game1_icon(){
 			const obj = new this.$.$mol_paragraph();
 			(obj.title) = () => ("🎯");
@@ -9361,99 +9371,6 @@ var $;
 			]);
 			return obj;
 		}
-		Games_section(){
-			const obj = new this.$.$mol_section();
-			(obj.title) = () => ((this.$.$mol_locale.text("$bog_pay_app_games_Games_section_title")));
-			(obj.content) = () => ([(this.Games_grid())]);
-			return obj;
-		}
-		Why1_icon(){
-			const obj = new this.$.$mol_paragraph();
-			(obj.title) = () => ("🌍");
-			return obj;
-		}
-		Why1_title(){
-			const obj = new this.$.$mol_paragraph();
-			(obj.title) = () => ((this.$.$mol_locale.text("$bog_pay_app_games_Why1_title_title")));
-			return obj;
-		}
-		Why1_text(){
-			const obj = new this.$.$mol_text();
-			(obj.text) = () => ((this.$.$mol_locale.text("$bog_pay_app_games_Why1_text_text")));
-			return obj;
-		}
-		Why1(){
-			const obj = new this.$.$mol_card();
-			(obj.content) = () => ([
-				(this.Why1_icon()), 
-				(this.Why1_title()), 
-				(this.Why1_text())
-			]);
-			return obj;
-		}
-		Why2_icon(){
-			const obj = new this.$.$mol_paragraph();
-			(obj.title) = () => ("📊");
-			return obj;
-		}
-		Why2_title(){
-			const obj = new this.$.$mol_paragraph();
-			(obj.title) = () => ((this.$.$mol_locale.text("$bog_pay_app_games_Why2_title_title")));
-			return obj;
-		}
-		Why2_text(){
-			const obj = new this.$.$mol_text();
-			(obj.text) = () => ((this.$.$mol_locale.text("$bog_pay_app_games_Why2_text_text")));
-			return obj;
-		}
-		Why2(){
-			const obj = new this.$.$mol_card();
-			(obj.content) = () => ([
-				(this.Why2_icon()), 
-				(this.Why2_title()), 
-				(this.Why2_text())
-			]);
-			return obj;
-		}
-		Why3_icon(){
-			const obj = new this.$.$mol_paragraph();
-			(obj.title) = () => ("💚");
-			return obj;
-		}
-		Why3_title(){
-			const obj = new this.$.$mol_paragraph();
-			(obj.title) = () => ((this.$.$mol_locale.text("$bog_pay_app_games_Why3_title_title")));
-			return obj;
-		}
-		Why3_text(){
-			const obj = new this.$.$mol_text();
-			(obj.text) = () => ((this.$.$mol_locale.text("$bog_pay_app_games_Why3_text_text")));
-			return obj;
-		}
-		Why3(){
-			const obj = new this.$.$mol_card();
-			(obj.content) = () => ([
-				(this.Why3_icon()), 
-				(this.Why3_title()), 
-				(this.Why3_text())
-			]);
-			return obj;
-		}
-		Why_grid(){
-			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ([
-				(this.Why1()), 
-				(this.Why2()), 
-				(this.Why3())
-			]);
-			return obj;
-		}
-		Why_section(){
-			const obj = new this.$.$mol_section();
-			(obj.title) = () => ((this.$.$mol_locale.text("$bog_pay_app_games_Why_section_title")));
-			(obj.content) = () => ([(this.Why_grid())]);
-			return obj;
-		}
 		title(){
 			return (this.$.$mol_locale.text("$bog_pay_app_games_title"));
 		}
@@ -9461,9 +9378,15 @@ var $;
 			return null;
 		}
 		body(){
-			return [(this.Games_section()), (this.Why_section())];
+			return [
+				(this.Games_section()), 
+				(this.Bog_ping()), 
+				(this.Games_grid())
+			];
 		}
 	};
+	($mol_mem(($.$bog_pay_app_games.prototype), "Games_section"));
+	($mol_mem(($.$bog_pay_app_games.prototype), "Bog_ping"));
 	($mol_mem(($.$bog_pay_app_games.prototype), "Game1_icon"));
 	($mol_mem(($.$bog_pay_app_games.prototype), "Game1_title"));
 	($mol_mem(($.$bog_pay_app_games.prototype), "Game1_text"));
@@ -9477,21 +9400,6 @@ var $;
 	($mol_mem(($.$bog_pay_app_games.prototype), "Game3_text"));
 	($mol_mem(($.$bog_pay_app_games.prototype), "Game3"));
 	($mol_mem(($.$bog_pay_app_games.prototype), "Games_grid"));
-	($mol_mem(($.$bog_pay_app_games.prototype), "Games_section"));
-	($mol_mem(($.$bog_pay_app_games.prototype), "Why1_icon"));
-	($mol_mem(($.$bog_pay_app_games.prototype), "Why1_title"));
-	($mol_mem(($.$bog_pay_app_games.prototype), "Why1_text"));
-	($mol_mem(($.$bog_pay_app_games.prototype), "Why1"));
-	($mol_mem(($.$bog_pay_app_games.prototype), "Why2_icon"));
-	($mol_mem(($.$bog_pay_app_games.prototype), "Why2_title"));
-	($mol_mem(($.$bog_pay_app_games.prototype), "Why2_text"));
-	($mol_mem(($.$bog_pay_app_games.prototype), "Why2"));
-	($mol_mem(($.$bog_pay_app_games.prototype), "Why3_icon"));
-	($mol_mem(($.$bog_pay_app_games.prototype), "Why3_title"));
-	($mol_mem(($.$bog_pay_app_games.prototype), "Why3_text"));
-	($mol_mem(($.$bog_pay_app_games.prototype), "Why3"));
-	($mol_mem(($.$bog_pay_app_games.prototype), "Why_grid"));
-	($mol_mem(($.$bog_pay_app_games.prototype), "Why_section"));
 
 
 ;
@@ -9515,19 +9423,39 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
+        const { rem } = $mol_style_unit;
         $mol_style_define($bog_pay_app_games, {
-            Why_grid: {
-                top: '200%',
-                right: '50%',
+            Games_section: {
+                position: 'absolute',
+                top: '350%',
+                left: '40%',
+                transform: 'translate(-50%, -50%)',
                 display: 'flex',
                 flexDirection: 'column',
                 gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
                 gridGap: '10px',
                 padding: '10px',
+                Title: {
+                    fontSize: rem(20),
+                    color: 'white',
+                    padding: '10px',
+                    borderRadius: '10px',
+                    margin: '10px',
+                    textAlign: 'center',
+                    width: '100%',
+                },
+            },
+            Bog_ping: {
+                left: '60%',
+                position: 'absolute',
+                top: '350%',
+                transform: 'translate(-50%, -50%)',
+                gridGap: '10px',
+                padding: '10px',
             },
             Games_grid: {
                 position: 'absolute',
-                top: '200%',
+                top: '2000%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
                 display: 'flex',
@@ -16543,62 +16471,11 @@ var $;
             }
             return null;
         }
-        ensure_registered() {
-            console.log('>>> ensure_registered called', new Error().stack);
-            const people = $bog_pay_app_people.hall();
-            console.log('>>> got people.hall()');
-            const list = people.List(null);
-            console.log('>>> got list', list);
-            if (!list)
-                return false;
-            const wasRegistered = list.has(this.ref());
-            console.log('>>> wasRegistered', wasRegistered);
-            if (!wasRegistered) {
-                console.log('>>> adding to list');
-                list.has(this.ref(), true);
-                console.log('>>> added to list');
-                this.$.$mol_log3_rise({
-                    place: this,
-                    message: 'User registered in People list',
-                    person: this.ref().description,
-                });
-            }
-            console.log('>>> ensure_registered done');
-            return true;
-        }
     }
     __decorate([
         $mol_mem
     ], $bog_pay_app_person.prototype, "active_sub", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_person.prototype, "ensure_registered", null);
     $.$bog_pay_app_person = $bog_pay_app_person;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $bog_pay_app_people extends $hyoo_crus_entity.with({
-        List: $hyoo_crus_list_ref_to(() => $bog_pay_app_person),
-    }) {
-        static hall() {
-            const glob = this.$.$hyoo_crus_glob;
-            const home_land = glob.home().land();
-            this.$.$mol_log3_rise({
-                place: this,
-                message: 'People hall land (using home)',
-                land_ref: home_land.ref().description,
-            });
-            const ref = this.$.$hyoo_crus_ref_resolve(home_land.ref(), this.$.$hyoo_crus_ref('___bogPeopl'));
-            return glob.Node(ref, $bog_pay_app_people);
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_people, "hall", null);
-    $.$bog_pay_app_people = $bog_pay_app_people;
 })($ || ($ = {}));
 
 ;
@@ -17065,7 +16942,7 @@ var $;
 var $;
 (function ($) {
     $.$bog_pay_app_admin_peers = [
-        '6E71EH2t',
+        'NRMoJk9R',
         'mcBM6jhX',
         'SSCOg7yi',
     ];
@@ -17095,6 +16972,51 @@ var $;
 		}
 	};
 
+
+;
+"use strict";
+var $;
+(function ($) {
+    $.$bog_pay_app_people_registry_land = 'SSCOg7yi_erVXV8hP_Shared0P';
+    class $bog_pay_app_people extends $hyoo_crus_entity.with({
+        List: $hyoo_crus_list_ref_to(() => $bog_pay_app_person),
+    }) {
+        static init_registry() {
+            const glob = this.$.$hyoo_crus_glob;
+            const registry_land = glob.land_grab({ '': this.$.$hyoo_crus_rank_post('just') });
+            this.$.$mol_log3_rise({
+                place: this,
+                message: 'Created shared registry land',
+                land_ref: registry_land.ref().description,
+                instructions: 'Copy this land_ref and update $bog_pay_app_people_registry_land constant!',
+            });
+            return registry_land.ref().description;
+        }
+        static hall() {
+            const glob = this.$.$hyoo_crus_glob;
+            const registry_ref = this.$.$hyoo_crus_ref($.$bog_pay_app_people_registry_land);
+            const shared_land = glob.Land(registry_ref);
+            this.$.$mol_log3_rise({
+                place: this,
+                message: 'People registry (shared land)',
+                land_ref: shared_land.ref().description,
+            });
+            let registry = shared_land.home().hall_by($bog_pay_app_people, {});
+            if (!registry) {
+                console.warn('>>> Registry not found in land, creating...');
+                registry = shared_land.home().hall_by($bog_pay_app_people, {});
+            }
+            return registry;
+        }
+    }
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_people, "init_registry", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_people, "hall", null);
+    $.$bog_pay_app_people = $bog_pay_app_people;
+})($ || ($ = {}));
 
 ;
 "use strict";
@@ -17130,60 +17052,51 @@ var $;
                 return Number($bog_pay_app_plan.basic().PriceCents()?.val() ?? '9900');
             }
             people() {
-                const glob = this.$.$hyoo_crus_glob;
-                const land_refs_snapshot = Array.from(glob.lands_touched.values());
-                console.log('>>> Admin.people() - checking lands', {
-                    total_lands: land_refs_snapshot.length,
-                    land_refs: land_refs_snapshot.map(ref => ref.description ?? ref.toString()),
-                });
+                console.log('>>> Admin.people() - reading from shared registry');
+                const people_registry = $bog_pay_app_people.hall();
+                if (!people_registry) {
+                    console.warn('>>> Shared registry land not found — check $bog_pay_app_people_registry_land or run init_registry() as admin');
+                    return [];
+                }
+                const list = people_registry.List();
+                if (!list) {
+                    console.log('>>> ERROR: registry list is null!');
+                    return [];
+                }
+                const all_people_raw = list.remote_list();
+                console.log('>>> Registry remote_list returned', all_people_raw.length, 'people');
                 const all_people = [];
                 const seen_peers = new Set();
-                for (const land_ref of land_refs_snapshot) {
+                for (const person of all_people_raw) {
                     try {
-                        const land = glob.Land(land_ref);
-                        const peer = land.auth().peer();
-                        console.log('>>> Checking land', {
-                            land_ref: land_ref.description ?? land_ref.toString(),
+                        const peer = person.land().auth().peer();
+                        console.log('>>> Got person', {
+                            ref: person.ref().description,
                             peer,
-                            seen_before: seen_peers.has(peer),
+                            name: person.Name()?.str() || '(no name)',
+                            email: person.Email()?.str() || '(no email)',
                         });
                         if (seen_peers.has(peer)) {
-                            console.log('>>> SKIPPED - peer already seen');
+                            console.log('>>> SKIPPED - duplicate peer');
                             continue;
                         }
-                        const person = land.home().hall_by($bog_pay_app_person, {});
-                        console.log('>>> Got person from land.home().hall_by', {
-                            person_exists: !!person,
-                            person_land_ref: person?.land().ref().description,
-                            person_peer: person?.land().auth().peer(),
-                            person_name: person?.Name()?.str() || '(no name)',
-                            person_email: person?.Email()?.str() || '(no email)',
-                        });
-                        if (person) {
-                            all_people.push(person);
-                            seen_peers.add(peer);
-                            console.log('>>> ADDED person to list', { total_now: all_people.length });
-                        }
-                        else {
-                            console.log('>>> NO PERSON found in this land');
-                        }
+                        all_people.push(person);
+                        seen_peers.add(peer);
+                        console.log('>>> ADDED to list, total:', all_people.length);
                     }
                     catch (e) {
-                        console.log('>>> ERROR processing land', {
-                            land_ref: land_ref.description ?? land_ref.toString(),
-                            error: e,
-                        });
+                        console.log('>>> ERROR processing person', e);
                     }
                 }
                 console.log('>>> Admin.people() - FINAL RESULT', {
-                    lands_checked: land_refs_snapshot.length,
+                    refs_in_registry: all_people_raw.length,
                     people_found: all_people.length,
                     peers: Array.from(seen_peers),
                 });
                 this.$.$mol_log3_rise({
                     place: this,
-                    message: 'People collected from home lands',
-                    lands_checked: land_refs_snapshot.length,
+                    message: 'People from shared registry',
+                    refs_in_registry: all_people_raw.length,
                     people_found: all_people.length,
                     people: all_people.map(p => ({
                         land_ref: p?.land().ref().description ?? '?',
@@ -17361,6 +17274,9 @@ var $;
         __decorate([
             $mol_mem
         ], $bog_pay_app_admin_page.prototype, "price_cents", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_admin_page.prototype, "people", null);
         __decorate([
             $mol_mem
         ], $bog_pay_app_admin_page.prototype, "rows", null);
@@ -17670,9 +17586,6 @@ var $;
     class $bog_pay_app_account_domain extends $mol_object2 {
         profile() {
             const person = $hyoo_crus_glob.home().hall_by($bog_pay_app_person, {});
-            if (person) {
-                person.ensure_registered();
-            }
             return person;
         }
         plan_basic() {
