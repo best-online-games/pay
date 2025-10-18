@@ -37,7 +37,20 @@ namespace $.$$ {
 		// People registry
 		@$mol_mem
 		people() {
-			return $bog_pay_app_people.hall().List()?.remote_list() ?? []
+			const list = $bog_pay_app_people.hall().List()?.remote_list() ?? []
+
+			this.$.$mol_log3_rise({
+				place: this,
+				message: 'People list loaded',
+				count: list.length,
+				people: list.map(p => ({
+					peer: p?.land().auth().peer() ?? '?',
+					name: p?.Name()?.str() || '(no name)',
+					email: p?.Email()?.str() || '(no email)',
+				})),
+			})
+
+			return list
 		}
 
 		// Rows content for UI
@@ -62,6 +75,18 @@ namespace $.$$ {
 		person_peer(index: number) {
 			const p = this.people()[index]
 			return p?.land().auth().peer() ?? '—'
+		}
+
+		@$mol_mem_key
+		person_name(index: number) {
+			const p = this.people()[index]
+			return p?.Name()?.str() || '(no name)'
+		}
+
+		@$mol_mem_key
+		person_email(index: number) {
+			const p = this.people()[index]
+			return p?.Email()?.str() || '(no email)'
 		}
 
 		@$mol_mem_key
@@ -136,9 +161,24 @@ namespace $.$$ {
 		@$mol_mem_key
 		Row(index: number) {
 			const $ = this.$
+
+			this.$.$mol_log3_rise({
+				place: this,
+				message: 'Rendering person row',
+				index,
+				peer: this.person_peer(index),
+				name: this.person_name(index),
+				email: this.person_email(index),
+				balance: this.person_balance_rub(index),
+				status: this.person_sub_status(index),
+				period_end: this.person_sub_period_end(index),
+			})
+
 			return $.$mol_row.make({
 				sub: () => [
 					$.$mol_text.make({ text: () => `Peer: ${this.person_peer(index)}` }),
+					$.$mol_text.make({ text: () => `Name: ${this.person_name(index)}` }),
+					$.$mol_text.make({ text: () => `Email: ${this.person_email(index)}` }),
 					$.$mol_text.make({ text: () => `Balance: ${this.person_balance_rub(index)} ₽` }),
 					$.$mol_text.make({ text: () => `Status: ${this.person_sub_status(index)}` }),
 					$.$mol_text.make({ text: () => `Until: ${this.person_sub_period_end(index)}` }),
