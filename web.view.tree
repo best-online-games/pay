@@ -653,6 +653,51 @@ $mol_button_major $mol_button_minor
 
 $mol_row $mol_view
 
+$mol_icon_upload $mol_icon path \M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z
+
+$mol_button_open $mol_button_minor
+	sub /
+		<= Icon $mol_icon_upload
+		<= Native $mol_button_open_native
+			files?next <=> files?next /
+			accept <= accept \
+			multiple <= multiple true
+
+$mol_button_open_native $mol_view
+	dom_name \input
+	files?next /
+	attr *
+		type \file
+		accept <= accept \
+		multiple <= multiple true
+	event *
+		change?next <=> picked?next null
+
+$mol_attach $mol_view
+	items? /string
+	sub /
+		<= Content $mol_row
+			sub <= content /$mol_view
+	Add $mol_button_open
+		title <= attach_title \
+		files? <=> attach_new? null
+	Item* $mol_button_minor
+		click?event <=> item_drop*?event null
+		sub /
+			<= Image* $mol_image
+				title \
+				uri <= item_uri* \
+
+$mol_icon_download $mol_icon path \M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z
+
+$mol_button_download $mol_button_minor
+	blob null
+	uri \
+	file_name \blob.bin
+	sub /
+		<= Icon $mol_icon_download
+		<= title \
+
 $mol_check_list $mol_view
 	dictionary *
 	Option* $mol_check

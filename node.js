@@ -16363,11 +16363,98 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $bog_pay_invoice extends $hyoo_crus_entity.with({
+        Person: $hyoo_crus_atom_ref_to(() => $bog_pay_person),
+        Subscription: $hyoo_crus_atom_ref_to(() => $bog_pay_subscription),
+        Kind: $hyoo_crus_atom_str,
+        AmountCents: $hyoo_crus_atom_str,
+        Currency: $hyoo_crus_atom_str,
+        Status: $hyoo_crus_atom_str,
+        CreatedAt: $hyoo_crus_atom_str,
+        PaidAt: $hyoo_crus_atom_str,
+        Provider: $hyoo_crus_atom_str,
+        ProviderInvoiceId: $hyoo_crus_atom_str,
+        PaymentUrl: $hyoo_crus_text,
+        Meta: $hyoo_crus_text,
+    }) {
+        amount_cents() {
+            return Number(this.AmountCents()?.val() ?? '0');
+        }
+        is_topup() {
+            return this.Kind()?.val() === 'topup';
+        }
+        is_charge() {
+            return this.Kind()?.val() === 'charge';
+        }
+        is_paid() {
+            return this.Status()?.val() === 'paid';
+        }
+        is_pending() {
+            return this.Status()?.val() === 'pending';
+        }
+        is_failed() {
+            return this.Status()?.val() === 'failed';
+        }
+        mark_pending() {
+            if (!this.CreatedAt()?.val())
+                this.CreatedAt(null).val(new Date().toISOString());
+            this.Status(null).val('pending');
+        }
+        mark_paid() {
+            this.Status(null).val('paid');
+            this.PaidAt(null).val(new Date().toISOString());
+        }
+        mark_failed() {
+            this.Status(null).val('failed');
+        }
+        cancel() {
+            this.Status(null).val('canceled');
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $bog_pay_invoice.prototype, "amount_cents", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_invoice.prototype, "is_topup", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_invoice.prototype, "is_charge", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_invoice.prototype, "is_paid", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_invoice.prototype, "is_pending", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_invoice.prototype, "is_failed", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_invoice.prototype, "mark_pending", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_invoice.prototype, "mark_paid", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_invoice.prototype, "mark_failed", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_invoice.prototype, "cancel", null);
+    $.$bog_pay_invoice = $bog_pay_invoice;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
     class $bog_pay_person extends $hyoo_crus_entity.with({
         Name: $hyoo_crus_text,
         Email: $hyoo_crus_text,
         CreatedAt: $hyoo_crus_atom_str,
+        BalanceCents: $hyoo_crus_atom_str,
         Subscriptions: $hyoo_crus_list_ref_to(() => $bog_pay_subscription),
+        Invoices: $hyoo_crus_list_ref_to(() => $bog_pay_invoice),
     }) {
         active_sub() {
             const now = Date.now();
@@ -16404,6 +16491,72 @@ var $;
         sub_active() {
             return this.profile()?.active_sub() ?? null;
         }
+        price_cents() {
+            return 9900;
+        }
+        balance_cents(next) {
+            const person = this.profile();
+            if (next !== undefined) {
+                person.BalanceCents(null).val(String(Math.max(0, Math.floor(next))));
+            }
+            return Number(person.BalanceCents()?.val() ?? '0');
+        }
+        topup_mock_rub(amountRub) {
+            const person = this.profile();
+            const inv = person.Invoices(null).remote_make({});
+            inv.Person(null).val(person.ref());
+            inv.Kind(null).val('topup');
+            inv.AmountCents(null).val(String(Math.round(amountRub * 100)));
+            inv.Currency(null).val('RUB');
+            inv.Provider(null).val('mock');
+            inv.mark_pending();
+            inv.mark_paid();
+            const newBal = this.balance_cents() + inv.amount_cents();
+            this.balance_cents(newBal);
+            console.log('[Billing] topup (mock):', {
+                person: person.ref().description,
+                delta: inv.amount_cents(),
+                balance: newBal,
+            });
+            return inv;
+        }
+        charge_sub_renewal_mock(sub) {
+            const amount = this.price_cents();
+            const person = this.profile();
+            const bal = this.balance_cents();
+            if (bal < amount) {
+                console.log('[Billing] charge skipped: insufficient funds', { balance: bal, need: amount });
+                return false;
+            }
+            this.balance_cents(bal - amount);
+            const inv = person.Invoices(null).remote_make({});
+            inv.Person(null).val(person.ref());
+            inv.Subscription(null).val(sub.ref());
+            inv.Kind(null).val('charge');
+            inv.AmountCents(null).val(String(amount));
+            inv.Currency(null).val('RUB');
+            inv.Provider(null).val('mock');
+            inv.mark_pending();
+            inv.mark_paid();
+            console.log('[Billing] charge (mock): renewal paid', {
+                subscription: sub.ref().description,
+                amount,
+                balance: this.balance_cents(),
+            });
+            return true;
+        }
+        ovpn_file_name() {
+            const peer = this.$.$hyoo_crus_glob.home().land().auth().peer();
+            return `${peer}.ovpn`;
+        }
+        ovpn_file_blob() {
+            const peer = this.$.$hyoo_crus_glob.home().land().auth().peer();
+            const content = `# OVPN profile (mock)
+# user: ${peer}
+# generated: ${new Date().toISOString()}
+`;
+            return new Blob([content], { type: 'application/x-openvpn-profile' });
+        }
         subscribe() {
             const active = this.sub_active();
             if (active) {
@@ -16433,15 +16586,17 @@ var $;
                 sub = person.Subscriptions(null).remote_make({});
                 sub.Person(null).val(person.ref());
                 sub.Plan(null).val(plan.ref());
-                sub.activate_month();
             }
-            else {
-                sub.activate_month();
+            if (!this.charge_sub_renewal_mock(sub)) {
+                console.log('[Billing] renew (mock): insufficient funds, please top-up balance first');
+                return sub;
             }
-            console.log('[Billing] renew (mock): +1 month', {
+            sub.activate_month();
+            console.log('[Billing] renew (mock): +period', {
                 subscription: sub.ref().description,
                 status: sub.Status()?.val(),
                 period: { start: sub.PeriodStart()?.val(), end: sub.PeriodEnd()?.val() },
+                balance: this.balance_cents(),
             });
             sub.enforce_access_mock();
             return sub;
@@ -16462,14 +16617,25 @@ var $;
         enforce_access() {
             const sub = this.sub_active();
             if (sub) {
-                sub.enforce_access_mock();
-            }
-            else {
-                const person = this.profile();
-                const subs = person?.Subscriptions()?.remote_list() ?? [];
-                for (const s of subs) {
-                    s.enforce_access_mock();
+                const expired = sub.period_end_ms() <= Date.now();
+                const mode = sub.RenewalMode()?.val();
+                if (expired && mode === 'auto') {
+                    const paid = this.charge_sub_renewal_mock(sub);
+                    if (paid) {
+                        sub.activate_month();
+                    }
+                    else {
+                        sub.RenewalMode(null).val('manual');
+                        sub.Status(null).val('canceled');
+                    }
                 }
+                sub.enforce_access_mock();
+                return;
+            }
+            const person = this.profile();
+            const subs = person?.Subscriptions()?.remote_list() ?? [];
+            for (const s of subs) {
+                s.enforce_access_mock();
             }
         }
         is_vpn_allowed() {
@@ -16502,6 +16668,21 @@ var $;
     __decorate([
         $mol_mem
     ], $bog_pay_account.prototype, "sub_active", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_account.prototype, "price_cents", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_account.prototype, "balance_cents", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_account.prototype, "topup_mock_rub", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_account.prototype, "charge_sub_renewal_mock", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_account.prototype, "ovpn_file_name", null);
     __decorate([
         $mol_action
     ], $bog_pay_account.prototype, "subscribe", null);
@@ -16556,6 +16737,275 @@ var $;
 var $;
 (function ($) {
     $mol_style_attach("mol/row/row.view.css", "[mol_row] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\talign-items: flex-start;\n\talign-content: flex-start;\n\tjustify-content: flex-start;\n\tpadding: var(--mol_gap_block);\n\tgap: var(--mol_gap_block);\n\tflex: 0 0 auto;\n\tbox-sizing: border-box;\n\tmax-width: 100%;\n}\n\n[mol_row] > * {\n\tmax-width: 100%;\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+	($.$mol_icon_upload) = class $mol_icon_upload extends ($.$mol_icon) {
+		path(){
+			return "M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_button_open) = class $mol_button_open extends ($.$mol_button_minor) {
+		Icon(){
+			const obj = new this.$.$mol_icon_upload();
+			return obj;
+		}
+		files(next){
+			if(next !== undefined) return next;
+			return [];
+		}
+		accept(){
+			return "";
+		}
+		multiple(){
+			return true;
+		}
+		Native(){
+			const obj = new this.$.$mol_button_open_native();
+			(obj.files) = (next) => ((this.files(next)));
+			(obj.accept) = () => ((this.accept()));
+			(obj.multiple) = () => ((this.multiple()));
+			return obj;
+		}
+		sub(){
+			return [(this.Icon()), (this.Native())];
+		}
+	};
+	($mol_mem(($.$mol_button_open.prototype), "Icon"));
+	($mol_mem(($.$mol_button_open.prototype), "files"));
+	($mol_mem(($.$mol_button_open.prototype), "Native"));
+	($.$mol_button_open_native) = class $mol_button_open_native extends ($.$mol_view) {
+		accept(){
+			return "";
+		}
+		multiple(){
+			return true;
+		}
+		picked(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		dom_name(){
+			return "input";
+		}
+		files(next){
+			if(next !== undefined) return next;
+			return [];
+		}
+		attr(){
+			return {
+				"type": "file", 
+				"accept": (this.accept()), 
+				"multiple": (this.multiple())
+			};
+		}
+		event(){
+			return {"change": (next) => (this.picked(next))};
+		}
+	};
+	($mol_mem(($.$mol_button_open_native.prototype), "picked"));
+	($mol_mem(($.$mol_button_open_native.prototype), "files"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_button_open_native extends $.$mol_button_open_native {
+            dom_node() {
+                return super.dom_node();
+            }
+            picked() {
+                const files = this.dom_node().files;
+                if (!files || !files.length)
+                    return;
+                this.files([...files]);
+            }
+        }
+        $$.$mol_button_open_native = $mol_button_open_native;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/button/open/open.view.css", "[mol_button_open_native] {\n\tposition: absolute;\n\tleft: 0;\n\ttop: -100%;\n\twidth: 100%;\n\theight: 200%;\n\tcursor: pointer;\n\topacity: 0;\n}\n");
+})($ || ($ = {}));
+
+;
+	($.$mol_attach) = class $mol_attach extends ($.$mol_view) {
+		content(){
+			return [];
+		}
+		Content(){
+			const obj = new this.$.$mol_row();
+			(obj.sub) = () => ((this.content()));
+			return obj;
+		}
+		attach_title(){
+			return "";
+		}
+		attach_new(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		item_drop(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		item_uri(id){
+			return "";
+		}
+		Image(id){
+			const obj = new this.$.$mol_image();
+			(obj.title) = () => ("");
+			(obj.uri) = () => ((this.item_uri(id)));
+			return obj;
+		}
+		items(next){
+			if(next !== undefined) return next;
+			return [];
+		}
+		sub(){
+			return [(this.Content())];
+		}
+		Add(){
+			const obj = new this.$.$mol_button_open();
+			(obj.title) = () => ((this.attach_title()));
+			(obj.files) = (next) => ((this.attach_new(next)));
+			return obj;
+		}
+		Item(id){
+			const obj = new this.$.$mol_button_minor();
+			(obj.click) = (next) => ((this.item_drop(id, next)));
+			(obj.sub) = () => ([(this.Image(id))]);
+			return obj;
+		}
+	};
+	($mol_mem(($.$mol_attach.prototype), "Content"));
+	($mol_mem(($.$mol_attach.prototype), "attach_new"));
+	($mol_mem_key(($.$mol_attach.prototype), "item_drop"));
+	($mol_mem_key(($.$mol_attach.prototype), "Image"));
+	($mol_mem(($.$mol_attach.prototype), "items"));
+	($mol_mem(($.$mol_attach.prototype), "Add"));
+	($mol_mem_key(($.$mol_attach.prototype), "Item"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_attach extends $.$mol_attach {
+            attach_new(files) {
+                this.items([
+                    ...this.items(),
+                    ...files.map(file => URL.createObjectURL(file)),
+                ]);
+            }
+            content() {
+                return [...this.items().map((_, i) => this.Item(i)), this.Add()];
+            }
+            item_uri(index) {
+                return this.items()[index];
+            }
+            item_drop(index, event) {
+                const items = this.items();
+                this.items([
+                    ...items.slice(0, index),
+                    ...items.slice(index + 1),
+                ]);
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_attach.prototype, "content", null);
+        $$.$mol_attach = $mol_attach;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/attach/attach.view.css", "[mol_attach_item] {\n\twidth: 6rem;\n\theight: 6rem;\n\tborder-radius: var(--mol_gap_round);\n\tpadding: 0;\n}\n\n[mol_attach_image] {\n\tbackground: var(--mol_theme_card);\n\twidth: 100%;\n\theight: 100%;\n}\n\n[mol_attach_add] {\n\tbackground: var(--mol_theme_card);\n\twidth: 6rem;\n\theight: 6rem;\n\talign-items: center;\n\tjustify-content: center;\n\toverflow: hidden;\n}\n\n[mol_attach_add_icon] {\n\twidth: 50%;\n\theight: 50%;\n}\n");
+})($ || ($ = {}));
+
+;
+	($.$mol_icon_download) = class $mol_icon_download extends ($.$mol_icon) {
+		path(){
+			return "M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_button_download) = class $mol_button_download extends ($.$mol_button_minor) {
+		Icon(){
+			const obj = new this.$.$mol_icon_download();
+			return obj;
+		}
+		title(){
+			return "";
+		}
+		blob(){
+			return null;
+		}
+		uri(){
+			return "";
+		}
+		file_name(){
+			return "blob.bin";
+		}
+		sub(){
+			return [(this.Icon()), (this.title())];
+		}
+	};
+	($mol_mem(($.$mol_button_download.prototype), "Icon"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_button_download extends $.$mol_button_download {
+            uri() {
+                return URL.createObjectURL(this.blob());
+            }
+            click() {
+                const a = $mol_jsx("a", { href: this.uri(), download: this.file_name() });
+                a.click();
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_button_download.prototype, "uri", null);
+        $$.$mol_button_download = $mol_button_download;
+    })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
 ;
@@ -16670,10 +17120,49 @@ var $;
                     },
                 });
             }
+            Info_balance() {
+                const $ = this.$;
+                return $.$mol_text.make({
+                    text: () => {
+                        const cents = this.account().balance_cents();
+                        const rub = (cents / 100).toFixed(2);
+                        return `Баланс: ${rub} ₽`;
+                    },
+                });
+            }
+            Attach_ovpn() {
+                const $ = this.$;
+                return $.$mol_attach.make({
+                    items: () => [this.account().ovpn_file_name()],
+                });
+            }
+            Download_ovpn_btn() {
+                const $ = this.$;
+                return $.$mol_button_download.make({
+                    sub: () => [$.$mol_text.make({ text: () => 'Скачать .ovpn (mock)' })],
+                    file_name: () => this.account().ovpn_file_name(),
+                    blob: () => this.account().ovpn_file_blob(),
+                });
+            }
+            Topup_btn() {
+                const $ = this.$;
+                return $.$mol_button_minor.make({
+                    sub: () => [$.$mol_text.make({ text: () => 'Пополнить +199 ₽ (mock)' })],
+                    click: () => {
+                        this.account().topup_mock_rub(199);
+                    },
+                });
+            }
             Actions() {
                 const $ = this.$;
                 return $.$mol_row.make({
-                    sub: () => [this.Subscribe_btn(), this.Renew_btn(), this.Cancel_btn()],
+                    sub: () => [
+                        this.Subscribe_btn(),
+                        this.Renew_btn(),
+                        this.Cancel_btn(),
+                        this.Topup_btn(),
+                        this.Download_ovpn_btn(),
+                    ],
                 });
             }
             body() {
@@ -16684,6 +17173,8 @@ var $;
                     this.Info_period(),
                     this.Info_renewal(),
                     this.Info_vpn(),
+                    this.Info_balance(),
+                    this.Attach_ovpn(),
                     this.Actions(),
                 ];
             }

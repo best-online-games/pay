@@ -7579,16 +7579,340 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    const $bog_pay_invoice_base: Omit<typeof $hyoo_crus_entity, "prototype"> & (new (...args: any[]) => $mol_type_override<$hyoo_crus_entity, {
+        readonly Person: (auto?: any) => {
+            Value: Value;
+            remote(next?: $bog_pay_person | null | undefined): $bog_pay_person | null;
+            remote_of(peer: string | null, next?: $bog_pay_person | null | undefined): $bog_pay_person | null;
+            ensure(config?: null | $hyoo_crus_rank_preset | $hyoo_crus_land): $bog_pay_person | null;
+            ensure_of(peer: string | null, config?: null | $hyoo_crus_rank_preset | $hyoo_crus_land): $bog_pay_person | null;
+            ensure_here(peer: string | null): void;
+            ensure_area(peer: string | null, land: $hyoo_crus_land): void;
+            ensure_lord(peer: string | null, preset: $hyoo_crus_rank_preset): void;
+            remote_ensure(preset?: $hyoo_crus_rank_preset): $bog_pay_person | null;
+            local_ensure(): $bog_pay_person | null;
+            val(next?: (symbol & {
+                $hyoo_crus_ref: symbol;
+            }) | null | undefined): (symbol & {
+                $hyoo_crus_ref: symbol;
+            }) | null;
+            val_of(peer: string | null, next?: (symbol & {
+                $hyoo_crus_ref: symbol;
+            }) | null | undefined): (symbol & {
+                $hyoo_crus_ref: symbol;
+            }) | null;
+            pick_unit(peer: string | null): $hyoo_crus_sand | undefined;
+            vary(next?: $hyoo_crus_vary_type): $hyoo_crus_vary_type;
+            vary_of(peer: string | null, next?: $hyoo_crus_vary_type): $hyoo_crus_vary_type;
+            [$mol_dev_format_head](): any[];
+            land(): $hyoo_crus_land;
+            head(): string;
+            land_ref(): symbol & {
+                $hyoo_crus_ref: symbol;
+            };
+            ref(): symbol & {
+                $hyoo_crus_ref: symbol;
+            };
+            toJSON(): string | undefined;
+            cast<Node_1 extends typeof $hyoo_crus_node>(Node: Node_1): InstanceType<Node_1>;
+            nodes<Node_1 extends typeof $hyoo_crus_node>(Node: Node_1 | null): readonly InstanceType<Node_1>[];
+            units(): $hyoo_crus_sand[];
+            units_of(peer: string | null): $hyoo_crus_sand[];
+            filled(): boolean;
+            can_change(): boolean;
+            last_change(): $mol_time_moment | null;
+            author_peers(): string[];
+            author_lords(): (symbol & {
+                $hyoo_crus_ref: symbol;
+            })[];
+            get $(): $;
+            set $(next: $);
+            destructor(): void;
+            toString(): string;
+            [Symbol.toStringTag]: string;
+            [$mol_ambient_ref]: $;
+        } | null;
+        readonly Subscription: (auto?: any) => {
+            Value: Value;
+            remote(next?: $bog_pay_subscription | null | undefined): $bog_pay_subscription | null;
+            remote_of(peer: string | null, next?: $bog_pay_subscription | null | undefined): $bog_pay_subscription | null;
+            ensure(config?: null | $hyoo_crus_rank_preset | $hyoo_crus_land): $bog_pay_subscription | null;
+            ensure_of(peer: string | null, config?: null | $hyoo_crus_rank_preset | $hyoo_crus_land): $bog_pay_subscription | null;
+            ensure_here(peer: string | null): void;
+            ensure_area(peer: string | null, land: $hyoo_crus_land): void;
+            ensure_lord(peer: string | null, preset: $hyoo_crus_rank_preset): void;
+            remote_ensure(preset?: $hyoo_crus_rank_preset): $bog_pay_subscription | null;
+            local_ensure(): $bog_pay_subscription | null;
+            val(next?: (symbol & {
+                $hyoo_crus_ref: symbol;
+            }) | null | undefined): (symbol & {
+                $hyoo_crus_ref: symbol;
+            }) | null;
+            val_of(peer: string | null, next?: (symbol & {
+                $hyoo_crus_ref: symbol;
+            }) | null | undefined): (symbol & {
+                $hyoo_crus_ref: symbol;
+            }) | null;
+            pick_unit(peer: string | null): $hyoo_crus_sand | undefined;
+            vary(next?: $hyoo_crus_vary_type): $hyoo_crus_vary_type;
+            vary_of(peer: string | null, next?: $hyoo_crus_vary_type): $hyoo_crus_vary_type;
+            [$mol_dev_format_head](): any[];
+            land(): $hyoo_crus_land;
+            head(): string;
+            land_ref(): symbol & {
+                $hyoo_crus_ref: symbol;
+            };
+            ref(): symbol & {
+                $hyoo_crus_ref: symbol;
+            };
+            toJSON(): string | undefined;
+            cast<Node_1 extends typeof $hyoo_crus_node>(Node: Node_1): InstanceType<Node_1>;
+            nodes<Node_1 extends typeof $hyoo_crus_node>(Node: Node_1 | null): readonly InstanceType<Node_1>[];
+            units(): $hyoo_crus_sand[];
+            units_of(peer: string | null): $hyoo_crus_sand[];
+            filled(): boolean;
+            can_change(): boolean;
+            last_change(): $mol_time_moment | null;
+            author_peers(): string[];
+            author_lords(): (symbol & {
+                $hyoo_crus_ref: symbol;
+            })[];
+            get $(): $;
+            set $(next: $);
+            destructor(): void;
+            toString(): string;
+            [Symbol.toStringTag]: string;
+            [$mol_ambient_ref]: $;
+        } | null;
+        readonly Kind: (auto?: any) => $hyoo_crus_atom_str | null;
+        readonly AmountCents: (auto?: any) => $hyoo_crus_atom_str | null;
+        readonly Currency: (auto?: any) => $hyoo_crus_atom_str | null;
+        readonly Status: (auto?: any) => $hyoo_crus_atom_str | null;
+        readonly CreatedAt: (auto?: any) => $hyoo_crus_atom_str | null;
+        readonly PaidAt: (auto?: any) => $hyoo_crus_atom_str | null;
+        readonly Provider: (auto?: any) => $hyoo_crus_atom_str | null;
+        readonly ProviderInvoiceId: (auto?: any) => $hyoo_crus_atom_str | null;
+        readonly PaymentUrl: (auto?: any) => $hyoo_crus_text | null;
+        readonly Meta: (auto?: any) => $hyoo_crus_text | null;
+    }>) & {
+        schema: {
+            [x: string]: typeof $hyoo_crus_node;
+        } & {
+            readonly Person: {
+                new (): {
+                    Value: () => typeof $bog_pay_person;
+                    remote(next?: $bog_pay_person | null | undefined): $bog_pay_person | null;
+                    remote_of(peer: string | null, next?: $bog_pay_person | null | undefined): $bog_pay_person | null;
+                    ensure(config?: null | $hyoo_crus_rank_preset | $hyoo_crus_land): $bog_pay_person | null;
+                    ensure_of(peer: string | null, config?: null | $hyoo_crus_rank_preset | $hyoo_crus_land): $bog_pay_person | null;
+                    ensure_here(peer: string | null): void;
+                    ensure_area(peer: string | null, land: $hyoo_crus_land): void;
+                    ensure_lord(peer: string | null, preset: $hyoo_crus_rank_preset): void;
+                    remote_ensure(preset?: $hyoo_crus_rank_preset): $bog_pay_person | null;
+                    local_ensure(): $bog_pay_person | null;
+                    val(next?: (symbol & {
+                        $hyoo_crus_ref: symbol;
+                    }) | null | undefined): (symbol & {
+                        $hyoo_crus_ref: symbol;
+                    }) | null;
+                    val_of(peer: string | null, next?: (symbol & {
+                        $hyoo_crus_ref: symbol;
+                    }) | null | undefined): (symbol & {
+                        $hyoo_crus_ref: symbol;
+                    }) | null;
+                    pick_unit(peer: string | null): $hyoo_crus_sand | undefined;
+                    vary(next?: $hyoo_crus_vary_type): $hyoo_crus_vary_type;
+                    vary_of(peer: string | null, next?: $hyoo_crus_vary_type): $hyoo_crus_vary_type;
+                    [$mol_dev_format_head](): any[];
+                    land(): $hyoo_crus_land;
+                    head(): string;
+                    land_ref(): symbol & {
+                        $hyoo_crus_ref: symbol;
+                    };
+                    ref(): symbol & {
+                        $hyoo_crus_ref: symbol;
+                    };
+                    toJSON(): string | undefined;
+                    cast<Node_1 extends typeof $hyoo_crus_node>(Node: Node_1): InstanceType<Node_1>;
+                    nodes<Node_1 extends typeof $hyoo_crus_node>(Node: Node_1 | null): readonly InstanceType<Node_1>[];
+                    units(): $hyoo_crus_sand[];
+                    units_of(peer: string | null): $hyoo_crus_sand[];
+                    filled(): boolean;
+                    can_change(): boolean;
+                    last_change(): $mol_time_moment | null;
+                    author_peers(): string[];
+                    author_lords(): (symbol & {
+                        $hyoo_crus_ref: symbol;
+                    })[];
+                    get $(): $;
+                    set $(next: $);
+                    destructor(): void;
+                    toString(): string;
+                    [Symbol.toStringTag]: string;
+                    [$mol_ambient_ref]: $;
+                };
+                toString(): any;
+                Value: typeof $hyoo_crus_dict;
+                parse: typeof $hyoo_crus_vary_cast_ref;
+                tag: keyof typeof $hyoo_crus_sand_tag;
+                make<This extends typeof $mol_object>(this: This, config: Partial<InstanceType<This>>): InstanceType<This>;
+                $: $;
+                create<Instance>(this: new (init?: (instance: any) => void) => Instance, init?: (instance: $mol_type_writable<Instance>) => void): Instance;
+                toJSON(): any;
+                destructor(): void;
+                [Symbol.toPrimitive](): any;
+            };
+            readonly Subscription: {
+                new (): {
+                    Value: () => typeof $bog_pay_subscription;
+                    remote(next?: $bog_pay_subscription | null | undefined): $bog_pay_subscription | null;
+                    remote_of(peer: string | null, next?: $bog_pay_subscription | null | undefined): $bog_pay_subscription | null;
+                    ensure(config?: null | $hyoo_crus_rank_preset | $hyoo_crus_land): $bog_pay_subscription | null;
+                    ensure_of(peer: string | null, config?: null | $hyoo_crus_rank_preset | $hyoo_crus_land): $bog_pay_subscription | null;
+                    ensure_here(peer: string | null): void;
+                    ensure_area(peer: string | null, land: $hyoo_crus_land): void;
+                    ensure_lord(peer: string | null, preset: $hyoo_crus_rank_preset): void;
+                    remote_ensure(preset?: $hyoo_crus_rank_preset): $bog_pay_subscription | null;
+                    local_ensure(): $bog_pay_subscription | null;
+                    val(next?: (symbol & {
+                        $hyoo_crus_ref: symbol;
+                    }) | null | undefined): (symbol & {
+                        $hyoo_crus_ref: symbol;
+                    }) | null;
+                    val_of(peer: string | null, next?: (symbol & {
+                        $hyoo_crus_ref: symbol;
+                    }) | null | undefined): (symbol & {
+                        $hyoo_crus_ref: symbol;
+                    }) | null;
+                    pick_unit(peer: string | null): $hyoo_crus_sand | undefined;
+                    vary(next?: $hyoo_crus_vary_type): $hyoo_crus_vary_type;
+                    vary_of(peer: string | null, next?: $hyoo_crus_vary_type): $hyoo_crus_vary_type;
+                    [$mol_dev_format_head](): any[];
+                    land(): $hyoo_crus_land;
+                    head(): string;
+                    land_ref(): symbol & {
+                        $hyoo_crus_ref: symbol;
+                    };
+                    ref(): symbol & {
+                        $hyoo_crus_ref: symbol;
+                    };
+                    toJSON(): string | undefined;
+                    cast<Node_1 extends typeof $hyoo_crus_node>(Node: Node_1): InstanceType<Node_1>;
+                    nodes<Node_1 extends typeof $hyoo_crus_node>(Node: Node_1 | null): readonly InstanceType<Node_1>[];
+                    units(): $hyoo_crus_sand[];
+                    units_of(peer: string | null): $hyoo_crus_sand[];
+                    filled(): boolean;
+                    can_change(): boolean;
+                    last_change(): $mol_time_moment | null;
+                    author_peers(): string[];
+                    author_lords(): (symbol & {
+                        $hyoo_crus_ref: symbol;
+                    })[];
+                    get $(): $;
+                    set $(next: $);
+                    destructor(): void;
+                    toString(): string;
+                    [Symbol.toStringTag]: string;
+                    [$mol_ambient_ref]: $;
+                };
+                toString(): any;
+                Value: typeof $hyoo_crus_dict;
+                parse: typeof $hyoo_crus_vary_cast_ref;
+                tag: keyof typeof $hyoo_crus_sand_tag;
+                make<This extends typeof $mol_object>(this: This, config: Partial<InstanceType<This>>): InstanceType<This>;
+                $: $;
+                create<Instance>(this: new (init?: (instance: any) => void) => Instance, init?: (instance: $mol_type_writable<Instance>) => void): Instance;
+                toJSON(): any;
+                destructor(): void;
+                [Symbol.toPrimitive](): any;
+            };
+            readonly Kind: typeof $hyoo_crus_atom_str;
+            readonly AmountCents: typeof $hyoo_crus_atom_str;
+            readonly Currency: typeof $hyoo_crus_atom_str;
+            readonly Status: typeof $hyoo_crus_atom_str;
+            readonly CreatedAt: typeof $hyoo_crus_atom_str;
+            readonly PaidAt: typeof $hyoo_crus_atom_str;
+            readonly Provider: typeof $hyoo_crus_atom_str;
+            readonly ProviderInvoiceId: typeof $hyoo_crus_atom_str;
+            readonly PaymentUrl: typeof $hyoo_crus_text;
+            readonly Meta: typeof $hyoo_crus_text;
+        };
+    };
+    export class $bog_pay_invoice extends $bog_pay_invoice_base {
+        amount_cents(): number;
+        is_topup(): boolean;
+        is_charge(): boolean;
+        is_paid(): boolean;
+        is_pending(): boolean;
+        is_failed(): boolean;
+        mark_pending(): void;
+        mark_paid(): void;
+        mark_failed(): void;
+        cancel(): void;
+    }
+    export {};
+}
+
+declare namespace $ {
     const $bog_pay_person_base: Omit<typeof $hyoo_crus_entity, "prototype"> & (new (...args: any[]) => $mol_type_override<$hyoo_crus_entity, {
         readonly Name: (auto?: any) => $hyoo_crus_text | null;
         readonly Email: (auto?: any) => $hyoo_crus_text | null;
         readonly CreatedAt: (auto?: any) => $hyoo_crus_atom_str | null;
+        readonly BalanceCents: (auto?: any) => $hyoo_crus_atom_str | null;
         readonly Subscriptions: (auto?: any) => {
             remote_list(next?: readonly $bog_pay_subscription[] | undefined): readonly $bog_pay_subscription[];
             remote_add(item: $bog_pay_subscription): void;
             make(config: null | number | $hyoo_crus_rank_preset | $hyoo_crus_land): $bog_pay_subscription;
             remote_make(config: $hyoo_crus_rank_preset): $bog_pay_subscription;
             local_make(idea?: number): $bog_pay_subscription;
+            items(next?: readonly ((symbol & {
+                $hyoo_crus_ref: symbol;
+            }) | null)[] | undefined): readonly ((symbol & {
+                $hyoo_crus_ref: symbol;
+            }) | null)[];
+            items_vary(next?: readonly $hyoo_crus_vary_type[], tag?: keyof typeof $hyoo_crus_sand_tag): readonly $hyoo_crus_vary_type[];
+            splice(next: readonly $hyoo_crus_vary_type[], from?: number, to?: number, tag?: keyof typeof $hyoo_crus_sand_tag): void;
+            find(vary: $hyoo_crus_vary_type): $hyoo_crus_sand | null;
+            has(vary: $hyoo_crus_vary_type, next?: boolean, tag?: keyof typeof $hyoo_crus_sand_tag): boolean;
+            add(vary: $hyoo_crus_vary_type, tag?: keyof typeof $hyoo_crus_sand_tag): void;
+            cut(vary: $hyoo_crus_vary_type): void;
+            move(from: number, to: number): void;
+            wipe(seat: number): void;
+            node_make<Node_1 extends typeof $hyoo_crus_node>(Node: Node_1, vary: $hyoo_crus_vary_type, tag?: keyof typeof $hyoo_crus_sand_tag): InstanceType<Node_1>;
+            [$mol_dev_format_head](): any[];
+            land(): $hyoo_crus_land;
+            head(): string;
+            land_ref(): symbol & {
+                $hyoo_crus_ref: symbol;
+            };
+            ref(): symbol & {
+                $hyoo_crus_ref: symbol;
+            };
+            toJSON(): string | undefined;
+            cast<Node_1 extends typeof $hyoo_crus_node>(Node: Node_1): InstanceType<Node_1>;
+            nodes<Node_1 extends typeof $hyoo_crus_node>(Node: Node_1 | null): readonly InstanceType<Node_1>[];
+            units(): $hyoo_crus_sand[];
+            units_of(peer: string | null): $hyoo_crus_sand[];
+            filled(): boolean;
+            can_change(): boolean;
+            last_change(): $mol_time_moment | null;
+            author_peers(): string[];
+            author_lords(): (symbol & {
+                $hyoo_crus_ref: symbol;
+            })[];
+            get $(): $;
+            set $(next: $);
+            destructor(): void;
+            toString(): string;
+            [Symbol.toStringTag]: string;
+            [$mol_ambient_ref]: $;
+        } | null;
+        readonly Invoices: (auto?: any) => {
+            remote_list(next?: readonly $bog_pay_invoice[] | undefined): readonly $bog_pay_invoice[];
+            remote_add(item: $bog_pay_invoice): void;
+            make(config: null | number | $hyoo_crus_rank_preset | $hyoo_crus_land): $bog_pay_invoice;
+            remote_make(config: $hyoo_crus_rank_preset): $bog_pay_invoice;
+            local_make(idea?: number): $bog_pay_invoice;
             items(next?: readonly ((symbol & {
                 $hyoo_crus_ref: symbol;
             }) | null)[] | undefined): readonly ((symbol & {
@@ -7638,6 +7962,7 @@ declare namespace $ {
             readonly Name: typeof $hyoo_crus_text;
             readonly Email: typeof $hyoo_crus_text;
             readonly CreatedAt: typeof $hyoo_crus_atom_str;
+            readonly BalanceCents: typeof $hyoo_crus_atom_str;
             readonly Subscriptions: {
                 new (): {
                     remote_list(next?: readonly $bog_pay_subscription[] | undefined): readonly $bog_pay_subscription[];
@@ -7645,6 +7970,66 @@ declare namespace $ {
                     make(config: null | number | $hyoo_crus_rank_preset | $hyoo_crus_land): $bog_pay_subscription;
                     remote_make(config: $hyoo_crus_rank_preset): $bog_pay_subscription;
                     local_make(idea?: number): $bog_pay_subscription;
+                    items(next?: readonly ((symbol & {
+                        $hyoo_crus_ref: symbol;
+                    }) | null)[] | undefined): readonly ((symbol & {
+                        $hyoo_crus_ref: symbol;
+                    }) | null)[];
+                    items_vary(next?: readonly $hyoo_crus_vary_type[], tag?: keyof typeof $hyoo_crus_sand_tag): readonly $hyoo_crus_vary_type[];
+                    splice(next: readonly $hyoo_crus_vary_type[], from?: number, to?: number, tag?: keyof typeof $hyoo_crus_sand_tag): void;
+                    find(vary: $hyoo_crus_vary_type): $hyoo_crus_sand | null;
+                    has(vary: $hyoo_crus_vary_type, next?: boolean, tag?: keyof typeof $hyoo_crus_sand_tag): boolean;
+                    add(vary: $hyoo_crus_vary_type, tag?: keyof typeof $hyoo_crus_sand_tag): void;
+                    cut(vary: $hyoo_crus_vary_type): void;
+                    move(from: number, to: number): void;
+                    wipe(seat: number): void;
+                    node_make<Node_1 extends typeof $hyoo_crus_node>(Node: Node_1, vary: $hyoo_crus_vary_type, tag?: keyof typeof $hyoo_crus_sand_tag): InstanceType<Node_1>;
+                    [$mol_dev_format_head](): any[];
+                    land(): $hyoo_crus_land;
+                    head(): string;
+                    land_ref(): symbol & {
+                        $hyoo_crus_ref: symbol;
+                    };
+                    ref(): symbol & {
+                        $hyoo_crus_ref: symbol;
+                    };
+                    toJSON(): string | undefined;
+                    cast<Node_1 extends typeof $hyoo_crus_node>(Node: Node_1): InstanceType<Node_1>;
+                    nodes<Node_1 extends typeof $hyoo_crus_node>(Node: Node_1 | null): readonly InstanceType<Node_1>[];
+                    units(): $hyoo_crus_sand[];
+                    units_of(peer: string | null): $hyoo_crus_sand[];
+                    filled(): boolean;
+                    can_change(): boolean;
+                    last_change(): $mol_time_moment | null;
+                    author_peers(): string[];
+                    author_lords(): (symbol & {
+                        $hyoo_crus_ref: symbol;
+                    })[];
+                    get $(): $;
+                    set $(next: $);
+                    destructor(): void;
+                    toString(): string;
+                    [Symbol.toStringTag]: string;
+                    [$mol_ambient_ref]: $;
+                };
+                Value: Value;
+                toString(): any;
+                parse: typeof $hyoo_crus_vary_cast_ref;
+                tag: keyof typeof $hyoo_crus_sand_tag;
+                make<This extends typeof $mol_object>(this: This, config: Partial<InstanceType<This>>): InstanceType<This>;
+                $: $;
+                create<Instance>(this: new (init?: (instance: any) => void) => Instance, init?: (instance: $mol_type_writable<Instance>) => void): Instance;
+                toJSON(): any;
+                destructor(): void;
+                [Symbol.toPrimitive](): any;
+            };
+            readonly Invoices: {
+                new (): {
+                    remote_list(next?: readonly $bog_pay_invoice[] | undefined): readonly $bog_pay_invoice[];
+                    remote_add(item: $bog_pay_invoice): void;
+                    make(config: null | number | $hyoo_crus_rank_preset | $hyoo_crus_land): $bog_pay_invoice;
+                    remote_make(config: $hyoo_crus_rank_preset): $bog_pay_invoice;
+                    local_make(idea?: number): $bog_pay_invoice;
                     items(next?: readonly ((symbol & {
                         $hyoo_crus_ref: symbol;
                     }) | null)[] | undefined): readonly ((symbol & {
@@ -7711,6 +8096,12 @@ declare namespace $ {
         profile(): $bog_pay_person | null;
         plan_basic(): $bog_pay_plan;
         sub_active(): $bog_pay_subscription | null;
+        price_cents(): number;
+        balance_cents(next?: number): number;
+        topup_mock_rub(amountRub: number): $bog_pay_invoice;
+        charge_sub_renewal_mock(sub: $bog_pay_subscription): boolean;
+        ovpn_file_name(): string;
+        ovpn_file_blob(): Blob;
         subscribe(): $bog_pay_subscription;
         renew(): $bog_pay_subscription;
         cancel_auto(): void;
@@ -7750,6 +8141,166 @@ declare namespace $ {
 //# sourceMappingURL=row.view.tree.d.ts.map
 declare namespace $ {
 
+	export class $mol_icon_upload extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=upload.view.tree.d.ts.map
+declare namespace $ {
+
+	type $mol_button_open_native__files_mol_button_open_1 = $mol_type_enforce<
+		ReturnType< $mol_button_open['files'] >
+		,
+		ReturnType< $mol_button_open_native['files'] >
+	>
+	type $mol_button_open_native__accept_mol_button_open_2 = $mol_type_enforce<
+		ReturnType< $mol_button_open['accept'] >
+		,
+		ReturnType< $mol_button_open_native['accept'] >
+	>
+	type $mol_button_open_native__multiple_mol_button_open_3 = $mol_type_enforce<
+		ReturnType< $mol_button_open['multiple'] >
+		,
+		ReturnType< $mol_button_open_native['multiple'] >
+	>
+	export class $mol_button_open extends $mol_button_minor {
+		Icon( ): $mol_icon_upload
+		files( next?: readonly(any)[] ): readonly(any)[]
+		accept( ): string
+		multiple( ): boolean
+		Native( ): $mol_button_open_native
+		sub( ): readonly(any)[]
+	}
+	
+	export class $mol_button_open_native extends $mol_view {
+		accept( ): string
+		multiple( ): boolean
+		picked( next?: any ): any
+		dom_name( ): string
+		files( next?: readonly(any)[] ): readonly(any)[]
+		attr( ): ({ 
+			'type': string,
+			'accept': ReturnType< $mol_button_open_native['accept'] >,
+			'multiple': ReturnType< $mol_button_open_native['multiple'] >,
+		}) 
+		event( ): ({ 
+			change( next?: ReturnType< $mol_button_open_native['picked'] > ): ReturnType< $mol_button_open_native['picked'] >,
+		}) 
+	}
+	
+}
+
+//# sourceMappingURL=open.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_button_open_native extends $.$mol_button_open_native {
+        dom_node(): HTMLInputElement;
+        picked(): void;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	type $mol_row__sub_mol_attach_1 = $mol_type_enforce<
+		ReturnType< $mol_attach['content'] >
+		,
+		ReturnType< $mol_row['sub'] >
+	>
+	type $mol_image__title_mol_attach_2 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_image['title'] >
+	>
+	type $mol_image__uri_mol_attach_3 = $mol_type_enforce<
+		ReturnType< $mol_attach['item_uri'] >
+		,
+		ReturnType< $mol_image['uri'] >
+	>
+	type $mol_button_open__title_mol_attach_4 = $mol_type_enforce<
+		ReturnType< $mol_attach['attach_title'] >
+		,
+		ReturnType< $mol_button_open['title'] >
+	>
+	type $mol_button_open__files_mol_attach_5 = $mol_type_enforce<
+		ReturnType< $mol_attach['attach_new'] >
+		,
+		ReturnType< $mol_button_open['files'] >
+	>
+	type $mol_button_minor__click_mol_attach_6 = $mol_type_enforce<
+		ReturnType< $mol_attach['item_drop'] >
+		,
+		ReturnType< $mol_button_minor['click'] >
+	>
+	type $mol_button_minor__sub_mol_attach_7 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_button_minor['sub'] >
+	>
+	export class $mol_attach extends $mol_view {
+		content( ): readonly($mol_view)[]
+		Content( ): $mol_row
+		attach_title( ): string
+		attach_new( next?: any ): any
+		item_drop( id: any, next?: any ): any
+		item_uri( id: any): string
+		Image( id: any): $mol_image
+		items( next?: readonly(string)[] ): readonly(string)[]
+		sub( ): readonly(any)[]
+		Add( ): $mol_button_open
+		Item( id: any): $mol_button_minor
+	}
+	
+}
+
+//# sourceMappingURL=attach.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_attach extends $.$mol_attach {
+        attach_new(files: File[]): void;
+        content(): ($mol_button_minor | $mol_button_open)[];
+        item_uri(index: number): string;
+        item_drop(index: number, event?: Event): void;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	export class $mol_icon_download extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=download.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_button_download extends $.$mol_button_download {
+        uri(): string;
+        click(): void;
+    }
+}
+
+declare namespace $ {
+
+	export class $mol_button_download extends $mol_button_minor {
+		Icon( ): $mol_icon_download
+		title( ): string
+		blob( ): any
+		uri( ): string
+		file_name( ): string
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=download.view.tree.d.ts.map
+declare namespace $ {
+
 	export class $bog_pay_app_account extends $mol_page {
 		title( ): string
 		Head( ): any
@@ -7776,8 +8327,12 @@ declare namespace $.$$ {
         Info_renewal(): $mol_text;
         Info_vpn(): $mol_text;
         Info_peer(): $mol_text;
+        Info_balance(): $mol_text;
+        Attach_ovpn(): $mol_attach;
+        Download_ovpn_btn(): $mol_button_download;
+        Topup_btn(): $mol_button_minor;
         Actions(): $mol_row;
-        body(): ($mol_text | $mol_row)[];
+        body(): ($mol_text | $mol_attach | $mol_row)[];
     }
 }
 
