@@ -34,23 +34,73 @@ namespace $.$$ {
 			return Number($bog_pay_app_plan.basic().PriceCents()?.val() ?? '9900')
 		}
 
-		// People registry
+		// People registry - read from shared registry land
 		@$mol_mem
 		people() {
-			const list = $bog_pay_app_people.hall().List()?.remote_list() ?? []
+			console.log('>>> Admin.people() - reading from shared registry')
+
+			// Get shared registry
+			const people_registry = $bog_pay_app_people.hall()
+			console.log('>>> Got registry land', people_registry.land().ref().description)
+
+			const list = people_registry.List(null)
+			if (!list) {
+				console.log('>>> ERROR: registry list is null!')
+				return []
+			}
+
+			// Use remote_list() which automatically resolves refs to Person objects
+			const all_people_raw = list.remote_list()
+			console.log('>>> Registry remote_list returned', all_people_raw.length, 'people')
+
+			const all_people: $bog_pay_app_person[] = []
+			const seen_peers = new Set<string>()
+
+			// Filter out duplicates by peer
+			for (const person of all_people_raw) {
+				try {
+					const peer = person.land().auth().peer()
+					console.log('>>> Got person', {
+						ref: person.ref().description,
+						peer,
+						name: person.Name()?.str() || '(no name)',
+						email: person.Email()?.str() || '(no email)',
+					})
+
+					// Skip duplicates (same peer)
+					if (seen_peers.has(peer)) {
+						console.log('>>> SKIPPED - duplicate peer')
+						continue
+					}
+
+					all_people.push(person)
+					seen_peers.add(peer)
+					console.log('>>> ADDED to list, total:', all_people.length)
+				} catch (e) {
+					console.log('>>> ERROR processing person', e)
+				}
+			}
+
+			console.log('>>> Admin.people() - FINAL RESULT', {
+				refs_in_registry: all_people_raw.length,
+				people_found: all_people.length,
+				peers: Array.from(seen_peers),
+			})
 
 			this.$.$mol_log3_rise({
 				place: this,
-				message: 'People list loaded',
-				count: list.length,
-				people: list.map(p => ({
+				message: 'People from shared registry',
+				refs_in_registry: all_people_raw.length,
+				people_found: all_people.length,
+				people: all_people.map(p => ({
+					land_ref: p?.land().ref().description ?? '?',
 					peer: p?.land().auth().peer() ?? '?',
 					name: p?.Name()?.str() || '(no name)',
 					email: p?.Email()?.str() || '(no email)',
 				})),
 			})
 
-			return list
+			return all_people
 		}
 
 		// Rows content for UI

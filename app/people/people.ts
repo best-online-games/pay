@@ -1,32 +1,30 @@
 namespace $ {
 	// Global shared registry of users for admin overview/cron-like actions
+	// This is a SHARED land that everyone can write to (to register themselves)
 	export class $bog_pay_app_people extends $hyoo_crus_entity.with({
 		List: $hyoo_crus_list_ref_to(() => $bog_pay_app_person),
 	}) {
-		// НЕ МЕНЯТЬ !!!!!!!!!!!!!!!!!!
-		// Fixed public land ID for shared People registry
-		// All users must use the SAME land ID to see each other
-		static shared_land_id = 'bogPay01_people01_Shared02' // Новый ID, без старых данных
-
 		@$mol_mem
 		static hall() {
-			// Use fixed shared land so every user appends to the same People list
+			// Use SHARED land for registry so admin can see all users
+			// Land ID: bogPay01_people01_Registry (3 parts, 8 chars each)
 			const glob = this.$.$hyoo_crus_glob
 
-			// Grab the fixed public land (create if not exists, with public write access)
-			const land_ref = this.$.$hyoo_crus_ref(this.shared_land_id)
-			const shared_land = glob.land_grab({
-				[land_ref.description!]: $hyoo_crus_rank_post('just'),
-			})
+			// Create or get shared registry land with public write access
+			const shared_land_id = 'bogPay01_people01_Registry'
+			const shared_land = glob.land_grab(
+				this.$.$hyoo_crus_ref(shared_land_id),
+				{ '': this.$.$hyoo_crus_rank_post('just') }, // Everyone can write
+			)
 
 			this.$.$mol_log3_rise({
 				place: this,
-				message: 'People hall land',
+				message: 'People registry (shared land)',
 				land_ref: shared_land.ref().description,
 			})
 
-			const ref = this.$.$hyoo_crus_ref_resolve(shared_land.ref(), this.$.$hyoo_crus_ref('___bogPeopl'))
-			return glob.Node(ref, $bog_pay_app_people)
+			// Root node in shared land is the People registry
+			return shared_land.home().hall_by($bog_pay_app_people, {})!
 		}
 	}
 }
