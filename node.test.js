@@ -10020,109 +10020,44 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$mol_icon_upload) = class $mol_icon_upload extends ($.$mol_icon) {
-		path(){
-			return "M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z";
+	($.$bog_pay_app_account) = class $bog_pay_app_account extends ($.$mol_page) {
+		title(){
+			return (this.$.$mol_locale.text("$bog_pay_app_account_title"));
 		}
-	};
-
-
-;
-"use strict";
-
-;
-	($.$mol_button_open) = class $mol_button_open extends ($.$mol_button_minor) {
-		Icon(){
-			const obj = new this.$.$mol_icon_upload();
-			return obj;
-		}
-		files(next){
-			if(next !== undefined) return next;
-			return [];
-		}
-		accept(){
-			return "";
-		}
-		multiple(){
-			return true;
-		}
-		Native(){
-			const obj = new this.$.$mol_button_open_native();
-			(obj.files) = (next) => ((this.files(next)));
-			(obj.accept) = () => ((this.accept()));
-			(obj.multiple) = () => ((this.multiple()));
-			return obj;
-		}
-		sub(){
-			return [(this.Icon()), (this.Native())];
-		}
-	};
-	($mol_mem(($.$mol_button_open.prototype), "Icon"));
-	($mol_mem(($.$mol_button_open.prototype), "files"));
-	($mol_mem(($.$mol_button_open.prototype), "Native"));
-	($.$mol_button_open_native) = class $mol_button_open_native extends ($.$mol_view) {
-		accept(){
-			return "";
-		}
-		multiple(){
-			return true;
-		}
-		picked(next){
-			if(next !== undefined) return next;
+		Head(){
 			return null;
 		}
-		dom_name(){
-			return "input";
-		}
-		files(next){
-			if(next !== undefined) return next;
-			return [];
-		}
-		attr(){
-			return {
-				"type": "file", 
-				"accept": (this.accept()), 
-				"multiple": (this.multiple())
-			};
-		}
-		event(){
-			return {"change": (next) => (this.picked(next))};
+		body(){
+			return [
+				(this.Info_peer()), 
+				(this.Info_status()), 
+				(this.Info_period()), 
+				(this.Info_renewal()), 
+				(this.Info_vpn()), 
+				(this.Attach_images()), 
+				(this.Actions())
+			];
 		}
 	};
-	($mol_mem(($.$mol_button_open_native.prototype), "picked"));
-	($mol_mem(($.$mol_button_open_native.prototype), "files"));
 
 
 ;
-"use strict";
+	($.$mol_button_major) = class $mol_button_major extends ($.$mol_button_minor) {
+		theme(){
+			return "$mol_theme_base";
+		}
+	};
 
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_button_open_native extends $.$mol_button_open_native {
-            dom_node() {
-                return super.dom_node();
-            }
-            picked() {
-                const files = this.dom_node().files;
-                if (!files || !files.length)
-                    return;
-                this.files([...files]);
-            }
-        }
-        $$.$mol_button_open_native = $mol_button_open_native;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
 
 ;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/button/open/open.view.css", "[mol_button_open_native] {\n\tposition: absolute;\n\tleft: 0;\n\ttop: -100%;\n\twidth: 100%;\n\theight: 200%;\n\tcursor: pointer;\n\topacity: 0;\n}\n");
+    $mol_style_attach("mol/button/major/major.view.css", "[mol_button_major] {\n\tbackground-color: var(--mol_theme_back);\n\tcolor: var(--mol_theme_text);\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -15978,6 +15913,111 @@ var $;
 })($ || ($ = {}));
 
 ;
+	($.$mol_icon_upload) = class $mol_icon_upload extends ($.$mol_icon) {
+		path(){
+			return "M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_button_open) = class $mol_button_open extends ($.$mol_button_minor) {
+		Icon(){
+			const obj = new this.$.$mol_icon_upload();
+			return obj;
+		}
+		files(next){
+			if(next !== undefined) return next;
+			return [];
+		}
+		accept(){
+			return "";
+		}
+		multiple(){
+			return true;
+		}
+		Native(){
+			const obj = new this.$.$mol_button_open_native();
+			(obj.files) = (next) => ((this.files(next)));
+			(obj.accept) = () => ((this.accept()));
+			(obj.multiple) = () => ((this.multiple()));
+			return obj;
+		}
+		sub(){
+			return [(this.Icon()), (this.Native())];
+		}
+	};
+	($mol_mem(($.$mol_button_open.prototype), "Icon"));
+	($mol_mem(($.$mol_button_open.prototype), "files"));
+	($mol_mem(($.$mol_button_open.prototype), "Native"));
+	($.$mol_button_open_native) = class $mol_button_open_native extends ($.$mol_view) {
+		accept(){
+			return "";
+		}
+		multiple(){
+			return true;
+		}
+		picked(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		dom_name(){
+			return "input";
+		}
+		files(next){
+			if(next !== undefined) return next;
+			return [];
+		}
+		attr(){
+			return {
+				"type": "file", 
+				"accept": (this.accept()), 
+				"multiple": (this.multiple())
+			};
+		}
+		event(){
+			return {"change": (next) => (this.picked(next))};
+		}
+	};
+	($mol_mem(($.$mol_button_open_native.prototype), "picked"));
+	($mol_mem(($.$mol_button_open_native.prototype), "files"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_button_open_native extends $.$mol_button_open_native {
+            dom_node() {
+                return super.dom_node();
+            }
+            picked() {
+                const files = this.dom_node().files;
+                if (!files || !files.length)
+                    return;
+                this.files([...files]);
+            }
+        }
+        $$.$mol_button_open_native = $mol_button_open_native;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/button/open/open.view.css", "[mol_button_open_native] {\n\tposition: absolute;\n\tleft: 0;\n\ttop: -100%;\n\twidth: 100%;\n\theight: 200%;\n\tcursor: pointer;\n\topacity: 0;\n}\n");
+})($ || ($ = {}));
+
+;
 "use strict";
 var $;
 (function ($) {
@@ -16264,12 +16304,6 @@ var $;
 (function ($) {
     $.$bog_pay_trial_ms = 5_000;
     $.$bog_pay_renewal_ms = 5_000;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
     class $bog_pay_app_subscription extends $hyoo_crus_entity.with({
         Person: $hyoo_crus_atom_ref_to(() => $bog_pay_app_person),
         Plan: $hyoo_crus_atom_ref_to(() => $bog_pay_app_plan),
@@ -16309,7 +16343,7 @@ var $;
         }
         start_trial() {
             const now = new Date();
-            const end = new Date(now.valueOf() + $bog_pay_trial_ms);
+            const end = new Date(now.valueOf() + $.$bog_pay_trial_ms);
             this.Status(null).val('trial');
             this.PeriodStart(null).val(now.toISOString());
             this.PeriodEnd(null).val(end.toISOString());
@@ -16320,7 +16354,7 @@ var $;
             const now = new Date();
             const currentEnd = this.period_end_ms();
             const baseTs = currentEnd && currentEnd > now.valueOf() ? currentEnd : now.valueOf();
-            const end = new Date(baseTs + $bog_pay_renewal_ms);
+            const end = new Date(baseTs + $.$bog_pay_renewal_ms);
             this.Status(null).val('active');
             if (!this.PeriodStart()?.val()) {
                 this.PeriodStart(null).val(now.toISOString());
@@ -16533,6 +16567,7 @@ var $;
         Photos: $hyoo_crus_list_ref_to(() => $hyoo_crus_atom_bin),
     }) {
         active_sub() {
+            this.ensure_admin_and_registry();
             const now = Date.now();
             const subs = this.Subscriptions()?.remote_list() ?? [];
             for (const sub of subs) {
@@ -16546,52 +16581,156 @@ var $;
             }
             return null;
         }
+        ensure_admin_and_registry() {
+            this.grant_admin_rule();
+            this.register_in_people();
+        }
+        grant_admin_rule() {
+        }
+        register_in_people() {
+            const people = $bog_pay_app_people.hall();
+            people.List(null).has(this.ref(), true);
+        }
     }
     __decorate([
         $mol_mem
     ], $bog_pay_app_person.prototype, "active_sub", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_person.prototype, "ensure_admin_and_registry", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_person.prototype, "grant_admin_rule", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_person.prototype, "register_in_people", null);
     $.$bog_pay_app_person = $bog_pay_app_person;
 })($ || ($ = {}));
-
-;
-	($.$bog_pay_app_account) = class $bog_pay_app_account extends ($.$mol_page) {
-		title(){
-			return (this.$.$mol_locale.text("$bog_pay_app_account_title"));
-		}
-		Head(){
-			return null;
-		}
-		body(){
-			return [
-				(this.Info_peer()), 
-				(this.Info_status()), 
-				(this.Info_period()), 
-				(this.Info_renewal()), 
-				(this.Info_vpn()), 
-				(this.Attach_images()), 
-				(this.Actions())
-			];
-		}
-	};
-
-
-;
-	($.$mol_button_major) = class $mol_button_major extends ($.$mol_button_minor) {
-		theme(){
-			return "$mol_theme_base";
-		}
-	};
-
 
 ;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/button/major/major.view.css", "[mol_button_major] {\n\tbackground-color: var(--mol_theme_back);\n\tcolor: var(--mol_theme_text);\n}\n");
+    class $bog_pay_app_people extends $hyoo_crus_entity.with({
+        List: $hyoo_crus_list_ref_to(() => $bog_pay_app_person),
+    }) {
+        static hall() {
+            return this.$.$hyoo_crus_glob.home().hall_by($bog_pay_app_people, { '': $hyoo_crus_rank_post('just') });
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_people, "hall", null);
+    $.$bog_pay_app_people = $bog_pay_app_people;
 })($ || ($ = {}));
 
 ;
 "use strict";
+var $;
+(function ($_1) {
+    var $$;
+    (function ($$) {
+        class $bog_pay_app_account_avatar extends $.$mol_button_open {
+            profile() {
+                return this.$.$hyoo_crus_glob.home().hall_by($bog_pay_app_person, {});
+            }
+            accept() {
+                return 'image/*';
+            }
+            multiple() {
+                return false;
+            }
+            image_data() {
+                const bins = this.profile()?.Photos()?.remote_list() ?? [];
+                return bins[0]?.val() ?? null;
+            }
+            image_uri() {
+                const data = this.image_data();
+                if (!data)
+                    return '';
+                const blob = new Blob([data], { type: 'image/*' });
+                return URL.createObjectURL(blob);
+            }
+            sub() {
+                const has_image = !!this.image_data();
+                const view = has_image ? this.Image() : this.Icon();
+                return [view, this.Native()];
+            }
+            Image() {
+                const $ = this.$;
+                return $.$mol_image.make({
+                    title: $mol_const(''),
+                    uri: () => this.image_uri(),
+                });
+            }
+            Icon() {
+                const $ = this.$;
+                return $.$mol_icon_upload.make({});
+            }
+            files(next) {
+                if (next && next.length) {
+                    const person = this.profile();
+                    const list = person.Photos(null);
+                    const existed = person.Photos()?.remote_list() ?? [];
+                    if (existed[0])
+                        list.has(existed[0].ref(), false);
+                    const blob = this.$.$mol_wire_sync(next[0]).arrayBuffer();
+                    const bin = list.remote_make({});
+                    bin.val(new Uint8Array(blob));
+                }
+                return [];
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_account_avatar.prototype, "profile", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_account_avatar.prototype, "image_data", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_account_avatar.prototype, "image_uri", null);
+        $$.$bog_pay_app_account_avatar = $bog_pay_app_account_avatar;
+    })($$ = $_1.$$ || ($_1.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($bog_pay_app_account_avatar, {
+            width: '6rem',
+            height: '6rem',
+            background: { color: $mol_theme.card },
+            border: { radius: $mol_gap.round },
+            padding: 0,
+            alignItems: 'center',
+            justifyContent: 'center',
+            overflow: 'hidden',
+            position: 'relative',
+            $mol_image: {
+                width: '100%',
+                height: '100%',
+                maxWidth: '100%',
+            },
+            Native: {
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                opacity: 0,
+                cursor: 'pointer',
+            },
+            Icon: {
+                width: '50%',
+                height: '50%',
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
 
 ;
 	($.$mol_icon_download) = class $mol_icon_download extends ($.$mol_icon) {
@@ -16667,103 +16806,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
-var $;
-(function ($_1) {
-    var $$;
-    (function ($$) {
-        class $bog_pay_app_account_avatar extends $.$mol_button_open {
-            profile() {
-                return this.$.$hyoo_crus_glob.home().hall_by($bog_pay_app_person, {});
-            }
-            accept() { return 'image/*'; }
-            multiple() { return false; }
-            image_data() {
-                const bins = this.profile()?.Photos()?.remote_list() ?? [];
-                return bins[0]?.val() ?? null;
-            }
-            image_uri() {
-                const data = this.image_data();
-                if (!data)
-                    return '';
-                const blob = new Blob([data], { type: 'image/*' });
-                return URL.createObjectURL(blob);
-            }
-            sub() {
-                const has_image = !!this.image_data();
-                const view = has_image
-                    ? this.Image()
-                    : this.Icon();
-                return [view, this.Native()];
-            }
-            Image() {
-                const $ = this.$;
-                return $.$mol_image.make({
-                    title: $mol_const(''),
-                    uri: () => this.image_uri(),
-                });
-            }
-            Icon() {
-                const $ = this.$;
-                return $.$mol_icon_upload.make({});
-            }
-            files(next) {
-                if (next && next.length) {
-                    const person = this.profile();
-                    const list = person.Photos(null);
-                    const existed = person.Photos()?.remote_list() ?? [];
-                    if (existed[0])
-                        list.has(existed[0].ref(), false);
-                    const blob = this.$.$mol_wire_sync(next[0]).arrayBuffer();
-                    const bin = list.remote_make({});
-                    bin.val(new Uint8Array(blob));
-                }
-                return [];
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $bog_pay_app_account_avatar.prototype, "profile", null);
-        __decorate([
-            $mol_mem
-        ], $bog_pay_app_account_avatar.prototype, "image_data", null);
-        __decorate([
-            $mol_mem
-        ], $bog_pay_app_account_avatar.prototype, "image_uri", null);
-        $$.$bog_pay_app_account_avatar = $bog_pay_app_account_avatar;
-        $mol_style_define($bog_pay_app_account_avatar, {
-            width: '6rem',
-            height: '6rem',
-            background: { color: $mol_theme.card },
-            border: { radius: $mol_gap.round },
-            padding: 0,
-            alignItems: 'center',
-            justifyContent: 'center',
-            overflow: 'hidden',
-            position: 'relative',
-            $mol_image: {
-                width: '100%',
-                height: '100%',
-                maxWidth: '100%',
-            },
-            Native: {
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                opacity: 0,
-                cursor: 'pointer',
-            },
-            Icon: {
-                width: '50%',
-                height: '50%',
-            },
-        });
-    })($$ = $_1.$$ || ($_1.$$ = {}));
-})($ || ($ = {}));
 
 ;
 "use strict";
@@ -17002,6 +17044,313 @@ var $;
 })($ || ($ = {}));
 
 ;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($bog_pay_app_account, {
+            Attach_images: {
+                width: '6rem',
+                height: '6rem',
+                background: { color: $mol_theme.card },
+                border: { radius: $mol_gap.round },
+                padding: 0,
+                alignItems: 'center',
+                justifyContent: 'center',
+                overflow: 'hidden',
+                position: 'relative',
+                $mol_image: {
+                    width: '100%',
+                    height: '100%',
+                    maxWidth: '100%',
+                },
+                Native: {
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    opacity: 0,
+                    cursor: 'pointer',
+                },
+                Icon: {
+                    width: '50%',
+                    height: '50%',
+                },
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $.$bog_pay_app_admin_peers = [
+        'SjixkGkN',
+    ];
+    class $bog_pay_app_admin extends $mol_object2 {
+        static is_me() {
+            const my_peer = this.$.$hyoo_crus_glob.home().land().auth().peer();
+            return $.$bog_pay_app_admin_peers.includes(my_peer);
+        }
+        static preset(rank = $hyoo_crus_rank_rule) {
+            return {};
+        }
+        static preset_rule() {
+            return this.preset($hyoo_crus_rank_rule);
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_admin, "is_me", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_admin, "preset", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_admin, "preset_rule", null);
+    $.$bog_pay_app_admin = $bog_pay_app_admin;
+})($ || ($ = {}));
+
+;
+	($.$bog_pay_app_admin_page) = class $bog_pay_app_admin_page extends ($.$mol_page) {
+		title(){
+			return (this.$.$mol_locale.text("$bog_pay_app_admin_page_title"));
+		}
+		Head(){
+			return null;
+		}
+		body(){
+			return [(this.Head_bar()), (this.Body_list())];
+		}
+	};
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    var $$;
+    (function ($$) {
+        class $bog_pay_app_admin_page extends $mol_page {
+            is_admin() {
+                return $bog_pay_app_admin.is_me();
+            }
+            title() {
+                new this.$.$mol_after_frame(() => {
+                    const btn = this.$.$mol_dom_context.document.querySelector('[id^="$bog_pay_app.Root"] [mol_deck_switch_option][id$="Option(\'3\')"]');
+                    if (btn && !this.is_admin()) {
+                        btn.style.display = 'none';
+                    }
+                });
+                if (this.is_admin()) {
+                    return this.$.$mol_locale.text('$bog_pay_app_admin_page_title');
+                }
+                else {
+                    return '';
+                }
+            }
+            sub_title() {
+                return this.$.$mol_locale.text('$bog_pay_app_admin_page_title');
+            }
+            price_cents() {
+                return Number($bog_pay_app_plan.basic().PriceCents()?.val() ?? '9900');
+            }
+            people() {
+                return $bog_pay_app_people.hall().List()?.remote_list() ?? [];
+            }
+            rows() {
+                return this.people().map((person, i) => this.Row(i));
+            }
+            cron_loop() {
+                if (!this.is_admin())
+                    return null;
+                new this.$.$mol_after_timeout(10_000, () => {
+                    this.enforce_all();
+                    this.cron_loop();
+                });
+                return null;
+            }
+            person_peer(index) {
+                const p = this.people()[index];
+                return p?.land().auth().peer() ?? '—';
+            }
+            person_balance_rub(index) {
+                const p = this.people()[index];
+                const cents = Number(p?.BalanceCents()?.val() ?? '0');
+                return (cents / 100).toFixed(2);
+            }
+            person_sub(index) {
+                const p = this.people()[index];
+                const subs = p?.Subscriptions()?.remote_list() ?? [];
+                const now = Date.now();
+                const sorted = subs
+                    .slice()
+                    .sort((a, b) => (b.PeriodEnd()?.val() ? Date.parse(b.PeriodEnd().val()) : 0) -
+                    (a.PeriodEnd()?.val() ? Date.parse(a.PeriodEnd().val()) : 0));
+                const active = sorted.find(s => {
+                    const end = s.PeriodEnd()?.val();
+                    if (!end)
+                        return false;
+                    const end_at = Date.parse(end);
+                    const st = s.Status()?.val();
+                    return end_at > now && (st === 'active' || st === 'trial');
+                });
+                return active ?? sorted[0] ?? null;
+            }
+            person_sub_status(index) {
+                const s = this.person_sub(index);
+                return s?.Status()?.val() ?? 'none';
+            }
+            person_sub_period_end(index) {
+                const s = this.person_sub(index);
+                const end = s?.PeriodEnd()?.val();
+                return end ? new Date(end).toLocaleString() : '—';
+            }
+            Enforce_btn() {
+                const $ = this.$;
+                return $.$mol_button_minor.make({
+                    sub: () => [$.$mol_text.make({ text: () => 'Enforce now' })],
+                    click: () => {
+                        this.enforce_all();
+                    },
+                    enabled: () => this.is_admin(),
+                });
+            }
+            Head_bar() {
+                const $ = this.$;
+                return $.$mol_row.make({
+                    sub: () => [
+                        $.$mol_text.make({
+                            text: () => this.is_admin() ? 'Admin: People overview' : 'No admin access (set ?admin=<public_peer>)',
+                        }),
+                        this.Enforce_btn(),
+                    ],
+                });
+            }
+            Row(index) {
+                const $ = this.$;
+                return $.$mol_row.make({
+                    sub: () => [
+                        $.$mol_text.make({ text: () => `Peer: ${this.person_peer(index)}` }),
+                        $.$mol_text.make({ text: () => `Balance: ${this.person_balance_rub(index)} ₽` }),
+                        $.$mol_text.make({ text: () => `Status: ${this.person_sub_status(index)}` }),
+                        $.$mol_text.make({ text: () => `Until: ${this.person_sub_period_end(index)}` }),
+                    ],
+                });
+            }
+            Body_list() {
+                const $ = this.$;
+                return $.$mol_list.make({
+                    rows: () => this.rows(),
+                });
+            }
+            sub() {
+                this.cron_loop();
+                return [this.Head_bar(), this.Body_list()];
+            }
+            enforce_all() {
+                if (!this.is_admin())
+                    return;
+                for (const person of this.people()) {
+                    this.enforce_person(person);
+                }
+            }
+            enforce_person(person) {
+                const subs = person.Subscriptions()?.remote_list() ?? [];
+                if (subs.length === 0)
+                    return;
+                let sub = subs.slice().sort((a, b) => {
+                    const ae = a.PeriodEnd()?.val() ? Date.parse(a.PeriodEnd().val()) : 0;
+                    const be = b.PeriodEnd()?.val() ? Date.parse(b.PeriodEnd().val()) : 0;
+                    return be - ae;
+                })[0];
+                const end_str = sub.PeriodEnd()?.val();
+                const end_at = end_str ? Date.parse(end_str) : 0;
+                const mode = sub.RenewalMode()?.val();
+                const now = Date.now();
+                if (end_at && end_at <= now && mode === 'auto') {
+                    const charged = this.charge_person_for_sub(person, sub);
+                    if (charged) {
+                        sub.activate_month();
+                    }
+                    else {
+                        sub.RenewalMode(null).val('manual');
+                        sub.Status(null).val('canceled');
+                    }
+                }
+                sub.enforce_access_mock();
+            }
+            charge_person_for_sub(person, sub) {
+                const price = this.price_cents();
+                const balance = Number(person.BalanceCents()?.val() ?? '0');
+                if (balance < price)
+                    return false;
+                person.BalanceCents(null).val(String(balance - price));
+                const inv = person.Invoices(null).remote_make({});
+                inv.Person(null).val(person.ref());
+                inv.Subscription(null).val(sub.ref());
+                inv.Kind(null).val('charge');
+                inv.AmountCents(null).val(String(price));
+                inv.Currency(null).val('RUB');
+                inv.Provider(null).val('admin-cron');
+                inv.mark_pending();
+                inv.mark_paid();
+                return true;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_admin_page.prototype, "is_admin", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_admin_page.prototype, "price_cents", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_admin_page.prototype, "people", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_admin_page.prototype, "rows", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_admin_page.prototype, "cron_loop", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_pay_app_admin_page.prototype, "person_peer", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_pay_app_admin_page.prototype, "person_balance_rub", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_pay_app_admin_page.prototype, "person_sub", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_pay_app_admin_page.prototype, "person_sub_status", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_pay_app_admin_page.prototype, "person_sub_period_end", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_pay_app_admin_page.prototype, "Row", null);
+        __decorate([
+            $mol_action
+        ], $bog_pay_app_admin_page.prototype, "enforce_all", null);
+        __decorate([
+            $mol_action
+        ], $bog_pay_app_admin_page.prototype, "enforce_person", null);
+        __decorate([
+            $mol_action
+        ], $bog_pay_app_admin_page.prototype, "charge_person_for_sub", null);
+        $$.$bog_pay_app_admin_page = $bog_pay_app_admin_page;
+    })($$ = $_1.$$ || ($_1.$$ = {}));
+})($ || ($ = {}));
+
+;
 	($.$mol_check_list) = class $mol_check_list extends ($.$mol_view) {
 		option_checked(id, next){
 			if(next !== undefined) return next;
@@ -17227,6 +17576,10 @@ var $;
 			const obj = new this.$.$bog_pay_app_account();
 			return obj;
 		}
+		Admin(){
+			const obj = new this.$.$bog_pay_app_admin_page();
+			return obj;
+		}
 		plugins(){
 			return [(this.Theme())];
 		}
@@ -17241,7 +17594,8 @@ var $;
 			(obj.items) = () => ([
 				(this.Home()), 
 				(this.Games()), 
-				(this.Personal_cabinet())
+				(this.Personal_cabinet()), 
+				(this.Admin())
 			]);
 			return obj;
 		}
@@ -17251,6 +17605,7 @@ var $;
 	($mol_mem(($.$bog_pay_app.prototype), "Home"));
 	($mol_mem(($.$bog_pay_app.prototype), "Games"));
 	($mol_mem(($.$bog_pay_app.prototype), "Personal_cabinet"));
+	($mol_mem(($.$bog_pay_app.prototype), "Admin"));
 	($mol_mem(($.$bog_pay_app.prototype), "Deck"));
 
 
@@ -17540,37 +17895,6 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
-        $mol_style_define($bog_pay_app_account, {
-            Attach_images: {
-                width: '6rem',
-                height: '6rem',
-                background: { color: $mol_theme.card },
-                border: { radius: $mol_gap.round },
-                padding: 0,
-                alignItems: 'center',
-                justifyContent: 'center',
-                overflow: 'hidden',
-                position: 'relative',
-                $mol_image: {
-                    width: '100%',
-                    height: '100%',
-                    maxWidth: '100%',
-                },
-                Native: {
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    opacity: 0,
-                    cursor: 'pointer',
-                },
-                Icon: {
-                    width: '50%',
-                    height: '50%',
-                },
-            },
-        });
         $mol_style_define($bog_pay_app, {
             Deck: {
                 Switch: {
@@ -17593,6 +17917,7 @@ var $;
                             borderRadius: '8px',
                             padding: { top: '12px', right: '24px', bottom: '12px', left: '24px' },
                         },
+                        ':nth-of-type(4)': {},
                     },
                 },
             },

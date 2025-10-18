@@ -4001,69 +4001,17 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-
-	export class $mol_icon_upload extends $mol_icon {
-		path( ): string
-	}
-	
-}
-
-//# sourceMappingURL=upload.view.tree.d.ts.map
-declare namespace $ {
-
-	type $mol_button_open_native__files_mol_button_open_1 = $mol_type_enforce<
-		ReturnType< $mol_button_open['files'] >
-		,
-		ReturnType< $mol_button_open_native['files'] >
-	>
-	type $mol_button_open_native__accept_mol_button_open_2 = $mol_type_enforce<
-		ReturnType< $mol_button_open['accept'] >
-		,
-		ReturnType< $mol_button_open_native['accept'] >
-	>
-	type $mol_button_open_native__multiple_mol_button_open_3 = $mol_type_enforce<
-		ReturnType< $mol_button_open['multiple'] >
-		,
-		ReturnType< $mol_button_open_native['multiple'] >
-	>
-	export class $mol_button_open extends $mol_button_minor {
-		Icon( ): $mol_icon_upload
-		files( next?: readonly(any)[] ): readonly(any)[]
-		accept( ): string
-		multiple( ): boolean
-		Native( ): $mol_button_open_native
-		sub( ): readonly(any)[]
-	}
-	
-	export class $mol_button_open_native extends $mol_view {
-		accept( ): string
-		multiple( ): boolean
-		picked( next?: any ): any
-		dom_name( ): string
-		files( next?: readonly(any)[] ): readonly(any)[]
-		attr( ): ({ 
-			'type': string,
-			'accept': ReturnType< $mol_button_open_native['accept'] >,
-			'multiple': ReturnType< $mol_button_open_native['multiple'] >,
-		}) 
-		event( ): ({ 
-			change( next?: ReturnType< $mol_button_open_native['picked'] > ): ReturnType< $mol_button_open_native['picked'] >,
-		}) 
-	}
-	
-}
-
-//# sourceMappingURL=open.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_button_open_native extends $.$mol_button_open_native {
-        dom_node(): HTMLInputElement;
-        picked(): void;
-    }
 }
 
 declare namespace $ {
+
+	export class $mol_button_major extends $mol_button_minor {
+		theme( ): string
+	}
+	
 }
 
+//# sourceMappingURL=major.view.tree.d.ts.map
 declare namespace $ {
     class $mol_wire_set<Value> extends Set<Value> {
         pub: $mol_wire_pub;
@@ -7303,6 +7251,70 @@ declare namespace $ {
 }
 
 declare namespace $ {
+
+	export class $mol_icon_upload extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=upload.view.tree.d.ts.map
+declare namespace $ {
+
+	type $mol_button_open_native__files_mol_button_open_1 = $mol_type_enforce<
+		ReturnType< $mol_button_open['files'] >
+		,
+		ReturnType< $mol_button_open_native['files'] >
+	>
+	type $mol_button_open_native__accept_mol_button_open_2 = $mol_type_enforce<
+		ReturnType< $mol_button_open['accept'] >
+		,
+		ReturnType< $mol_button_open_native['accept'] >
+	>
+	type $mol_button_open_native__multiple_mol_button_open_3 = $mol_type_enforce<
+		ReturnType< $mol_button_open['multiple'] >
+		,
+		ReturnType< $mol_button_open_native['multiple'] >
+	>
+	export class $mol_button_open extends $mol_button_minor {
+		Icon( ): $mol_icon_upload
+		files( next?: readonly(any)[] ): readonly(any)[]
+		accept( ): string
+		multiple( ): boolean
+		Native( ): $mol_button_open_native
+		sub( ): readonly(any)[]
+	}
+	
+	export class $mol_button_open_native extends $mol_view {
+		accept( ): string
+		multiple( ): boolean
+		picked( next?: any ): any
+		dom_name( ): string
+		files( next?: readonly(any)[] ): readonly(any)[]
+		attr( ): ({ 
+			'type': string,
+			'accept': ReturnType< $mol_button_open_native['accept'] >,
+			'multiple': ReturnType< $mol_button_open_native['multiple'] >,
+		}) 
+		event( ): ({ 
+			change( next?: ReturnType< $mol_button_open_native['picked'] > ): ReturnType< $mol_button_open_native['picked'] >,
+		}) 
+	}
+	
+}
+
+//# sourceMappingURL=open.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_button_open_native extends $.$mol_button_open_native {
+        dom_node(): HTMLInputElement;
+        picked(): void;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
     let $hyoo_crus_text_tokens: $mol_regexp<{
         [x: string]: string;
         readonly token: string;
@@ -7365,11 +7377,8 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    const $bog_pay_trial_ms: number;
-    const $bog_pay_renewal_ms: number;
-}
-
-declare namespace $ {
+    export const $bog_pay_trial_ms: number;
+    export const $bog_pay_renewal_ms: number;
     const $bog_pay_app_subscription_base: Omit<typeof $hyoo_crus_entity, "prototype"> & (new (...args: any[]) => $mol_type_override<$hyoo_crus_entity, {
         readonly Person: (auto?: any) => {
             Value: Value;
@@ -8259,22 +8268,152 @@ declare namespace $ {
     };
     export class $bog_pay_app_person extends $bog_pay_app_person_base {
         active_sub(): $bog_pay_app_subscription | null;
+        ensure_admin_and_registry(): void;
+        grant_admin_rule(): void;
+        register_in_people(): void;
     }
     export {};
 }
 
 declare namespace $ {
+    const $bog_pay_app_people_base: Omit<typeof $hyoo_crus_entity, "prototype"> & (new (...args: any[]) => $mol_type_override<$hyoo_crus_entity, {
+        readonly List: (auto?: any) => {
+            remote_list(next?: readonly $bog_pay_app_person[] | undefined): readonly $bog_pay_app_person[];
+            remote_add(item: $bog_pay_app_person): void;
+            make(config: null | number | $hyoo_crus_rank_preset | $hyoo_crus_land): $bog_pay_app_person;
+            remote_make(config: $hyoo_crus_rank_preset): $bog_pay_app_person;
+            local_make(idea?: number): $bog_pay_app_person;
+            items(next?: readonly ((symbol & {
+                $hyoo_crus_ref: symbol;
+            }) | null)[] | undefined): readonly ((symbol & {
+                $hyoo_crus_ref: symbol;
+            }) | null)[];
+            items_vary(next?: readonly $hyoo_crus_vary_type[], tag?: keyof typeof $hyoo_crus_sand_tag): readonly $hyoo_crus_vary_type[];
+            splice(next: readonly $hyoo_crus_vary_type[], from?: number, to?: number, tag?: keyof typeof $hyoo_crus_sand_tag): void;
+            find(vary: $hyoo_crus_vary_type): $hyoo_crus_sand | null;
+            has(vary: $hyoo_crus_vary_type, next?: boolean, tag?: keyof typeof $hyoo_crus_sand_tag): boolean;
+            add(vary: $hyoo_crus_vary_type, tag?: keyof typeof $hyoo_crus_sand_tag): void;
+            cut(vary: $hyoo_crus_vary_type): void;
+            move(from: number, to: number): void;
+            wipe(seat: number): void;
+            node_make<Node_1 extends typeof $hyoo_crus_node>(Node: Node_1, vary: $hyoo_crus_vary_type, tag?: keyof typeof $hyoo_crus_sand_tag): InstanceType<Node_1>;
+            [$mol_dev_format_head](): any[];
+            land(): $hyoo_crus_land;
+            head(): string;
+            land_ref(): symbol & {
+                $hyoo_crus_ref: symbol;
+            };
+            ref(): symbol & {
+                $hyoo_crus_ref: symbol;
+            };
+            toJSON(): string | undefined;
+            cast<Node_1 extends typeof $hyoo_crus_node>(Node: Node_1): InstanceType<Node_1>;
+            nodes<Node_1 extends typeof $hyoo_crus_node>(Node: Node_1 | null): readonly InstanceType<Node_1>[];
+            units(): $hyoo_crus_sand[];
+            units_of(peer: string | null): $hyoo_crus_sand[];
+            filled(): boolean;
+            can_change(): boolean;
+            last_change(): $mol_time_moment | null;
+            author_peers(): string[];
+            author_lords(): (symbol & {
+                $hyoo_crus_ref: symbol;
+            })[];
+            get $(): $;
+            set $(next: $);
+            destructor(): void;
+            toString(): string;
+            [Symbol.toStringTag]: string;
+            [$mol_ambient_ref]: $;
+        } | null;
+    }>) & {
+        schema: {
+            [x: string]: typeof $hyoo_crus_node;
+        } & {
+            readonly List: {
+                new (): {
+                    remote_list(next?: readonly $bog_pay_app_person[] | undefined): readonly $bog_pay_app_person[];
+                    remote_add(item: $bog_pay_app_person): void;
+                    make(config: null | number | $hyoo_crus_rank_preset | $hyoo_crus_land): $bog_pay_app_person;
+                    remote_make(config: $hyoo_crus_rank_preset): $bog_pay_app_person;
+                    local_make(idea?: number): $bog_pay_app_person;
+                    items(next?: readonly ((symbol & {
+                        $hyoo_crus_ref: symbol;
+                    }) | null)[] | undefined): readonly ((symbol & {
+                        $hyoo_crus_ref: symbol;
+                    }) | null)[];
+                    items_vary(next?: readonly $hyoo_crus_vary_type[], tag?: keyof typeof $hyoo_crus_sand_tag): readonly $hyoo_crus_vary_type[];
+                    splice(next: readonly $hyoo_crus_vary_type[], from?: number, to?: number, tag?: keyof typeof $hyoo_crus_sand_tag): void;
+                    find(vary: $hyoo_crus_vary_type): $hyoo_crus_sand | null;
+                    has(vary: $hyoo_crus_vary_type, next?: boolean, tag?: keyof typeof $hyoo_crus_sand_tag): boolean;
+                    add(vary: $hyoo_crus_vary_type, tag?: keyof typeof $hyoo_crus_sand_tag): void;
+                    cut(vary: $hyoo_crus_vary_type): void;
+                    move(from: number, to: number): void;
+                    wipe(seat: number): void;
+                    node_make<Node_1 extends typeof $hyoo_crus_node>(Node: Node_1, vary: $hyoo_crus_vary_type, tag?: keyof typeof $hyoo_crus_sand_tag): InstanceType<Node_1>;
+                    [$mol_dev_format_head](): any[];
+                    land(): $hyoo_crus_land;
+                    head(): string;
+                    land_ref(): symbol & {
+                        $hyoo_crus_ref: symbol;
+                    };
+                    ref(): symbol & {
+                        $hyoo_crus_ref: symbol;
+                    };
+                    toJSON(): string | undefined;
+                    cast<Node_1 extends typeof $hyoo_crus_node>(Node: Node_1): InstanceType<Node_1>;
+                    nodes<Node_1 extends typeof $hyoo_crus_node>(Node: Node_1 | null): readonly InstanceType<Node_1>[];
+                    units(): $hyoo_crus_sand[];
+                    units_of(peer: string | null): $hyoo_crus_sand[];
+                    filled(): boolean;
+                    can_change(): boolean;
+                    last_change(): $mol_time_moment | null;
+                    author_peers(): string[];
+                    author_lords(): (symbol & {
+                        $hyoo_crus_ref: symbol;
+                    })[];
+                    get $(): $;
+                    set $(next: $);
+                    destructor(): void;
+                    toString(): string;
+                    [Symbol.toStringTag]: string;
+                    [$mol_ambient_ref]: $;
+                };
+                Value: Value;
+                toString(): any;
+                parse: typeof $hyoo_crus_vary_cast_ref;
+                tag: keyof typeof $hyoo_crus_sand_tag;
+                make<This extends typeof $mol_object>(this: This, config: Partial<InstanceType<This>>): InstanceType<This>;
+                $: $;
+                create<Instance>(this: new (init?: (instance: any) => void) => Instance, init?: (instance: $mol_type_writable<Instance>) => void): Instance;
+                toJSON(): any;
+                destructor(): void;
+                [Symbol.toPrimitive](): any;
+            };
+        };
+    };
+    export class $bog_pay_app_people extends $bog_pay_app_people_base {
+        static hall(): $bog_pay_app_people;
+    }
+    export {};
 }
 
-declare namespace $ {
-
-	export class $mol_button_major extends $mol_button_minor {
-		theme( ): string
-	}
-	
+declare namespace $.$$ {
+    class $bog_pay_app_account_avatar extends $.$mol_button_open {
+        profile(): $bog_pay_app_person | null;
+        accept(): string;
+        multiple(): boolean;
+        image_data(): Uint8Array<ArrayBuffer> | null;
+        image_uri(): string;
+        sub(): ($mol_image | $.$mol_button_open_native | $mol_icon_upload)[];
+        Image(): $mol_image;
+        Icon(): $mol_icon_upload;
+        files(next?: readonly File[]): never[];
+    }
 }
 
-//# sourceMappingURL=major.view.tree.d.ts.map
+declare namespace $.$$ {
+}
+
 declare namespace $ {
 
 	export class $mol_icon_download extends $mol_icon {
@@ -8316,20 +8455,6 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=row.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $bog_pay_app_account_avatar extends $.$mol_button_open {
-        profile(): $bog_pay_app_person | null;
-        accept(): string;
-        multiple(): boolean;
-        image_data(): Uint8Array<ArrayBuffer> | null;
-        image_uri(): string;
-        sub(): ($mol_image | $.$mol_button_open_native | $mol_icon_upload)[];
-        Image(): $mol_image;
-        Icon(): $mol_icon_upload;
-        files(next?: readonly File[]): never[];
-    }
-}
-
 declare namespace $ {
 
 	export class $bog_pay_app_account extends $mol_page {
@@ -8367,6 +8492,54 @@ declare namespace $.$$ {
         Topup_btn(): $mol_button_minor;
         Actions(): $mol_row;
         body(): ($mol_text | $bog_pay_app_account_avatar | $mol_row)[];
+    }
+}
+
+declare namespace $.$$ {
+}
+
+declare namespace $ {
+    const $bog_pay_app_admin_peers: readonly ["SjixkGkN"];
+    class $bog_pay_app_admin extends $mol_object2 {
+        static is_me(): boolean;
+        static preset(rank?: typeof $hyoo_crus_rank.Value): $hyoo_crus_rank_preset;
+        static preset_rule(): $hyoo_crus_rank_preset;
+    }
+}
+
+declare namespace $ {
+
+	export class $bog_pay_app_admin_page extends $mol_page {
+		title( ): string
+		Head( ): any
+		body( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=page.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $bog_pay_app_admin_page extends $mol_page {
+        is_admin(): boolean;
+        title(): string;
+        sub_title(): string;
+        price_cents(): number;
+        people(): readonly $bog_pay_app_person[];
+        rows(): $mol_row[];
+        cron_loop(): any;
+        person_peer(index: number): string;
+        person_balance_rub(index: number): string;
+        person_sub(index: number): $bog_pay_app_subscription;
+        person_sub_status(index: number): string;
+        person_sub_period_end(index: number): string;
+        Enforce_btn(): $mol_button_minor;
+        Head_bar(): $mol_row;
+        Row(index: number): $mol_row;
+        Body_list(): $mol_list;
+        sub(): ($mol_list | $mol_row)[];
+        enforce_all(): void;
+        enforce_person(person: $bog_pay_app_person): void;
+        charge_person_for_sub(person: $bog_pay_app_person, sub: $bog_pay_app_subscription): boolean;
     }
 }
 
@@ -8526,6 +8699,7 @@ declare namespace $ {
 		Home( ): $bog_pay_app_home
 		Games( ): $bog_pay_app_games
 		Personal_cabinet( ): $bog_pay_app_account
+		Admin( ): $bog_pay_app_admin_page
 		plugins( ): readonly(any)[]
 		head( ): readonly(any)[]
 		body( ): readonly(any)[]
