@@ -8391,7 +8391,6 @@ declare namespace $ {
         };
     };
     export class $bog_pay_app_people extends $bog_pay_app_people_base {
-        static shared_land_id: string;
         static hall(): $bog_pay_app_people;
     }
     export {};

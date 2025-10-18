@@ -16627,13 +16627,9 @@ var $;
     class $bog_pay_app_people extends $hyoo_crus_entity.with({
         List: $hyoo_crus_list_ref_to(() => $bog_pay_app_person),
     }) {
-        static shared_land_id = 'bogPay01_people01_Shared02';
         static hall() {
             const glob = this.$.$hyoo_crus_glob;
-            const land_ref = this.$.$hyoo_crus_ref(this.shared_land_id);
-            const shared_land = glob.land_grab({
-                [land_ref.description]: $hyoo_crus_rank_post('just'),
-            });
+            const shared_land = glob.land_grab({ '': $hyoo_crus_rank_post('just') });
             this.$.$mol_log3_rise({
                 place: this,
                 message: 'People hall land',
