@@ -11,6 +11,15 @@ namespace $.$$ {
 		}
 
 		@$mol_mem
+		enforce_loop() {
+			new this.$.$mol_after_timeout(2000, () => {
+				this.enforce()
+				this.enforce_loop()
+			})
+			return null as any
+		}
+
+		@$mol_mem
 		status_text() {
 			const st = this.account().subscription_status()
 			if (st === 'none') return 'Подписка: отсутствует'
@@ -117,7 +126,7 @@ namespace $.$$ {
 		}
 
 		body() {
-			this.enforce()
+			this.enforce_loop()
 			return [
 				this.Info_peer(),
 				this.Info_status(),

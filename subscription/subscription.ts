@@ -110,14 +110,15 @@ namespace $ {
 
 		@$mol_action
 		expire_if_needed() {
-			if (this.is_expired()) {
-				// If period is over, mark as past_due (or canceled if manual and reached end)
-				const renewal = this.RenewalMode()?.val()
-				if (renewal === 'manual') {
-					this.Status(null)!.val('canceled')
-				} else {
-					this.Status(null)!.val('past_due')
-				}
+			// If period is over — handle by renewal mode
+			if (!this.is_expired()) return
+			const renewal = this.RenewalMode()?.val()
+			if (renewal === 'auto') {
+				// Auto-renew: extend period and keep status active
+				this.activate_month()
+			} else {
+				// Manual renewal: expire gracefully
+				this.Status(null)!.val('canceled')
 			}
 		}
 
