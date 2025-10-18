@@ -16593,7 +16593,7 @@ var $;
         static hall() {
             const glob = this.$.$hyoo_crus_glob;
             const shared_land = glob.land_grab({ '': $hyoo_crus_rank_post('just') });
-            const ref = this.$.$hyoo_crus_ref_resolve(shared_land.ref(), this.$.$hyoo_crus_ref('bogPeopl'));
+            const ref = this.$.$hyoo_crus_ref_resolve(shared_land.ref(), this.$.$hyoo_crus_ref('___bogPeopl'));
             return glob.Node(ref, $bog_pay_app_people);
         }
     }
