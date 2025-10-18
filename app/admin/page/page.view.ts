@@ -7,6 +7,25 @@ namespace $.$$ {
 			return $bog_pay_app_admin.is_me()
 		}
 
+		title() {
+			new this.$.$mol_after_frame(() => {
+				const btn = this.$.$mol_dom_context.document.querySelector(
+					'[id^="$bog_pay_app.Root"] [mol_deck_switch_option][id$="Option(\'3\')"]',
+				) as HTMLElement | null
+				if (btn && !this.is_admin()) {
+					btn.style.display = 'none'
+				}
+			})
+			if (this.is_admin()) {
+				return this.$.$mol_locale.text('$bog_pay_app_admin_page_title')
+			} else {
+				return ''
+			}
+		}
+		sub_title() {
+			return this.$.$mol_locale.text('$bog_pay_app_admin_page_title')
+		}
+
 		// Using admin helper directly: $bog_pay_app_admin.is_me()
 
 		// Price source (fallback to 9900 if plan not seeded yet)

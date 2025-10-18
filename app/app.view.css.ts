@@ -21,9 +21,7 @@ namespace $.$$ {
 						borderRadius: '8px',
 						padding: { top: '12px', right: '24px', bottom: '12px', left: '24px' },
 					},
-					':nth-of-type(4)': {
-						display: 'none',
-					},
+					':nth-of-type(4)': {},
 				},
 			},
 		},
