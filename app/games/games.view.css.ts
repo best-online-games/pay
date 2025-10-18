@@ -1,4 +1,6 @@
 namespace $.$$ {
+	const { rem } = $mol_style_unit
+
 	$mol_style_define($bog_pay_app_games, {
 		Games_section: {
 			position: 'absolute',
@@ -10,6 +12,15 @@ namespace $.$$ {
 			gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
 			gridGap: '10px',
 			padding: '10px',
+			Title: {
+				fontSize: rem(20),
+				color: 'white',
+				padding: '10px',
+				borderRadius: '10px',
+				margin: '10px',
+				textAlign: 'center',
+				width: '100%',
+			},
 		},
 
 		Bog_ping: {

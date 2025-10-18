@@ -39,11 +39,15 @@ namespace $.$$ {
 		people() {
 			console.log('>>> Admin.people() - reading from shared registry')
 
-			// Get shared registry
 			const people_registry = $bog_pay_app_people.hall()
-			console.log('>>> Got registry land', people_registry.land().ref().description)
+			if (!people_registry) {
+				console.warn(
+					'>>> Shared registry land not found — check $bog_pay_app_people_registry_land or run init_registry() as admin',
+				)
+				return []
+			}
 
-			const list = people_registry.List(null)
+			const list = people_registry!.List()
 			if (!list) {
 				console.log('>>> ERROR: registry list is null!')
 				return []

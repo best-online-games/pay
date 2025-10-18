@@ -7,9 +7,6 @@ namespace $ {
 			// Профиль текущего пользователя (локально, CRUS home space)
 			const person = $hyoo_crus_glob.home().hall_by($bog_pay_app_person, {})
 			// Ensure person is registered in People list (memoized, runs once)
-			if (person) {
-				person.ensure_registered()
-			}
 			return person
 		}
 

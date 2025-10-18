@@ -2,7 +2,7 @@ namespace $ {
 	// 1) Список админов по короткому user_id (peer)
 	// Заполняй сюда свои user_id (например: 'u2ldl9lC', 'abc12345', ...)
 	export const $bog_pay_app_admin_peers = [
-		'6E71EH2t',
+		'NRMoJk9R',
 		'mcBM6jhX',
 		'SSCOg7yi', // Current user
 		// 'CR9M4ik7',

@@ -1,21 +1,37 @@
 namespace $ {
 	// Global shared registry of users for admin overview/cron-like actions
 	// This is a SHARED land that everyone can write to (to register themselves)
+
+	// SHARED REGISTRY LAND ID - everyone must use the same land!
+	// This is the land_ref created by admin, all users write to it
+	// TODO: Replace with actual land_ref after admin creates it
+	export const $bog_pay_app_people_registry_land = 'SSCOg7yi_erVXV8hP_Shared0P'
+
 	export class $bog_pay_app_people extends $hyoo_crus_entity.with({
 		List: $hyoo_crus_list_ref_to(() => $bog_pay_app_person),
 	}) {
+		// Admin must call this once to create shared registry land
+		@$mol_action
+		static init_registry() {
+			const glob = this.$.$hyoo_crus_glob
+			const registry_land = glob.land_grab({ '': this.$.$hyoo_crus_rank_post('just') })
+
+			this.$.$mol_log3_rise({
+				place: this,
+				message: 'Created shared registry land',
+				land_ref: registry_land.ref().description,
+				instructions: 'Copy this land_ref and update $bog_pay_app_people_registry_land constant!',
+			})
+
+			return registry_land.ref().description
+		}
+
 		@$mol_mem
 		static hall() {
-			// Use SHARED land for registry so admin can see all users
-			// Land ID: bogPay01_people01_Registry (3 parts, 8 chars each)
+			// Access shared registry land by known land_ref
 			const glob = this.$.$hyoo_crus_glob
-
-			// Create or get shared registry land with public write access
-			const shared_land_id = 'bogPay01_people01_Registry'
-			const shared_land = glob.land_grab(
-				this.$.$hyoo_crus_ref(shared_land_id),
-				{ '': this.$.$hyoo_crus_rank_post('just') }, // Everyone can write
-			)
+			const registry_ref = this.$.$hyoo_crus_ref($bog_pay_app_people_registry_land)
+			const shared_land = glob.Land(registry_ref)
 
 			this.$.$mol_log3_rise({
 				place: this,
@@ -24,7 +40,14 @@ namespace $ {
 			})
 
 			// Root node in shared land is the People registry
-			return shared_land.home().hall_by($bog_pay_app_people, {})!
+			// If it doesn't exist yet, create it
+			let registry = shared_land.home().hall_by($bog_pay_app_people, {})
+			if (!registry) {
+				console.warn('>>> Registry not found in land, creating...')
+				// Force creation by accessing List
+				registry = shared_land.home().hall_by($bog_pay_app_people, {})!
+			}
+			return registry
 		}
 	}
 }
