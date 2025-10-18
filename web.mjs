@@ -17928,6 +17928,10 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
+        new $mol_after_frame(() => {
+            $hyoo_crus_yard.masters = ['https://crus.hd4.ru/'];
+            $hyoo_crus_glob.yard().sync();
+        });
         class $bog_pay_app extends $.$bog_pay_app {
             body() {
                 const originalLang = this.$.$mol_locale.lang();
