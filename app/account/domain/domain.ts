@@ -1,17 +1,17 @@
 namespace $ {
-	export class $bog_pay_account extends $mol_object2 {
+	export class $bog_pay_app_account_domain extends $mol_object2 {
 		// CRUS context
 
 		@$mol_mem
 		profile() {
 			// Профиль текущего пользователя (локально, CRUS home space)
-			return $hyoo_crus_glob.home().hall_by($bog_pay_person, {})
+			return $hyoo_crus_glob.home().hall_by($bog_pay_app_person, {})
 		}
 
 		@$mol_mem
 		plan_basic() {
 			// Единственный публичный тариф
-			return $bog_pay_plan.basic()
+			return $bog_pay_app_plan.basic()
 		}
 
 		@$mol_mem
@@ -63,7 +63,7 @@ namespace $ {
 		}
 
 		@$mol_action
-		charge_sub_renewal_mock(sub: $bog_pay_subscription) {
+		charge_sub_renewal_mock(sub: $bog_pay_app_subscription) {
 			const amount = this.price_cents()
 			const person = this.profile()!
 			const bal = this.balance_cents()

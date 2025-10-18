@@ -1,11 +1,12 @@
 namespace $ {
-	export class $bog_pay_person extends $hyoo_crus_entity.with({
+	export class $bog_pay_app_person extends $hyoo_crus_entity.with({
 		Name: $hyoo_crus_text,
 		Email: $hyoo_crus_text,
 		CreatedAt: $hyoo_crus_atom_str,
 		BalanceCents: $hyoo_crus_atom_str,
-		Subscriptions: $hyoo_crus_list_ref_to(() => $bog_pay_subscription),
-		Invoices: $hyoo_crus_list_ref_to(() => $bog_pay_invoice),
+		Subscriptions: $hyoo_crus_list_ref_to(() => $bog_pay_app_subscription),
+		Invoices: $hyoo_crus_list_ref_to(() => $bog_pay_app_invoice),
+		Photos: $hyoo_crus_list_ref_to(() => $hyoo_crus_atom_bin),
 	}) {
 		@$mol_mem
 		active_sub() {

@@ -1,5 +1,4 @@
 namespace $ {
-
 	/**
 	 * CRUS Invoice entity for top-ups (balance refill) and charges (subscription billing).
 	 *
@@ -10,24 +9,23 @@ namespace $ {
 	 * - Subscription is optional for 'charge' invoices; for 'topup' can be empty.
 	 * - Provider/ProviderInvoiceId/PaymentUrl are for external billing integration (mock for now).
 	 */
-	export class $bog_pay_invoice extends $hyoo_crus_entity.with({
-		Person: $hyoo_crus_atom_ref_to(() => $bog_pay_person),
-		Subscription: $hyoo_crus_atom_ref_to(() => $bog_pay_subscription),
+	export class $bog_pay_app_invoice extends $hyoo_crus_entity.with({
+		Person: $hyoo_crus_atom_ref_to(() => $bog_pay_app_person),
+		Subscription: $hyoo_crus_atom_ref_to(() => $bog_pay_app_subscription),
 
-		Kind: $hyoo_crus_atom_str,         // 'topup' | 'charge'
-		AmountCents: $hyoo_crus_atom_str,  // e.g. '9900'
-		Currency: $hyoo_crus_atom_str,     // e.g. 'RUB'
+		Kind: $hyoo_crus_atom_str, // 'topup' | 'charge'
+		AmountCents: $hyoo_crus_atom_str, // e.g. '9900'
+		Currency: $hyoo_crus_atom_str, // e.g. 'RUB'
 
-		Status: $hyoo_crus_atom_str,       // 'pending' | 'paid' | 'failed' | 'canceled'
-		CreatedAt: $hyoo_crus_atom_str,    // ISO string
-		PaidAt: $hyoo_crus_atom_str,       // ISO string
+		Status: $hyoo_crus_atom_str, // 'pending' | 'paid' | 'failed' | 'canceled'
+		CreatedAt: $hyoo_crus_atom_str, // ISO string
+		PaidAt: $hyoo_crus_atom_str, // ISO string
 
-		Provider: $hyoo_crus_atom_str,         // e.g. 'mock'
-		ProviderInvoiceId: $hyoo_crus_atom_str,// external invoice id
-		PaymentUrl: $hyoo_crus_text,           // checkout URL (if any)
-		Meta: $hyoo_crus_text,                 // optional free-form
+		Provider: $hyoo_crus_atom_str, // e.g. 'mock'
+		ProviderInvoiceId: $hyoo_crus_atom_str, // external invoice id
+		PaymentUrl: $hyoo_crus_text, // checkout URL (if any)
+		Meta: $hyoo_crus_text, // optional free-form
 	}) {
-
 		// Helpers
 
 		@$mol_mem
@@ -83,7 +81,5 @@ namespace $ {
 		cancel() {
 			this.Status(null)!.val('canceled')
 		}
-
 	}
-
 }

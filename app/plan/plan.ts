@@ -1,5 +1,5 @@
 namespace $ {
-	export class $bog_pay_plan extends $hyoo_crus_entity.with({
+	export class $bog_pay_app_plan extends $hyoo_crus_entity.with({
 		Title: $hyoo_crus_text,
 		Descr: $hyoo_crus_text,
 		PriceCents: $hyoo_crus_atom_str, // 9900 = 99 RUB
@@ -19,7 +19,7 @@ namespace $ {
 		}
 
 		static basic_id() {
-			return '___bogPayPl'
+			return '___bogPayAp'
 		}
 
 		@$mol_mem
@@ -27,7 +27,7 @@ namespace $ {
 			const base = this.$.$hyoo_crus_glob.home().land().ref()
 			const rel = this.$.$hyoo_crus_ref(this.basic_id())
 			const ref = this.$.$hyoo_crus_ref_resolve(base, rel)
-			const plan = this.$.$hyoo_crus_glob.Node(ref, $bog_pay_plan)
+			const plan = this.$.$hyoo_crus_glob.Node(ref, $bog_pay_app_plan)
 
 			// Инициализация единственного публичного тарифа (seed)
 			if (!plan.PriceCents()?.val()) {

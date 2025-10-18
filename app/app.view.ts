@@ -9,8 +9,9 @@ namespace $.$$ {
 		}
 	}
 
-	export const $bog_pay_person = $.$bog_pay_person
-	export const $bog_pay_plan = $.$bog_pay_plan
-	export const $bog_pay_subscription = $.$bog_pay_subscription
-	export const $bog_pay_account = $.$bog_pay_account
+	export const $bog_pay_person = $.$bog_pay_app_person
+	export const $bog_pay_plan = $.$bog_pay_app_plan
+	export const $bog_pay_subscription = $.$bog_pay_app_subscription
+	export const $bog_pay_account = $.$bog_pay_app_account_domain
+	export const $bog_pay_invoice = $.$bog_pay_app_invoice
 }

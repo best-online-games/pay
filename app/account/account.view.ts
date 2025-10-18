@@ -130,33 +130,41 @@ namespace $.$$ {
 		}
 
 		@$mol_mem
-		images(next?: readonly string[]) {
-			return (next as readonly string[] | undefined) ?? []
+		images() {
+			const person = this.account().profile()
+			const bins = person?.Photos()?.remote_list() ?? []
+			return bins.map(bin => {
+				const data = bin.val()
+				if (!data) return ''
+				const blob = new Blob([data], { type: 'image/*' })
+				return URL.createObjectURL(blob)
+			})
 		}
 
 		@$mol_action
 		attach_add_files(files: File[]) {
 			if (!files || files.length === 0) return
-			const urls = this.images().slice()
+			const person = this.account().profile()!
 			for (const file of files) {
-				// Превью через ObjectURL
-				const url = URL.createObjectURL(file)
-				urls.push(url)
+				const buf = new Uint8Array(this.$.$mol_wire_sync(file).arrayBuffer())
+				const bin = person.Photos(null)!.remote_make({})!
+				bin.val(buf)
 			}
-			this.images(urls)
 		}
 
 		@$mol_action
 		attach_remove_index(index: number) {
-			const urls = this.images().slice()
-			const id = urls[index]
-			if (id !== undefined) {
+			const person = this.account().profile()
+			const list = person?.Photos()?.remote_list() ?? []
+			const bin = list[index]
+			if (!bin) return
+			const url = this.images()[index]
+			if (url) {
 				try {
-					URL.revokeObjectURL(id)
+					URL.revokeObjectURL(url)
 				} catch {}
-				urls.splice(index, 1)
-				this.images(urls)
 			}
+			person!.Photos(null)!.has(bin.ref(), false)
 		}
 
 		Attach_images() {

@@ -2,9 +2,9 @@ namespace $ {
 	// Subscription statuses:
 	// 'trial' | 'active' | 'canceled' | 'past_due'
 	// RenewalMode: 'auto' | 'manual'
-	export class $bog_pay_subscription extends $hyoo_crus_entity.with({
-		Person: $hyoo_crus_atom_ref_to(() => $bog_pay_person),
-		Plan: $hyoo_crus_atom_ref_to(() => $bog_pay_plan),
+	export class $bog_pay_app_subscription extends $hyoo_crus_entity.with({
+		Person: $hyoo_crus_atom_ref_to(() => $bog_pay_app_person),
+		Plan: $hyoo_crus_atom_ref_to(() => $bog_pay_app_plan),
 		Status: $hyoo_crus_atom_str,
 		PeriodStart: $hyoo_crus_atom_str,
 		PeriodEnd: $hyoo_crus_atom_str,
