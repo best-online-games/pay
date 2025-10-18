@@ -10,9 +10,6 @@ namespace $ {
 	}) {
 		@$mol_mem
 		active_sub() {
-			// Ensure admin write access and registration to People registry on first access
-			this.ensure_admin_and_registry()
-
 			const now = Date.now()
 			const subs = this.Subscriptions()?.remote_list() ?? []
 
@@ -29,38 +26,33 @@ namespace $ {
 			return null
 		}
 
-		@$mol_action
-		ensure_admin_and_registry() {
-			this.register_in_people()
-		}
+		// Registration happens separately, not in active_sub to avoid loops
+		@$mol_mem
+		ensure_registered() {
+			console.log('>>> ensure_registered called', new Error().stack)
 
-		@$mol_action
-		register_in_people() {
-			// Add this user into global People registry (admin rights are set via People.hall preset)
 			const people = $bog_pay_app_people.hall()
-			// List is hosted in admin hall, rights are inherited
+			console.log('>>> got people.hall()')
+
 			const list = people.List(null)
-			if (!list) {
-				this.$.$mol_log3_rise({
-					place: this,
-					message: 'People list is null',
-					hint: 'Cannot register user in global People registry',
-				})
-				return
-			}
+			console.log('>>> got list', list)
+			if (!list) return false
 
 			const wasRegistered = list.has(this.ref())
-			list.has(this.ref(), true)
+			console.log('>>> wasRegistered', wasRegistered)
 
 			if (!wasRegistered) {
+				console.log('>>> adding to list')
+				list.has(this.ref(), true)
+				console.log('>>> added to list')
 				this.$.$mol_log3_rise({
 					place: this,
-					message: 'User registered in People',
+					message: 'User registered in People list',
 					person: this.ref().description,
-					name: this.Name()?.str() || '(no name)',
-					email: this.Email()?.str() || '(no email)',
 				})
 			}
+			console.log('>>> ensure_registered done')
+			return true
 		}
 	}
 }

@@ -34,23 +34,53 @@ namespace $.$$ {
 			return Number($bog_pay_app_plan.basic().PriceCents()?.val() ?? '9900')
 		}
 
-		// People registry
-		@$mol_mem
+		// People registry - collect persons from all home lands
 		people() {
-			const list = $bog_pay_app_people.hall().List()?.remote_list() ?? []
+			const glob = this.$.$hyoo_crus_glob
+
+			// CRITICAL: Convert Set to Array FIRST to break reactivity cycle!
+			// Accessing lands inside loop adds to touched set -> triggers recalc -> infinite loop
+			const land_refs_snapshot = Array.from(glob.lands_touched.values())
+
+			const all_people: $bog_pay_app_person[] = []
+			const seen_peers = new Set<string>()
+
+			// Iterate through static snapshot (not reactive set)
+			for (const land_ref of land_refs_snapshot) {
+				try {
+					const land = glob.Land(land_ref)
+					const peer = land.auth().peer()
+
+					// Skip if we already have person from this peer (idempotency)
+					if (seen_peers.has(peer)) continue
+
+					// Each user has Person in their home land at root
+					const person = land.home().hall_by($bog_pay_app_person, {})
+
+					// Check if this person has any data
+					if (person) {
+						all_people.push(person)
+						seen_peers.add(peer)
+					}
+				} catch (e) {
+					// Skip lands that don't have person data
+				}
+			}
 
 			this.$.$mol_log3_rise({
 				place: this,
-				message: 'People list loaded',
-				count: list.length,
-				people: list.map(p => ({
+				message: 'People collected from home lands',
+				lands_checked: land_refs_snapshot.length,
+				people_found: all_people.length,
+				people: all_people.map(p => ({
+					land_ref: p?.land().ref().description ?? '?',
 					peer: p?.land().auth().peer() ?? '?',
 					name: p?.Name()?.str() || '(no name)',
 					email: p?.Email()?.str() || '(no email)',
 				})),
 			})
 
-			return list
+			return all_people
 		}
 
 		// Rows content for UI

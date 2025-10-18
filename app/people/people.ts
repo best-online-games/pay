@@ -5,18 +5,18 @@ namespace $ {
 	}) {
 		@$mol_mem
 		static hall() {
-			// Each user creates their own land with public write access
-			// Users' lands will sync together through CRUS
+			// Use each user's home land as registry
+			// Everyone registers in their own home land
 			const glob = this.$.$hyoo_crus_glob
-			const shared_land = glob.land_grab({ '': $hyoo_crus_rank_post('just') })
+			const home_land = glob.home().land()
 
 			this.$.$mol_log3_rise({
 				place: this,
-				message: 'People hall land',
-				land_ref: shared_land.ref().description,
+				message: 'People hall land (using home)',
+				land_ref: home_land.ref().description,
 			})
 
-			const ref = this.$.$hyoo_crus_ref_resolve(shared_land.ref(), this.$.$hyoo_crus_ref('___bogPeopl'))
+			const ref = this.$.$hyoo_crus_ref_resolve(home_land.ref(), this.$.$hyoo_crus_ref('___bogPeopl'))
 			return glob.Node(ref, $bog_pay_app_people)
 		}
 	}
