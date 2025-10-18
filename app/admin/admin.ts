@@ -3,6 +3,7 @@ namespace $ {
 	// Заполняй сюда свои user_id (например: 'u2ldl9lC', 'abc12345', ...)
 	export const $bog_pay_app_admin_peers = [
 		'SjixkGkN',
+		'mcBM6jhX',
 		// 'CR9M4ik7',
 		// 'SjixkGkN'
 	] as const
