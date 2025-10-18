@@ -20,6 +20,97 @@ namespace $ {
 			return this.profile()?.active_sub() ?? null
 		}
 
+		// Pricing & Balance
+
+		@$mol_mem
+		price_cents() {
+			return 9900
+		}
+
+		@$mol_mem
+		balance_cents(next?: number) {
+			const person = this.profile()!
+			if (next !== undefined) {
+				person.BalanceCents(null)!.val(String(Math.max(0, Math.floor(next))))
+			}
+			return Number(person.BalanceCents()?.val() ?? '0')
+		}
+
+		// Invoices
+
+		@$mol_action
+		topup_mock_rub(amountRub: number) {
+			const person = this.profile()!
+			const inv = person.Invoices(null)!.remote_make({})!
+			inv.Person(null)!.val(person.ref())
+			inv.Kind(null)!.val('topup')
+			inv.AmountCents(null)!.val(String(Math.round(amountRub * 100)))
+			inv.Currency(null)!.val('RUB')
+			inv.Provider(null)!.val('mock')
+			inv.mark_pending()
+			inv.mark_paid()
+
+			const newBal = this.balance_cents() + inv.amount_cents()
+			this.balance_cents(newBal)
+
+			console.log('[Billing] topup (mock):', {
+				person: person.ref().description,
+				delta: inv.amount_cents(),
+				balance: newBal,
+			})
+
+			return inv
+		}
+
+		@$mol_action
+		charge_sub_renewal_mock(sub: $bog_pay_subscription) {
+			const amount = this.price_cents()
+			const person = this.profile()!
+			const bal = this.balance_cents()
+
+			if (bal < amount) {
+				console.log('[Billing] charge skipped: insufficient funds', { balance: bal, need: amount })
+				return false
+			}
+
+			this.balance_cents(bal - amount)
+
+			const inv = person.Invoices(null)!.remote_make({})!
+			inv.Person(null)!.val(person.ref())
+			inv.Subscription(null)!.val(sub.ref())
+			inv.Kind(null)!.val('charge')
+			inv.AmountCents(null)!.val(String(amount))
+			inv.Currency(null)!.val('RUB')
+			inv.Provider(null)!.val('mock')
+			inv.mark_pending()
+			inv.mark_paid()
+
+			console.log('[Billing] charge (mock): renewal paid', {
+				subscription: sub.ref().description,
+				amount,
+				balance: this.balance_cents(),
+			})
+
+			return true
+		}
+
+		// OVPN mock download
+
+		@$mol_mem
+		ovpn_file_name() {
+			const peer = this.$.$hyoo_crus_glob.home().land().auth().peer()
+			return `${peer}.ovpn`
+		}
+
+		ovpn_file_blob() {
+			const peer = this.$.$hyoo_crus_glob.home().land().auth().peer()
+			const content = `# OVPN profile (mock)
+# user: ${peer}
+# generated: ${new Date().toISOString()}
+`
+			return new Blob([content], { type: 'application/x-openvpn-profile' })
+		}
+
 		// Actions
 
 		@$mol_action
@@ -54,31 +145,34 @@ namespace $ {
 
 		@$mol_action
 		renew() {
-			// Идемпотентно: продлевает на месяц от текущего периода (или от текущего времени)
+			// Продление вручную: списываем средства и продлеваем период
 			let sub = this.sub_active()
 
-			// Если нет подписки вообще — создадим и активируем сразу месяц (без trial)
 			if (!sub) {
 				const person = this.profile()!
 				const plan = this.plan_basic()
 				sub = person.Subscriptions(null)!.remote_make({})!
 				sub.Person(null)!.val(person.ref())
 				sub.Plan(null)!.val(plan.ref())
-				// Активируем на месяц
-				sub.activate_month()
-			} else {
-				// Продление текущей активной/триальной
-				sub.activate_month()
 			}
 
-			// Мокаем оплату/чекаут
-			console.log('[Billing] renew (mock): +1 month', {
+			// Оплата (mock, с баланса)
+			if (!this.charge_sub_renewal_mock(sub)) {
+				console.log('[Billing] renew (mock): insufficient funds, please top-up balance first')
+				return sub
+			}
+
+			// Продлеваем период на dev-интервал
+			sub.activate_month()
+
+			console.log('[Billing] renew (mock): +period', {
 				subscription: sub.ref().description,
 				status: sub.Status()?.val(),
 				period: { start: sub.PeriodStart()?.val(), end: sub.PeriodEnd()?.val() },
+				balance: this.balance_cents(),
 			})
 
-			// Проверяем и приводим доступ
+			// Приводим доступ
 			sub.enforce_access_mock()
 			return sub
 		}
@@ -106,16 +200,32 @@ namespace $ {
 		enforce_access() {
 			// Внешняя точка согласования доступа: дергать периодически (UI таймером) или при навигации
 			const sub = this.sub_active()
+
 			if (sub) {
-				sub.enforce_access_mock()
-			} else {
-				// Нет активной подписки => отозвать у всего, что могло остаться в провижнене
-				// Для простоты перебираем все подписки профиля
-				const person = this.profile()
-				const subs = person?.Subscriptions()?.remote_list() ?? []
-				for (const s of subs) {
-					s.enforce_access_mock()
+				// Если период истёк и стоит автопродление — пытаемся списать и продлить
+				const expired = sub.period_end_ms() <= Date.now()
+				const mode = sub.RenewalMode()?.val()
+
+				if (expired && mode === 'auto') {
+					const paid = this.charge_sub_renewal_mock(sub)
+					if (paid) {
+						sub.activate_month()
+					} else {
+						// Недостаточно средств: отключаем автопродление и ставим canceled
+						sub.RenewalMode(null)!.val('manual')
+						sub.Status(null)!.val('canceled')
+					}
 				}
+
+				sub.enforce_access_mock()
+				return
+			}
+
+			// Нет активной подписки => отозвать у всего, что могло остаться в провижнене
+			const person = this.profile()
+			const subs = person?.Subscriptions()?.remote_list() ?? []
+			for (const s of subs) {
+				s.enforce_access_mock()
 			}
 		}
 

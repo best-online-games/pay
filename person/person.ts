@@ -3,7 +3,9 @@ namespace $ {
 		Name: $hyoo_crus_text,
 		Email: $hyoo_crus_text,
 		CreatedAt: $hyoo_crus_atom_str,
+		BalanceCents: $hyoo_crus_atom_str,
 		Subscriptions: $hyoo_crus_list_ref_to(() => $bog_pay_subscription),
+		Invoices: $hyoo_crus_list_ref_to(() => $bog_pay_invoice),
 	}) {
 		@$mol_mem
 		active_sub() {

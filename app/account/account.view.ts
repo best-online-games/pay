@@ -118,10 +118,53 @@ namespace $.$$ {
 			})
 		}
 
+		Info_balance() {
+			const $ = this.$
+			return $.$mol_text.make({
+				text: () => {
+					const cents = this.account().balance_cents()
+					const rub = (cents / 100).toFixed(2)
+					return `Баланс: ${rub} ₽`
+				},
+			})
+		}
+
+		Attach_ovpn() {
+			const $ = this.$
+			return $.$mol_attach.make({
+				items: () => [this.account().ovpn_file_name()],
+			})
+		}
+
+		Download_ovpn_btn() {
+			const $ = this.$
+			return $.$mol_button_download.make({
+				sub: () => [$.$mol_text.make({ text: () => 'Скачать .ovpn (mock)' })],
+				file_name: () => this.account().ovpn_file_name(),
+				blob: () => this.account().ovpn_file_blob(),
+			})
+		}
+
+		Topup_btn() {
+			const $ = this.$
+			return $.$mol_button_minor.make({
+				sub: () => [$.$mol_text.make({ text: () => 'Пополнить +199 ₽ (mock)' })],
+				click: () => {
+					this.account().topup_mock_rub(199)
+				},
+			})
+		}
+
 		Actions() {
 			const $ = this.$
 			return $.$mol_row.make({
-				sub: () => [this.Subscribe_btn(), this.Renew_btn(), this.Cancel_btn()],
+				sub: () => [
+					this.Subscribe_btn(),
+					this.Renew_btn(),
+					this.Cancel_btn(),
+					this.Topup_btn(),
+					this.Download_ovpn_btn(),
+				],
 			})
 		}
 
@@ -133,6 +176,8 @@ namespace $.$$ {
 				this.Info_period(),
 				this.Info_renewal(),
 				this.Info_vpn(),
+				this.Info_balance(),
+				this.Attach_ovpn(),
 				this.Actions(),
 			]
 		}
