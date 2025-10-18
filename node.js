@@ -10029,43 +10029,109 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$bog_pay_app_account) = class $bog_pay_app_account extends ($.$mol_page) {
-		title(){
-			return (this.$.$mol_locale.text("$bog_pay_app_account_title"));
-		}
-		Head(){
-			return null;
-		}
-		body(){
-			return [
-				(this.Info_peer()), 
-				(this.Info_status()), 
-				(this.Info_period()), 
-				(this.Info_renewal()), 
-				(this.Info_vpn()), 
-				(this.Actions())
-			];
+	($.$mol_icon_upload) = class $mol_icon_upload extends ($.$mol_icon) {
+		path(){
+			return "M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z";
 		}
 	};
 
 
 ;
-	($.$mol_button_major) = class $mol_button_major extends ($.$mol_button_minor) {
-		theme(){
-			return "$mol_theme_base";
+"use strict";
+
+;
+	($.$mol_button_open) = class $mol_button_open extends ($.$mol_button_minor) {
+		Icon(){
+			const obj = new this.$.$mol_icon_upload();
+			return obj;
+		}
+		files(next){
+			if(next !== undefined) return next;
+			return [];
+		}
+		accept(){
+			return "";
+		}
+		multiple(){
+			return true;
+		}
+		Native(){
+			const obj = new this.$.$mol_button_open_native();
+			(obj.files) = (next) => ((this.files(next)));
+			(obj.accept) = () => ((this.accept()));
+			(obj.multiple) = () => ((this.multiple()));
+			return obj;
+		}
+		sub(){
+			return [(this.Icon()), (this.Native())];
 		}
 	};
+	($mol_mem(($.$mol_button_open.prototype), "Icon"));
+	($mol_mem(($.$mol_button_open.prototype), "files"));
+	($mol_mem(($.$mol_button_open.prototype), "Native"));
+	($.$mol_button_open_native) = class $mol_button_open_native extends ($.$mol_view) {
+		accept(){
+			return "";
+		}
+		multiple(){
+			return true;
+		}
+		picked(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		dom_name(){
+			return "input";
+		}
+		files(next){
+			if(next !== undefined) return next;
+			return [];
+		}
+		attr(){
+			return {
+				"type": "file", 
+				"accept": (this.accept()), 
+				"multiple": (this.multiple())
+			};
+		}
+		event(){
+			return {"change": (next) => (this.picked(next))};
+		}
+	};
+	($mol_mem(($.$mol_button_open_native.prototype), "picked"));
+	($mol_mem(($.$mol_button_open_native.prototype), "files"));
 
+
+;
+"use strict";
 
 ;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/button/major/major.view.css", "[mol_button_major] {\n\tbackground-color: var(--mol_theme_back);\n\tcolor: var(--mol_theme_text);\n}\n");
+    var $$;
+    (function ($$) {
+        class $mol_button_open_native extends $.$mol_button_open_native {
+            dom_node() {
+                return super.dom_node();
+            }
+            picked() {
+                const files = this.dom_node().files;
+                if (!files || !files.length)
+                    return;
+                this.files([...files]);
+            }
+        }
+        $$.$mol_button_open_native = $mol_button_open_native;
+    })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
 ;
 "use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/button/open/open.view.css", "[mol_button_open_native] {\n\tposition: absolute;\n\tleft: 0;\n\ttop: -100%;\n\twidth: 100%;\n\theight: 200%;\n\tcursor: pointer;\n\topacity: 0;\n}\n");
+})($ || ($ = {}));
 
 ;
 "use strict";
@@ -15921,788 +15987,6 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$mol_row) = class $mol_row extends ($.$mol_view) {};
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/row/row.view.css", "[mol_row] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\talign-items: flex-start;\n\talign-content: flex-start;\n\tjustify-content: flex-start;\n\tpadding: var(--mol_gap_block);\n\tgap: var(--mol_gap_block);\n\tflex: 0 0 auto;\n\tbox-sizing: border-box;\n\tmax-width: 100%;\n}\n\n[mol_row] > * {\n\tmax-width: 100%;\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-;
-	($.$mol_icon_upload) = class $mol_icon_upload extends ($.$mol_icon) {
-		path(){
-			return "M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z";
-		}
-	};
-
-
-;
-"use strict";
-
-;
-	($.$mol_button_open) = class $mol_button_open extends ($.$mol_button_minor) {
-		Icon(){
-			const obj = new this.$.$mol_icon_upload();
-			return obj;
-		}
-		files(next){
-			if(next !== undefined) return next;
-			return [];
-		}
-		accept(){
-			return "";
-		}
-		multiple(){
-			return true;
-		}
-		Native(){
-			const obj = new this.$.$mol_button_open_native();
-			(obj.files) = (next) => ((this.files(next)));
-			(obj.accept) = () => ((this.accept()));
-			(obj.multiple) = () => ((this.multiple()));
-			return obj;
-		}
-		sub(){
-			return [(this.Icon()), (this.Native())];
-		}
-	};
-	($mol_mem(($.$mol_button_open.prototype), "Icon"));
-	($mol_mem(($.$mol_button_open.prototype), "files"));
-	($mol_mem(($.$mol_button_open.prototype), "Native"));
-	($.$mol_button_open_native) = class $mol_button_open_native extends ($.$mol_view) {
-		accept(){
-			return "";
-		}
-		multiple(){
-			return true;
-		}
-		picked(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		dom_name(){
-			return "input";
-		}
-		files(next){
-			if(next !== undefined) return next;
-			return [];
-		}
-		attr(){
-			return {
-				"type": "file", 
-				"accept": (this.accept()), 
-				"multiple": (this.multiple())
-			};
-		}
-		event(){
-			return {"change": (next) => (this.picked(next))};
-		}
-	};
-	($mol_mem(($.$mol_button_open_native.prototype), "picked"));
-	($mol_mem(($.$mol_button_open_native.prototype), "files"));
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_button_open_native extends $.$mol_button_open_native {
-            dom_node() {
-                return super.dom_node();
-            }
-            picked() {
-                const files = this.dom_node().files;
-                if (!files || !files.length)
-                    return;
-                this.files([...files]);
-            }
-        }
-        $$.$mol_button_open_native = $mol_button_open_native;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/button/open/open.view.css", "[mol_button_open_native] {\n\tposition: absolute;\n\tleft: 0;\n\ttop: -100%;\n\twidth: 100%;\n\theight: 200%;\n\tcursor: pointer;\n\topacity: 0;\n}\n");
-})($ || ($ = {}));
-
-;
-	($.$mol_attach) = class $mol_attach extends ($.$mol_view) {
-		content(){
-			return [];
-		}
-		Content(){
-			const obj = new this.$.$mol_row();
-			(obj.sub) = () => ((this.content()));
-			return obj;
-		}
-		attach_title(){
-			return "";
-		}
-		attach_new(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		item_drop(id, next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		item_uri(id){
-			return "";
-		}
-		Image(id){
-			const obj = new this.$.$mol_image();
-			(obj.title) = () => ("");
-			(obj.uri) = () => ((this.item_uri(id)));
-			return obj;
-		}
-		items(next){
-			if(next !== undefined) return next;
-			return [];
-		}
-		sub(){
-			return [(this.Content())];
-		}
-		Add(){
-			const obj = new this.$.$mol_button_open();
-			(obj.title) = () => ((this.attach_title()));
-			(obj.files) = (next) => ((this.attach_new(next)));
-			return obj;
-		}
-		Item(id){
-			const obj = new this.$.$mol_button_minor();
-			(obj.click) = (next) => ((this.item_drop(id, next)));
-			(obj.sub) = () => ([(this.Image(id))]);
-			return obj;
-		}
-	};
-	($mol_mem(($.$mol_attach.prototype), "Content"));
-	($mol_mem(($.$mol_attach.prototype), "attach_new"));
-	($mol_mem_key(($.$mol_attach.prototype), "item_drop"));
-	($mol_mem_key(($.$mol_attach.prototype), "Image"));
-	($mol_mem(($.$mol_attach.prototype), "items"));
-	($mol_mem(($.$mol_attach.prototype), "Add"));
-	($mol_mem_key(($.$mol_attach.prototype), "Item"));
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_attach extends $.$mol_attach {
-            attach_new(files) {
-                this.items([
-                    ...this.items(),
-                    ...files.map(file => URL.createObjectURL(file)),
-                ]);
-            }
-            content() {
-                return [...this.items().map((_, i) => this.Item(i)), this.Add()];
-            }
-            item_uri(index) {
-                return this.items()[index];
-            }
-            item_drop(index, event) {
-                const items = this.items();
-                this.items([
-                    ...items.slice(0, index),
-                    ...items.slice(index + 1),
-                ]);
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_attach.prototype, "content", null);
-        $$.$mol_attach = $mol_attach;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/attach/attach.view.css", "[mol_attach_item] {\n\twidth: 6rem;\n\theight: 6rem;\n\tborder-radius: var(--mol_gap_round);\n\tpadding: 0;\n}\n\n[mol_attach_image] {\n\tbackground: var(--mol_theme_card);\n\twidth: 100%;\n\theight: 100%;\n}\n\n[mol_attach_add] {\n\tbackground: var(--mol_theme_card);\n\twidth: 6rem;\n\theight: 6rem;\n\talign-items: center;\n\tjustify-content: center;\n\toverflow: hidden;\n}\n\n[mol_attach_add_icon] {\n\twidth: 50%;\n\theight: 50%;\n}\n");
-})($ || ($ = {}));
-
-;
-	($.$mol_icon_download) = class $mol_icon_download extends ($.$mol_icon) {
-		path(){
-			return "M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z";
-		}
-	};
-
-
-;
-"use strict";
-
-;
-	($.$mol_button_download) = class $mol_button_download extends ($.$mol_button_minor) {
-		Icon(){
-			const obj = new this.$.$mol_icon_download();
-			return obj;
-		}
-		title(){
-			return "";
-		}
-		blob(){
-			return null;
-		}
-		uri(){
-			return "";
-		}
-		file_name(){
-			return "blob.bin";
-		}
-		sub(){
-			return [(this.Icon()), (this.title())];
-		}
-	};
-	($mol_mem(($.$mol_button_download.prototype), "Icon"));
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_button_download extends $.$mol_button_download {
-            uri() {
-                return URL.createObjectURL(this.blob());
-            }
-            click() {
-                const a = $mol_jsx("a", { href: this.uri(), download: this.file_name() });
-                a.click();
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_button_download.prototype, "uri", null);
-        $$.$mol_button_download = $mol_button_download;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($_1) {
-    var $$;
-    (function ($$) {
-        class $bog_pay_app_account extends $.$bog_pay_app_account {
-            account() {
-                return new this.$.$bog_pay_account();
-            }
-            enforce() {
-                this.account().enforce_access();
-            }
-            enforce_loop() {
-                new this.$.$mol_after_timeout(2000, () => {
-                    this.enforce();
-                    this.enforce_loop();
-                });
-                return null;
-            }
-            status_text() {
-                const st = this.account().subscription_status();
-                if (st === 'none')
-                    return 'Подписка: отсутствует';
-                return `Подписка: ${st}`;
-            }
-            period_text() {
-                const p = this.account().subscription_period();
-                if (!p.start || !p.end)
-                    return 'Период: —';
-                const start = new Date(p.start).toLocaleString();
-                const end = new Date(p.end).toLocaleString();
-                return `Период: ${start} — ${end}`;
-            }
-            renewal_text() {
-                const r = this.account().subscription_renewal();
-                return `Автопродление: ${r ?? '—'}`;
-            }
-            vpn_text() {
-                return this.account().is_vpn_allowed() ? 'VPN доступен' : 'VPN недоступен';
-            }
-            Subscribe_btn() {
-                const $ = this.$;
-                return $.$mol_button_major.make({
-                    sub: () => [$.$mol_text.make({ text: () => 'Оформить (14 дней бесплатно)' })],
-                    click: () => {
-                        this.account().subscribe();
-                    },
-                    enabled: () => this.account().subscription_status() === 'none',
-                });
-            }
-            Renew_btn() {
-                const $ = this.$;
-                return $.$mol_button_minor.make({
-                    sub: () => [$.$mol_text.make({ text: () => '+1 месяц (mock)' })],
-                    click: () => {
-                        this.account().renew();
-                    },
-                    enabled: () => true,
-                });
-            }
-            Cancel_btn() {
-                const $ = this.$;
-                return $.$mol_button_minor.make({
-                    sub: () => [
-                        $.$mol_text.make({
-                            text: () => this.account().subscription_renewal() === 'auto'
-                                ? 'Выключить автопродление'
-                                : 'Включить автопродление',
-                        }),
-                    ],
-                    click: () => {
-                        const mode = this.account().subscription_renewal();
-                        if (mode === 'auto')
-                            this.account().cancel_auto();
-                        else
-                            this.account().sub_active()?.renew_auto();
-                    },
-                    enabled: () => this.account().subscription_status() !== 'none',
-                });
-            }
-            Info_status() {
-                const $ = this.$;
-                return $.$mol_text.make({ text: () => this.status_text() });
-            }
-            Info_period() {
-                const $ = this.$;
-                return $.$mol_text.make({ text: () => this.period_text() });
-            }
-            Info_renewal() {
-                const $ = this.$;
-                return $.$mol_text.make({ text: () => this.renewal_text() });
-            }
-            Info_vpn() {
-                const $ = this.$;
-                return $.$mol_text.make({ text: () => this.vpn_text() });
-            }
-            Info_peer() {
-                const $ = this.$;
-                return $.$mol_text.make({
-                    text: () => {
-                        const peer = this.$.$hyoo_crus_glob.home().land().auth().peer();
-                        return `User ID: ${peer}`;
-                    },
-                });
-            }
-            Info_balance() {
-                const $ = this.$;
-                return $.$mol_text.make({
-                    text: () => {
-                        const cents = this.account().balance_cents();
-                        const rub = (cents / 100).toFixed(2);
-                        return `Баланс: ${rub} ₽`;
-                    },
-                });
-            }
-            images() {
-                const person = this.account().profile();
-                const bins = person?.Photos()?.remote_list() ?? [];
-                return bins.map(bin => {
-                    const data = bin.val();
-                    if (!data)
-                        return '';
-                    const blob = new Blob([data], { type: 'image/*' });
-                    return URL.createObjectURL(blob);
-                });
-            }
-            attach_add_files(files) {
-                if (!files || files.length === 0)
-                    return;
-                const person = this.account().profile();
-                for (const file of files) {
-                    const buf = new Uint8Array(this.$.$mol_wire_sync(file).arrayBuffer());
-                    const bin = person.Photos(null).remote_make({});
-                    bin.val(buf);
-                }
-            }
-            attach_remove_index(index) {
-                const person = this.account().profile();
-                const list = person?.Photos()?.remote_list() ?? [];
-                const bin = list[index];
-                if (!bin)
-                    return;
-                const url = this.images()[index];
-                if (url) {
-                    try {
-                        URL.revokeObjectURL(url);
-                    }
-                    catch { }
-                }
-                person.Photos(null).has(bin.ref(), false);
-            }
-            Attach_images() {
-                const $ = this.$;
-                return $.$mol_attach.make({
-                    attach_title: () => 'Загрузить изображение',
-                    items: () => this.images(),
-                    attach_new: (files) => {
-                        this.attach_add_files(files);
-                    },
-                    item_uri: (index) => this.images()[index] ?? '',
-                    item_drop: (index, event) => {
-                        this.attach_remove_index(index);
-                    },
-                });
-            }
-            Download_ovpn_btn() {
-                const $ = this.$;
-                return $.$mol_button_download.make({
-                    sub: () => [$.$mol_text.make({ text: () => 'Скачать .ovpn (mock)' })],
-                    file_name: () => this.account().ovpn_file_name(),
-                    blob: () => this.account().ovpn_file_blob(),
-                });
-            }
-            Topup_btn() {
-                const $ = this.$;
-                return $.$mol_button_minor.make({
-                    sub: () => [$.$mol_text.make({ text: () => 'Пополнить +199 ₽ (mock)' })],
-                    click: () => {
-                        this.account().topup_mock_rub(199);
-                    },
-                });
-            }
-            Actions() {
-                const $ = this.$;
-                return $.$mol_row.make({
-                    sub: () => [
-                        this.Subscribe_btn(),
-                        this.Renew_btn(),
-                        this.Cancel_btn(),
-                        this.Topup_btn(),
-                        this.Download_ovpn_btn(),
-                    ],
-                });
-            }
-            body() {
-                this.enforce_loop();
-                return [
-                    this.Info_peer(),
-                    this.Info_status(),
-                    this.Info_period(),
-                    this.Info_renewal(),
-                    this.Info_vpn(),
-                    this.Info_balance(),
-                    this.Attach_images(),
-                    this.Actions(),
-                ];
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $bog_pay_app_account.prototype, "account", null);
-        __decorate([
-            $mol_action
-        ], $bog_pay_app_account.prototype, "enforce", null);
-        __decorate([
-            $mol_mem
-        ], $bog_pay_app_account.prototype, "enforce_loop", null);
-        __decorate([
-            $mol_mem
-        ], $bog_pay_app_account.prototype, "status_text", null);
-        __decorate([
-            $mol_mem
-        ], $bog_pay_app_account.prototype, "period_text", null);
-        __decorate([
-            $mol_mem
-        ], $bog_pay_app_account.prototype, "renewal_text", null);
-        __decorate([
-            $mol_mem
-        ], $bog_pay_app_account.prototype, "vpn_text", null);
-        __decorate([
-            $mol_mem
-        ], $bog_pay_app_account.prototype, "images", null);
-        __decorate([
-            $mol_action
-        ], $bog_pay_app_account.prototype, "attach_add_files", null);
-        __decorate([
-            $mol_action
-        ], $bog_pay_app_account.prototype, "attach_remove_index", null);
-        $$.$bog_pay_app_account = $bog_pay_app_account;
-    })($$ = $_1.$$ || ($_1.$$ = {}));
-})($ || ($ = {}));
-
-;
-	($.$mol_check_list) = class $mol_check_list extends ($.$mol_view) {
-		option_checked(id, next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		option_title(id){
-			return "";
-		}
-		option_label(id){
-			return [(this.option_title(id))];
-		}
-		enabled(){
-			return true;
-		}
-		option_enabled(id){
-			return (this.enabled());
-		}
-		option_hint(id){
-			return "";
-		}
-		items(){
-			return [];
-		}
-		dictionary(){
-			return {};
-		}
-		Option(id){
-			const obj = new this.$.$mol_check();
-			(obj.checked) = (next) => ((this.option_checked(id, next)));
-			(obj.label) = () => ((this.option_label(id)));
-			(obj.enabled) = () => ((this.option_enabled(id)));
-			(obj.hint) = () => ((this.option_hint(id)));
-			(obj.minimal_height) = () => (24);
-			return obj;
-		}
-		options(){
-			return {};
-		}
-		keys(){
-			return [];
-		}
-		sub(){
-			return (this.items());
-		}
-	};
-	($mol_mem_key(($.$mol_check_list.prototype), "option_checked"));
-	($mol_mem_key(($.$mol_check_list.prototype), "Option"));
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_check_list extends $.$mol_check_list {
-            options() {
-                return {};
-            }
-            dictionary(next) {
-                return next ?? {};
-            }
-            option_checked(id, next) {
-                const prev = this.dictionary();
-                if (next === undefined)
-                    return prev[id] ?? null;
-                const next_rec = { ...prev, [id]: next };
-                if (next === null)
-                    delete next_rec[id];
-                return this.dictionary(next_rec)[id] ?? null;
-            }
-            keys() {
-                return Object.keys(this.options());
-            }
-            items() {
-                return this.keys().map(key => this.Option(key));
-            }
-            option_title(key) {
-                return this.options()[key] || key;
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_check_list.prototype, "keys", null);
-        __decorate([
-            $mol_mem
-        ], $mol_check_list.prototype, "items", null);
-        $$.$mol_check_list = $mol_check_list;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/check/list/list.view.css", "[mol_check_list] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tflex: 1 1 auto;\n\tborder-radius: var(--mol_gap_round);\n\tgap: 1px;\n}\n\n[mol_check_list_option] {\n\tflex: 0 1 auto;\n}\n\n[mol_check_list_option]:where([mol_check_checked=\"true\"]) {\n\ttext-shadow: 0 0;\n\tcolor: var(--mol_theme_current);\n}\n\n[mol_check_list_option]:where([mol_check_checked=\"true\"][disabled]) {\n\tcolor: var(--mol_theme_text);\n}\n");
-})($ || ($ = {}));
-
-;
-	($.$mol_switch) = class $mol_switch extends ($.$mol_check_list) {
-		value(next){
-			if(next !== undefined) return next;
-			return "";
-		}
-	};
-	($mol_mem(($.$mol_switch.prototype), "value"));
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_switch extends $.$mol_switch {
-            value(next) {
-                return $mol_state_session.value(`${this}.value()`, next) ?? '';
-            }
-            option_checked(key, next) {
-                if (next === undefined)
-                    return this.value() == key;
-                this.value(next ? key : '');
-                return next;
-            }
-        }
-        $$.$mol_switch = $mol_switch;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-	($.$mol_deck) = class $mol_deck extends ($.$mol_list) {
-		current(next){
-			if(next !== undefined) return next;
-			return "0";
-		}
-		switch_options(){
-			return {};
-		}
-		Switch(){
-			const obj = new this.$.$mol_switch();
-			(obj.value) = (next) => ((this.current(next)));
-			(obj.options) = () => ((this.switch_options()));
-			return obj;
-		}
-		Content(){
-			const obj = new this.$.$mol_view();
-			return obj;
-		}
-		items(){
-			return [];
-		}
-		rows(){
-			return [(this.Switch()), (this.Content())];
-		}
-	};
-	($mol_mem(($.$mol_deck.prototype), "current"));
-	($mol_mem(($.$mol_deck.prototype), "Switch"));
-	($mol_mem(($.$mol_deck.prototype), "Content"));
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_deck extends $.$mol_deck {
-            current(next) {
-                return $mol_state_session.value(`${this}.current()`, next) || '0';
-            }
-            switch_options() {
-                let options = {};
-                this.items().forEach((item, index) => {
-                    options[String(index)] = item.title();
-                });
-                return options;
-            }
-            Content() {
-                return this.items()[Number(this.current())];
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_deck.prototype, "Content", null);
-        $$.$mol_deck = $mol_deck;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-	($.$bog_pay_app) = class $bog_pay_app extends ($.$mol_page) {
-		Theme(){
-			const obj = new this.$.$bog_pay_theme_auto();
-			return obj;
-		}
-		Lights(){
-			const obj = new this.$.$mol_lights_toggle();
-			return obj;
-		}
-		Switch(){
-			return (this.Deck().Switch());
-		}
-		Content(){
-			return (this.Deck().Content());
-		}
-		Home(){
-			const obj = new this.$.$bog_pay_app_home();
-			return obj;
-		}
-		Games(){
-			const obj = new this.$.$bog_pay_app_games();
-			return obj;
-		}
-		Personal_cabinet(){
-			const obj = new this.$.$bog_pay_app_account();
-			return obj;
-		}
-		plugins(){
-			return [(this.Theme())];
-		}
-		head(){
-			return [(this.Switch()), (this.Lights())];
-		}
-		body(){
-			return [(this.Content())];
-		}
-		Deck(){
-			const obj = new this.$.$mol_deck();
-			(obj.items) = () => ([
-				(this.Home()), 
-				(this.Games()), 
-				(this.Personal_cabinet())
-			]);
-			return obj;
-		}
-	};
-	($mol_mem(($.$bog_pay_app.prototype), "Theme"));
-	($mol_mem(($.$bog_pay_app.prototype), "Lights"));
-	($mol_mem(($.$bog_pay_app.prototype), "Home"));
-	($mol_mem(($.$bog_pay_app.prototype), "Games"));
-	($mol_mem(($.$bog_pay_app.prototype), "Personal_cabinet"));
-	($mol_mem(($.$bog_pay_app.prototype), "Deck"));
-
-
-;
 "use strict";
 var $;
 (function ($) {
@@ -17279,6 +16563,707 @@ var $;
 })($ || ($ = {}));
 
 ;
+	($.$bog_pay_app_account) = class $bog_pay_app_account extends ($.$mol_page) {
+		title(){
+			return (this.$.$mol_locale.text("$bog_pay_app_account_title"));
+		}
+		Head(){
+			return null;
+		}
+		body(){
+			return [
+				(this.Info_peer()), 
+				(this.Info_status()), 
+				(this.Info_period()), 
+				(this.Info_renewal()), 
+				(this.Info_vpn()), 
+				(this.Attach_images()), 
+				(this.Actions())
+			];
+		}
+	};
+
+
+;
+	($.$mol_button_major) = class $mol_button_major extends ($.$mol_button_minor) {
+		theme(){
+			return "$mol_theme_base";
+		}
+	};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/button/major/major.view.css", "[mol_button_major] {\n\tbackground-color: var(--mol_theme_back);\n\tcolor: var(--mol_theme_text);\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+	($.$mol_icon_download) = class $mol_icon_download extends ($.$mol_icon) {
+		path(){
+			return "M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_button_download) = class $mol_button_download extends ($.$mol_button_minor) {
+		Icon(){
+			const obj = new this.$.$mol_icon_download();
+			return obj;
+		}
+		title(){
+			return "";
+		}
+		blob(){
+			return null;
+		}
+		uri(){
+			return "";
+		}
+		file_name(){
+			return "blob.bin";
+		}
+		sub(){
+			return [(this.Icon()), (this.title())];
+		}
+	};
+	($mol_mem(($.$mol_button_download.prototype), "Icon"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_button_download extends $.$mol_button_download {
+            uri() {
+                return URL.createObjectURL(this.blob());
+            }
+            click() {
+                const a = $mol_jsx("a", { href: this.uri(), download: this.file_name() });
+                a.click();
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_button_download.prototype, "uri", null);
+        $$.$mol_button_download = $mol_button_download;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+	($.$mol_row) = class $mol_row extends ($.$mol_view) {};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/row/row.view.css", "[mol_row] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\talign-items: flex-start;\n\talign-content: flex-start;\n\tjustify-content: flex-start;\n\tpadding: var(--mol_gap_block);\n\tgap: var(--mol_gap_block);\n\tflex: 0 0 auto;\n\tbox-sizing: border-box;\n\tmax-width: 100%;\n}\n\n[mol_row] > * {\n\tmax-width: 100%;\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    var $$;
+    (function ($$) {
+        class $bog_pay_app_account_avatar extends $.$mol_button_open {
+            profile() {
+                return this.$.$hyoo_crus_glob.home().hall_by($bog_pay_app_person, {});
+            }
+            accept() { return 'image/*'; }
+            multiple() { return false; }
+            image_data() {
+                const bins = this.profile()?.Photos()?.remote_list() ?? [];
+                return bins[0]?.val() ?? null;
+            }
+            image_uri() {
+                const data = this.image_data();
+                if (!data)
+                    return '';
+                const blob = new Blob([data], { type: 'image/*' });
+                return URL.createObjectURL(blob);
+            }
+            sub() {
+                const has_image = !!this.image_data();
+                const view = has_image
+                    ? this.Image()
+                    : this.Icon();
+                return [view, this.Native()];
+            }
+            Image() {
+                const $ = this.$;
+                return $.$mol_image.make({
+                    title: $mol_const(''),
+                    uri: () => this.image_uri(),
+                });
+            }
+            Icon() {
+                const $ = this.$;
+                return $.$mol_icon_upload.make({});
+            }
+            files(next) {
+                if (next && next.length) {
+                    const person = this.profile();
+                    const list = person.Photos(null);
+                    const existed = person.Photos()?.remote_list() ?? [];
+                    if (existed[0])
+                        list.has(existed[0].ref(), false);
+                    const blob = this.$.$mol_wire_sync(next[0]).arrayBuffer();
+                    const bin = list.remote_make({});
+                    bin.val(new Uint8Array(blob));
+                }
+                return [];
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_account_avatar.prototype, "profile", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_account_avatar.prototype, "image_data", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_account_avatar.prototype, "image_uri", null);
+        $$.$bog_pay_app_account_avatar = $bog_pay_app_account_avatar;
+        $mol_style_define($bog_pay_app_account_avatar, {
+            width: '6rem',
+            height: '6rem',
+            background: { color: $mol_theme.card },
+            border: { radius: $mol_gap.round },
+            padding: 0,
+            alignItems: 'center',
+            justifyContent: 'center',
+            overflow: 'hidden',
+            position: 'relative',
+            $mol_image: {
+                width: '100%',
+                height: '100%',
+                maxWidth: '100%',
+            },
+            Native: {
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                opacity: 0,
+                cursor: 'pointer',
+            },
+            Icon: {
+                width: '50%',
+                height: '50%',
+            },
+        });
+    })($$ = $_1.$$ || ($_1.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    var $$;
+    (function ($$) {
+        class $bog_pay_app_account extends $.$bog_pay_app_account {
+            account() {
+                return new this.$.$bog_pay_account();
+            }
+            enforce() {
+                this.account().enforce_access();
+            }
+            enforce_loop() {
+                new this.$.$mol_after_timeout(2000, () => {
+                    this.enforce();
+                    this.enforce_loop();
+                });
+                return null;
+            }
+            status_text() {
+                const st = this.account().subscription_status();
+                if (st === 'none')
+                    return 'Подписка: отсутствует';
+                return `Подписка: ${st}`;
+            }
+            period_text() {
+                const p = this.account().subscription_period();
+                if (!p.start || !p.end)
+                    return 'Период: —';
+                const start = new Date(p.start).toLocaleString();
+                const end = new Date(p.end).toLocaleString();
+                return `Период: ${start} — ${end}`;
+            }
+            renewal_text() {
+                const r = this.account().subscription_renewal();
+                return `Автопродление: ${r ?? '—'}`;
+            }
+            vpn_text() {
+                return this.account().is_vpn_allowed() ? 'VPN доступен' : 'VPN недоступен';
+            }
+            Subscribe_btn() {
+                const $ = this.$;
+                return $.$mol_button_major.make({
+                    sub: () => [$.$mol_text.make({ text: () => 'Оформить (14 дней бесплатно)' })],
+                    click: () => {
+                        this.account().subscribe();
+                    },
+                    enabled: () => this.account().subscription_status() === 'none',
+                });
+            }
+            Renew_btn() {
+                const $ = this.$;
+                return $.$mol_button_minor.make({
+                    sub: () => [$.$mol_text.make({ text: () => '+1 месяц (mock)' })],
+                    click: () => {
+                        this.account().renew();
+                    },
+                    enabled: () => true,
+                });
+            }
+            Cancel_btn() {
+                const $ = this.$;
+                return $.$mol_button_minor.make({
+                    sub: () => [
+                        $.$mol_text.make({
+                            text: () => this.account().subscription_renewal() === 'auto'
+                                ? 'Выключить автопродление'
+                                : 'Включить автопродление',
+                        }),
+                    ],
+                    click: () => {
+                        const mode = this.account().subscription_renewal();
+                        if (mode === 'auto')
+                            this.account().cancel_auto();
+                        else
+                            this.account().sub_active()?.renew_auto();
+                    },
+                    enabled: () => this.account().subscription_status() !== 'none',
+                });
+            }
+            Info_status() {
+                const $ = this.$;
+                return $.$mol_text.make({ text: () => this.status_text() });
+            }
+            Info_period() {
+                const $ = this.$;
+                return $.$mol_text.make({ text: () => this.period_text() });
+            }
+            Info_renewal() {
+                const $ = this.$;
+                return $.$mol_text.make({ text: () => this.renewal_text() });
+            }
+            Info_vpn() {
+                const $ = this.$;
+                return $.$mol_text.make({ text: () => this.vpn_text() });
+            }
+            Info_peer() {
+                const $ = this.$;
+                return $.$mol_text.make({
+                    text: () => {
+                        const peer = this.$.$hyoo_crus_glob.home().land().auth().peer();
+                        return `User ID: ${peer}`;
+                    },
+                });
+            }
+            Info_balance() {
+                const $ = this.$;
+                return $.$mol_text.make({
+                    text: () => {
+                        const cents = this.account().balance_cents();
+                        const rub = (cents / 100).toFixed(2);
+                        return `Баланс: ${rub} ₽`;
+                    },
+                });
+            }
+            images() {
+                const person = this.account().profile();
+                const bins = person?.Photos()?.remote_list() ?? [];
+                return bins.map(bin => {
+                    const data = bin.val();
+                    if (!data)
+                        return '';
+                    const blob = new Blob([data], { type: 'image/*' });
+                    return URL.createObjectURL(blob);
+                });
+            }
+            attach_add_files(files) {
+                if (!files || files.length === 0)
+                    return;
+                const person = this.account().profile();
+                for (const file of files) {
+                    const buf = new Uint8Array(this.$.$mol_wire_sync(file).arrayBuffer());
+                    const bin = person.Photos(null).remote_make({});
+                    bin.val(buf);
+                }
+            }
+            attach_remove_index(index) {
+                const person = this.account().profile();
+                const list = person?.Photos()?.remote_list() ?? [];
+                const bin = list[index];
+                if (!bin)
+                    return;
+                const url = this.images()[index];
+                if (url) {
+                    try {
+                        URL.revokeObjectURL(url);
+                    }
+                    catch { }
+                }
+                person.Photos(null).has(bin.ref(), false);
+            }
+            Attach_images() {
+                const $ = this.$;
+                return $.$bog_pay_app_account_avatar.make({});
+            }
+            Download_ovpn_btn() {
+                const $ = this.$;
+                return $.$mol_button_download.make({
+                    sub: () => [$.$mol_text.make({ text: () => 'Скачать .ovpn (mock)' })],
+                    file_name: () => this.account().ovpn_file_name(),
+                    blob: () => this.account().ovpn_file_blob(),
+                });
+            }
+            Topup_btn() {
+                const $ = this.$;
+                return $.$mol_button_minor.make({
+                    sub: () => [$.$mol_text.make({ text: () => 'Пополнить +199 ₽ (mock)' })],
+                    click: () => {
+                        this.account().topup_mock_rub(199);
+                    },
+                });
+            }
+            Actions() {
+                const $ = this.$;
+                return $.$mol_row.make({
+                    sub: () => [
+                        this.Subscribe_btn(),
+                        this.Renew_btn(),
+                        this.Cancel_btn(),
+                        this.Topup_btn(),
+                        this.Download_ovpn_btn(),
+                    ],
+                });
+            }
+            body() {
+                this.enforce_loop();
+                return [
+                    this.Info_peer(),
+                    this.Info_status(),
+                    this.Info_period(),
+                    this.Info_renewal(),
+                    this.Info_vpn(),
+                    this.Info_balance(),
+                    this.Attach_images(),
+                    this.Actions(),
+                ];
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_account.prototype, "account", null);
+        __decorate([
+            $mol_action
+        ], $bog_pay_app_account.prototype, "enforce", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_account.prototype, "enforce_loop", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_account.prototype, "status_text", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_account.prototype, "period_text", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_account.prototype, "renewal_text", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_account.prototype, "vpn_text", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_account.prototype, "images", null);
+        __decorate([
+            $mol_action
+        ], $bog_pay_app_account.prototype, "attach_add_files", null);
+        __decorate([
+            $mol_action
+        ], $bog_pay_app_account.prototype, "attach_remove_index", null);
+        $$.$bog_pay_app_account = $bog_pay_app_account;
+    })($$ = $_1.$$ || ($_1.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$mol_check_list) = class $mol_check_list extends ($.$mol_view) {
+		option_checked(id, next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		option_title(id){
+			return "";
+		}
+		option_label(id){
+			return [(this.option_title(id))];
+		}
+		enabled(){
+			return true;
+		}
+		option_enabled(id){
+			return (this.enabled());
+		}
+		option_hint(id){
+			return "";
+		}
+		items(){
+			return [];
+		}
+		dictionary(){
+			return {};
+		}
+		Option(id){
+			const obj = new this.$.$mol_check();
+			(obj.checked) = (next) => ((this.option_checked(id, next)));
+			(obj.label) = () => ((this.option_label(id)));
+			(obj.enabled) = () => ((this.option_enabled(id)));
+			(obj.hint) = () => ((this.option_hint(id)));
+			(obj.minimal_height) = () => (24);
+			return obj;
+		}
+		options(){
+			return {};
+		}
+		keys(){
+			return [];
+		}
+		sub(){
+			return (this.items());
+		}
+	};
+	($mol_mem_key(($.$mol_check_list.prototype), "option_checked"));
+	($mol_mem_key(($.$mol_check_list.prototype), "Option"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_check_list extends $.$mol_check_list {
+            options() {
+                return {};
+            }
+            dictionary(next) {
+                return next ?? {};
+            }
+            option_checked(id, next) {
+                const prev = this.dictionary();
+                if (next === undefined)
+                    return prev[id] ?? null;
+                const next_rec = { ...prev, [id]: next };
+                if (next === null)
+                    delete next_rec[id];
+                return this.dictionary(next_rec)[id] ?? null;
+            }
+            keys() {
+                return Object.keys(this.options());
+            }
+            items() {
+                return this.keys().map(key => this.Option(key));
+            }
+            option_title(key) {
+                return this.options()[key] || key;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_check_list.prototype, "keys", null);
+        __decorate([
+            $mol_mem
+        ], $mol_check_list.prototype, "items", null);
+        $$.$mol_check_list = $mol_check_list;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/check/list/list.view.css", "[mol_check_list] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tflex: 1 1 auto;\n\tborder-radius: var(--mol_gap_round);\n\tgap: 1px;\n}\n\n[mol_check_list_option] {\n\tflex: 0 1 auto;\n}\n\n[mol_check_list_option]:where([mol_check_checked=\"true\"]) {\n\ttext-shadow: 0 0;\n\tcolor: var(--mol_theme_current);\n}\n\n[mol_check_list_option]:where([mol_check_checked=\"true\"][disabled]) {\n\tcolor: var(--mol_theme_text);\n}\n");
+})($ || ($ = {}));
+
+;
+	($.$mol_switch) = class $mol_switch extends ($.$mol_check_list) {
+		value(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+	};
+	($mol_mem(($.$mol_switch.prototype), "value"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_switch extends $.$mol_switch {
+            value(next) {
+                return $mol_state_session.value(`${this}.value()`, next) ?? '';
+            }
+            option_checked(key, next) {
+                if (next === undefined)
+                    return this.value() == key;
+                this.value(next ? key : '');
+                return next;
+            }
+        }
+        $$.$mol_switch = $mol_switch;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$mol_deck) = class $mol_deck extends ($.$mol_list) {
+		current(next){
+			if(next !== undefined) return next;
+			return "0";
+		}
+		switch_options(){
+			return {};
+		}
+		Switch(){
+			const obj = new this.$.$mol_switch();
+			(obj.value) = (next) => ((this.current(next)));
+			(obj.options) = () => ((this.switch_options()));
+			return obj;
+		}
+		Content(){
+			const obj = new this.$.$mol_view();
+			return obj;
+		}
+		items(){
+			return [];
+		}
+		rows(){
+			return [(this.Switch()), (this.Content())];
+		}
+	};
+	($mol_mem(($.$mol_deck.prototype), "current"));
+	($mol_mem(($.$mol_deck.prototype), "Switch"));
+	($mol_mem(($.$mol_deck.prototype), "Content"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_deck extends $.$mol_deck {
+            current(next) {
+                return $mol_state_session.value(`${this}.current()`, next) || '0';
+            }
+            switch_options() {
+                let options = {};
+                this.items().forEach((item, index) => {
+                    options[String(index)] = item.title();
+                });
+                return options;
+            }
+            Content() {
+                return this.items()[Number(this.current())];
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_deck.prototype, "Content", null);
+        $$.$mol_deck = $mol_deck;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$bog_pay_app) = class $bog_pay_app extends ($.$mol_page) {
+		Theme(){
+			const obj = new this.$.$bog_pay_theme_auto();
+			return obj;
+		}
+		Lights(){
+			const obj = new this.$.$mol_lights_toggle();
+			return obj;
+		}
+		Switch(){
+			return (this.Deck().Switch());
+		}
+		Content(){
+			return (this.Deck().Content());
+		}
+		Home(){
+			const obj = new this.$.$bog_pay_app_home();
+			return obj;
+		}
+		Games(){
+			const obj = new this.$.$bog_pay_app_games();
+			return obj;
+		}
+		Personal_cabinet(){
+			const obj = new this.$.$bog_pay_app_account();
+			return obj;
+		}
+		plugins(){
+			return [(this.Theme())];
+		}
+		head(){
+			return [(this.Switch()), (this.Lights())];
+		}
+		body(){
+			return [(this.Content())];
+		}
+		Deck(){
+			const obj = new this.$.$mol_deck();
+			(obj.items) = () => ([
+				(this.Home()), 
+				(this.Games()), 
+				(this.Personal_cabinet())
+			]);
+			return obj;
+		}
+	};
+	($mol_mem(($.$bog_pay_app.prototype), "Theme"));
+	($mol_mem(($.$bog_pay_app.prototype), "Lights"));
+	($mol_mem(($.$bog_pay_app.prototype), "Home"));
+	($mol_mem(($.$bog_pay_app.prototype), "Games"));
+	($mol_mem(($.$bog_pay_app.prototype), "Personal_cabinet"));
+	($mol_mem(($.$bog_pay_app.prototype), "Deck"));
+
+
+;
 "use strict";
 var $;
 (function ($) {
@@ -17564,6 +17549,37 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
+        $mol_style_define($bog_pay_app_account, {
+            Attach_images: {
+                width: '6rem',
+                height: '6rem',
+                background: { color: $mol_theme.card },
+                border: { radius: $mol_gap.round },
+                padding: 0,
+                alignItems: 'center',
+                justifyContent: 'center',
+                overflow: 'hidden',
+                position: 'relative',
+                $mol_image: {
+                    width: '100%',
+                    height: '100%',
+                    maxWidth: '100%',
+                },
+                Native: {
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    opacity: 0,
+                    cursor: 'pointer',
+                },
+                Icon: {
+                    width: '50%',
+                    height: '50%',
+                },
+            },
+        });
         $mol_style_define($bog_pay_app, {
             Deck: {
                 Switch: {

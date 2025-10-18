@@ -637,22 +637,6 @@ $bog_pay_app_games $mol_page
 								<= Why3_text $mol_text
 									text @ \Bog Ping создан командой энтузиастов киберспорта, которые понимают важность каждой миллисекунды в соревновательных играх.
 
-$bog_pay_app_account $mol_page
-	title @ \Personal Cabinet
-	Head null
-	body /
-		<= Info_peer
-		<= Info_status
-		<= Info_period
-		<= Info_renewal
-		<= Info_vpn
-		<= Actions
-
-$mol_button_major $mol_button_minor
-	theme \$mol_theme_base
-
-$mol_row $mol_view
-
 $mol_icon_upload $mol_icon path \M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z
 
 $mol_button_open $mol_button_minor
@@ -673,20 +657,20 @@ $mol_button_open_native $mol_view
 	event *
 		change?next <=> picked?next null
 
-$mol_attach $mol_view
-	items? /string
-	sub /
-		<= Content $mol_row
-			sub <= content /$mol_view
-	Add $mol_button_open
-		title <= attach_title \
-		files? <=> attach_new? null
-	Item* $mol_button_minor
-		click?event <=> item_drop*?event null
-		sub /
-			<= Image* $mol_image
-				title \
-				uri <= item_uri* \
+$bog_pay_app_account $mol_page
+	title @ \Personal Cabinet
+	Head null
+	body /
+		<= Info_peer
+		<= Info_status
+		<= Info_period
+		<= Info_renewal
+		<= Info_vpn
+		<= Attach_images
+		<= Actions
+
+$mol_button_major $mol_button_minor
+	theme \$mol_theme_base
 
 $mol_icon_download $mol_icon path \M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z
 
@@ -697,6 +681,8 @@ $mol_button_download $mol_button_minor
 	sub /
 		<= Icon $mol_icon_download
 		<= title \
+
+$mol_row $mol_view
 
 $mol_check_list $mol_view
 	dictionary *

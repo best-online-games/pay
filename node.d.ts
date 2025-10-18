@@ -4001,17 +4001,69 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-}
 
-declare namespace $ {
-
-	export class $mol_button_major extends $mol_button_minor {
-		theme( ): string
+	export class $mol_icon_upload extends $mol_icon {
+		path( ): string
 	}
 	
 }
 
-//# sourceMappingURL=major.view.tree.d.ts.map
+//# sourceMappingURL=upload.view.tree.d.ts.map
+declare namespace $ {
+
+	type $mol_button_open_native__files_mol_button_open_1 = $mol_type_enforce<
+		ReturnType< $mol_button_open['files'] >
+		,
+		ReturnType< $mol_button_open_native['files'] >
+	>
+	type $mol_button_open_native__accept_mol_button_open_2 = $mol_type_enforce<
+		ReturnType< $mol_button_open['accept'] >
+		,
+		ReturnType< $mol_button_open_native['accept'] >
+	>
+	type $mol_button_open_native__multiple_mol_button_open_3 = $mol_type_enforce<
+		ReturnType< $mol_button_open['multiple'] >
+		,
+		ReturnType< $mol_button_open_native['multiple'] >
+	>
+	export class $mol_button_open extends $mol_button_minor {
+		Icon( ): $mol_icon_upload
+		files( next?: readonly(any)[] ): readonly(any)[]
+		accept( ): string
+		multiple( ): boolean
+		Native( ): $mol_button_open_native
+		sub( ): readonly(any)[]
+	}
+	
+	export class $mol_button_open_native extends $mol_view {
+		accept( ): string
+		multiple( ): boolean
+		picked( next?: any ): any
+		dom_name( ): string
+		files( next?: readonly(any)[] ): readonly(any)[]
+		attr( ): ({ 
+			'type': string,
+			'accept': ReturnType< $mol_button_open_native['accept'] >,
+			'multiple': ReturnType< $mol_button_open_native['multiple'] >,
+		}) 
+		event( ): ({ 
+			change( next?: ReturnType< $mol_button_open_native['picked'] > ): ReturnType< $mol_button_open_native['picked'] >,
+		}) 
+	}
+	
+}
+
+//# sourceMappingURL=open.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_button_open_native extends $.$mol_button_open_native {
+        dom_node(): HTMLInputElement;
+        picked(): void;
+    }
+}
+
+declare namespace $ {
+}
+
 declare namespace $ {
     class $mol_wire_set<Value> extends Set<Value> {
         pub: $mol_wire_pub;
@@ -7251,326 +7303,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-}
-
-declare namespace $ {
-
-	export class $mol_row extends $mol_view {
-	}
-	
-}
-
-//# sourceMappingURL=row.view.tree.d.ts.map
-declare namespace $ {
-
-	export class $mol_icon_upload extends $mol_icon {
-		path( ): string
-	}
-	
-}
-
-//# sourceMappingURL=upload.view.tree.d.ts.map
-declare namespace $ {
-
-	type $mol_button_open_native__files_mol_button_open_1 = $mol_type_enforce<
-		ReturnType< $mol_button_open['files'] >
-		,
-		ReturnType< $mol_button_open_native['files'] >
-	>
-	type $mol_button_open_native__accept_mol_button_open_2 = $mol_type_enforce<
-		ReturnType< $mol_button_open['accept'] >
-		,
-		ReturnType< $mol_button_open_native['accept'] >
-	>
-	type $mol_button_open_native__multiple_mol_button_open_3 = $mol_type_enforce<
-		ReturnType< $mol_button_open['multiple'] >
-		,
-		ReturnType< $mol_button_open_native['multiple'] >
-	>
-	export class $mol_button_open extends $mol_button_minor {
-		Icon( ): $mol_icon_upload
-		files( next?: readonly(any)[] ): readonly(any)[]
-		accept( ): string
-		multiple( ): boolean
-		Native( ): $mol_button_open_native
-		sub( ): readonly(any)[]
-	}
-	
-	export class $mol_button_open_native extends $mol_view {
-		accept( ): string
-		multiple( ): boolean
-		picked( next?: any ): any
-		dom_name( ): string
-		files( next?: readonly(any)[] ): readonly(any)[]
-		attr( ): ({ 
-			'type': string,
-			'accept': ReturnType< $mol_button_open_native['accept'] >,
-			'multiple': ReturnType< $mol_button_open_native['multiple'] >,
-		}) 
-		event( ): ({ 
-			change( next?: ReturnType< $mol_button_open_native['picked'] > ): ReturnType< $mol_button_open_native['picked'] >,
-		}) 
-	}
-	
-}
-
-//# sourceMappingURL=open.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_button_open_native extends $.$mol_button_open_native {
-        dom_node(): HTMLInputElement;
-        picked(): void;
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	type $mol_row__sub_mol_attach_1 = $mol_type_enforce<
-		ReturnType< $mol_attach['content'] >
-		,
-		ReturnType< $mol_row['sub'] >
-	>
-	type $mol_image__title_mol_attach_2 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_image['title'] >
-	>
-	type $mol_image__uri_mol_attach_3 = $mol_type_enforce<
-		ReturnType< $mol_attach['item_uri'] >
-		,
-		ReturnType< $mol_image['uri'] >
-	>
-	type $mol_button_open__title_mol_attach_4 = $mol_type_enforce<
-		ReturnType< $mol_attach['attach_title'] >
-		,
-		ReturnType< $mol_button_open['title'] >
-	>
-	type $mol_button_open__files_mol_attach_5 = $mol_type_enforce<
-		ReturnType< $mol_attach['attach_new'] >
-		,
-		ReturnType< $mol_button_open['files'] >
-	>
-	type $mol_button_minor__click_mol_attach_6 = $mol_type_enforce<
-		ReturnType< $mol_attach['item_drop'] >
-		,
-		ReturnType< $mol_button_minor['click'] >
-	>
-	type $mol_button_minor__sub_mol_attach_7 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_button_minor['sub'] >
-	>
-	export class $mol_attach extends $mol_view {
-		content( ): readonly($mol_view)[]
-		Content( ): $mol_row
-		attach_title( ): string
-		attach_new( next?: any ): any
-		item_drop( id: any, next?: any ): any
-		item_uri( id: any): string
-		Image( id: any): $mol_image
-		items( next?: readonly(string)[] ): readonly(string)[]
-		sub( ): readonly(any)[]
-		Add( ): $mol_button_open
-		Item( id: any): $mol_button_minor
-	}
-	
-}
-
-//# sourceMappingURL=attach.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_attach extends $.$mol_attach {
-        attach_new(files: File[]): void;
-        content(): ($mol_button_minor | $mol_button_open)[];
-        item_uri(index: number): string;
-        item_drop(index: number, event?: Event): void;
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	export class $mol_icon_download extends $mol_icon {
-		path( ): string
-	}
-	
-}
-
-//# sourceMappingURL=download.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_button_download extends $.$mol_button_download {
-        uri(): string;
-        click(): void;
-    }
-}
-
-declare namespace $ {
-
-	export class $mol_button_download extends $mol_button_minor {
-		Icon( ): $mol_icon_download
-		title( ): string
-		blob( ): any
-		uri( ): string
-		file_name( ): string
-		sub( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=download.view.tree.d.ts.map
-declare namespace $ {
-
-	export class $bog_pay_app_account extends $mol_page {
-		title( ): string
-		Head( ): any
-		body( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=account.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $bog_pay_app_account extends $.$bog_pay_app_account {
-        account(): $bog_pay_app_account_domain;
-        enforce(): void;
-        enforce_loop(): any;
-        status_text(): string;
-        period_text(): string;
-        renewal_text(): string;
-        vpn_text(): "VPN доступен" | "VPN недоступен";
-        Subscribe_btn(): $mol_button_major;
-        Renew_btn(): $mol_button_minor;
-        Cancel_btn(): $mol_button_minor;
-        Info_status(): $mol_text;
-        Info_period(): $mol_text;
-        Info_renewal(): $mol_text;
-        Info_vpn(): $mol_text;
-        Info_peer(): $mol_text;
-        Info_balance(): $mol_text;
-        images(): string[];
-        attach_add_files(files: File[]): void;
-        attach_remove_index(index: number): void;
-        Attach_images(): $mol_attach;
-        Download_ovpn_btn(): $mol_button_download;
-        Topup_btn(): $mol_button_minor;
-        Actions(): $mol_row;
-        body(): ($mol_text | $mol_attach | $mol_row)[];
-    }
-}
-
-declare namespace $ {
-
-	type $mol_check__checked_mol_check_list_1 = $mol_type_enforce<
-		ReturnType< $mol_check_list['option_checked'] >
-		,
-		ReturnType< $mol_check['checked'] >
-	>
-	type $mol_check__label_mol_check_list_2 = $mol_type_enforce<
-		ReturnType< $mol_check_list['option_label'] >
-		,
-		ReturnType< $mol_check['label'] >
-	>
-	type $mol_check__enabled_mol_check_list_3 = $mol_type_enforce<
-		ReturnType< $mol_check_list['option_enabled'] >
-		,
-		ReturnType< $mol_check['enabled'] >
-	>
-	type $mol_check__hint_mol_check_list_4 = $mol_type_enforce<
-		ReturnType< $mol_check_list['option_hint'] >
-		,
-		ReturnType< $mol_check['hint'] >
-	>
-	type $mol_check__minimal_height_mol_check_list_5 = $mol_type_enforce<
-		number
-		,
-		ReturnType< $mol_check['minimal_height'] >
-	>
-	export class $mol_check_list extends $mol_view {
-		option_checked( id: any, next?: boolean ): boolean
-		option_title( id: any): string
-		option_label( id: any): readonly(any)[]
-		enabled( ): boolean
-		option_enabled( id: any): ReturnType< $mol_check_list['enabled'] >
-		option_hint( id: any): string
-		items( ): readonly($mol_check)[]
-		dictionary( ): Record<string, any>
-		Option( id: any): $mol_check
-		options( ): Record<string, any>
-		keys( ): readonly(string)[]
-		sub( ): ReturnType< $mol_check_list['items'] >
-	}
-	
-}
-
-//# sourceMappingURL=list.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_check_list extends $.$mol_check_list {
-        options(): {
-            [key: string]: string;
-        };
-        dictionary(next?: Record<string, boolean>): Record<string, boolean>;
-        option_checked(id: string, next?: boolean | null): boolean;
-        keys(): readonly string[];
-        items(): $.$mol_check[];
-        option_title(key: string): string;
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	export class $mol_switch extends $mol_check_list {
-		value( next?: string ): string
-	}
-	
-}
-
-//# sourceMappingURL=switch.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_switch extends $.$mol_switch {
-        value(next?: string): string;
-        option_checked(key: string, next?: boolean): boolean;
-    }
-}
-
-declare namespace $ {
-
-	type $mol_switch__value_mol_deck_1 = $mol_type_enforce<
-		ReturnType< $mol_deck['current'] >
-		,
-		ReturnType< $mol_switch['value'] >
-	>
-	type $mol_switch__options_mol_deck_2 = $mol_type_enforce<
-		ReturnType< $mol_deck['switch_options'] >
-		,
-		ReturnType< $mol_switch['options'] >
-	>
-	export class $mol_deck extends $mol_list {
-		current( next?: string ): string
-		switch_options( ): Record<string, any>
-		Switch( ): $mol_switch
-		Content( ): $mol_view
-		items( ): readonly($mol_view)[]
-		rows( ): readonly($mol_view)[]
-	}
-	
-}
-
-//# sourceMappingURL=deck.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_deck extends $.$mol_deck {
-        current(next?: string): string;
-        switch_options(): Record<string, string>;
-        Content(): $mol_view;
-    }
-}
-
-declare namespace $ {
     let $hyoo_crus_text_tokens: $mol_regexp<{
         [x: string]: string;
         readonly token: string;
@@ -8529,6 +8261,222 @@ declare namespace $ {
         active_sub(): $bog_pay_app_subscription | null;
     }
     export {};
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	export class $mol_button_major extends $mol_button_minor {
+		theme( ): string
+	}
+	
+}
+
+//# sourceMappingURL=major.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $mol_icon_download extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=download.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_button_download extends $.$mol_button_download {
+        uri(): string;
+        click(): void;
+    }
+}
+
+declare namespace $ {
+
+	export class $mol_button_download extends $mol_button_minor {
+		Icon( ): $mol_icon_download
+		title( ): string
+		blob( ): any
+		uri( ): string
+		file_name( ): string
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=download.view.tree.d.ts.map
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	export class $mol_row extends $mol_view {
+	}
+	
+}
+
+//# sourceMappingURL=row.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $bog_pay_app_account_avatar extends $.$mol_button_open {
+        profile(): $bog_pay_app_person | null;
+        accept(): string;
+        multiple(): boolean;
+        image_data(): Uint8Array<ArrayBuffer> | null;
+        image_uri(): string;
+        sub(): ($mol_image | $.$mol_button_open_native | $mol_icon_upload)[];
+        Image(): $mol_image;
+        Icon(): $mol_icon_upload;
+        files(next?: readonly File[]): never[];
+    }
+}
+
+declare namespace $ {
+
+	export class $bog_pay_app_account extends $mol_page {
+		title( ): string
+		Head( ): any
+		body( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=account.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $bog_pay_app_account extends $.$bog_pay_app_account {
+        account(): $bog_pay_app_account_domain;
+        enforce(): void;
+        enforce_loop(): any;
+        status_text(): string;
+        period_text(): string;
+        renewal_text(): string;
+        vpn_text(): "VPN доступен" | "VPN недоступен";
+        Subscribe_btn(): $mol_button_major;
+        Renew_btn(): $mol_button_minor;
+        Cancel_btn(): $mol_button_minor;
+        Info_status(): $mol_text;
+        Info_period(): $mol_text;
+        Info_renewal(): $mol_text;
+        Info_vpn(): $mol_text;
+        Info_peer(): $mol_text;
+        Info_balance(): $mol_text;
+        images(): string[];
+        attach_add_files(files: File[]): void;
+        attach_remove_index(index: number): void;
+        Attach_images(): $bog_pay_app_account_avatar;
+        Download_ovpn_btn(): $mol_button_download;
+        Topup_btn(): $mol_button_minor;
+        Actions(): $mol_row;
+        body(): ($mol_text | $bog_pay_app_account_avatar | $mol_row)[];
+    }
+}
+
+declare namespace $ {
+
+	type $mol_check__checked_mol_check_list_1 = $mol_type_enforce<
+		ReturnType< $mol_check_list['option_checked'] >
+		,
+		ReturnType< $mol_check['checked'] >
+	>
+	type $mol_check__label_mol_check_list_2 = $mol_type_enforce<
+		ReturnType< $mol_check_list['option_label'] >
+		,
+		ReturnType< $mol_check['label'] >
+	>
+	type $mol_check__enabled_mol_check_list_3 = $mol_type_enforce<
+		ReturnType< $mol_check_list['option_enabled'] >
+		,
+		ReturnType< $mol_check['enabled'] >
+	>
+	type $mol_check__hint_mol_check_list_4 = $mol_type_enforce<
+		ReturnType< $mol_check_list['option_hint'] >
+		,
+		ReturnType< $mol_check['hint'] >
+	>
+	type $mol_check__minimal_height_mol_check_list_5 = $mol_type_enforce<
+		number
+		,
+		ReturnType< $mol_check['minimal_height'] >
+	>
+	export class $mol_check_list extends $mol_view {
+		option_checked( id: any, next?: boolean ): boolean
+		option_title( id: any): string
+		option_label( id: any): readonly(any)[]
+		enabled( ): boolean
+		option_enabled( id: any): ReturnType< $mol_check_list['enabled'] >
+		option_hint( id: any): string
+		items( ): readonly($mol_check)[]
+		dictionary( ): Record<string, any>
+		Option( id: any): $mol_check
+		options( ): Record<string, any>
+		keys( ): readonly(string)[]
+		sub( ): ReturnType< $mol_check_list['items'] >
+	}
+	
+}
+
+//# sourceMappingURL=list.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_check_list extends $.$mol_check_list {
+        options(): {
+            [key: string]: string;
+        };
+        dictionary(next?: Record<string, boolean>): Record<string, boolean>;
+        option_checked(id: string, next?: boolean | null): boolean;
+        keys(): readonly string[];
+        items(): $.$mol_check[];
+        option_title(key: string): string;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	export class $mol_switch extends $mol_check_list {
+		value( next?: string ): string
+	}
+	
+}
+
+//# sourceMappingURL=switch.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_switch extends $.$mol_switch {
+        value(next?: string): string;
+        option_checked(key: string, next?: boolean): boolean;
+    }
+}
+
+declare namespace $ {
+
+	type $mol_switch__value_mol_deck_1 = $mol_type_enforce<
+		ReturnType< $mol_deck['current'] >
+		,
+		ReturnType< $mol_switch['value'] >
+	>
+	type $mol_switch__options_mol_deck_2 = $mol_type_enforce<
+		ReturnType< $mol_deck['switch_options'] >
+		,
+		ReturnType< $mol_switch['options'] >
+	>
+	export class $mol_deck extends $mol_list {
+		current( next?: string ): string
+		switch_options( ): Record<string, any>
+		Switch( ): $mol_switch
+		Content( ): $mol_view
+		items( ): readonly($mol_view)[]
+		rows( ): readonly($mol_view)[]
+	}
+	
+}
+
+//# sourceMappingURL=deck.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_deck extends $.$mol_deck {
+        current(next?: string): string;
+        switch_options(): Record<string, string>;
+        Content(): $mol_view;
+    }
 }
 
 declare namespace $ {
