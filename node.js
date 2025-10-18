@@ -16266,14 +16266,14 @@ var $;
             }
         }
         expire_if_needed() {
-            if (this.is_expired()) {
-                const renewal = this.RenewalMode()?.val();
-                if (renewal === 'manual') {
-                    this.Status(null).val('canceled');
-                }
-                else {
-                    this.Status(null).val('past_due');
-                }
+            if (!this.is_expired())
+                return;
+            const renewal = this.RenewalMode()?.val();
+            if (renewal === 'auto') {
+                this.activate_month();
+            }
+            else {
+                this.Status(null).val('canceled');
             }
         }
         provision_access_mock() {
@@ -16577,6 +16577,13 @@ var $;
             enforce() {
                 this.account().enforce_access();
             }
+            enforce_loop() {
+                new this.$.$mol_after_timeout(2000, () => {
+                    this.enforce();
+                    this.enforce_loop();
+                });
+                return null;
+            }
             status_text() {
                 const st = this.account().subscription_status();
                 if (st === 'none')
@@ -16670,7 +16677,7 @@ var $;
                 });
             }
             body() {
-                this.enforce();
+                this.enforce_loop();
                 return [
                     this.Info_peer(),
                     this.Info_status(),
@@ -16687,6 +16694,9 @@ var $;
         __decorate([
             $mol_action
         ], $bog_pay_app_account.prototype, "enforce", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_account.prototype, "enforce_loop", null);
         __decorate([
             $mol_mem
         ], $bog_pay_app_account.prototype, "status_text", null);

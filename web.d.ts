@@ -7810,6 +7810,7 @@ declare namespace $.$$ {
     class $bog_pay_app_account extends $.$bog_pay_app_account {
         account(): $bog_pay_account;
         enforce(): void;
+        enforce_loop(): any;
         status_text(): string;
         period_text(): string;
         renewal_text(): string;
