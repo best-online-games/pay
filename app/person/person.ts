@@ -31,14 +31,7 @@ namespace $ {
 
 		@$mol_action
 		ensure_admin_and_registry() {
-			this.grant_admin_rule()
 			this.register_in_people()
-		}
-
-		@$mol_action
-		grant_admin_rule() {
-			// Admin rights are granted via presets on creation time (e.g., People.hall and new nodes).
-			// No direct ensure() on atom/list fields here.
 		}
 
 		@$mol_action
@@ -47,8 +40,27 @@ namespace $ {
 			const people = $bog_pay_app_people.hall()
 			// List is hosted in admin hall, rights are inherited
 			const list = people.List(null)
-			if (!list) return
+			if (!list) {
+				this.$.$mol_log3_rise({
+					place: this,
+					message: 'People list is null',
+					hint: 'Cannot register user in global People registry',
+				})
+				return
+			}
+
+			const wasRegistered = list.has(this.ref())
 			list.has(this.ref(), true)
+
+			if (!wasRegistered) {
+				this.$.$mol_log3_rise({
+					place: this,
+					message: 'User registered in People',
+					person: this.ref().description,
+					name: this.Name()?.str() || '(no name)',
+					email: this.Email()?.str() || '(no email)',
+				})
+			}
 		}
 	}
 }
