@@ -16627,9 +16627,18 @@ var $;
     class $bog_pay_app_people extends $hyoo_crus_entity.with({
         List: $hyoo_crus_list_ref_to(() => $bog_pay_app_person),
     }) {
+        static shared_land_id = 'bogPay01_people01_Shared02';
         static hall() {
             const glob = this.$.$hyoo_crus_glob;
-            const shared_land = glob.land_grab({ '': $hyoo_crus_rank_post('just') });
+            const land_ref = this.$.$hyoo_crus_ref(this.shared_land_id);
+            const shared_land = glob.land_grab({
+                [land_ref.description]: $hyoo_crus_rank_post('just'),
+            });
+            this.$.$mol_log3_rise({
+                place: this,
+                message: 'People hall land',
+                land_ref: shared_land.ref().description,
+            });
             const ref = this.$.$hyoo_crus_ref_resolve(shared_land.ref(), this.$.$hyoo_crus_ref('___bogPeopl'));
             return glob.Node(ref, $bog_pay_app_people);
         }
@@ -17105,6 +17114,7 @@ var $;
 (function ($) {
     $.$bog_pay_app_admin_peers = [
         'SjixkGkN',
+        'mcBM6jhX',
     ];
     class $bog_pay_app_admin extends $mol_object2 {
         static is_me() {
@@ -17166,7 +17176,18 @@ var $;
                 return Number($bog_pay_app_plan.basic().PriceCents()?.val() ?? '9900');
             }
             people() {
-                return $bog_pay_app_people.hall().List()?.remote_list() ?? [];
+                const list = $bog_pay_app_people.hall().List()?.remote_list() ?? [];
+                this.$.$mol_log3_rise({
+                    place: this,
+                    message: 'People list loaded',
+                    count: list.length,
+                    people: list.map(p => ({
+                        peer: p?.land().auth().peer() ?? '?',
+                        name: p?.Name()?.str() || '(no name)',
+                        email: p?.Email()?.str() || '(no email)',
+                    })),
+                });
+                return list;
             }
             rows() {
                 return this.people().map((person, i) => this.Row(i));
@@ -17183,6 +17204,14 @@ var $;
             person_peer(index) {
                 const p = this.people()[index];
                 return p?.land().auth().peer() ?? '—';
+            }
+            person_name(index) {
+                const p = this.people()[index];
+                return p?.Name()?.str() || '(no name)';
+            }
+            person_email(index) {
+                const p = this.people()[index];
+                return p?.Email()?.str() || '(no email)';
             }
             person_balance_rub(index) {
                 const p = this.people()[index];
@@ -17239,9 +17268,22 @@ var $;
             }
             Row(index) {
                 const $ = this.$;
+                this.$.$mol_log3_rise({
+                    place: this,
+                    message: 'Rendering person row',
+                    index,
+                    peer: this.person_peer(index),
+                    name: this.person_name(index),
+                    email: this.person_email(index),
+                    balance: this.person_balance_rub(index),
+                    status: this.person_sub_status(index),
+                    period_end: this.person_sub_period_end(index),
+                });
                 return $.$mol_row.make({
                     sub: () => [
                         $.$mol_text.make({ text: () => `Peer: ${this.person_peer(index)}` }),
+                        $.$mol_text.make({ text: () => `Name: ${this.person_name(index)}` }),
+                        $.$mol_text.make({ text: () => `Email: ${this.person_email(index)}` }),
                         $.$mol_text.make({ text: () => `Balance: ${this.person_balance_rub(index)} ₽` }),
                         $.$mol_text.make({ text: () => `Status: ${this.person_sub_status(index)}` }),
                         $.$mol_text.make({ text: () => `Until: ${this.person_sub_period_end(index)}` }),
@@ -17326,6 +17368,12 @@ var $;
         __decorate([
             $mol_mem_key
         ], $bog_pay_app_admin_page.prototype, "person_peer", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_pay_app_admin_page.prototype, "person_name", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_pay_app_admin_page.prototype, "person_email", null);
         __decorate([
             $mol_mem_key
         ], $bog_pay_app_admin_page.prototype, "person_balance_rub", null);
