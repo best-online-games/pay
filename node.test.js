@@ -10041,6 +10041,24 @@ var $;
 
 
 ;
+	($.$mol_button_major) = class $mol_button_major extends ($.$mol_button_minor) {
+		theme(){
+			return "$mol_theme_base";
+		}
+	};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/button/major/major.view.css", "[mol_button_major] {\n\tbackground-color: var(--mol_theme_back);\n\tcolor: var(--mol_theme_text);\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
 "use strict";
 
 ;
@@ -15894,832 +15912,6 @@ var $;
 })($ || ($ = {}));
 
 ;
-"use strict";
-var $;
-(function ($) {
-    const { unicode_only, line_end, tab, repeat_greedy, optional, forbid_after, force_after, char_only, char_except } = $mol_regexp;
-    $.$hyoo_crus_text_tokens = $mol_regexp.from({
-        token: {
-            'line-break': line_end,
-            'indents': repeat_greedy(tab, 1),
-            'emoji': [
-                unicode_only('Extended_Pictographic'),
-                optional(unicode_only('Emoji_Modifier')),
-                repeat_greedy([
-                    unicode_only('Emoji_Component'),
-                    unicode_only('Extended_Pictographic'),
-                    optional(unicode_only('Emoji_Modifier')),
-                ]),
-            ],
-            'link': /\b(https?:\/\/[^\s,.;:!?")]+(?:[,.;:!?")][^\s,.;:!?")]+)+)/,
-            'Word': [
-                [char_only(' ', 0xA0)],
-                repeat_greedy(char_only([
-                    unicode_only('General_Category', 'Uppercase_Letter'),
-                    unicode_only('Diacritic'),
-                    unicode_only('General_Category', 'Number'),
-                ]), 1),
-                repeat_greedy(char_only([
-                    unicode_only('General_Category', 'Lowercase_Letter'),
-                    unicode_only('Diacritic'),
-                    unicode_only('General_Category', 'Number'),
-                ])),
-            ],
-            'word': [
-                [char_only(' ', 0xA0)],
-                repeat_greedy(char_only([
-                    unicode_only('General_Category', 'Lowercase_Letter'),
-                    unicode_only('Diacritic'),
-                    unicode_only('General_Category', 'Number'),
-                ]), 1),
-            ],
-            'spaces': [
-                forbid_after(line_end),
-                repeat_greedy(unicode_only('White_Space'), 1),
-                force_after(unicode_only('White_Space')),
-            ],
-            'space': [
-                forbid_after(line_end),
-                unicode_only('White_Space'),
-                forbid_after([
-                    unicode_only('White_Space'),
-                    unicode_only('General_Category', 'Uppercase_Letter'),
-                    unicode_only('General_Category', 'Lowercase_Letter'),
-                    unicode_only('Diacritic'),
-                    unicode_only('General_Category', 'Number'),
-                ]),
-            ],
-            'others': [
-                [char_only(' ', 0xA0)],
-                repeat_greedy(char_except([
-                    unicode_only('General_Category', 'Uppercase_Letter'),
-                    unicode_only('General_Category', 'Lowercase_Letter'),
-                    unicode_only('Diacritic'),
-                    unicode_only('General_Category', 'Number'),
-                    unicode_only('White_Space'),
-                ]), 1),
-            ],
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $hyoo_crus_text extends $hyoo_crus_node {
-        static tag = $hyoo_crus_sand_tag[$hyoo_crus_sand_tag.vals];
-        value(next) {
-            return this.text(next);
-        }
-        text(next) {
-            if (next !== undefined) {
-                const land = this.land();
-                const prev = this.units();
-                const lines = next.match(/.*\n|.+$/g) ?? [];
-                $mol_reconcile({
-                    prev,
-                    from: 0,
-                    to: prev.length,
-                    next: lines,
-                    equal: (next, prev) => {
-                        return land.Node($hyoo_crus_text).Item(prev.self()).str() === next;
-                    },
-                    drop: (prev, lead) => this.land().post(lead?.self() ?? '', prev.head(), prev.self(), null),
-                    insert: (next, lead) => {
-                        const sand = this.land().post(lead?.self() ?? '', this.head(), land.self_make(), 'p', 'vals');
-                        land.Node($hyoo_crus_text).Item(sand.self()).str(next);
-                        return sand;
-                    },
-                    replace: (next, prev, lead) => {
-                        land.Node($hyoo_crus_text).Item(prev.self()).str(next);
-                        return prev;
-                    },
-                });
-            }
-            return this.str();
-        }
-        str(next) {
-            if (next === undefined) {
-                let str = '';
-                const land = this.land();
-                for (const unit of this.units()) {
-                    if (unit.tag() === 'term')
-                        str += $hyoo_crus_vary_cast_str(land.sand_decode(unit)) ?? '';
-                    else
-                        str += land.Node($hyoo_crus_text).Item(unit.self()).str();
-                }
-                return str;
-            }
-            else {
-                this.write(next, 0, -1);
-                return this.str();
-            }
-        }
-        write(next, str_from = -1, str_to = str_from) {
-            const land = this.land();
-            const list = this.units();
-            let from = str_from < 0 ? list.length : 0;
-            let word = '';
-            while (from < list.length) {
-                word = $hyoo_crus_vary_cast_str(land.sand_decode(list[from])) ?? '';
-                if (str_from <= word.length) {
-                    next = word.slice(0, str_from) + next;
-                    break;
-                }
-                str_from -= word.length;
-                if (str_to > 0)
-                    str_to -= word.length;
-                from++;
-            }
-            let to = str_to < 0 ? list.length : from;
-            while (to < list.length) {
-                word = $hyoo_crus_vary_cast_str(land.sand_decode(list[to])) ?? '';
-                to++;
-                if (str_to < word.length) {
-                    next = next + word.slice(str_to);
-                    break;
-                }
-                str_to -= word.length;
-            }
-            if (from && from === list.length) {
-                --from;
-                next = ($hyoo_crus_vary_cast_str(land.sand_decode(list[from])) ?? '') + next;
-            }
-            const words = next.match($hyoo_crus_text_tokens) ?? [];
-            this.cast($hyoo_crus_list_vary).splice(words, from, to);
-            return this;
-        }
-        point_by_offset(offset) {
-            const land = this.land();
-            let off = offset;
-            for (const unit of this.units()) {
-                if (unit.tag() === 'term') {
-                    const len = $hyoo_crus_vary_cast_str(land.sand_decode(unit))?.length ?? 0;
-                    if (off <= len)
-                        return [unit.self(), off];
-                    else
-                        off -= len;
-                }
-                else {
-                    const found = land.Node($hyoo_crus_text).Item(unit.self()).point_by_offset(off);
-                    if (found[0])
-                        return found;
-                    off = found[1];
-                }
-            }
-            return ['', off];
-        }
-        offset_by_point([self, offset]) {
-            const land = this.land();
-            for (const unit of this.units()) {
-                if (unit.self() === self)
-                    return [self, offset];
-                if (unit.tag() === 'term') {
-                    offset += $hyoo_crus_vary_cast_str(land.sand_decode(unit))?.length ?? 0;
-                }
-                else {
-                    const found = land.Node($hyoo_crus_text).Item(unit.self()).offset_by_point([self, offset]);
-                    if (found[0])
-                        return [self, found[1]];
-                    offset = found[1];
-                }
-            }
-            return ['', offset];
-        }
-        selection(lord, next) {
-            const base = this.$.$hyoo_crus_glob.Land(lord).Data($hyoo_crus_home);
-            if (next) {
-                base.Selection(null)?.val(next.map(offset => this.point_by_offset(offset).join(':')).join('|'));
-                return next;
-            }
-            else {
-                this.text();
-                return base.Selection()?.val()?.split('|').map(point => {
-                    const chunks = point.split(':');
-                    return this.offset_by_point([chunks[0], Number(chunks[1]) || 0])[1];
-                }) ?? [0, 0];
-            }
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $hyoo_crus_text.prototype, "text", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_crus_text.prototype, "str", null);
-    __decorate([
-        $mol_action
-    ], $hyoo_crus_text.prototype, "write", null);
-    __decorate([
-        $mol_action
-    ], $hyoo_crus_text.prototype, "point_by_offset", null);
-    __decorate([
-        $mol_action
-    ], $hyoo_crus_text.prototype, "offset_by_point", null);
-    __decorate([
-        $mol_mem_key
-    ], $hyoo_crus_text.prototype, "selection", null);
-    $.$hyoo_crus_text = $hyoo_crus_text;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $bog_pay_plan extends $hyoo_crus_entity.with({
-        Title: $hyoo_crus_text,
-        Descr: $hyoo_crus_text,
-        PriceCents: $hyoo_crus_atom_str,
-        Currency: $hyoo_crus_atom_str,
-        Period: $hyoo_crus_atom_str,
-        TrialDays: $hyoo_crus_atom_str,
-        Public: $hyoo_crus_atom_str,
-    }) {
-        price_cents() {
-            return Number(this.PriceCents()?.val() ?? '0');
-        }
-        is_public() {
-            return this.Public()?.val() === 'true';
-        }
-        static basic_id() {
-            return '___bogPayPl';
-        }
-        static basic() {
-            const base = this.$.$hyoo_crus_glob.home().land().ref();
-            const rel = this.$.$hyoo_crus_ref(this.basic_id());
-            const ref = this.$.$hyoo_crus_ref_resolve(base, rel);
-            const plan = this.$.$hyoo_crus_glob.Node(ref, $bog_pay_plan);
-            if (!plan.PriceCents()?.val()) {
-                plan.Title(null).text('Bog Ping Premium');
-                plan.Descr(null).text('Единый тариф: 99 ₽/мес, первые 14 дней бесплатно');
-                plan.PriceCents(null).val('9900');
-                plan.Currency(null).val('RUB');
-                plan.Period(null).val('month');
-                plan.TrialDays(null).val('14');
-                plan.Public(null).val('true');
-            }
-            return plan;
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $bog_pay_plan.prototype, "price_cents", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_plan.prototype, "is_public", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_plan, "basic", null);
-    $.$bog_pay_plan = $bog_pay_plan;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $.$bog_pay_trial_ms = 5_000;
-    $.$bog_pay_renewal_ms = 5_000;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $bog_pay_subscription extends $hyoo_crus_entity.with({
-        Person: $hyoo_crus_atom_ref_to(() => $bog_pay_person),
-        Plan: $hyoo_crus_atom_ref_to(() => $bog_pay_plan),
-        Status: $hyoo_crus_atom_str,
-        PeriodStart: $hyoo_crus_atom_str,
-        PeriodEnd: $hyoo_crus_atom_str,
-        CancelAt: $hyoo_crus_atom_str,
-        RenewalMode: $hyoo_crus_atom_str,
-        AccessState: $hyoo_crus_atom_str,
-    }) {
-        now_ms() {
-            return Date.now();
-        }
-        period_start_ms() {
-            const s = this.PeriodStart()?.val();
-            return s ? Date.parse(s) : 0;
-        }
-        period_end_ms() {
-            const s = this.PeriodEnd()?.val();
-            return s ? Date.parse(s) : 0;
-        }
-        is_trial() {
-            return this.Status()?.val() === 'trial' && this.period_end_ms() > this.now_ms();
-        }
-        is_active() {
-            const status = this.Status()?.val();
-            if (this.period_end_ms() <= this.now_ms())
-                return false;
-            return status === 'active' || status === 'trial';
-        }
-        is_expired() {
-            return !!this.period_end_ms() && this.period_end_ms() <= this.now_ms();
-        }
-        remaining_ms() {
-            const end = this.period_end_ms();
-            return end ? Math.max(0, end - this.now_ms()) : 0;
-        }
-        start_trial() {
-            const now = new Date();
-            const end = new Date(now.valueOf() + $bog_pay_trial_ms);
-            this.Status(null).val('trial');
-            this.PeriodStart(null).val(now.toISOString());
-            this.PeriodEnd(null).val(end.toISOString());
-            this.RenewalMode(null).val('auto');
-            this.AccessState(null).val('revoked');
-        }
-        activate_month() {
-            const now = new Date();
-            const currentEnd = this.period_end_ms();
-            const baseTs = currentEnd && currentEnd > now.valueOf() ? currentEnd : now.valueOf();
-            const end = new Date(baseTs + $bog_pay_renewal_ms);
-            this.Status(null).val('active');
-            if (!this.PeriodStart()?.val()) {
-                this.PeriodStart(null).val(now.toISOString());
-            }
-            this.PeriodEnd(null).val(end.toISOString());
-            if (!this.RenewalMode()?.val()) {
-                this.RenewalMode(null).val('auto');
-            }
-        }
-        cancel_auto() {
-            this.RenewalMode(null).val('manual');
-            this.CancelAt(null).val(new Date().toISOString());
-        }
-        renew_auto() {
-            this.RenewalMode(null).val('auto');
-            if (this.period_end_ms() > Date.now() && this.Status()?.val() !== 'active') {
-                this.Status(null).val('active');
-            }
-        }
-        expire_if_needed() {
-            if (!this.is_expired())
-                return;
-            const renewal = this.RenewalMode()?.val();
-            if (renewal === 'auto') {
-                this.activate_month();
-            }
-            else {
-                this.Status(null).val('canceled');
-            }
-        }
-        provision_access_mock() {
-            const plan = this.Plan()?.remote();
-            const person = this.Person()?.remote();
-            const id = this.ref().description ?? 'unknown';
-            console.log('[VPN] provision certificate (mock):', {
-                subscription: id,
-                person: person ? person.ref().description : null,
-                plan: plan ? plan.ref().description : null,
-            });
-            this.AccessState(null).val('provisioned');
-        }
-        revoke_access_mock() {
-            const id = this.ref().description ?? 'unknown';
-            console.log('[VPN] revoke certificate (mock):', { subscription: id });
-            this.AccessState(null).val('revoked');
-        }
-        access_desired() {
-            return this.is_active();
-        }
-        enforce_access_mock() {
-            this.expire_if_needed();
-            const desired = this.access_desired();
-            const state = this.AccessState()?.val();
-            const status = this.Status()?.val();
-            if (desired && state !== 'provisioned') {
-                this.provision_access_mock();
-            }
-            if (status === 'canceled' && state === 'provisioned') {
-                this.revoke_access_mock();
-            }
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $bog_pay_subscription.prototype, "now_ms", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_subscription.prototype, "period_start_ms", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_subscription.prototype, "period_end_ms", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_subscription.prototype, "is_trial", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_subscription.prototype, "is_active", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_subscription.prototype, "is_expired", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_subscription.prototype, "remaining_ms", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_subscription.prototype, "start_trial", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_subscription.prototype, "activate_month", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_subscription.prototype, "cancel_auto", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_subscription.prototype, "renew_auto", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_subscription.prototype, "expire_if_needed", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_subscription.prototype, "provision_access_mock", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_subscription.prototype, "revoke_access_mock", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_subscription.prototype, "access_desired", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_subscription.prototype, "enforce_access_mock", null);
-    $.$bog_pay_subscription = $bog_pay_subscription;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $bog_pay_invoice extends $hyoo_crus_entity.with({
-        Person: $hyoo_crus_atom_ref_to(() => $bog_pay_person),
-        Subscription: $hyoo_crus_atom_ref_to(() => $bog_pay_subscription),
-        Kind: $hyoo_crus_atom_str,
-        AmountCents: $hyoo_crus_atom_str,
-        Currency: $hyoo_crus_atom_str,
-        Status: $hyoo_crus_atom_str,
-        CreatedAt: $hyoo_crus_atom_str,
-        PaidAt: $hyoo_crus_atom_str,
-        Provider: $hyoo_crus_atom_str,
-        ProviderInvoiceId: $hyoo_crus_atom_str,
-        PaymentUrl: $hyoo_crus_text,
-        Meta: $hyoo_crus_text,
-    }) {
-        amount_cents() {
-            return Number(this.AmountCents()?.val() ?? '0');
-        }
-        is_topup() {
-            return this.Kind()?.val() === 'topup';
-        }
-        is_charge() {
-            return this.Kind()?.val() === 'charge';
-        }
-        is_paid() {
-            return this.Status()?.val() === 'paid';
-        }
-        is_pending() {
-            return this.Status()?.val() === 'pending';
-        }
-        is_failed() {
-            return this.Status()?.val() === 'failed';
-        }
-        mark_pending() {
-            if (!this.CreatedAt()?.val())
-                this.CreatedAt(null).val(new Date().toISOString());
-            this.Status(null).val('pending');
-        }
-        mark_paid() {
-            this.Status(null).val('paid');
-            this.PaidAt(null).val(new Date().toISOString());
-        }
-        mark_failed() {
-            this.Status(null).val('failed');
-        }
-        cancel() {
-            this.Status(null).val('canceled');
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $bog_pay_invoice.prototype, "amount_cents", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_invoice.prototype, "is_topup", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_invoice.prototype, "is_charge", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_invoice.prototype, "is_paid", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_invoice.prototype, "is_pending", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_invoice.prototype, "is_failed", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_invoice.prototype, "mark_pending", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_invoice.prototype, "mark_paid", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_invoice.prototype, "mark_failed", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_invoice.prototype, "cancel", null);
-    $.$bog_pay_invoice = $bog_pay_invoice;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $bog_pay_person extends $hyoo_crus_entity.with({
-        Name: $hyoo_crus_text,
-        Email: $hyoo_crus_text,
-        CreatedAt: $hyoo_crus_atom_str,
-        BalanceCents: $hyoo_crus_atom_str,
-        Subscriptions: $hyoo_crus_list_ref_to(() => $bog_pay_subscription),
-        Invoices: $hyoo_crus_list_ref_to(() => $bog_pay_invoice),
-    }) {
-        active_sub() {
-            const now = Date.now();
-            const subs = this.Subscriptions()?.remote_list() ?? [];
-            for (const sub of subs) {
-                const status = sub.Status()?.val();
-                const endStr = sub.PeriodEnd()?.val();
-                const endAt = endStr ? Date.parse(endStr) : 0;
-                if (!endAt || endAt <= now)
-                    continue;
-                if (status === 'active' || status === 'trial')
-                    return sub;
-            }
-            return null;
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $bog_pay_person.prototype, "active_sub", null);
-    $.$bog_pay_person = $bog_pay_person;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $bog_pay_account extends $mol_object2 {
-        profile() {
-            return $hyoo_crus_glob.home().hall_by($bog_pay_person, {});
-        }
-        plan_basic() {
-            return $bog_pay_plan.basic();
-        }
-        sub_active() {
-            return this.profile()?.active_sub() ?? null;
-        }
-        price_cents() {
-            return 9900;
-        }
-        balance_cents(next) {
-            const person = this.profile();
-            if (next !== undefined) {
-                person.BalanceCents(null).val(String(Math.max(0, Math.floor(next))));
-            }
-            return Number(person.BalanceCents()?.val() ?? '0');
-        }
-        topup_mock_rub(amountRub) {
-            const person = this.profile();
-            const inv = person.Invoices(null).remote_make({});
-            inv.Person(null).val(person.ref());
-            inv.Kind(null).val('topup');
-            inv.AmountCents(null).val(String(Math.round(amountRub * 100)));
-            inv.Currency(null).val('RUB');
-            inv.Provider(null).val('mock');
-            inv.mark_pending();
-            inv.mark_paid();
-            const newBal = this.balance_cents() + inv.amount_cents();
-            this.balance_cents(newBal);
-            console.log('[Billing] topup (mock):', {
-                person: person.ref().description,
-                delta: inv.amount_cents(),
-                balance: newBal,
-            });
-            return inv;
-        }
-        charge_sub_renewal_mock(sub) {
-            const amount = this.price_cents();
-            const person = this.profile();
-            const bal = this.balance_cents();
-            if (bal < amount) {
-                console.log('[Billing] charge skipped: insufficient funds', { balance: bal, need: amount });
-                return false;
-            }
-            this.balance_cents(bal - amount);
-            const inv = person.Invoices(null).remote_make({});
-            inv.Person(null).val(person.ref());
-            inv.Subscription(null).val(sub.ref());
-            inv.Kind(null).val('charge');
-            inv.AmountCents(null).val(String(amount));
-            inv.Currency(null).val('RUB');
-            inv.Provider(null).val('mock');
-            inv.mark_pending();
-            inv.mark_paid();
-            console.log('[Billing] charge (mock): renewal paid', {
-                subscription: sub.ref().description,
-                amount,
-                balance: this.balance_cents(),
-            });
-            return true;
-        }
-        ovpn_file_name() {
-            const peer = this.$.$hyoo_crus_glob.home().land().auth().peer();
-            return `${peer}.ovpn`;
-        }
-        ovpn_file_blob() {
-            const peer = this.$.$hyoo_crus_glob.home().land().auth().peer();
-            const content = `# OVPN profile (mock)
-# user: ${peer}
-# generated: ${new Date().toISOString()}
-`;
-            return new Blob([content], { type: 'application/x-openvpn-profile' });
-        }
-        subscribe() {
-            const active = this.sub_active();
-            if (active) {
-                active.enforce_access_mock();
-                return active;
-            }
-            const person = this.profile();
-            const plan = this.plan_basic();
-            const sub = person.Subscriptions(null).remote_make({});
-            sub.Person(null).val(person.ref());
-            sub.Plan(null).val(plan.ref());
-            sub.start_trial();
-            sub.enforce_access_mock();
-            console.log('[Billing] subscribe (mock): start trial for plan', {
-                person: person.ref().description,
-                plan: plan.ref().description,
-                status: sub.Status()?.val(),
-                period: { start: sub.PeriodStart()?.val(), end: sub.PeriodEnd()?.val() },
-            });
-            return sub;
-        }
-        renew() {
-            let sub = this.sub_active();
-            if (!sub) {
-                const person = this.profile();
-                const plan = this.plan_basic();
-                sub = person.Subscriptions(null).remote_make({});
-                sub.Person(null).val(person.ref());
-                sub.Plan(null).val(plan.ref());
-            }
-            if (!this.charge_sub_renewal_mock(sub)) {
-                console.log('[Billing] renew (mock): insufficient funds, please top-up balance first');
-                return sub;
-            }
-            sub.activate_month();
-            console.log('[Billing] renew (mock): +period', {
-                subscription: sub.ref().description,
-                status: sub.Status()?.val(),
-                period: { start: sub.PeriodStart()?.val(), end: sub.PeriodEnd()?.val() },
-                balance: this.balance_cents(),
-            });
-            sub.enforce_access_mock();
-            return sub;
-        }
-        cancel_auto() {
-            const sub = this.sub_active();
-            if (!sub)
-                return;
-            sub.cancel_auto();
-            console.log('[Billing] cancel auto (mock): access remains until period end', {
-                subscription: sub.ref().description,
-                status: sub.Status()?.val(),
-                renewal: sub.RenewalMode()?.val(),
-                period: { start: sub.PeriodStart()?.val(), end: sub.PeriodEnd()?.val() },
-            });
-            sub.enforce_access_mock();
-        }
-        enforce_access() {
-            const sub = this.sub_active();
-            if (sub) {
-                const expired = sub.period_end_ms() <= Date.now();
-                const mode = sub.RenewalMode()?.val();
-                if (expired && mode === 'auto') {
-                    const paid = this.charge_sub_renewal_mock(sub);
-                    if (paid) {
-                        sub.activate_month();
-                    }
-                    else {
-                        sub.RenewalMode(null).val('manual');
-                        sub.Status(null).val('canceled');
-                    }
-                }
-                sub.enforce_access_mock();
-                return;
-            }
-            const person = this.profile();
-            const subs = person?.Subscriptions()?.remote_list() ?? [];
-            for (const s of subs) {
-                s.enforce_access_mock();
-            }
-        }
-        is_vpn_allowed() {
-            return !!this.sub_active();
-        }
-        subscription_status() {
-            const sub = this.sub_active();
-            if (!sub)
-                return 'none';
-            return sub.Status()?.val() ?? 'none';
-        }
-        subscription_period() {
-            const sub = this.sub_active();
-            return {
-                start: sub?.PeriodStart()?.val() ?? null,
-                end: sub?.PeriodEnd()?.val() ?? null,
-            };
-        }
-        subscription_renewal() {
-            const sub = this.sub_active();
-            return sub?.RenewalMode()?.val() ?? null;
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $bog_pay_account.prototype, "profile", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_account.prototype, "plan_basic", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_account.prototype, "sub_active", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_account.prototype, "price_cents", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_account.prototype, "balance_cents", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_account.prototype, "topup_mock_rub", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_account.prototype, "charge_sub_renewal_mock", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_account.prototype, "ovpn_file_name", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_account.prototype, "subscribe", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_account.prototype, "renew", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_account.prototype, "cancel_auto", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_account.prototype, "enforce_access", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_account.prototype, "is_vpn_allowed", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_account.prototype, "subscription_status", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_account.prototype, "subscription_period", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_account.prototype, "subscription_renewal", null);
-    $.$bog_pay_account = $bog_pay_account;
-})($ || ($ = {}));
-
-;
-	($.$mol_button_major) = class $mol_button_major extends ($.$mol_button_minor) {
-		theme(){
-			return "$mol_theme_base";
-		}
-	};
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/button/major/major.view.css", "[mol_button_major] {\n\tbackground-color: var(--mol_theme_back);\n\tcolor: var(--mol_theme_text);\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-;
 	($.$mol_row) = class $mol_row extends ($.$mol_view) {};
 
 
@@ -17121,10 +16313,54 @@ var $;
                     },
                 });
             }
-            Attach_ovpn() {
+            images() {
+                const person = this.account().profile();
+                const bins = person?.Photos()?.remote_list() ?? [];
+                return bins.map(bin => {
+                    const data = bin.val();
+                    if (!data)
+                        return '';
+                    const blob = new Blob([data], { type: 'image/*' });
+                    return URL.createObjectURL(blob);
+                });
+            }
+            attach_add_files(files) {
+                if (!files || files.length === 0)
+                    return;
+                const person = this.account().profile();
+                for (const file of files) {
+                    const buf = new Uint8Array(this.$.$mol_wire_sync(file).arrayBuffer());
+                    const bin = person.Photos(null).remote_make({});
+                    bin.val(buf);
+                }
+            }
+            attach_remove_index(index) {
+                const person = this.account().profile();
+                const list = person?.Photos()?.remote_list() ?? [];
+                const bin = list[index];
+                if (!bin)
+                    return;
+                const url = this.images()[index];
+                if (url) {
+                    try {
+                        URL.revokeObjectURL(url);
+                    }
+                    catch { }
+                }
+                person.Photos(null).has(bin.ref(), false);
+            }
+            Attach_images() {
                 const $ = this.$;
                 return $.$mol_attach.make({
-                    items: () => [this.account().ovpn_file_name()],
+                    attach_title: () => 'Загрузить изображение',
+                    items: () => this.images(),
+                    attach_new: (files) => {
+                        this.attach_add_files(files);
+                    },
+                    item_uri: (index) => this.images()[index] ?? '',
+                    item_drop: (index, event) => {
+                        this.attach_remove_index(index);
+                    },
                 });
             }
             Download_ovpn_btn() {
@@ -17165,7 +16401,7 @@ var $;
                     this.Info_renewal(),
                     this.Info_vpn(),
                     this.Info_balance(),
-                    this.Attach_ovpn(),
+                    this.Attach_images(),
                     this.Actions(),
                 ];
             }
@@ -17191,6 +16427,15 @@ var $;
         __decorate([
             $mol_mem
         ], $bog_pay_app_account.prototype, "vpn_text", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_account.prototype, "images", null);
+        __decorate([
+            $mol_action
+        ], $bog_pay_app_account.prototype, "attach_add_files", null);
+        __decorate([
+            $mol_action
+        ], $bog_pay_app_account.prototype, "attach_remove_index", null);
         $$.$bog_pay_app_account = $bog_pay_app_account;
     })($$ = $_1.$$ || ($_1.$$ = {}));
 })($ || ($ = {}));
@@ -17452,6 +16697,815 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    const { unicode_only, line_end, tab, repeat_greedy, optional, forbid_after, force_after, char_only, char_except } = $mol_regexp;
+    $.$hyoo_crus_text_tokens = $mol_regexp.from({
+        token: {
+            'line-break': line_end,
+            'indents': repeat_greedy(tab, 1),
+            'emoji': [
+                unicode_only('Extended_Pictographic'),
+                optional(unicode_only('Emoji_Modifier')),
+                repeat_greedy([
+                    unicode_only('Emoji_Component'),
+                    unicode_only('Extended_Pictographic'),
+                    optional(unicode_only('Emoji_Modifier')),
+                ]),
+            ],
+            'link': /\b(https?:\/\/[^\s,.;:!?")]+(?:[,.;:!?")][^\s,.;:!?")]+)+)/,
+            'Word': [
+                [char_only(' ', 0xA0)],
+                repeat_greedy(char_only([
+                    unicode_only('General_Category', 'Uppercase_Letter'),
+                    unicode_only('Diacritic'),
+                    unicode_only('General_Category', 'Number'),
+                ]), 1),
+                repeat_greedy(char_only([
+                    unicode_only('General_Category', 'Lowercase_Letter'),
+                    unicode_only('Diacritic'),
+                    unicode_only('General_Category', 'Number'),
+                ])),
+            ],
+            'word': [
+                [char_only(' ', 0xA0)],
+                repeat_greedy(char_only([
+                    unicode_only('General_Category', 'Lowercase_Letter'),
+                    unicode_only('Diacritic'),
+                    unicode_only('General_Category', 'Number'),
+                ]), 1),
+            ],
+            'spaces': [
+                forbid_after(line_end),
+                repeat_greedy(unicode_only('White_Space'), 1),
+                force_after(unicode_only('White_Space')),
+            ],
+            'space': [
+                forbid_after(line_end),
+                unicode_only('White_Space'),
+                forbid_after([
+                    unicode_only('White_Space'),
+                    unicode_only('General_Category', 'Uppercase_Letter'),
+                    unicode_only('General_Category', 'Lowercase_Letter'),
+                    unicode_only('Diacritic'),
+                    unicode_only('General_Category', 'Number'),
+                ]),
+            ],
+            'others': [
+                [char_only(' ', 0xA0)],
+                repeat_greedy(char_except([
+                    unicode_only('General_Category', 'Uppercase_Letter'),
+                    unicode_only('General_Category', 'Lowercase_Letter'),
+                    unicode_only('Diacritic'),
+                    unicode_only('General_Category', 'Number'),
+                    unicode_only('White_Space'),
+                ]), 1),
+            ],
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $hyoo_crus_text extends $hyoo_crus_node {
+        static tag = $hyoo_crus_sand_tag[$hyoo_crus_sand_tag.vals];
+        value(next) {
+            return this.text(next);
+        }
+        text(next) {
+            if (next !== undefined) {
+                const land = this.land();
+                const prev = this.units();
+                const lines = next.match(/.*\n|.+$/g) ?? [];
+                $mol_reconcile({
+                    prev,
+                    from: 0,
+                    to: prev.length,
+                    next: lines,
+                    equal: (next, prev) => {
+                        return land.Node($hyoo_crus_text).Item(prev.self()).str() === next;
+                    },
+                    drop: (prev, lead) => this.land().post(lead?.self() ?? '', prev.head(), prev.self(), null),
+                    insert: (next, lead) => {
+                        const sand = this.land().post(lead?.self() ?? '', this.head(), land.self_make(), 'p', 'vals');
+                        land.Node($hyoo_crus_text).Item(sand.self()).str(next);
+                        return sand;
+                    },
+                    replace: (next, prev, lead) => {
+                        land.Node($hyoo_crus_text).Item(prev.self()).str(next);
+                        return prev;
+                    },
+                });
+            }
+            return this.str();
+        }
+        str(next) {
+            if (next === undefined) {
+                let str = '';
+                const land = this.land();
+                for (const unit of this.units()) {
+                    if (unit.tag() === 'term')
+                        str += $hyoo_crus_vary_cast_str(land.sand_decode(unit)) ?? '';
+                    else
+                        str += land.Node($hyoo_crus_text).Item(unit.self()).str();
+                }
+                return str;
+            }
+            else {
+                this.write(next, 0, -1);
+                return this.str();
+            }
+        }
+        write(next, str_from = -1, str_to = str_from) {
+            const land = this.land();
+            const list = this.units();
+            let from = str_from < 0 ? list.length : 0;
+            let word = '';
+            while (from < list.length) {
+                word = $hyoo_crus_vary_cast_str(land.sand_decode(list[from])) ?? '';
+                if (str_from <= word.length) {
+                    next = word.slice(0, str_from) + next;
+                    break;
+                }
+                str_from -= word.length;
+                if (str_to > 0)
+                    str_to -= word.length;
+                from++;
+            }
+            let to = str_to < 0 ? list.length : from;
+            while (to < list.length) {
+                word = $hyoo_crus_vary_cast_str(land.sand_decode(list[to])) ?? '';
+                to++;
+                if (str_to < word.length) {
+                    next = next + word.slice(str_to);
+                    break;
+                }
+                str_to -= word.length;
+            }
+            if (from && from === list.length) {
+                --from;
+                next = ($hyoo_crus_vary_cast_str(land.sand_decode(list[from])) ?? '') + next;
+            }
+            const words = next.match($hyoo_crus_text_tokens) ?? [];
+            this.cast($hyoo_crus_list_vary).splice(words, from, to);
+            return this;
+        }
+        point_by_offset(offset) {
+            const land = this.land();
+            let off = offset;
+            for (const unit of this.units()) {
+                if (unit.tag() === 'term') {
+                    const len = $hyoo_crus_vary_cast_str(land.sand_decode(unit))?.length ?? 0;
+                    if (off <= len)
+                        return [unit.self(), off];
+                    else
+                        off -= len;
+                }
+                else {
+                    const found = land.Node($hyoo_crus_text).Item(unit.self()).point_by_offset(off);
+                    if (found[0])
+                        return found;
+                    off = found[1];
+                }
+            }
+            return ['', off];
+        }
+        offset_by_point([self, offset]) {
+            const land = this.land();
+            for (const unit of this.units()) {
+                if (unit.self() === self)
+                    return [self, offset];
+                if (unit.tag() === 'term') {
+                    offset += $hyoo_crus_vary_cast_str(land.sand_decode(unit))?.length ?? 0;
+                }
+                else {
+                    const found = land.Node($hyoo_crus_text).Item(unit.self()).offset_by_point([self, offset]);
+                    if (found[0])
+                        return [self, found[1]];
+                    offset = found[1];
+                }
+            }
+            return ['', offset];
+        }
+        selection(lord, next) {
+            const base = this.$.$hyoo_crus_glob.Land(lord).Data($hyoo_crus_home);
+            if (next) {
+                base.Selection(null)?.val(next.map(offset => this.point_by_offset(offset).join(':')).join('|'));
+                return next;
+            }
+            else {
+                this.text();
+                return base.Selection()?.val()?.split('|').map(point => {
+                    const chunks = point.split(':');
+                    return this.offset_by_point([chunks[0], Number(chunks[1]) || 0])[1];
+                }) ?? [0, 0];
+            }
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $hyoo_crus_text.prototype, "text", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_crus_text.prototype, "str", null);
+    __decorate([
+        $mol_action
+    ], $hyoo_crus_text.prototype, "write", null);
+    __decorate([
+        $mol_action
+    ], $hyoo_crus_text.prototype, "point_by_offset", null);
+    __decorate([
+        $mol_action
+    ], $hyoo_crus_text.prototype, "offset_by_point", null);
+    __decorate([
+        $mol_mem_key
+    ], $hyoo_crus_text.prototype, "selection", null);
+    $.$hyoo_crus_text = $hyoo_crus_text;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $bog_pay_app_plan extends $hyoo_crus_entity.with({
+        Title: $hyoo_crus_text,
+        Descr: $hyoo_crus_text,
+        PriceCents: $hyoo_crus_atom_str,
+        Currency: $hyoo_crus_atom_str,
+        Period: $hyoo_crus_atom_str,
+        TrialDays: $hyoo_crus_atom_str,
+        Public: $hyoo_crus_atom_str,
+    }) {
+        price_cents() {
+            return Number(this.PriceCents()?.val() ?? '0');
+        }
+        is_public() {
+            return this.Public()?.val() === 'true';
+        }
+        static basic_id() {
+            return '___bogPayAp';
+        }
+        static basic() {
+            const base = this.$.$hyoo_crus_glob.home().land().ref();
+            const rel = this.$.$hyoo_crus_ref(this.basic_id());
+            const ref = this.$.$hyoo_crus_ref_resolve(base, rel);
+            const plan = this.$.$hyoo_crus_glob.Node(ref, $bog_pay_app_plan);
+            if (!plan.PriceCents()?.val()) {
+                plan.Title(null).text('Bog Ping Premium');
+                plan.Descr(null).text('Единый тариф: 99 ₽/мес, первые 14 дней бесплатно');
+                plan.PriceCents(null).val('9900');
+                plan.Currency(null).val('RUB');
+                plan.Period(null).val('month');
+                plan.TrialDays(null).val('14');
+                plan.Public(null).val('true');
+            }
+            return plan;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_plan.prototype, "price_cents", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_plan.prototype, "is_public", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_plan, "basic", null);
+    $.$bog_pay_app_plan = $bog_pay_app_plan;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $.$bog_pay_trial_ms = 5_000;
+    $.$bog_pay_renewal_ms = 5_000;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $bog_pay_app_subscription extends $hyoo_crus_entity.with({
+        Person: $hyoo_crus_atom_ref_to(() => $bog_pay_app_person),
+        Plan: $hyoo_crus_atom_ref_to(() => $bog_pay_app_plan),
+        Status: $hyoo_crus_atom_str,
+        PeriodStart: $hyoo_crus_atom_str,
+        PeriodEnd: $hyoo_crus_atom_str,
+        CancelAt: $hyoo_crus_atom_str,
+        RenewalMode: $hyoo_crus_atom_str,
+        AccessState: $hyoo_crus_atom_str,
+    }) {
+        now_ms() {
+            return Date.now();
+        }
+        period_start_ms() {
+            const s = this.PeriodStart()?.val();
+            return s ? Date.parse(s) : 0;
+        }
+        period_end_ms() {
+            const s = this.PeriodEnd()?.val();
+            return s ? Date.parse(s) : 0;
+        }
+        is_trial() {
+            return this.Status()?.val() === 'trial' && this.period_end_ms() > this.now_ms();
+        }
+        is_active() {
+            const status = this.Status()?.val();
+            if (this.period_end_ms() <= this.now_ms())
+                return false;
+            return status === 'active' || status === 'trial';
+        }
+        is_expired() {
+            return !!this.period_end_ms() && this.period_end_ms() <= this.now_ms();
+        }
+        remaining_ms() {
+            const end = this.period_end_ms();
+            return end ? Math.max(0, end - this.now_ms()) : 0;
+        }
+        start_trial() {
+            const now = new Date();
+            const end = new Date(now.valueOf() + $bog_pay_trial_ms);
+            this.Status(null).val('trial');
+            this.PeriodStart(null).val(now.toISOString());
+            this.PeriodEnd(null).val(end.toISOString());
+            this.RenewalMode(null).val('auto');
+            this.AccessState(null).val('revoked');
+        }
+        activate_month() {
+            const now = new Date();
+            const currentEnd = this.period_end_ms();
+            const baseTs = currentEnd && currentEnd > now.valueOf() ? currentEnd : now.valueOf();
+            const end = new Date(baseTs + $bog_pay_renewal_ms);
+            this.Status(null).val('active');
+            if (!this.PeriodStart()?.val()) {
+                this.PeriodStart(null).val(now.toISOString());
+            }
+            this.PeriodEnd(null).val(end.toISOString());
+            if (!this.RenewalMode()?.val()) {
+                this.RenewalMode(null).val('auto');
+            }
+        }
+        cancel_auto() {
+            this.RenewalMode(null).val('manual');
+            this.CancelAt(null).val(new Date().toISOString());
+        }
+        renew_auto() {
+            this.RenewalMode(null).val('auto');
+            if (this.period_end_ms() > Date.now() && this.Status()?.val() !== 'active') {
+                this.Status(null).val('active');
+            }
+        }
+        expire_if_needed() {
+            if (!this.is_expired())
+                return;
+            const renewal = this.RenewalMode()?.val();
+            if (renewal === 'auto') {
+                this.activate_month();
+            }
+            else {
+                this.Status(null).val('canceled');
+            }
+        }
+        provision_access_mock() {
+            const plan = this.Plan()?.remote();
+            const person = this.Person()?.remote();
+            const id = this.ref().description ?? 'unknown';
+            console.log('[VPN] provision certificate (mock):', {
+                subscription: id,
+                person: person ? person.ref().description : null,
+                plan: plan ? plan.ref().description : null,
+            });
+            this.AccessState(null).val('provisioned');
+        }
+        revoke_access_mock() {
+            const id = this.ref().description ?? 'unknown';
+            console.log('[VPN] revoke certificate (mock):', { subscription: id });
+            this.AccessState(null).val('revoked');
+        }
+        access_desired() {
+            return this.is_active();
+        }
+        enforce_access_mock() {
+            this.expire_if_needed();
+            const desired = this.access_desired();
+            const state = this.AccessState()?.val();
+            const status = this.Status()?.val();
+            if (desired && state !== 'provisioned') {
+                this.provision_access_mock();
+            }
+            if (status === 'canceled' && state === 'provisioned') {
+                this.revoke_access_mock();
+            }
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_subscription.prototype, "now_ms", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_subscription.prototype, "period_start_ms", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_subscription.prototype, "period_end_ms", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_subscription.prototype, "is_trial", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_subscription.prototype, "is_active", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_subscription.prototype, "is_expired", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_subscription.prototype, "remaining_ms", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_subscription.prototype, "start_trial", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_subscription.prototype, "activate_month", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_subscription.prototype, "cancel_auto", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_subscription.prototype, "renew_auto", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_subscription.prototype, "expire_if_needed", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_subscription.prototype, "provision_access_mock", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_subscription.prototype, "revoke_access_mock", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_subscription.prototype, "access_desired", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_subscription.prototype, "enforce_access_mock", null);
+    $.$bog_pay_app_subscription = $bog_pay_app_subscription;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $bog_pay_app_invoice extends $hyoo_crus_entity.with({
+        Person: $hyoo_crus_atom_ref_to(() => $bog_pay_app_person),
+        Subscription: $hyoo_crus_atom_ref_to(() => $bog_pay_app_subscription),
+        Kind: $hyoo_crus_atom_str,
+        AmountCents: $hyoo_crus_atom_str,
+        Currency: $hyoo_crus_atom_str,
+        Status: $hyoo_crus_atom_str,
+        CreatedAt: $hyoo_crus_atom_str,
+        PaidAt: $hyoo_crus_atom_str,
+        Provider: $hyoo_crus_atom_str,
+        ProviderInvoiceId: $hyoo_crus_atom_str,
+        PaymentUrl: $hyoo_crus_text,
+        Meta: $hyoo_crus_text,
+    }) {
+        amount_cents() {
+            return Number(this.AmountCents()?.val() ?? '0');
+        }
+        is_topup() {
+            return this.Kind()?.val() === 'topup';
+        }
+        is_charge() {
+            return this.Kind()?.val() === 'charge';
+        }
+        is_paid() {
+            return this.Status()?.val() === 'paid';
+        }
+        is_pending() {
+            return this.Status()?.val() === 'pending';
+        }
+        is_failed() {
+            return this.Status()?.val() === 'failed';
+        }
+        mark_pending() {
+            if (!this.CreatedAt()?.val())
+                this.CreatedAt(null).val(new Date().toISOString());
+            this.Status(null).val('pending');
+        }
+        mark_paid() {
+            this.Status(null).val('paid');
+            this.PaidAt(null).val(new Date().toISOString());
+        }
+        mark_failed() {
+            this.Status(null).val('failed');
+        }
+        cancel() {
+            this.Status(null).val('canceled');
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_invoice.prototype, "amount_cents", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_invoice.prototype, "is_topup", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_invoice.prototype, "is_charge", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_invoice.prototype, "is_paid", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_invoice.prototype, "is_pending", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_invoice.prototype, "is_failed", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_invoice.prototype, "mark_pending", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_invoice.prototype, "mark_paid", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_invoice.prototype, "mark_failed", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_invoice.prototype, "cancel", null);
+    $.$bog_pay_app_invoice = $bog_pay_app_invoice;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $bog_pay_app_person extends $hyoo_crus_entity.with({
+        Name: $hyoo_crus_text,
+        Email: $hyoo_crus_text,
+        CreatedAt: $hyoo_crus_atom_str,
+        BalanceCents: $hyoo_crus_atom_str,
+        Subscriptions: $hyoo_crus_list_ref_to(() => $bog_pay_app_subscription),
+        Invoices: $hyoo_crus_list_ref_to(() => $bog_pay_app_invoice),
+        Photos: $hyoo_crus_list_ref_to(() => $hyoo_crus_atom_bin),
+    }) {
+        active_sub() {
+            const now = Date.now();
+            const subs = this.Subscriptions()?.remote_list() ?? [];
+            for (const sub of subs) {
+                const status = sub.Status()?.val();
+                const endStr = sub.PeriodEnd()?.val();
+                const endAt = endStr ? Date.parse(endStr) : 0;
+                if (!endAt || endAt <= now)
+                    continue;
+                if (status === 'active' || status === 'trial')
+                    return sub;
+            }
+            return null;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_person.prototype, "active_sub", null);
+    $.$bog_pay_app_person = $bog_pay_app_person;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $bog_pay_app_account_domain extends $mol_object2 {
+        profile() {
+            return $hyoo_crus_glob.home().hall_by($bog_pay_app_person, {});
+        }
+        plan_basic() {
+            return $bog_pay_app_plan.basic();
+        }
+        sub_active() {
+            return this.profile()?.active_sub() ?? null;
+        }
+        price_cents() {
+            return 9900;
+        }
+        balance_cents(next) {
+            const person = this.profile();
+            if (next !== undefined) {
+                person.BalanceCents(null).val(String(Math.max(0, Math.floor(next))));
+            }
+            return Number(person.BalanceCents()?.val() ?? '0');
+        }
+        topup_mock_rub(amountRub) {
+            const person = this.profile();
+            const inv = person.Invoices(null).remote_make({});
+            inv.Person(null).val(person.ref());
+            inv.Kind(null).val('topup');
+            inv.AmountCents(null).val(String(Math.round(amountRub * 100)));
+            inv.Currency(null).val('RUB');
+            inv.Provider(null).val('mock');
+            inv.mark_pending();
+            inv.mark_paid();
+            const newBal = this.balance_cents() + inv.amount_cents();
+            this.balance_cents(newBal);
+            console.log('[Billing] topup (mock):', {
+                person: person.ref().description,
+                delta: inv.amount_cents(),
+                balance: newBal,
+            });
+            return inv;
+        }
+        charge_sub_renewal_mock(sub) {
+            const amount = this.price_cents();
+            const person = this.profile();
+            const bal = this.balance_cents();
+            if (bal < amount) {
+                console.log('[Billing] charge skipped: insufficient funds', { balance: bal, need: amount });
+                return false;
+            }
+            this.balance_cents(bal - amount);
+            const inv = person.Invoices(null).remote_make({});
+            inv.Person(null).val(person.ref());
+            inv.Subscription(null).val(sub.ref());
+            inv.Kind(null).val('charge');
+            inv.AmountCents(null).val(String(amount));
+            inv.Currency(null).val('RUB');
+            inv.Provider(null).val('mock');
+            inv.mark_pending();
+            inv.mark_paid();
+            console.log('[Billing] charge (mock): renewal paid', {
+                subscription: sub.ref().description,
+                amount,
+                balance: this.balance_cents(),
+            });
+            return true;
+        }
+        ovpn_file_name() {
+            const peer = this.$.$hyoo_crus_glob.home().land().auth().peer();
+            return `${peer}.ovpn`;
+        }
+        ovpn_file_blob() {
+            const peer = this.$.$hyoo_crus_glob.home().land().auth().peer();
+            const content = `# OVPN profile (mock)
+# user: ${peer}
+# generated: ${new Date().toISOString()}
+`;
+            return new Blob([content], { type: 'application/x-openvpn-profile' });
+        }
+        subscribe() {
+            const active = this.sub_active();
+            if (active) {
+                active.enforce_access_mock();
+                return active;
+            }
+            const person = this.profile();
+            const plan = this.plan_basic();
+            const sub = person.Subscriptions(null).remote_make({});
+            sub.Person(null).val(person.ref());
+            sub.Plan(null).val(plan.ref());
+            sub.start_trial();
+            sub.enforce_access_mock();
+            console.log('[Billing] subscribe (mock): start trial for plan', {
+                person: person.ref().description,
+                plan: plan.ref().description,
+                status: sub.Status()?.val(),
+                period: { start: sub.PeriodStart()?.val(), end: sub.PeriodEnd()?.val() },
+            });
+            return sub;
+        }
+        renew() {
+            let sub = this.sub_active();
+            if (!sub) {
+                const person = this.profile();
+                const plan = this.plan_basic();
+                sub = person.Subscriptions(null).remote_make({});
+                sub.Person(null).val(person.ref());
+                sub.Plan(null).val(plan.ref());
+            }
+            if (!this.charge_sub_renewal_mock(sub)) {
+                console.log('[Billing] renew (mock): insufficient funds, please top-up balance first');
+                return sub;
+            }
+            sub.activate_month();
+            console.log('[Billing] renew (mock): +period', {
+                subscription: sub.ref().description,
+                status: sub.Status()?.val(),
+                period: { start: sub.PeriodStart()?.val(), end: sub.PeriodEnd()?.val() },
+                balance: this.balance_cents(),
+            });
+            sub.enforce_access_mock();
+            return sub;
+        }
+        cancel_auto() {
+            const sub = this.sub_active();
+            if (!sub)
+                return;
+            sub.cancel_auto();
+            console.log('[Billing] cancel auto (mock): access remains until period end', {
+                subscription: sub.ref().description,
+                status: sub.Status()?.val(),
+                renewal: sub.RenewalMode()?.val(),
+                period: { start: sub.PeriodStart()?.val(), end: sub.PeriodEnd()?.val() },
+            });
+            sub.enforce_access_mock();
+        }
+        enforce_access() {
+            const sub = this.sub_active();
+            if (sub) {
+                const expired = sub.period_end_ms() <= Date.now();
+                const mode = sub.RenewalMode()?.val();
+                if (expired && mode === 'auto') {
+                    const paid = this.charge_sub_renewal_mock(sub);
+                    if (paid) {
+                        sub.activate_month();
+                    }
+                    else {
+                        sub.RenewalMode(null).val('manual');
+                        sub.Status(null).val('canceled');
+                    }
+                }
+                sub.enforce_access_mock();
+                return;
+            }
+            const person = this.profile();
+            const subs = person?.Subscriptions()?.remote_list() ?? [];
+            for (const s of subs) {
+                s.enforce_access_mock();
+            }
+        }
+        is_vpn_allowed() {
+            return !!this.sub_active();
+        }
+        subscription_status() {
+            const sub = this.sub_active();
+            if (!sub)
+                return 'none';
+            return sub.Status()?.val() ?? 'none';
+        }
+        subscription_period() {
+            const sub = this.sub_active();
+            return {
+                start: sub?.PeriodStart()?.val() ?? null,
+                end: sub?.PeriodEnd()?.val() ?? null,
+            };
+        }
+        subscription_renewal() {
+            const sub = this.sub_active();
+            return sub?.RenewalMode()?.val() ?? null;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_account_domain.prototype, "profile", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_account_domain.prototype, "plan_basic", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_account_domain.prototype, "sub_active", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_account_domain.prototype, "price_cents", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_account_domain.prototype, "balance_cents", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_account_domain.prototype, "topup_mock_rub", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_account_domain.prototype, "charge_sub_renewal_mock", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_account_domain.prototype, "ovpn_file_name", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_account_domain.prototype, "subscribe", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_account_domain.prototype, "renew", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_account_domain.prototype, "cancel_auto", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_account_domain.prototype, "enforce_access", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_account_domain.prototype, "is_vpn_allowed", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_account_domain.prototype, "subscription_status", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_account_domain.prototype, "subscription_period", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_account_domain.prototype, "subscription_renewal", null);
+    $.$bog_pay_app_account_domain = $bog_pay_app_account_domain;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
     function $mol_offline() { }
     $.$mol_offline = $mol_offline;
 })($ || ($ = {}));
@@ -17487,10 +17541,11 @@ var $;
             }
         }
         $$.$bog_pay_app = $bog_pay_app;
-        $$.$bog_pay_person = $.$bog_pay_person;
-        $$.$bog_pay_plan = $.$bog_pay_plan;
-        $$.$bog_pay_subscription = $.$bog_pay_subscription;
-        $$.$bog_pay_account = $.$bog_pay_account;
+        $$.$bog_pay_person = $.$bog_pay_app_person;
+        $$.$bog_pay_plan = $.$bog_pay_app_plan;
+        $$.$bog_pay_subscription = $.$bog_pay_app_subscription;
+        $$.$bog_pay_account = $.$bog_pay_app_account_domain;
+        $$.$bog_pay_invoice = $.$bog_pay_app_invoice;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
