@@ -3,6 +3,7 @@ namespace $ {
 	export const $bog_pay_trial_ms: number = 5_000
 	/** Renewal extension duration (ms). Dev: 5 seconds */
 	export const $bog_pay_renewal_ms: number = 5_000
+
 	// Subscription statuses:
 	// 'trial' | 'active' | 'canceled' | 'past_due'
 	// RenewalMode: 'auto' | 'manual'
