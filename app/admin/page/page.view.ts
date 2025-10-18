@@ -6,6 +6,12 @@ namespace $.$$ {
 		is_admin() {
 			return $bog_pay_app_admin.is_me()
 		}
+		title() {
+			if (this.is_admin()) {
+				return this.$.$mol_locale.text('$bog_pay_app_admin_page_title')
+			} // guard
+			return ''
+		}
 
 		// Using admin helper directly: $bog_pay_app_admin.is_me()
 
