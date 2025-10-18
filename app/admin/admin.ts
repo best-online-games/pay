@@ -51,7 +51,12 @@ namespace $ {
 		@$mol_mem
 		static preset(rank: typeof $hyoo_crus_rank.Value = $hyoo_crus_rank_rule) {
 			const preset: $hyoo_crus_rank_preset = {}
-			for (const pub of $bog_pay_app_admins.peers()) preset[pub] = rank
+			for (const pub of $bog_pay_app_admins.peers()) {
+				if (pub === this.$.$hyoo_crus_glob.home().land().auth().public().toString()) {
+					preset[pub] = rank
+				}
+				continue
+			}
 			return preset
 		}
 

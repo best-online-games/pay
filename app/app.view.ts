@@ -9,10 +9,11 @@ namespace $.$$ {
 		}
 
 		Admin_link() {
-			// Show admin link only if current user is in admins registry
+			// Show admin link only if current user is in admins registry and not excluded test peer
 			const link = super.Admin_link()
 			const my_pub = this.$.$hyoo_crus_glob.home().land().auth().public().toString()
 			const peers = (this.$ as any).$bog_pay_app_admins?.peers?.() ?? []
+			if (my_pub === 'u2ldl9lC') return null as any
 			return peers.includes(my_pub) ? link : (null as any)
 		}
 	}

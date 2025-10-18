@@ -194,7 +194,7 @@ namespace $.$$ {
 			person.BalanceCents(null)!.val(String(balance - price))
 
 			// invoice record
-			const inv = person.Invoices(null)!.remote_make($bog_pay_app_admin.preset_rule())!
+			const inv = person.Invoices(null)!.remote_make({})!
 			inv.Person(null)!.val(person.ref())
 			inv.Subscription(null)!.val(sub.ref())
 			inv.Kind(null)!.val('charge')

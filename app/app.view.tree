@@ -15,3 +15,10 @@ $bog_pay_app $mol_page
 			<= Games $bog_pay_app_games
 			<= Personal_cabinet $bog_pay_app_account
 			<= Admin $bog_pay_app_admin_page
+
+$bog_pay_app_admin_link $mol_link
+	hint @ \Open Admin (Users)
+	sub /
+		<= Label $mol_text
+			text @ \Users (Admin)
+	uri \#!page=Admin

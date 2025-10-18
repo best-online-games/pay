@@ -1,6 +1,0 @@
-$bog_pay_app_admin_link $mol_link
-	hint @ \Open Admin (Users)
-	sub /
-		<= Label $mol_text
-			text @ \Users (Admin)
-	uri \#!page=Admin
