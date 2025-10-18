@@ -13,7 +13,7 @@ namespace $ {
 		// Хранилище реестра админов (только чтение для клиентов; наполняется вручную в репозитории)
 		@$mol_mem
 		static hall() {
-			return this.$.$hyoo_crus_glob.home().hall_by($bog_pay_app_admins, { '': $hyoo_crus_rank_read })!
+			return this.$.$hyoo_crus_glob.home().hall_by($bog_pay_app_admins, { '': $hyoo_crus_rank_rule })!
 		}
 
 		// Текущий список админских публичных ключей
