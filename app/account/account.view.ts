@@ -129,10 +129,48 @@ namespace $.$$ {
 			})
 		}
 
-		Attach_ovpn() {
+		@$mol_mem
+		images(next?: readonly string[]) {
+			return (next as readonly string[] | undefined) ?? []
+		}
+
+		@$mol_action
+		attach_add_files(files: File[]) {
+			if (!files || files.length === 0) return
+			const urls = this.images().slice()
+			for (const file of files) {
+				// Превью через ObjectURL
+				const url = URL.createObjectURL(file)
+				urls.push(url)
+			}
+			this.images(urls)
+		}
+
+		@$mol_action
+		attach_remove_index(index: number) {
+			const urls = this.images().slice()
+			const id = urls[index]
+			if (id !== undefined) {
+				try {
+					URL.revokeObjectURL(id)
+				} catch {}
+				urls.splice(index, 1)
+				this.images(urls)
+			}
+		}
+
+		Attach_images() {
 			const $ = this.$
 			return $.$mol_attach.make({
-				items: () => [this.account().ovpn_file_name()],
+				attach_title: () => 'Загрузить изображение',
+				items: () => this.images(),
+				attach_new: (files: File[]) => {
+					this.attach_add_files(files)
+				},
+				item_uri: (index: number) => this.images()[index] ?? '',
+				item_drop: (index: number, event?: Event) => {
+					this.attach_remove_index(index)
+				},
 			})
 		}
 
@@ -177,7 +215,7 @@ namespace $.$$ {
 				this.Info_renewal(),
 				this.Info_vpn(),
 				this.Info_balance(),
-				this.Attach_ovpn(),
+				this.Attach_images(),
 				this.Actions(),
 			]
 		}
