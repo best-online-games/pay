@@ -9426,42 +9426,20 @@ var $;
         const { rem } = $mol_style_unit;
         $mol_style_define($bog_pay_app_games, {
             Games_section: {
-                position: 'absolute',
-                top: '350%',
-                left: '40%',
-                transform: 'translate(-50%, -50%)',
                 display: 'flex',
                 flexDirection: 'column',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
                 gridGap: '10px',
                 padding: '10px',
                 Title: {
-                    fontSize: rem(20),
-                    color: 'white',
-                    padding: '10px',
-                    borderRadius: '10px',
-                    margin: '10px',
-                    textAlign: 'center',
-                    width: '100%',
+                    fontSize: rem(2),
                 },
             },
             Bog_ping: {
-                left: '60%',
-                position: 'absolute',
-                top: '350%',
-                transform: 'translate(-50%, -50%)',
-                gridGap: '10px',
                 padding: '10px',
             },
             Games_grid: {
-                position: 'absolute',
-                top: '2000%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
                 display: 'flex',
                 flexDirection: 'column',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-                gridGap: '10px',
                 padding: '10px',
             },
             Body_content: {
