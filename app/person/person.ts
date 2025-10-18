@@ -46,7 +46,9 @@ namespace $ {
 			// Add this user into global People registry (admin rights are set via People.hall preset)
 			const people = $bog_pay_app_people.hall()
 			// List is hosted in admin hall, rights are inherited
-			people.List(null)!.has(this.ref(), true)
+			const list = people.List(null)
+			if (!list) return
+			list.has(this.ref(), true)
 		}
 	}
 }
