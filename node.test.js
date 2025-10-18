@@ -17109,13 +17109,14 @@ var $;
 var $;
 (function ($) {
     $.$bog_pay_app_admin_peers = [
-        'SjixkGkN',
         'mcBM6jhX',
+        'SSCOg7yi',
     ];
     class $bog_pay_app_admin extends $mol_object2 {
         static is_me() {
             const my_peer = this.$.$hyoo_crus_glob.home().land().auth().peer();
-            return $.$bog_pay_app_admin_peers.includes(my_peer);
+            const is_admin = $.$bog_pay_app_admin_peers.includes(my_peer);
+            return is_admin;
         }
     }
     __decorate([

@@ -8498,7 +8498,7 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    const $bog_pay_app_admin_peers: readonly ["SjixkGkN", "mcBM6jhX"];
+    const $bog_pay_app_admin_peers: readonly ["mcBM6jhX", "SSCOg7yi"];
     class $bog_pay_app_admin extends $mol_object2 {
         static is_me(): boolean;
     }
