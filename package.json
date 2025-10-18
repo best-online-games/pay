@@ -214,6 +214,8 @@
     "$mol_embed_rutube",
     "$mol_expander",
     "$bog_pay_app_games",
+    "$mol_card",
+    "$mol_section",
     "$bog_pay_app_account",
     "$mol_deck",
     "$mol_switch",

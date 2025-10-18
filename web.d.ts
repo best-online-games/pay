@@ -3597,201 +3597,278 @@ declare namespace $.$$ {
 
 declare namespace $ {
 
-	type $mol_view__sub_bog_pay_app_games_1 = $mol_type_enforce<
+	type $mol_view__sub_mol_card_1 = $mol_type_enforce<
+		ReturnType< $mol_card['content'] >
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__minimal_height_mol_card_2 = $mol_type_enforce<
+		number
+		,
+		ReturnType< $mol_view['minimal_height'] >
+	>
+	type $mol_view__sub_mol_card_3 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__sub_bog_pay_app_games_2 = $mol_type_enforce<
-		readonly(any)[]
+	export class $mol_card extends $mol_list {
+		status( ): string
+		content( ): readonly($mol_view_content)[]
+		Content( ): $mol_view
+		status_text( ): ReturnType< $mol_card['status'] >
+		Status( ): $mol_view
+		attr( ): ({ 
+			'mol_card_status_type': ReturnType< $mol_card['status'] >,
+		})  & ReturnType< $mol_list['attr'] >
+		rows( ): readonly($mol_view)[]
+	}
+	
+}
+
+//# sourceMappingURL=card.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_card extends $.$mol_card {
+        rows(): readonly $mol_view[];
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	type $mol_paragraph__dom_name_mol_section_1 = $mol_type_enforce<
+		ReturnType< $mol_section['title_dom_name'] >
+		,
+		ReturnType< $mol_paragraph['dom_name'] >
+	>
+	type $mol_paragraph__title_mol_section_2 = $mol_type_enforce<
+		ReturnType< $mol_section['title'] >
+		,
+		ReturnType< $mol_paragraph['title'] >
+	>
+	type $mol_view__sub_mol_section_3 = $mol_type_enforce<
+		ReturnType< $mol_section['tools'] >
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__sub_bog_pay_app_games_3 = $mol_type_enforce<
-		readonly(any)[]
+	type $mol_view__sub_mol_section_4 = $mol_type_enforce<
+		ReturnType< $mol_section['head'] >
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_text__text_bog_pay_app_games_4 = $mol_type_enforce<
+	type $mol_list__rows_mol_section_5 = $mol_type_enforce<
+		ReturnType< $mol_section['content'] >
+		,
+		ReturnType< $mol_list['rows'] >
+	>
+	export class $mol_section extends $mol_list {
+		title_dom_name( ): string
+		Title( ): $mol_paragraph
+		tools( ): readonly(any)[]
+		Tools( ): $mol_view
+		head( ): readonly(any)[]
+		Head( ): $mol_view
+		content( ): readonly(any)[]
+		Content( ): $mol_list
+		level( ): number
+		rows( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=section.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_section extends $.$mol_section {
+        title_dom_name(): string;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	type $mol_paragraph__title_bog_pay_app_games_1 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_paragraph['title'] >
+	>
+	type $mol_paragraph__title_bog_pay_app_games_2 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_paragraph['title'] >
+	>
+	type $mol_text__text_bog_pay_app_games_3 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_text['text'] >
 	>
-	type $mol_view__sub_bog_pay_app_games_5 = $mol_type_enforce<
+	type $mol_card__content_bog_pay_app_games_4 = $mol_type_enforce<
 		readonly(any)[]
 		,
-		ReturnType< $mol_view['sub'] >
+		ReturnType< $mol_card['content'] >
 	>
-	type $mol_view__sub_bog_pay_app_games_6 = $mol_type_enforce<
-		readonly(any)[]
+	type $mol_paragraph__title_bog_pay_app_games_5 = $mol_type_enforce<
+		string
 		,
-		ReturnType< $mol_view['sub'] >
+		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_view__sub_bog_pay_app_games_7 = $mol_type_enforce<
-		readonly(any)[]
+	type $mol_paragraph__title_bog_pay_app_games_6 = $mol_type_enforce<
+		string
 		,
-		ReturnType< $mol_view['sub'] >
+		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_text__text_bog_pay_app_games_8 = $mol_type_enforce<
+	type $mol_text__text_bog_pay_app_games_7 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_text['text'] >
 	>
-	type $mol_view__sub_bog_pay_app_games_9 = $mol_type_enforce<
+	type $mol_card__content_bog_pay_app_games_8 = $mol_type_enforce<
 		readonly(any)[]
 		,
-		ReturnType< $mol_view['sub'] >
+		ReturnType< $mol_card['content'] >
 	>
-	type $mol_view__sub_bog_pay_app_games_10 = $mol_type_enforce<
-		readonly(any)[]
+	type $mol_paragraph__title_bog_pay_app_games_9 = $mol_type_enforce<
+		string
 		,
-		ReturnType< $mol_view['sub'] >
+		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_view__sub_bog_pay_app_games_11 = $mol_type_enforce<
-		readonly(any)[]
+	type $mol_paragraph__title_bog_pay_app_games_10 = $mol_type_enforce<
+		string
 		,
-		ReturnType< $mol_view['sub'] >
+		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_text__text_bog_pay_app_games_12 = $mol_type_enforce<
+	type $mol_text__text_bog_pay_app_games_11 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_text['text'] >
 	>
-	type $mol_view__sub_bog_pay_app_games_13 = $mol_type_enforce<
+	type $mol_card__content_bog_pay_app_games_12 = $mol_type_enforce<
 		readonly(any)[]
 		,
-		ReturnType< $mol_view['sub'] >
+		ReturnType< $mol_card['content'] >
 	>
-	type $mol_view__sub_bog_pay_app_games_14 = $mol_type_enforce<
+	type $mol_list__rows_bog_pay_app_games_13 = $mol_type_enforce<
 		readonly(any)[]
 		,
-		ReturnType< $mol_view['sub'] >
+		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_view__sub_bog_pay_app_games_15 = $mol_type_enforce<
+	type $mol_section__title_bog_pay_app_games_14 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_section['title'] >
+	>
+	type $mol_section__content_bog_pay_app_games_15 = $mol_type_enforce<
 		readonly(any)[]
 		,
-		ReturnType< $mol_view['sub'] >
+		ReturnType< $mol_section['content'] >
 	>
-	type $mol_view__sub_bog_pay_app_games_16 = $mol_type_enforce<
-		readonly(any)[]
+	type $mol_paragraph__title_bog_pay_app_games_16 = $mol_type_enforce<
+		string
 		,
-		ReturnType< $mol_view['sub'] >
+		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_view__sub_bog_pay_app_games_17 = $mol_type_enforce<
-		readonly(any)[]
+	type $mol_paragraph__title_bog_pay_app_games_17 = $mol_type_enforce<
+		string
 		,
-		ReturnType< $mol_view['sub'] >
+		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_view__sub_bog_pay_app_games_18 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_text__text_bog_pay_app_games_19 = $mol_type_enforce<
+	type $mol_text__text_bog_pay_app_games_18 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_text['text'] >
 	>
-	type $mol_view__sub_bog_pay_app_games_20 = $mol_type_enforce<
+	type $mol_card__content_bog_pay_app_games_19 = $mol_type_enforce<
 		readonly(any)[]
 		,
-		ReturnType< $mol_view['sub'] >
+		ReturnType< $mol_card['content'] >
 	>
-	type $mol_view__sub_bog_pay_app_games_21 = $mol_type_enforce<
-		readonly(any)[]
+	type $mol_paragraph__title_bog_pay_app_games_20 = $mol_type_enforce<
+		string
 		,
-		ReturnType< $mol_view['sub'] >
+		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_view__sub_bog_pay_app_games_22 = $mol_type_enforce<
-		readonly(any)[]
+	type $mol_paragraph__title_bog_pay_app_games_21 = $mol_type_enforce<
+		string
 		,
-		ReturnType< $mol_view['sub'] >
+		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_text__text_bog_pay_app_games_23 = $mol_type_enforce<
+	type $mol_text__text_bog_pay_app_games_22 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_text['text'] >
 	>
-	type $mol_view__sub_bog_pay_app_games_24 = $mol_type_enforce<
+	type $mol_card__content_bog_pay_app_games_23 = $mol_type_enforce<
 		readonly(any)[]
 		,
-		ReturnType< $mol_view['sub'] >
+		ReturnType< $mol_card['content'] >
 	>
-	type $mol_view__sub_bog_pay_app_games_25 = $mol_type_enforce<
-		readonly(any)[]
+	type $mol_paragraph__title_bog_pay_app_games_24 = $mol_type_enforce<
+		string
 		,
-		ReturnType< $mol_view['sub'] >
+		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_view__sub_bog_pay_app_games_26 = $mol_type_enforce<
-		readonly(any)[]
+	type $mol_paragraph__title_bog_pay_app_games_25 = $mol_type_enforce<
+		string
 		,
-		ReturnType< $mol_view['sub'] >
+		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_text__text_bog_pay_app_games_27 = $mol_type_enforce<
+	type $mol_text__text_bog_pay_app_games_26 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_text['text'] >
 	>
-	type $mol_view__sub_bog_pay_app_games_28 = $mol_type_enforce<
+	type $mol_card__content_bog_pay_app_games_27 = $mol_type_enforce<
 		readonly(any)[]
 		,
-		ReturnType< $mol_view['sub'] >
+		ReturnType< $mol_card['content'] >
 	>
-	type $mol_view__sub_bog_pay_app_games_29 = $mol_type_enforce<
+	type $mol_list__rows_bog_pay_app_games_28 = $mol_type_enforce<
 		readonly(any)[]
 		,
-		ReturnType< $mol_view['sub'] >
+		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_view__sub_bog_pay_app_games_30 = $mol_type_enforce<
+	type $mol_section__title_bog_pay_app_games_29 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_section['title'] >
+	>
+	type $mol_section__content_bog_pay_app_games_30 = $mol_type_enforce<
 		readonly(any)[]
 		,
-		ReturnType< $mol_view['sub'] >
+		ReturnType< $mol_section['content'] >
 	>
 	export class $bog_pay_app_games extends $mol_page {
-		games_title( ): string
-		Games_title( ): $mol_view
-		game1_icon_text( ): string
-		Game1_icon( ): $mol_view
-		game1_title( ): string
-		Game1_title( ): $mol_view
+		Game1_icon( ): $mol_paragraph
+		Game1_title( ): $mol_paragraph
 		Game1_text( ): $mol_text
-		Game1( ): $mol_view
-		game2_icon_text( ): string
-		Game2_icon( ): $mol_view
-		game2_title( ): string
-		Game2_title( ): $mol_view
+		Game1( ): $mol_card
+		Game2_icon( ): $mol_paragraph
+		Game2_title( ): $mol_paragraph
 		Game2_text( ): $mol_text
-		Game2( ): $mol_view
-		game3_icon_text( ): string
-		Game3_icon( ): $mol_view
-		game3_title( ): string
-		Game3_title( ): $mol_view
+		Game2( ): $mol_card
+		Game3_icon( ): $mol_paragraph
+		Game3_title( ): $mol_paragraph
 		Game3_text( ): $mol_text
-		Game3( ): $mol_view
-		Games_grid( ): $mol_view
-		Games_section( ): $mol_view
-		why_title( ): string
-		Why_title( ): $mol_view
-		why1_icon_text( ): string
-		Why1_icon( ): $mol_view
-		why1_title( ): string
-		Why1_title( ): $mol_view
+		Game3( ): $mol_card
+		Games_grid( ): $mol_list
+		Games_section( ): $mol_section
+		Why1_icon( ): $mol_paragraph
+		Why1_title( ): $mol_paragraph
 		Why1_text( ): $mol_text
-		Why1( ): $mol_view
-		why2_icon_text( ): string
-		Why2_icon( ): $mol_view
-		why2_title( ): string
-		Why2_title( ): $mol_view
+		Why1( ): $mol_card
+		Why2_icon( ): $mol_paragraph
+		Why2_title( ): $mol_paragraph
 		Why2_text( ): $mol_text
-		Why2( ): $mol_view
-		why3_icon_text( ): string
-		Why3_icon( ): $mol_view
-		why3_title( ): string
-		Why3_title( ): $mol_view
+		Why2( ): $mol_card
+		Why3_icon( ): $mol_paragraph
+		Why3_title( ): $mol_paragraph
 		Why3_text( ): $mol_text
-		Why3( ): $mol_view
-		Why_grid( ): $mol_view
-		Why_section( ): $mol_view
+		Why3( ): $mol_card
+		Why_grid( ): $mol_list
+		Why_section( ): $mol_section
 		title( ): string
 		Head( ): any
 		body( ): readonly(any)[]
@@ -3801,11 +3878,11 @@ declare namespace $ {
 
 //# sourceMappingURL=games.view.tree.d.ts.map
 declare namespace $.$$ {
+    class $bog_pay_app_games extends $.$bog_pay_app_games {
+    }
 }
 
 declare namespace $.$$ {
-    class $bog_pay_app_games extends $.$bog_pay_app_games {
-    }
 }
 
 declare namespace $ {

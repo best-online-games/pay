@@ -9602,29 +9602,149 @@ var $;
 })($ || ($ = {}));
 
 ;
+	($.$mol_card) = class $mol_card extends ($.$mol_list) {
+		status(){
+			return "";
+		}
+		content(){
+			return [(this.title())];
+		}
+		Content(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.content()));
+			return obj;
+		}
+		status_text(){
+			return (this.status());
+		}
+		Status(){
+			const obj = new this.$.$mol_view();
+			(obj.minimal_height) = () => (30);
+			(obj.sub) = () => ([(this.status_text())]);
+			return obj;
+		}
+		attr(){
+			return {...(super.attr()), "mol_card_status_type": (this.status())};
+		}
+		rows(){
+			return [(this.Content()), (this.Status())];
+		}
+	};
+	($mol_mem(($.$mol_card.prototype), "Content"));
+	($mol_mem(($.$mol_card.prototype), "Status"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_card extends $.$mol_card {
+            rows() {
+                return [
+                    this.Content(),
+                    ...this.status_text() ? [this.Status()] : [],
+                ];
+            }
+        }
+        $$.$mol_card = $mol_card;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/card/card.view.css", "[mol_card] {\n\tbackground: var(--mol_theme_card);\n\tcolor: var(--mol_theme_text);\n\tborder-radius: var(--mol_gap_round);\n\tdisplay: flex;\n\tflex: 0 1 auto;\n\tflex-direction: column;\n\tposition: relative;\n\tbox-shadow: 0 0 0.5rem 0rem hsla(0,0%,0%,.125);\n\t/* overflow: hidden; */\n}\n\n[mol_card_content] {\n\tflex: 1 1 auto;\n\tborder-radius: var(--mol_gap_round);\n\tmargin: 0;\n\tpadding: var(--mol_gap_block);\n}\n\n[mol_card_status] {\n\tbackground: var(--mol_theme_line);\n\tpadding: var(--mol_gap_text);\n\tmargin: 0;\n}\n\n[mol_card_status] {\n\tbackground: var(--mol_theme_line);\n}\n");
+})($ || ($ = {}));
+
+;
+	($.$mol_section) = class $mol_section extends ($.$mol_list) {
+		title_dom_name(){
+			return "h1";
+		}
+		Title(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.dom_name) = () => ((this.title_dom_name()));
+			(obj.title) = () => ((this.title()));
+			return obj;
+		}
+		tools(){
+			return [];
+		}
+		Tools(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.tools()));
+			return obj;
+		}
+		head(){
+			return [(this.Title()), (this.Tools())];
+		}
+		Head(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.head()));
+			return obj;
+		}
+		content(){
+			return [];
+		}
+		Content(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ((this.content()));
+			return obj;
+		}
+		level(){
+			return 1;
+		}
+		rows(){
+			return [(this.Head()), (this.Content())];
+		}
+	};
+	($mol_mem(($.$mol_section.prototype), "Title"));
+	($mol_mem(($.$mol_section.prototype), "Tools"));
+	($mol_mem(($.$mol_section.prototype), "Head"));
+	($mol_mem(($.$mol_section.prototype), "Content"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_section extends $.$mol_section {
+            title_dom_name() {
+                return 'h' + this.level();
+            }
+        }
+        $$.$mol_section = $mol_section;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/section/section.view.css", "[mol_section_head] {\n\tjustify-content: space-between;\n\talign-items: flex-end;\n\tflex-wrap: wrap;\n}\n\n[mol_section_title] {\n\tpadding: var(--mol_gap_text);\n\ttext-shadow: 0 0;\n\tfont-weight: normal;\n}\n\n[mol_section_title]:where(h1) {\n\tfont-size: 1.5rem;\n}\n\n[mol_section_title]:where(h2) {\n\tfont-size: 1.5rem;\n\tfont-style: italic;\n}\n\n[mol_section_title]:where(h3) {\n\tfont-size: 1.25rem;\n}\n\n[mol_section_title]:where(h4) {\n\tfont-size: 1.25rem;\n\tfont-style: italic;\n}\n\n[mol_section_title]:where(h5) {\n\tfont-size: 1rem;\n}\n\n[mol_section_title]:where(h6) {\n\tfont-size: 1rem;\n\tfont-style: italic;\n}\n");
+})($ || ($ = {}));
+
+;
 	($.$bog_pay_app_games) = class $bog_pay_app_games extends ($.$mol_page) {
-		games_title(){
-			return (this.$.$mol_locale.text("$bog_pay_app_games_games_title"));
-		}
-		Games_title(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.games_title())]);
-			return obj;
-		}
-		game1_icon_text(){
-			return "🎯";
-		}
 		Game1_icon(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.game1_icon_text())]);
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ("🎯");
 			return obj;
-		}
-		game1_title(){
-			return (this.$.$mol_locale.text("$bog_pay_app_games_game1_title"));
 		}
 		Game1_title(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.game1_title())]);
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_pay_app_games_Game1_title_title")));
 			return obj;
 		}
 		Game1_text(){
@@ -9633,28 +9753,22 @@ var $;
 			return obj;
 		}
 		Game1(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([
+			const obj = new this.$.$mol_card();
+			(obj.content) = () => ([
 				(this.Game1_icon()), 
 				(this.Game1_title()), 
 				(this.Game1_text())
 			]);
 			return obj;
 		}
-		game2_icon_text(){
-			return "⚔️";
-		}
 		Game2_icon(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.game2_icon_text())]);
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ("⚔️");
 			return obj;
 		}
-		game2_title(){
-			return (this.$.$mol_locale.text("$bog_pay_app_games_game2_title"));
-		}
 		Game2_title(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.game2_title())]);
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_pay_app_games_Game2_title_title")));
 			return obj;
 		}
 		Game2_text(){
@@ -9663,28 +9777,22 @@ var $;
 			return obj;
 		}
 		Game2(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([
+			const obj = new this.$.$mol_card();
+			(obj.content) = () => ([
 				(this.Game2_icon()), 
 				(this.Game2_title()), 
 				(this.Game2_text())
 			]);
 			return obj;
 		}
-		game3_icon_text(){
-			return "🏆";
-		}
 		Game3_icon(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.game3_icon_text())]);
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ("🏆");
 			return obj;
 		}
-		game3_title(){
-			return (this.$.$mol_locale.text("$bog_pay_app_games_game3_title"));
-		}
 		Game3_title(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.game3_title())]);
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_pay_app_games_Game3_title_title")));
 			return obj;
 		}
 		Game3_text(){
@@ -9693,8 +9801,8 @@ var $;
 			return obj;
 		}
 		Game3(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([
+			const obj = new this.$.$mol_card();
+			(obj.content) = () => ([
 				(this.Game3_icon()), 
 				(this.Game3_title()), 
 				(this.Game3_text())
@@ -9702,8 +9810,8 @@ var $;
 			return obj;
 		}
 		Games_grid(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ([
 				(this.Game1()), 
 				(this.Game2()), 
 				(this.Game3())
@@ -9711,32 +9819,19 @@ var $;
 			return obj;
 		}
 		Games_section(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Games_title()), (this.Games_grid())]);
+			const obj = new this.$.$mol_section();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_pay_app_games_Games_section_title")));
+			(obj.content) = () => ([(this.Games_grid())]);
 			return obj;
-		}
-		why_title(){
-			return (this.$.$mol_locale.text("$bog_pay_app_games_why_title"));
-		}
-		Why_title(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.why_title())]);
-			return obj;
-		}
-		why1_icon_text(){
-			return "🌍";
 		}
 		Why1_icon(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.why1_icon_text())]);
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ("🌍");
 			return obj;
 		}
-		why1_title(){
-			return (this.$.$mol_locale.text("$bog_pay_app_games_why1_title"));
-		}
 		Why1_title(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.why1_title())]);
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_pay_app_games_Why1_title_title")));
 			return obj;
 		}
 		Why1_text(){
@@ -9745,28 +9840,22 @@ var $;
 			return obj;
 		}
 		Why1(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([
+			const obj = new this.$.$mol_card();
+			(obj.content) = () => ([
 				(this.Why1_icon()), 
 				(this.Why1_title()), 
 				(this.Why1_text())
 			]);
 			return obj;
 		}
-		why2_icon_text(){
-			return "📊";
-		}
 		Why2_icon(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.why2_icon_text())]);
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ("📊");
 			return obj;
 		}
-		why2_title(){
-			return (this.$.$mol_locale.text("$bog_pay_app_games_why2_title"));
-		}
 		Why2_title(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.why2_title())]);
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_pay_app_games_Why2_title_title")));
 			return obj;
 		}
 		Why2_text(){
@@ -9775,28 +9864,22 @@ var $;
 			return obj;
 		}
 		Why2(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([
+			const obj = new this.$.$mol_card();
+			(obj.content) = () => ([
 				(this.Why2_icon()), 
 				(this.Why2_title()), 
 				(this.Why2_text())
 			]);
 			return obj;
 		}
-		why3_icon_text(){
-			return "💚";
-		}
 		Why3_icon(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.why3_icon_text())]);
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ("💚");
 			return obj;
 		}
-		why3_title(){
-			return (this.$.$mol_locale.text("$bog_pay_app_games_why3_title"));
-		}
 		Why3_title(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.why3_title())]);
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_pay_app_games_Why3_title_title")));
 			return obj;
 		}
 		Why3_text(){
@@ -9805,8 +9888,8 @@ var $;
 			return obj;
 		}
 		Why3(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([
+			const obj = new this.$.$mol_card();
+			(obj.content) = () => ([
 				(this.Why3_icon()), 
 				(this.Why3_title()), 
 				(this.Why3_text())
@@ -9814,8 +9897,8 @@ var $;
 			return obj;
 		}
 		Why_grid(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ([
 				(this.Why1()), 
 				(this.Why2()), 
 				(this.Why3())
@@ -9823,8 +9906,9 @@ var $;
 			return obj;
 		}
 		Why_section(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Why_title()), (this.Why_grid())]);
+			const obj = new this.$.$mol_section();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_pay_app_games_Why_section_title")));
+			(obj.content) = () => ([(this.Why_grid())]);
 			return obj;
 		}
 		title(){
@@ -9837,7 +9921,6 @@ var $;
 			return [(this.Games_section()), (this.Why_section())];
 		}
 	};
-	($mol_mem(($.$bog_pay_app_games.prototype), "Games_title"));
 	($mol_mem(($.$bog_pay_app_games.prototype), "Game1_icon"));
 	($mol_mem(($.$bog_pay_app_games.prototype), "Game1_title"));
 	($mol_mem(($.$bog_pay_app_games.prototype), "Game1_text"));
@@ -9852,7 +9935,6 @@ var $;
 	($mol_mem(($.$bog_pay_app_games.prototype), "Game3"));
 	($mol_mem(($.$bog_pay_app_games.prototype), "Games_grid"));
 	($mol_mem(($.$bog_pay_app_games.prototype), "Games_section"));
-	($mol_mem(($.$bog_pay_app_games.prototype), "Why_title"));
 	($mol_mem(($.$bog_pay_app_games.prototype), "Why1_icon"));
 	($mol_mem(($.$bog_pay_app_games.prototype), "Why1_title"));
 	($mol_mem(($.$bog_pay_app_games.prototype), "Why1_text"));
@@ -9878,28 +9960,31 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
+        class $bog_pay_app_games extends $.$bog_pay_app_games {
+        }
+        $$.$bog_pay_app_games = $bog_pay_app_games;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
         $mol_style_define($bog_pay_app_games, {
             Why_grid: {
+                top: '200%',
+                right: '50%',
                 display: 'flex',
                 flexDirection: 'column',
                 gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
                 gridGap: '10px',
                 padding: '10px',
             },
-            Games_title: {
-                position: 'absolute',
-                top: '10%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                color: 'black',
-                fontSize: '40px',
-                fontWeight: '700',
-                margin: '10px',
-                fontFamily: 'Arial, sans-serif',
-            },
             Games_grid: {
                 position: 'absolute',
-                top: '150%',
+                top: '200%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
                 display: 'flex',
@@ -9931,18 +10016,6 @@ var $;
                 contain: 'none',
             },
         });
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $bog_pay_app_games extends $.$bog_pay_app_games {
-        }
-        $$.$bog_pay_app_games = $bog_pay_app_games;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
