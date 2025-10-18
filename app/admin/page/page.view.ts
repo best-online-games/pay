@@ -49,30 +49,19 @@ namespace $.$$ {
 				return []
 			}
 
-			// Get all person references from registry
-			const person_refs = list.items_maybe()
-			console.log('>>> Registry has', person_refs.length, 'person refs')
+			// Use remote_list() which automatically resolves refs to Person objects
+			const all_people_raw = list.remote_list()
+			console.log('>>> Registry remote_list returned', all_people_raw.length, 'people')
 
 			const all_people: $bog_pay_app_person[] = []
 			const seen_peers = new Set<string>()
 
-			// Resolve each reference to actual Person object
-			for (const person_ref of person_refs) {
+			// Filter out duplicates by peer
+			for (const person of all_people_raw) {
 				try {
-					console.log('>>> Resolving person ref', person_ref.description)
-
-					// Load the person from their home land
-					const glob = this.$.$hyoo_crus_glob
-					const person = glob.Node(person_ref, $bog_pay_app_person)
-
-					if (!person) {
-						console.log('>>> WARNING: Could not resolve person ref', person_ref.description)
-						continue
-					}
-
 					const peer = person.land().auth().peer()
 					console.log('>>> Got person', {
-						ref: person_ref.description,
+						ref: person.ref().description,
 						peer,
 						name: person.Name()?.str() || '(no name)',
 						email: person.Email()?.str() || '(no email)',
@@ -88,12 +77,12 @@ namespace $.$$ {
 					seen_peers.add(peer)
 					console.log('>>> ADDED to list, total:', all_people.length)
 				} catch (e) {
-					console.log('>>> ERROR resolving person ref', person_ref.description, e)
+					console.log('>>> ERROR processing person', e)
 				}
 			}
 
 			console.log('>>> Admin.people() - FINAL RESULT', {
-				refs_in_registry: person_refs.length,
+				refs_in_registry: all_people_raw.length,
 				people_found: all_people.length,
 				peers: Array.from(seen_peers),
 			})
@@ -101,7 +90,7 @@ namespace $.$$ {
 			this.$.$mol_log3_rise({
 				place: this,
 				message: 'People from shared registry',
-				refs_in_registry: person_refs.length,
+				refs_in_registry: all_people_raw.length,
 				people_found: all_people.length,
 				people: all_people.map(p => ({
 					land_ref: p?.land().ref().description ?? '?',
