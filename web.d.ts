@@ -8316,7 +8316,6 @@ declare namespace $ {
     export class $bog_pay_app_person extends $bog_pay_app_person_base {
         active_sub(): $bog_pay_app_subscription | null;
         ensure_admin_and_registry(): void;
-        grant_admin_rule(): void;
         register_in_people(): void;
     }
     export {};

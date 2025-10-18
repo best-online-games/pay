@@ -16582,17 +16582,30 @@ var $;
             return null;
         }
         ensure_admin_and_registry() {
-            this.grant_admin_rule();
             this.register_in_people();
-        }
-        grant_admin_rule() {
         }
         register_in_people() {
             const people = $bog_pay_app_people.hall();
             const list = people.List(null);
-            if (!list)
+            if (!list) {
+                this.$.$mol_log3_rise({
+                    place: this,
+                    message: 'People list is null',
+                    hint: 'Cannot register user in global People registry',
+                });
                 return;
+            }
+            const wasRegistered = list.has(this.ref());
             list.has(this.ref(), true);
+            if (!wasRegistered) {
+                this.$.$mol_log3_rise({
+                    place: this,
+                    message: 'User registered in People',
+                    person: this.ref().description,
+                    name: this.Name()?.str() || '(no name)',
+                    email: this.Email()?.str() || '(no email)',
+                });
+            }
         }
     }
     __decorate([
@@ -16601,9 +16614,6 @@ var $;
     __decorate([
         $mol_action
     ], $bog_pay_app_person.prototype, "ensure_admin_and_registry", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_app_person.prototype, "grant_admin_rule", null);
     __decorate([
         $mol_action
     ], $bog_pay_app_person.prototype, "register_in_people", null);
