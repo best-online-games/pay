@@ -2,5 +2,9 @@ $bog_pay_app_account $mol_page
 	title @ \Personal Cabinet
 	Head null
 	body /
-		<= Content $mol_text
-			text @ \Personal Cabinet in progress
+		<= Info_peer
+		<= Info_status
+		<= Info_period
+		<= Info_renewal
+		<= Info_vpn
+		<= Actions
