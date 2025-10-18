@@ -7,7 +7,18 @@ namespace $.$$ {
 			return $bog_pay_app_admin.is_me()
 		}
 		title() {
-			if (this.is_admin()) {
+			console.log(this.is_admin(), 'admin')
+			if (this.is_admin() || true) {
+				$mol_style_define($bog_pay_app, {
+					Deck: {
+						Switch: {
+							Option: {
+								':nth-of-type(4)': {},
+							},
+						},
+					},
+				})
+
 				return this.$.$mol_locale.text('$bog_pay_app_admin_page_title')
 			} // guard
 			return ''
