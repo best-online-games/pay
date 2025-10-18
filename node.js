@@ -16598,7 +16598,10 @@ var $;
         }
         register_in_people() {
             const people = $bog_pay_app_people.hall();
-            people.List(null).has(this.ref(), true);
+            const list = people.List(null);
+            if (!list)
+                return;
+            list.has(this.ref(), true);
         }
     }
     __decorate([
@@ -16626,7 +16629,7 @@ var $;
         static hall() {
             const glob = this.$.$hyoo_crus_glob;
             const shared_land = glob.land_grab({ '': $hyoo_crus_rank_post('just') });
-            const ref = this.$.$hyoo_crus_ref_resolve(shared_land.ref(), this.$.$hyoo_crus_ref('___bogPeople'));
+            const ref = this.$.$hyoo_crus_ref_resolve(shared_land.ref(), this.$.$hyoo_crus_ref('bogPeopl'));
             return glob.Node(ref, $bog_pay_app_people);
         }
     }
