@@ -34,78 +34,74 @@ namespace $.$$ {
 			return Number($bog_pay_app_plan.basic().PriceCents()?.val() ?? '9900')
 		}
 
-		// People registry - collect persons from all home lands
+		// People registry - read from shared registry land
+		@$mol_mem
 		people() {
-			const glob = this.$.$hyoo_crus_glob
+			console.log('>>> Admin.people() - reading from shared registry')
 
-			// CRITICAL: Convert Set to Array FIRST to break reactivity cycle!
-			// Accessing lands inside loop adds to touched set -> triggers recalc -> infinite loop
-			const land_refs_snapshot = Array.from(glob.lands_touched.values())
+			// Get shared registry
+			const people_registry = $bog_pay_app_people.hall()
+			console.log('>>> Got registry land', people_registry.land().ref().description)
 
-			console.log('>>> Admin.people() - checking lands', {
-				total_lands: land_refs_snapshot.length,
-				land_refs: land_refs_snapshot.map(ref => ref.description ?? ref.toString()),
-			})
+			const list = people_registry.List(null)
+			if (!list) {
+				console.log('>>> ERROR: registry list is null!')
+				return []
+			}
+
+			// Get all person references from registry
+			const person_refs = list.items_maybe()
+			console.log('>>> Registry has', person_refs.length, 'person refs')
 
 			const all_people: $bog_pay_app_person[] = []
 			const seen_peers = new Set<string>()
 
-			// Iterate through static snapshot (not reactive set)
-			for (const land_ref of land_refs_snapshot) {
+			// Resolve each reference to actual Person object
+			for (const person_ref of person_refs) {
 				try {
-					const land = glob.Land(land_ref)
-					const peer = land.auth().peer()
+					console.log('>>> Resolving person ref', person_ref.description)
 
-					console.log('>>> Checking land', {
-						land_ref: land_ref.description ?? land_ref.toString(),
-						peer,
-						seen_before: seen_peers.has(peer),
-					})
+					// Load the person from their home land
+					const glob = this.$.$hyoo_crus_glob
+					const person = glob.Node(person_ref, $bog_pay_app_person)
 
-					// Skip if we already have person from this peer (idempotency)
-					if (seen_peers.has(peer)) {
-						console.log('>>> SKIPPED - peer already seen')
+					if (!person) {
+						console.log('>>> WARNING: Could not resolve person ref', person_ref.description)
 						continue
 					}
 
-					// Each user has Person in their home land at root
-					const person = land.home().hall_by($bog_pay_app_person, {})
-
-					console.log('>>> Got person from land.home().hall_by', {
-						person_exists: !!person,
-						person_land_ref: person?.land().ref().description,
-						person_peer: person?.land().auth().peer(),
-						person_name: person?.Name()?.str() || '(no name)',
-						person_email: person?.Email()?.str() || '(no email)',
+					const peer = person.land().auth().peer()
+					console.log('>>> Got person', {
+						ref: person_ref.description,
+						peer,
+						name: person.Name()?.str() || '(no name)',
+						email: person.Email()?.str() || '(no email)',
 					})
 
-					// Check if this person has any data
-					if (person) {
-						all_people.push(person)
-						seen_peers.add(peer)
-						console.log('>>> ADDED person to list', { total_now: all_people.length })
-					} else {
-						console.log('>>> NO PERSON found in this land')
+					// Skip duplicates (same peer)
+					if (seen_peers.has(peer)) {
+						console.log('>>> SKIPPED - duplicate peer')
+						continue
 					}
+
+					all_people.push(person)
+					seen_peers.add(peer)
+					console.log('>>> ADDED to list, total:', all_people.length)
 				} catch (e) {
-					console.log('>>> ERROR processing land', {
-						land_ref: land_ref.description ?? land_ref.toString(),
-						error: e,
-					})
-					// Skip lands that don't have person data
+					console.log('>>> ERROR resolving person ref', person_ref.description, e)
 				}
 			}
 
 			console.log('>>> Admin.people() - FINAL RESULT', {
-				lands_checked: land_refs_snapshot.length,
+				refs_in_registry: person_refs.length,
 				people_found: all_people.length,
 				peers: Array.from(seen_peers),
 			})
 
 			this.$.$mol_log3_rise({
 				place: this,
-				message: 'People collected from home lands',
-				lands_checked: land_refs_snapshot.length,
+				message: 'People from shared registry',
+				refs_in_registry: person_refs.length,
 				people_found: all_people.length,
 				people: all_people.map(p => ({
 					land_ref: p?.land().ref().description ?? '?',

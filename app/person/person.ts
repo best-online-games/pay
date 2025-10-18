@@ -26,29 +26,38 @@ namespace $ {
 			return null
 		}
 
-		// Registration happens separately, not in active_sub to avoid loops
+		// Registration: add reference to this Person into shared registry
+		// Person lives in user's home land, but reference goes to shared registry
 		@$mol_mem
 		ensure_registered() {
-			console.log('>>> ensure_registered called', new Error().stack)
+			console.log('>>> ensure_registered called for Person', this.ref().description)
 
+			// Get shared registry
 			const people = $bog_pay_app_people.hall()
-			console.log('>>> got people.hall()')
+			console.log('>>> got shared people registry land', people.land().ref().description)
 
 			const list = people.List(null)
 			console.log('>>> got list', list)
-			if (!list) return false
+			if (!list) {
+				console.log('>>> ERROR: list is null!')
+				return false
+			}
 
+			// Check if this Person ref is already in the list
 			const wasRegistered = list.has(this.ref())
-			console.log('>>> wasRegistered', wasRegistered)
+			console.log('>>> wasRegistered', wasRegistered, 'my ref:', this.ref().description)
 
 			if (!wasRegistered) {
-				console.log('>>> adding to list')
+				console.log('>>> adding my Person ref to shared registry')
 				list.has(this.ref(), true)
-				console.log('>>> added to list')
+				console.log('>>> added!')
+
 				this.$.$mol_log3_rise({
 					place: this,
-					message: 'User registered in People list',
+					message: 'User registered in People',
 					person: this.ref().description,
+					name: this.Name()?.str() || '(no name)',
+					email: this.Email()?.str() || '(no email)',
 				})
 			}
 			console.log('>>> ensure_registered done')
