@@ -169,43 +169,7 @@ namespace $.$$ {
 
 		Attach_images() {
 			const $ = this.$
-			const self = this
-			return $.$mol_button_open.make({
-				accept: () => 'image/*',
-				multiple: () => false,
-				sub: function () {
-					const bins = self.account().profile()?.Photos()?.remote_list() ?? []
-					const data = bins[0]?.val() ?? null
-					const content = data
-						? $.$mol_image.make({
-								title: () => '',
-								uri: () => {
-									if (!data) return ''
-									const blob = new Blob([data], { type: 'image/*' })
-									return URL.createObjectURL(blob)
-								},
-							})
-						: $.$mol_icon_upload.make({})
-					// Ensure native file input is present so click opens picker
-					// and show either current image or upload icon
-					// @ts-ignore - this is $mol_button_open instance
-					return [content, this.Native()]
-				},
-				hint: () => 'Изменить изображение',
-				files: (next?: readonly File[]) => {
-					if (next && next.length) {
-						const person = self.account().profile()!
-						const list = person.Photos(null)!
-						const existed = person.Photos()?.remote_list() ?? []
-						if (existed[0]) list.has(existed[0].ref(), false)
-						const buf = new Uint8Array(self.$.$mol_wire_sync(next[0]).arrayBuffer())
-						const bin = list.remote_make({})!
-						bin.val(buf)
-					}
-					// reset file input after handling
-					return []
-				},
-			})
+			return $.$bog_pay_app_account_avatar.make({})
 		}
 
 		Download_ovpn_btn() {

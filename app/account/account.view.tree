@@ -7,4 +7,5 @@ $bog_pay_app_account $mol_page
 		<= Info_period
 		<= Info_renewal
 		<= Info_vpn
+		<= Attach_images
 		<= Actions
