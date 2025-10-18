@@ -6,7 +6,7 @@ namespace $ {
 		// НЕ МЕНЯТЬ !!!!!!!!!!!!!!!!!!
 		// Fixed public land ID for shared People registry
 		// All users must use the SAME land ID to see each other
-		static shared_land_id = 'bogPay00_people00_Shared00'
+		static shared_land_id = 'bogPay01_people01_Shared01' // Новый ID, без старых данных
 
 		@$mol_mem
 		static hall() {
