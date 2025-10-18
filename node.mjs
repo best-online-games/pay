@@ -16624,7 +16624,10 @@ var $;
         List: $hyoo_crus_list_ref_to(() => $bog_pay_app_person),
     }) {
         static hall() {
-            return this.$.$hyoo_crus_glob.home().hall_by($bog_pay_app_people, { '': $hyoo_crus_rank_post('just') });
+            const glob = this.$.$hyoo_crus_glob;
+            const shared_land = glob.land_grab({ '': $hyoo_crus_rank_post('just') });
+            const ref = this.$.$hyoo_crus_ref_resolve(shared_land.ref(), this.$.$hyoo_crus_ref('___bogPeople'));
+            return glob.Node(ref, $bog_pay_app_people);
         }
     }
     __decorate([
@@ -17104,22 +17107,10 @@ var $;
             const my_peer = this.$.$hyoo_crus_glob.home().land().auth().peer();
             return $.$bog_pay_app_admin_peers.includes(my_peer);
         }
-        static preset(rank = $hyoo_crus_rank_rule) {
-            return {};
-        }
-        static preset_rule() {
-            return this.preset($hyoo_crus_rank_rule);
-        }
     }
     __decorate([
         $mol_mem
     ], $bog_pay_app_admin, "is_me", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_admin, "preset", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_admin, "preset_rule", null);
     $.$bog_pay_app_admin = $bog_pay_app_admin;
 })($ || ($ = {}));
 

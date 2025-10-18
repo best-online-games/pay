@@ -8502,8 +8502,6 @@ declare namespace $ {
     const $bog_pay_app_admin_peers: readonly ["SjixkGkN"];
     class $bog_pay_app_admin extends $mol_object2 {
         static is_me(): boolean;
-        static preset(rank?: typeof $hyoo_crus_rank.Value): $hyoo_crus_rank_preset;
-        static preset_rule(): $hyoo_crus_rank_preset;
     }
 }
 
