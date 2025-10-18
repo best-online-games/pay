@@ -8268,8 +8268,7 @@ declare namespace $ {
     };
     export class $bog_pay_app_person extends $bog_pay_app_person_base {
         active_sub(): $bog_pay_app_subscription | null;
-        ensure_admin_and_registry(): void;
-        register_in_people(): void;
+        ensure_registered(): boolean;
     }
     export {};
 }
@@ -8498,7 +8497,7 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    const $bog_pay_app_admin_peers: readonly ["mcBM6jhX", "SSCOg7yi"];
+    const $bog_pay_app_admin_peers: readonly ["6E71EH2t", "mcBM6jhX", "SSCOg7yi"];
     class $bog_pay_app_admin extends $mol_object2 {
         static is_me(): boolean;
     }
@@ -8521,7 +8520,7 @@ declare namespace $.$$ {
         title(): string;
         sub_title(): string;
         price_cents(): number;
-        people(): readonly $bog_pay_app_person[];
+        people(): $bog_pay_app_person[];
         rows(): $mol_row[];
         cron_loop(): any;
         person_peer(index: number): string;

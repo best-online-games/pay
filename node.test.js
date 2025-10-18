@@ -16567,7 +16567,6 @@ var $;
         Photos: $hyoo_crus_list_ref_to(() => $hyoo_crus_atom_bin),
     }) {
         active_sub() {
-            this.ensure_admin_and_registry();
             const now = Date.now();
             const subs = this.Subscriptions()?.remote_list() ?? [];
             for (const sub of subs) {
@@ -16581,42 +16580,36 @@ var $;
             }
             return null;
         }
-        ensure_admin_and_registry() {
-            this.register_in_people();
-        }
-        register_in_people() {
+        ensure_registered() {
+            console.log('>>> ensure_registered called', new Error().stack);
             const people = $bog_pay_app_people.hall();
+            console.log('>>> got people.hall()');
             const list = people.List(null);
-            if (!list) {
-                this.$.$mol_log3_rise({
-                    place: this,
-                    message: 'People list is null',
-                    hint: 'Cannot register user in global People registry',
-                });
-                return;
-            }
+            console.log('>>> got list', list);
+            if (!list)
+                return false;
             const wasRegistered = list.has(this.ref());
-            list.has(this.ref(), true);
+            console.log('>>> wasRegistered', wasRegistered);
             if (!wasRegistered) {
+                console.log('>>> adding to list');
+                list.has(this.ref(), true);
+                console.log('>>> added to list');
                 this.$.$mol_log3_rise({
                     place: this,
-                    message: 'User registered in People',
+                    message: 'User registered in People list',
                     person: this.ref().description,
-                    name: this.Name()?.str() || '(no name)',
-                    email: this.Email()?.str() || '(no email)',
                 });
             }
+            console.log('>>> ensure_registered done');
+            return true;
         }
     }
     __decorate([
         $mol_mem
     ], $bog_pay_app_person.prototype, "active_sub", null);
     __decorate([
-        $mol_action
-    ], $bog_pay_app_person.prototype, "ensure_admin_and_registry", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_app_person.prototype, "register_in_people", null);
+        $mol_mem
+    ], $bog_pay_app_person.prototype, "ensure_registered", null);
     $.$bog_pay_app_person = $bog_pay_app_person;
 })($ || ($ = {}));
 
@@ -16629,13 +16622,13 @@ var $;
     }) {
         static hall() {
             const glob = this.$.$hyoo_crus_glob;
-            const shared_land = glob.land_grab({ '': $hyoo_crus_rank_post('just') });
+            const home_land = glob.home().land();
             this.$.$mol_log3_rise({
                 place: this,
-                message: 'People hall land',
-                land_ref: shared_land.ref().description,
+                message: 'People hall land (using home)',
+                land_ref: home_land.ref().description,
             });
-            const ref = this.$.$hyoo_crus_ref_resolve(shared_land.ref(), this.$.$hyoo_crus_ref('___bogPeopl'));
+            const ref = this.$.$hyoo_crus_ref_resolve(home_land.ref(), this.$.$hyoo_crus_ref('___bogPeopl'));
             return glob.Node(ref, $bog_pay_app_people);
         }
     }
@@ -17109,6 +17102,7 @@ var $;
 var $;
 (function ($) {
     $.$bog_pay_app_admin_peers = [
+        '6E71EH2t',
         'mcBM6jhX',
         'SSCOg7yi',
     ];
@@ -17173,18 +17167,38 @@ var $;
                 return Number($bog_pay_app_plan.basic().PriceCents()?.val() ?? '9900');
             }
             people() {
-                const list = $bog_pay_app_people.hall().List()?.remote_list() ?? [];
+                const glob = this.$.$hyoo_crus_glob;
+                const land_refs_snapshot = Array.from(glob.lands_touched.values());
+                const all_people = [];
+                const seen_peers = new Set();
+                for (const land_ref of land_refs_snapshot) {
+                    try {
+                        const land = glob.Land(land_ref);
+                        const peer = land.auth().peer();
+                        if (seen_peers.has(peer))
+                            continue;
+                        const person = land.home().hall_by($bog_pay_app_person, {});
+                        if (person) {
+                            all_people.push(person);
+                            seen_peers.add(peer);
+                        }
+                    }
+                    catch (e) {
+                    }
+                }
                 this.$.$mol_log3_rise({
                     place: this,
-                    message: 'People list loaded',
-                    count: list.length,
-                    people: list.map(p => ({
+                    message: 'People collected from home lands',
+                    lands_checked: land_refs_snapshot.length,
+                    people_found: all_people.length,
+                    people: all_people.map(p => ({
+                        land_ref: p?.land().ref().description ?? '?',
                         peer: p?.land().auth().peer() ?? '?',
                         name: p?.Name()?.str() || '(no name)',
                         email: p?.Email()?.str() || '(no email)',
                     })),
                 });
-                return list;
+                return all_people;
             }
             rows() {
                 return this.people().map((person, i) => this.Row(i));
@@ -17353,9 +17367,6 @@ var $;
         __decorate([
             $mol_mem
         ], $bog_pay_app_admin_page.prototype, "price_cents", null);
-        __decorate([
-            $mol_mem
-        ], $bog_pay_app_admin_page.prototype, "people", null);
         __decorate([
             $mol_mem
         ], $bog_pay_app_admin_page.prototype, "rows", null);
@@ -17664,7 +17675,11 @@ var $;
 (function ($) {
     class $bog_pay_app_account_domain extends $mol_object2 {
         profile() {
-            return $hyoo_crus_glob.home().hall_by($bog_pay_app_person, {});
+            const person = $hyoo_crus_glob.home().hall_by($bog_pay_app_person, {});
+            if (person) {
+                person.ensure_registered();
+            }
+            return person;
         }
         plan_basic() {
             return $bog_pay_app_plan.basic();
