@@ -15,6 +15,9 @@ namespace $.$$ {
 			const title = this.option_title(id)
 			option.option_title = () => title
 
+			// Пробрасываем checked (для переключения)
+			option.option_checked = (next?: boolean) => this.option_checked(id, next)
+
 			// Пробрасываем some_attr
 			const someAttr = this.option_some_attr(id)
 			if (someAttr) {

@@ -3,3 +3,4 @@ $bog_pay_switch_option $mol_check
 	option_title \
 	label /
 		<= option_title
+	checked? <=> option_checked? false

@@ -2,6 +2,9 @@ namespace $.$$ {
 	const { rem } = $mol_style_unit
 
 	$mol_style_define($bog_pay_app_games, {
+		some: {
+			color: 'red',
+		},
 		Games_section: {
 			display: 'flex',
 			flexDirection: 'column',
