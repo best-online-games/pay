@@ -5,7 +5,7 @@ namespace $ {
 	// SHARED REGISTRY LAND ID - everyone must use the same land!
 	// This is the land_ref created by admin, all users write to it
 	// TODO: Replace with actual land_ref after admin creates it
-	export const $bog_pay_app_people_registry_land = 'SSCOg7yi_erVXV8hP_Shared0P'
+	export const $bog_pay_app_people_registry_land = 'a5ppYKwl_7XdWXlnm'
 
 	export class $bog_pay_app_people extends $hyoo_crus_entity.with({
 		List: $hyoo_crus_list_ref_to(() => $bog_pay_app_person),
