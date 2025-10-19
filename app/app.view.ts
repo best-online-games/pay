@@ -8,8 +8,6 @@ namespace $.$$ {
 		@$mol_mem
 		override Deck() {
 			const deck = super.Deck()
-			console.log('app Deck() created')
-			// Устанавливаем атрибут для второй кнопки (Games с индексом '1')
 			deck.switch_option_some_attr = (id: string) => {
 				const result = id === '1' ? 'bla' : ''
 				console.log('app deck.switch_option_some_attr:', { id, result })
