@@ -25,7 +25,7 @@ namespace $ {
 				}
 
 				const person_ref = person.ref()
-				const already_has = list.has(person_ref.description!)
+				const already_has = $mol_wire_sync(list).has(person_ref.description!)
 
 				if (already_has) {
 					console.log('>>> User already registered in global land', {
@@ -36,7 +36,7 @@ namespace $ {
 				}
 
 				// Add to global registry
-				list.add(person_ref.description!)
+				$mol_wire_sync(list).add(person_ref.description!)
 
 				console.log('>>> ✅ User registered in global land', {
 					person_ref: person_ref.description,
