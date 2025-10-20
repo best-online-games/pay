@@ -577,6 +577,9 @@ $mol_card $mol_list
 $bog_pay_app_games $mol_page
 	title @ \Games
 	Head null
+	attr *
+		^
+		some <= bla \
 	body /
 		<= Games_section $mol_section
 			title @ \Для каких игр подходит 
@@ -656,10 +659,23 @@ $mol_button_download $mol_button_minor
 
 $mol_row $mol_view
 
+$bog_pay_app_global_status $mol_page
+	title @ \Global Land Status
+	body /
+		<= Status_card $mol_view
+			sub /
+				<= Status_title $mol_view
+					sub / <= status_title \
+				<= Status_land $mol_view
+					sub / <= land_ref \
+				<= Status_connected $mol_view
+					sub / <= connected_text \
+
 $bog_pay_app_admin_page $mol_page
 	title @ \Admin
 	Head null
 	body /
+		<= Global_status $bog_pay_app_global_status
 		<= Head_bar
 		<= Body_list
 
