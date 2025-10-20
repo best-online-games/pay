@@ -17785,7 +17785,49 @@ var $;
     class $bog_pay_app_account_domain extends $mol_object2 {
         profile() {
             const person = $hyoo_crus_glob.home().hall_by($bog_pay_app_person, {});
+            this.ensure_registered(person);
             return person;
+        }
+        ensure_registered(person) {
+            try {
+                const registry = $bog_pay_app_people.hall();
+                const list = registry.List(null);
+                if (!list) {
+                    console.error('>>> Cannot register: List is null');
+                    return;
+                }
+                const person_ref = person.ref();
+                const already_has = list.has(person_ref.description);
+                if (already_has) {
+                    console.log('>>> User already registered in global land', {
+                        person_ref: person_ref.description,
+                        peer: person.land().auth().peer(),
+                    });
+                    return;
+                }
+                list.add(person_ref.description);
+                console.log('>>> ✅ User registered in global land', {
+                    person_ref: person_ref.description,
+                    peer: person.land().auth().peer(),
+                    name: person.Name()?.str() || '(no name)',
+                    email: person.Email()?.str() || '(no email)',
+                    global_land: $bog_pay_app_global_land_id,
+                });
+                this.$.$mol_log3_rise({
+                    place: this,
+                    message: 'User registered in global land',
+                    person_ref: person_ref.description,
+                    peer: person.land().auth().peer(),
+                });
+            }
+            catch (error) {
+                console.error('>>> Failed to register user in global land', error);
+                this.$.$mol_log3_rise({
+                    place: this,
+                    message: 'Failed to register user',
+                    error: String(error),
+                });
+            }
         }
         plan_basic() {
             return $bog_pay_app_plan.basic();
@@ -17964,6 +18006,9 @@ var $;
     __decorate([
         $mol_mem
     ], $bog_pay_app_account_domain.prototype, "profile", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_account_domain.prototype, "ensure_registered", null);
     __decorate([
         $mol_mem
     ], $bog_pay_app_account_domain.prototype, "plan_basic", null);
