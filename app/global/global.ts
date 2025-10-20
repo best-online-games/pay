@@ -1,10 +1,10 @@
 namespace $ {
 	/**
 	 * Global land helper for bog/pay application
-	 * 
+	 *
 	 * This demonstrates how to access and use a global CRUS land
 	 * similar to how piterjs uses global lands for shared data.
-	 * 
+	 *
 	 * Example usage:
 	 * ```ts
 	 * const globalLand = $bog_pay_app_global.land()
@@ -37,7 +37,7 @@ namespace $ {
 
 		/**
 		 * Example: Access a specific entity type from the global land
-		 * 
+		 *
 		 * Usage:
 		 * ```ts
 		 * const plans = $bog_pay_app_global.hall_by($bog_pay_app_plan, {})
@@ -46,14 +46,14 @@ namespace $ {
 		@$mol_mem_key
 		static hall_by<T extends $hyoo_crus_entity>(
 			Entity: typeof $hyoo_crus_entity & (new (...args: any[]) => T),
-			hint: { [key: string]: any }
+			hint: { [key: string]: any },
 		): T | null {
 			return this.land().home().hall_by(Entity, hint)
 		}
 
 		/**
 		 * Example: Get a specific node from the global land by reference
-		 * 
+		 *
 		 * Usage:
 		 * ```ts
 		 * const ref = this.$.$hyoo_crus_ref('some_relative_id')
@@ -62,7 +62,7 @@ namespace $ {
 		 */
 		static node<T extends $hyoo_crus_entity>(
 			ref: $hyoo_crus_ref,
-			Entity: typeof $hyoo_crus_entity & (new (...args: any[]) => T)
+			Entity: typeof $hyoo_crus_entity & (new (...args: any[]) => T),
 		): T | null {
 			const glob = this.$.$hyoo_crus_glob
 			return glob.Node(ref, Entity)
@@ -98,7 +98,7 @@ namespace $ {
 		 * Get or create the global config from the global land
 		 */
 		@$mol_mem
-		static instance() {
+		static instance(): $bog_pay_app_global_config | null {
 			return $bog_pay_app_global.hall_by($bog_pay_app_global_config, {})
 		}
 	}
