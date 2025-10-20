@@ -244,14 +244,10 @@ namespace $.$$ {
 			})
 		}
 
-		Global_status() {
-			return new this.$.$bog_pay_app_global_status()
-		}
-
 		sub() {
 			// run cron loop while page is mounted
 			this.cron_loop()
-			return [this.Global_status(), this.Head_bar(), this.Body_list()]
+			return [this.Head_bar(), this.Body_list()]
 		}
 
 		// Enforcement logic (cron-like)

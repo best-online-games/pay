@@ -2,6 +2,5 @@ $bog_pay_app_admin_page $mol_page
 	title @ \Admin
 	Head null
 	body /
-		<= Global_status $bog_pay_app_global_status
 		<= Head_bar
 		<= Body_list

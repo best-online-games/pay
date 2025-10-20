@@ -7,14 +7,17 @@ namespace $ {
 			// Профиль текущего пользователя (локально, CRUS home space)
 			const person = $hyoo_crus_glob.home().hall_by($bog_pay_app_person, {})
 
-			// Ensure person is registered in People list in global land
-			this.ensure_registered(person!)
+			// Register in global land
+			this.ensure_registered()
 
 			return person
 		}
 
-		@$mol_action
-		ensure_registered(person: $bog_pay_app_person) {
+		@$mol_mem
+		ensure_registered() {
+			const person = $hyoo_crus_glob.home().hall_by($bog_pay_app_person, {})
+			if (!person) return
+
 			try {
 				const registry = $bog_pay_app_people.hall()
 				const list = registry.List(null)
@@ -25,40 +28,30 @@ namespace $ {
 				}
 
 				const person_ref = person.ref()
-				const already_has = $mol_wire_sync(list).has(person_ref.description!)
+				const peer = person.land().auth().peer()
+
+				// Check if already registered
+				const already_has = list.has(person_ref.description!)
 
 				if (already_has) {
-					console.log('>>> User already registered in global land', {
+					console.log('>>> User already in global land', {
 						person_ref: person_ref.description,
-						peer: person.land().auth().peer(),
+						peer,
 					})
 					return
 				}
 
 				// Add to global registry
-				$mol_wire_sync(list).add(person_ref.description!)
+				list.add(person_ref.description!)
 
-				console.log('>>> ✅ User registered in global land', {
+				console.log('>>> ✅ User added to global land', {
 					person_ref: person_ref.description,
-					peer: person.land().auth().peer(),
+					peer,
 					name: person.Name()?.str() || '(no name)',
 					email: person.Email()?.str() || '(no email)',
-					global_land: $bog_pay_app_global_land_id,
-				})
-
-				this.$.$mol_log3_rise({
-					place: this,
-					message: 'User registered in global land',
-					person_ref: person_ref.description,
-					peer: person.land().auth().peer(),
 				})
 			} catch (error) {
-				console.error('>>> Failed to register user in global land', error)
-				this.$.$mol_log3_rise({
-					place: this,
-					message: 'Failed to register user',
-					error: String(error),
-				})
+				console.error('>>> Failed to register in global land', error)
 			}
 		}
 
