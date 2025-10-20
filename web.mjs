@@ -17129,7 +17129,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$bog_pay_app_people_registry_land = 'a5ppYKwl_7XdWXlnm';
+    $.$bog_pay_app_people_registry_land = $bog_pay_app_global_land_id;
     class $bog_pay_app_people extends $hyoo_crus_entity.with({
         List: $hyoo_crus_list_ref_to(() => $bog_pay_app_person),
     }) {
@@ -17145,19 +17145,18 @@ var $;
             return registry_land.ref().description;
         }
         static hall() {
-            const glob = this.$.$hyoo_crus_glob;
-            const registry_ref = this.$.$hyoo_crus_ref($.$bog_pay_app_people_registry_land);
-            const shared_land = glob.Land(registry_ref);
+            const registry = $bog_pay_app_global.hall_by($bog_pay_app_people, {});
+            if (!registry) {
+                throw new Error('Cannot access people registry in global land');
+            }
+            if (!registry.List(null)) {
+                console.log('>>> Initializing people registry List');
+            }
             this.$.$mol_log3_rise({
                 place: this,
-                message: 'People registry (shared land)',
-                land_ref: shared_land.ref().description,
+                message: 'People registry accessed',
+                land_ref: $bog_pay_app_global_land_id,
             });
-            let registry = shared_land.home().hall_by($bog_pay_app_people, {});
-            if (!registry) {
-                console.warn('>>> Registry not found in land, creating...');
-                registry = shared_land.home().hall_by($bog_pay_app_people, {});
-            }
             return registry;
         }
     }
@@ -17207,16 +17206,15 @@ var $;
                 console.log('>>> Admin.people() - reading from shared registry');
                 const people_registry = $bog_pay_app_people.hall();
                 if (!people_registry) {
-                    console.warn('>>> Shared registry land not found — check $bog_pay_app_people_registry_land or run init_registry() as admin');
+                    console.warn('>>> Shared registry not found');
                     return [];
                 }
                 const list = people_registry.List();
                 if (!list) {
-                    console.log('>>> ERROR: registry list is null!');
+                    console.warn('>>> Registry list is null');
                     return [];
                 }
                 const all_people_raw = list.remote_list();
-                console.log('>>> Registry remote_list returned', all_people_raw.length, 'people');
                 const all_people = [];
                 const seen_peers = new Set();
                 for (const person of all_people_raw) {
