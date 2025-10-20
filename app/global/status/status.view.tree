@@ -1,0 +1,31 @@
+$bog_pay_app_global_status $mol_page
+	title @ \Global Land Status
+	body /
+		<= Status_card $mol_view
+			sub /
+				<= Status_title $mol_view
+					sub / <= status_title \
+				<= Status_land $mol_view
+					sub / <= land_ref \
+				<= Status_connected $mol_view
+					sub / <= connected_text \
+		<= Config_card $mol_view
+			sub /
+				<= Config_title $mol_view
+					sub / @ \Global Configuration
+				<= App_name $mol_view
+					sub / <= app_name \
+				<= Maintenance $mol_view
+					sub / <= maintenance_text \
+				<= Announcement $mol_view
+					sub / <= announcement \
+		<= Plan_card $mol_view
+			sub /
+				<= Plan_title $mol_view
+					sub / @ \Plan from Global Land
+				<= Plan_name $mol_view
+					sub / <= plan_title \
+				<= Plan_price $mol_view
+					sub / <= plan_price \
+				<= Plan_descr $mol_view
+					sub / <= plan_descr \
