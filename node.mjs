@@ -16990,170 +16990,7 @@ var $;
 })($ || ($ = {}));
 
 ;
-"use strict";
-var $;
-(function ($) {
-    $.$bog_pay_app_global_land_id = 'zGBdtaer_FopVR1YS';
-    class $bog_pay_app_global extends $mol_object2 {
-        static land() {
-            const glob = this.$.$hyoo_crus_glob;
-            const land_ref = this.$.$hyoo_crus_ref($.$bog_pay_app_global_land_id);
-            const land = glob.Land(land_ref);
-            this.$.$mol_log3_rise({
-                place: this,
-                message: 'Global land accessed',
-                land_ref: land.ref().description,
-            });
-            return land;
-        }
-        static hall_by(Entity, hint) {
-            return this.land().home().hall_by(Entity, hint);
-        }
-        static node(ref, Entity) {
-            const glob = this.$.$hyoo_crus_glob;
-            return glob.Node(ref, Entity);
-        }
-        static resolve_ref(relative_id) {
-            const base = this.land().ref();
-            const rel = this.$.$hyoo_crus_ref(relative_id);
-            return this.$.$hyoo_crus_ref_resolve(base, rel);
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_global, "land", null);
-    __decorate([
-        $mol_mem_key
-    ], $bog_pay_app_global, "hall_by", null);
-    $.$bog_pay_app_global = $bog_pay_app_global;
-    class $bog_pay_app_global_config extends $hyoo_crus_entity.with({
-        AppName: $hyoo_crus_text,
-        Version: $hyoo_crus_atom_str,
-        MaintenanceMode: $hyoo_crus_atom_str,
-        AnnouncementText: $hyoo_crus_text,
-    }) {
-        is_maintenance() {
-            return this.MaintenanceMode()?.val() === 'true';
-        }
-        static instance() {
-            return $bog_pay_app_global.hall_by($bog_pay_app_global_config, {});
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_global_config.prototype, "is_maintenance", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_global_config, "instance", null);
-    $.$bog_pay_app_global_config = $bog_pay_app_global_config;
-})($ || ($ = {}));
-
-;
-	($.$bog_pay_app_global_status) = class $bog_pay_app_global_status extends ($.$mol_page) {
-		status_title(){
-			return "";
-		}
-		Status_title(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.status_title())]);
-			return obj;
-		}
-		land_ref(){
-			return "";
-		}
-		Status_land(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.land_ref())]);
-			return obj;
-		}
-		connected_text(){
-			return "";
-		}
-		Status_connected(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.connected_text())]);
-			return obj;
-		}
-		Status_card(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([
-				(this.Status_title()), 
-				(this.Status_land()), 
-				(this.Status_connected())
-			]);
-			return obj;
-		}
-		title(){
-			return (this.$.$mol_locale.text("$bog_pay_app_global_status_title"));
-		}
-		body(){
-			return [(this.Status_card())];
-		}
-	};
-	($mol_mem(($.$bog_pay_app_global_status.prototype), "Status_title"));
-	($mol_mem(($.$bog_pay_app_global_status.prototype), "Status_land"));
-	($mol_mem(($.$bog_pay_app_global_status.prototype), "Status_connected"));
-	($mol_mem(($.$bog_pay_app_global_status.prototype), "Status_card"));
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $bog_pay_app_global_status extends $.$bog_pay_app_global_status {
-            status_title() {
-                try {
-                    const land = $bog_pay_app_global.land();
-                    return land ? '✅ Global Land Connected' : '❌ Not Connected';
-                }
-                catch (error) {
-                    return '❌ Error: ' + String(error);
-                }
-            }
-            land_ref() {
-                try {
-                    const land = $bog_pay_app_global.land();
-                    return 'Land ID: ' + (land?.ref().description ?? 'N/A');
-                }
-                catch {
-                    return 'Land ID: N/A';
-                }
-            }
-            connected_text() {
-                try {
-                    const land = $bog_pay_app_global.land();
-                    const online = land ? 'Online' : 'Offline';
-                    return 'Status: ' + online;
-                }
-                catch {
-                    return 'Status: Error';
-                }
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $bog_pay_app_global_status.prototype, "status_title", null);
-        __decorate([
-            $mol_mem
-        ], $bog_pay_app_global_status.prototype, "land_ref", null);
-        __decorate([
-            $mol_mem
-        ], $bog_pay_app_global_status.prototype, "connected_text", null);
-        $$.$bog_pay_app_global_status = $bog_pay_app_global_status;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
 	($.$bog_pay_app_admin_page) = class $bog_pay_app_admin_page extends ($.$mol_page) {
-		Global_status(){
-			const obj = new this.$.$bog_pay_app_global_status();
-			return obj;
-		}
 		title(){
 			return (this.$.$mol_locale.text("$bog_pay_app_admin_page_title"));
 		}
@@ -17161,21 +16998,16 @@ var $;
 			return null;
 		}
 		body(){
-			return [
-				(this.Global_status()), 
-				(this.Head_bar()), 
-				(this.Body_list())
-			];
+			return [(this.Head_bar()), (this.Body_list())];
 		}
 	};
-	($mol_mem(($.$bog_pay_app_admin_page.prototype), "Global_status"));
 
 
 ;
 "use strict";
 var $;
 (function ($) {
-    $.$bog_pay_app_people_registry_land = $bog_pay_app_global_land_id;
+    $.$bog_pay_app_people_registry_land = 'zGBdtaer_FopVR1YS';
     class $bog_pay_app_people extends $hyoo_crus_entity.with({
         List: $hyoo_crus_list_ref_to(() => $bog_pay_app_person),
     }) {
@@ -17191,18 +17023,19 @@ var $;
             return registry_land.ref().description;
         }
         static hall() {
-            const registry = $bog_pay_app_global.hall_by($bog_pay_app_people, {});
+            const glob = this.$.$hyoo_crus_glob;
+            const registry_ref = this.$.$hyoo_crus_ref($.$bog_pay_app_people_registry_land);
+            const shared_land = glob.Land(registry_ref);
+            console.log('>>> Accessing people registry in global land:', {
+                land_ref: shared_land.ref().description,
+            });
+            const registry = shared_land.home().hall_by($bog_pay_app_people, {});
             if (!registry) {
                 throw new Error('Cannot access people registry in global land');
             }
             if (!registry.List(null)) {
                 console.log('>>> Initializing people registry List');
             }
-            this.$.$mol_log3_rise({
-                place: this,
-                message: 'People registry accessed',
-                land_ref: $bog_pay_app_global_land_id,
-            });
             return registry;
         }
     }
@@ -17410,12 +17243,9 @@ var $;
                     rows: () => this.rows(),
                 });
             }
-            Global_status() {
-                return new this.$.$bog_pay_app_global_status();
-            }
             sub() {
                 this.cron_loop();
-                return [this.Global_status(), this.Head_bar(), this.Body_list()];
+                return [this.Head_bar(), this.Body_list()];
             }
             enforce_all() {
                 if (!this.is_admin())
@@ -17785,10 +17615,13 @@ var $;
     class $bog_pay_app_account_domain extends $mol_object2 {
         profile() {
             const person = $hyoo_crus_glob.home().hall_by($bog_pay_app_person, {});
-            this.ensure_registered(person);
+            this.ensure_registered();
             return person;
         }
-        ensure_registered(person) {
+        ensure_registered() {
+            const person = $hyoo_crus_glob.home().hall_by($bog_pay_app_person, {});
+            if (!person)
+                return;
             try {
                 const registry = $bog_pay_app_people.hall();
                 const list = registry.List(null);
@@ -17797,36 +17630,25 @@ var $;
                     return;
                 }
                 const person_ref = person.ref();
-                const already_has = $mol_wire_sync(list).has(person_ref.description);
+                const peer = person.land().auth().peer();
+                const already_has = list.has(person_ref.description);
                 if (already_has) {
-                    console.log('>>> User already registered in global land', {
+                    console.log('>>> User already in global land', {
                         person_ref: person_ref.description,
-                        peer: person.land().auth().peer(),
+                        peer,
                     });
                     return;
                 }
-                $mol_wire_sync(list).add(person_ref.description);
-                console.log('>>> ✅ User registered in global land', {
+                list.add(person_ref.description);
+                console.log('>>> ✅ User added to global land', {
                     person_ref: person_ref.description,
-                    peer: person.land().auth().peer(),
+                    peer,
                     name: person.Name()?.str() || '(no name)',
                     email: person.Email()?.str() || '(no email)',
-                    global_land: $bog_pay_app_global_land_id,
-                });
-                this.$.$mol_log3_rise({
-                    place: this,
-                    message: 'User registered in global land',
-                    person_ref: person_ref.description,
-                    peer: person.land().auth().peer(),
                 });
             }
             catch (error) {
-                console.error('>>> Failed to register user in global land', error);
-                this.$.$mol_log3_rise({
-                    place: this,
-                    message: 'Failed to register user',
-                    error: String(error),
-                });
+                console.error('>>> Failed to register in global land', error);
             }
         }
         plan_basic() {
@@ -18007,7 +17829,7 @@ var $;
         $mol_mem
     ], $bog_pay_app_account_domain.prototype, "profile", null);
     __decorate([
-        $mol_action
+        $mol_mem
     ], $bog_pay_app_account_domain.prototype, "ensure_registered", null);
     __decorate([
         $mol_mem

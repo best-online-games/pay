@@ -8297,83 +8297,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    export const $bog_pay_app_global_land_id = "zGBdtaer_FopVR1YS";
-    export class $bog_pay_app_global extends $mol_object2 {
-        static land(): $hyoo_crus_land;
-        static hall_by<T extends $hyoo_crus_entity>(Entity: typeof $hyoo_crus_entity & (new (...args: any[]) => T), hint: {
-            [key: string]: any;
-        }): T | null;
-        static node<T extends $hyoo_crus_entity>(ref: $hyoo_crus_ref, Entity: typeof $hyoo_crus_entity & (new (...args: any[]) => T)): T | null;
-        static resolve_ref(relative_id: string): $hyoo_crus_ref;
-    }
-    const $bog_pay_app_global_config_base: Omit<typeof $hyoo_crus_entity, "prototype"> & (new (...args: any[]) => $mol_type_override<$hyoo_crus_entity, {
-        readonly AppName: (auto?: any) => $hyoo_crus_text | null;
-        readonly Version: (auto?: any) => $hyoo_crus_atom_str | null;
-        readonly MaintenanceMode: (auto?: any) => $hyoo_crus_atom_str | null;
-        readonly AnnouncementText: (auto?: any) => $hyoo_crus_text | null;
-    }>) & {
-        schema: {
-            [x: string]: typeof $hyoo_crus_node;
-        } & {
-            readonly AppName: typeof $hyoo_crus_text;
-            readonly Version: typeof $hyoo_crus_atom_str;
-            readonly MaintenanceMode: typeof $hyoo_crus_atom_str;
-            readonly AnnouncementText: typeof $hyoo_crus_text;
-        };
-    };
-    export class $bog_pay_app_global_config extends $bog_pay_app_global_config_base {
-        is_maintenance(): boolean;
-        static instance(): $bog_pay_app_global_config | null;
-    }
-    export {};
-}
-
-declare namespace $ {
-
-	type $mol_view__sub_bog_pay_app_global_status_1 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_view__sub_bog_pay_app_global_status_2 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_view__sub_bog_pay_app_global_status_3 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_view__sub_bog_pay_app_global_status_4 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	export class $bog_pay_app_global_status extends $mol_page {
-		status_title( ): string
-		Status_title( ): $mol_view
-		land_ref( ): string
-		Status_land( ): $mol_view
-		connected_text( ): string
-		Status_connected( ): $mol_view
-		Status_card( ): $mol_view
-		title( ): string
-		body( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=status.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $bog_pay_app_global_status extends $.$bog_pay_app_global_status {
-        status_title(): string;
-        land_ref(): string;
-        connected_text(): string;
-    }
-}
-
-declare namespace $ {
     export const $bog_pay_app_people_registry_land = "zGBdtaer_FopVR1YS";
     const $bog_pay_app_people_base: Omit<typeof $hyoo_crus_entity, "prototype"> & (new (...args: any[]) => $mol_type_override<$hyoo_crus_entity, {
         readonly List: (auto?: any) => {
@@ -8500,7 +8423,6 @@ declare namespace $ {
 declare namespace $ {
 
 	export class $bog_pay_app_admin_page extends $mol_page {
-		Global_status( ): $bog_pay_app_global_status
 		title( ): string
 		Head( ): any
 		body( ): readonly(any)[]
@@ -8529,8 +8451,7 @@ declare namespace $.$$ {
         Head_bar(): $mol_row;
         Row(index: number): $mol_row;
         Body_list(): $mol_list;
-        Global_status(): $bog_pay_app_global_status;
-        sub(): ($mol_list | $mol_row | $bog_pay_app_global_status)[];
+        sub(): ($mol_list | $mol_row)[];
         enforce_all(): void;
         enforce_person(person: $bog_pay_app_person): void;
         charge_person_for_sub(person: $bog_pay_app_person, sub: $bog_pay_app_subscription): boolean;
@@ -8649,7 +8570,7 @@ declare namespace $.$$ {
 declare namespace $ {
     class $bog_pay_app_account_domain extends $mol_object2 {
         profile(): $bog_pay_app_person | null;
-        ensure_registered(person: $bog_pay_app_person): void;
+        ensure_registered(): void;
         plan_basic(): $bog_pay_app_plan;
         sub_active(): $bog_pay_app_subscription | null;
         price_cents(): number;
