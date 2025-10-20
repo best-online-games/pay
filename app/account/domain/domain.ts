@@ -20,22 +20,11 @@ namespace $ {
 
 			try {
 				const registry = $bog_pay_app_people.hall()
-
-				// Get or create List with PUBLIC read/write permissions
-				// This is CRITICAL: List must be accessible to all users
-				let list = registry.List()
+				const list = registry.List()
 
 				if (!list) {
-					console.log('>>> Initializing List with public permissions')
-					// Create List node with public join permissions
-					// Empty key '' means "everyone can read and add one node"
-					// rank_join allows users to register themselves
-					list = registry.List(null)!.remote_ensure({ '': this.$.$hyoo_crus_rank_join('just') })
-
-					if (!list) {
-						console.error('>>> Cannot create List with public permissions')
-						return
-					}
+					console.error('>>> Cannot register: List is null')
+					return
 				}
 
 				const person_ref = person.ref()

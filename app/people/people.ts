@@ -34,25 +34,14 @@ namespace $ {
 				land_ref: shared_land.ref().description,
 			})
 
-			const registry = shared_land.home().hall_by($bog_pay_app_people, {})
+			// IMPORTANT: Pass public permissions when creating registry
+			// This ensures all nested nodes (like List) have public access
+			const registry = shared_land.home().hall_by($bog_pay_app_people, {
+				'': this.$.$hyoo_crus_rank_join('just'),
+			})
 
 			if (!registry) {
 				throw new Error('Cannot access people registry in global land')
-			}
-
-			// Ensure List is initialized with public read permissions
-			// This needs to be done once by someone who has write access to the land
-			let list = registry.List()
-			if (!list) {
-				console.log('>>> Initializing people registry List with public permissions')
-				try {
-					// Try to create List with public join access
-					// '': rank_join means everyone can read and add one entry
-					list = registry.List(null)!.remote_ensure({ '': this.$.$hyoo_crus_rank_join('just') })
-					console.log('>>> List initialized successfully')
-				} catch (e) {
-					console.warn('>>> Could not initialize List (might not have write permissions):', e)
-				}
 			}
 
 			return registry
