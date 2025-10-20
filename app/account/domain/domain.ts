@@ -6,8 +6,60 @@ namespace $ {
 		profile() {
 			// Профиль текущего пользователя (локально, CRUS home space)
 			const person = $hyoo_crus_glob.home().hall_by($bog_pay_app_person, {})
-			// Ensure person is registered in People list (memoized, runs once)
+
+			// Ensure person is registered in People list in global land
+			this.ensure_registered(person!)
+
 			return person
+		}
+
+		@$mol_action
+		ensure_registered(person: $bog_pay_app_person) {
+			try {
+				const registry = $bog_pay_app_people.hall()
+				const list = registry.List(null)
+
+				if (!list) {
+					console.error('>>> Cannot register: List is null')
+					return
+				}
+
+				const person_ref = person.ref()
+				const already_has = list.has(person_ref.description!)
+
+				if (already_has) {
+					console.log('>>> User already registered in global land', {
+						person_ref: person_ref.description,
+						peer: person.land().auth().peer(),
+					})
+					return
+				}
+
+				// Add to global registry
+				list.add(person_ref.description!)
+
+				console.log('>>> ✅ User registered in global land', {
+					person_ref: person_ref.description,
+					peer: person.land().auth().peer(),
+					name: person.Name()?.str() || '(no name)',
+					email: person.Email()?.str() || '(no email)',
+					global_land: $bog_pay_app_global_land_id,
+				})
+
+				this.$.$mol_log3_rise({
+					place: this,
+					message: 'User registered in global land',
+					person_ref: person_ref.description,
+					peer: person.land().auth().peer(),
+				})
+			} catch (error) {
+				console.error('>>> Failed to register user in global land', error)
+				this.$.$mol_log3_rise({
+					place: this,
+					message: 'Failed to register user',
+					error: String(error),
+				})
+			}
 		}
 
 		@$mol_mem
