@@ -9897,44 +9897,109 @@ var $;
     (function ($$) {
         const { rem } = $mol_style_unit;
         $mol_style_define($bog_pay_app_games, {
+            Body_content: {
+                display: 'block',
+                padding: $mol_gap.block,
+                maxWidth: rem(90),
+                margin: [0, 'auto'],
+            },
             Games_section: {
-                display: 'flex',
-                flexDirection: 'column',
-                gridGap: '10px',
-                padding: '10px',
+                display: 'inline',
+                margin: { right: $mol_gap.text },
                 Title: {
-                    fontSize: rem(2),
+                    display: 'inline',
+                    font: {
+                        size: rem(3.5),
+                        weight: 800,
+                    },
+                    color: $mol_theme.text,
                 },
             },
             Bog_ping: {
-                padding: '10px',
+                display: 'inline',
+                Title: {
+                    display: 'inline',
+                    font: {
+                        size: rem(3.5),
+                        weight: 800,
+                    },
+                    color: $mol_theme.focus,
+                },
             },
             Games_grid: {
-                display: 'flex',
-                flexDirection: 'column',
-                padding: '10px',
+                display: 'grid',
+                gridTemplateColumns: 'repeat( auto-fit, minmax(20rem, 1fr) )',
+                gap: $mol_gap.block,
+                margin: [$mol_gap.block, 0],
+                align: { items: 'stretch' },
             },
-            Body_content: {
-                contain: 'none',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
+            Game1: {
+                background: { color: $mol_theme.card },
+                padding: $mol_gap.block,
+                boxShadow: `0 0 0 1px var(--mol_theme_line)`,
+                transition: 'transform .15s ease, box-shadow .15s ease',
+                ':hover': {
+                    transform: 'translateY(-2px)',
+                    boxShadow: `0 .5rem 1.5rem rgba(0,0,0,.08), 0 0 0 1px var(--mol_theme_line)`,
+                },
+            },
+            Game2: {
+                background: { color: $mol_theme.card },
+                padding: $mol_gap.block,
+                boxShadow: `0 0 0 1px var(--mol_theme_line)`,
+                transition: 'transform .15s ease, box-shadow .15s ease',
+                ':hover': {
+                    transform: 'translateY(-2px)',
+                    boxShadow: `0 .5rem 1.5rem rgba(0,0,0,.08), 0 0 0 1px var(--mol_theme_line)`,
+                },
+            },
+            Game3: {
+                background: { color: $mol_theme.card },
+                boxShadow: `0 0 0 1px var(--mol_theme_line)`,
+                transition: 'transform .15s ease, box-shadow .15s ease',
+                ':hover': {
+                    transform: 'translateY(-2px)',
+                    boxShadow: `0 .5rem 1.5rem rgba(0,0,0,.08), 0 0 0 1px var(--mol_theme_line)`,
+                },
+            },
+            Game1_icon: {
+                fontSize: rem(2.5),
+                margin: { bottom: $mol_gap.text },
+            },
+            Game2_icon: {
+                fontSize: rem(2.5),
+                margin: { bottom: $mol_gap.text },
+            },
+            Game3_icon: {
+                fontSize: rem(2.5),
+                margin: { bottom: $mol_gap.text },
+            },
+            Game1_title: {
+                font: { weight: 700, size: rem(1.25) },
+                color: $mol_theme.text,
+                margin: { bottom: $mol_gap.text },
+            },
+            Game2_title: {
+                font: { weight: 700, size: rem(1.25) },
+                color: $mol_theme.text,
+                margin: { bottom: $mol_gap.text },
+            },
+            Game3_title: {
+                font: { weight: 700, size: rem(1.25) },
+                color: $mol_theme.text,
+                margin: { bottom: $mol_gap.text },
             },
             Game1_text: {
-                color: 'red',
-                fontSize: '20px',
-                margin: '10px',
+                color: $mol_theme.text,
+                opacity: 0.8,
             },
             Game2_text: {
-                color: 'blue',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
+                color: $mol_theme.text,
+                opacity: 0.8,
             },
-            Body: {
-                contain: 'none',
+            Game3_text: {
+                color: $mol_theme.text,
+                opacity: 0.8,
             },
         });
     })($$ = $.$$ || ($.$$ = {}));
