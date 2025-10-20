@@ -41,21 +41,18 @@ namespace $.$$ {
 
 			const people_registry = $bog_pay_app_people.hall()
 			if (!people_registry) {
-				console.warn(
-					'>>> Shared registry land not found — check $bog_pay_app_people_registry_land or run init_registry() as admin',
-				)
+				console.warn('>>> Shared registry not found')
 				return []
 			}
 
-			const list = people_registry!.List()
+			const list = people_registry.List()
 			if (!list) {
-				console.log('>>> ERROR: registry list is null!')
+				console.warn('>>> Registry list is null')
 				return []
 			}
 
 			// Use remote_list() which automatically resolves refs to Person objects
 			const all_people_raw = list.remote_list()
-			console.log('>>> Registry remote_list returned', all_people_raw.length, 'people')
 
 			const all_people: $bog_pay_app_person[] = []
 			const seen_peers = new Set<string>()
