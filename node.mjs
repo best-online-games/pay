@@ -9901,7 +9901,6 @@ var $;
                 display: 'block',
                 padding: $mol_gap.block,
                 maxWidth: rem(90),
-                margin: [0, 'auto'],
             },
             Games_section: {
                 display: 'inline',
@@ -9912,13 +9911,10 @@ var $;
                         size: rem(3.5),
                         weight: 800,
                     },
-                    color: $mol_theme.text,
                 },
             },
             Bog_ping: {
-                display: 'inline',
                 Title: {
-                    display: 'inline',
                     font: {
                         size: rem(3.5),
                         weight: 800,
