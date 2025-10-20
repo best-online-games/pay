@@ -17081,12 +17081,11 @@ var $;
             console.log('>>> Accessing people registry in global land:', {
                 land_ref: shared_land.ref().description,
             });
-            const registry = shared_land.home().hall_by($bog_pay_app_people, {});
+            const registry = shared_land.home().hall_by($bog_pay_app_people, {
+                '': this.$.$hyoo_crus_rank_join('just'),
+            });
             if (!registry) {
                 throw new Error('Cannot access people registry in global land');
-            }
-            if (!registry.List(null)) {
-                console.log('>>> Initializing people registry List');
             }
             return registry;
         }
@@ -17676,7 +17675,7 @@ var $;
                 return;
             try {
                 const registry = $bog_pay_app_people.hall();
-                const list = registry.List(null);
+                const list = registry.List();
                 if (!list) {
                     console.error('>>> Cannot register: List is null');
                     return;
