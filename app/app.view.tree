@@ -6,7 +6,7 @@ $bog_pay_app $mol_page
 		<= Lights $mol_lights_toggle
 	body /
 		<= Content
-	Deck $bog_pay_deck
+	Deck $mol_deck
 		Switch => Switch
 		Content => Content
 		items /

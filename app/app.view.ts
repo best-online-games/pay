@@ -5,17 +5,6 @@ namespace $.$$ {
 	})
 
 	export class $bog_pay_app extends $.$bog_pay_app {
-		@$mol_mem
-		override Deck() {
-			const deck = super.Deck()
-			deck.switch_option_some_attr = (id: string) => {
-				const result = id === '1' ? 'bla' : ''
-				console.log('app deck.switch_option_some_attr:', { id, result })
-				return result
-			}
-			return deck
-		}
-
 		body() {
 			const originalLang = this.$.$mol_locale.lang()
 			this.$.$mol_locale.lang('en')

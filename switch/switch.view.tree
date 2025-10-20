@@ -1,3 +1,0 @@
-$bog_pay_switch $mol_switch
-	Option* $bog_pay_switch_option
-	option_some_attr* \
