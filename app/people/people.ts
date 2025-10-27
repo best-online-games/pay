@@ -3,8 +3,8 @@ namespace $ {
   // This is a SHARED land that everyone can write to (to register themselves)
   // All users (including admin) are automatically added to the list when they first access their profile
 
-  // Use the main domain land for people registry (with orgy-level permissions - all can write)
-  export const $bog_pay_app_people_registry_land = 'YpaaEBfX_BcHFsæKs'
+  // Use the main domain land for people registry (with join-level permissions)
+  export const $bog_pay_app_people_registry_land = 'Pnb1U21r_SIUrlFCI'
 
   export class $bog_pay_app_people extends $hyoo_crus_entity.with({
     List: $hyoo_crus_list_ref_to(() => $bog_pay_app_person),

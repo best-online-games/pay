@@ -7,7 +7,7 @@ namespace $.$$ {
   export class $bog_pay_app extends $.$bog_pay_app {
     @$mol_mem
     domain_id() {
-      return 'YpaaEBfX_BcHFsæKs' as $mol_int62_string
+      return 'Pnb1U21r_SIUrlFCI' as $mol_int62_string
     }
 
     @$mol_mem
