@@ -17039,7 +17039,7 @@ var $;
                 land_ref: shared_land.ref().description,
             });
             const registry = shared_land.home().hall_by($bog_pay_app_people, {
-                '': this.$.$hyoo_crus_rank_join('just'),
+                '': this.$.$hyoo_crus_rank(this.$.$hyoo_crus_rank_tier.join),
             });
             if (!registry) {
                 throw new Error('Cannot access people registry in global land');
@@ -19538,41 +19538,7 @@ var $;
     class $bog_pay_app_account_domain extends $mol_object2 {
         profile() {
             const person = $hyoo_crus_glob.home().hall_by($bog_pay_app_person, {});
-            this.ensure_registered();
             return person;
-        }
-        ensure_registered() {
-            const person = $hyoo_crus_glob.home().hall_by($bog_pay_app_person, {});
-            if (!person)
-                return;
-            try {
-                const registry = $bog_pay_app_people.hall();
-                const list = registry.List();
-                if (!list) {
-                    console.error('>>> Cannot register: List is null');
-                    return;
-                }
-                const person_ref = person.ref();
-                const peer = person.land().auth().peer();
-                const already_has = list.has(person_ref.description);
-                if (already_has) {
-                    console.log('>>> User already in global land', {
-                        person_ref: person_ref.description,
-                        peer,
-                    });
-                    return;
-                }
-                list.add(person_ref.description);
-                console.log('>>> ✅ User added to global land', {
-                    person_ref: person_ref.description,
-                    peer,
-                    name: person.Name()?.str() || '(no name)',
-                    email: person.Email()?.str() || '(no email)',
-                });
-            }
-            catch (error) {
-                console.error('>>> Failed to register in global land', error);
-            }
         }
         plan_basic() {
             return $bog_pay_app_plan.basic();
@@ -19751,9 +19717,6 @@ var $;
     __decorate([
         $mol_mem
     ], $bog_pay_app_account_domain.prototype, "profile", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_account_domain.prototype, "ensure_registered", null);
     __decorate([
         $mol_mem
     ], $bog_pay_app_account_domain.prototype, "plan_basic", null);
