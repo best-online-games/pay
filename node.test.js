@@ -17079,9 +17079,9 @@ var $;
             console.log('>>> [REGISTRY STEP 3] Got shared land', {
                 land_ref: shared_land.ref().description,
             });
-            const rank = this.$.$hyoo_crus_rank(this.$.$hyoo_crus_rank_tier.join);
+            const rank = this.$.$hyoo_crus_rank_post('just');
             console.log('>>> [REGISTRY STEP 4] Creating/accessing registry with permissions', {
-                rank_level: this.$.$hyoo_crus_rank_tier.join,
+                rank_level: 'post (orgy - everyone can write)',
             });
             const registry = shared_land.home().hall_by($bog_pay_app_people, {
                 '': rank,
