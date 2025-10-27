@@ -1,9 +1,6 @@
 $bog_pay_app_games $mol_page
 	title @ \Games
 	Head null
-	attr *
-		^
-		some <= bla \
 	body /
 		<= Games_section $mol_section
 			title @ \Для каких игр подходит 
