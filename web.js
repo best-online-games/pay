@@ -17016,7 +17016,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$bog_pay_app_people_registry_land = 'OonXNN12_gSræV7iT';
+    $.$bog_pay_app_people_registry_land = 'YpaaEBfX_BcHFsæKs';
     class $bog_pay_app_people extends $hyoo_crus_entity.with({
         List: $hyoo_crus_list_ref_to(() => $bog_pay_app_person),
     }) {
@@ -17059,9 +17059,10 @@ var $;
             });
             if (!registry.List()) {
                 console.log('>>> [REGISTRY STEP 6] List is null, initializing it');
-                registry.List(null);
+                const list = registry.List(null);
                 console.log('>>> [REGISTRY STEP 7] List initialized', {
                     list_now_exists: !!registry.List(),
+                    list_ref: list.ref().description,
                 });
             }
             else {
@@ -20002,7 +20003,7 @@ var $;
         });
         class $bog_pay_app extends $.$bog_pay_app {
             domain_id() {
-                return 'OonXNN12_gSræV7iT';
+                return 'YpaaEBfX_BcHFsæKs';
             }
             domain_rights() {
                 const land_id = this.domain_id();
@@ -20076,7 +20077,7 @@ var $;
 })($ || ($ = {}));
 
 ;
-var $node = $node || {} ; $node[ "/bog/pay/app/OonXNN12_gSræV7iT!OonXNN12_gSræV7iT.bin" ] = "data:application/octet-stream;base64,AwAAADqJ1zTddoEq/le4kwAAAAAAAAAACwAAAAAAAAD/JTqJ1zTddoEq/le4k9uIApeto3KO5SF/v/S3+yy2vnx3AeuCmmMFEo63fZ6bTIOSfEvPBcUY+NtiG+9J4dPDtEX+550XKiinAj/N2U67eWRz5e4JF/X2qSn60+UMwlXRZtHyz7fCqccQsOR7tMAdetT8lipRJdxwX2cX1U7Inff/OonXNN12AAC4gv9oNbfg1xp0mCChTAyYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA5Czan+rQHElXXi0+gEaNZhdCAkzqNpmBkcQFizBGCc2AqWArETMlGwMoi+Qm3KyZ+48/vVlujRAdKukXcAvcu93c6idc03XYBALiC/2gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAES8DOCimS1DY0xT7lwBnX1yNtLB7n6j9rPzdqc9c+vT2E6l9Q6u17aNLoONek+XHyexJNxJKMZOGZoarTT+HIE="
+var $node = $node || {} ; $node[ "/bog/pay/app/YpaaEBfX_BcHFsæKs!YpaaEBfX_BcHFsæKs.bin" ] = "data:application/octet-stream;base64,AwAAAGKWmhAX1wXBxbPirAAAAAAAAAAACwAAAAAAAAD/8GKWmhAX1wXBxbPirCthSsZdmlHuj/QIYhovZyQDDKoeD/tbCeMn1v5TR/14uCj2Rp4Ql9ZvokLkqDY2XMJxKo3JmdhEoA3BXVZIyIQidi+uWjqzKQ8lmX7FUZ8Riwl6gjyeeJeXwE59Y5YJEiRhN3AstUUzgF2N2iDLg7g/pff/YpaaEBfXAABCk/9oLeRGyZNLPZdT1kRaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABzEEbczqN6yZ0gSkGoCW5JZToCXCi4OSdqf7HLeN3Sb0sgqlSExt0tjPtQSTgL0b+XsWIbXifFPvIaM/KcCATB939ilpoQF9cBAEKT/2gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACsA7iiDUuO80smUI7278RT+d9hpCzQpW7JK4IjrZNp5BofXBh24ZNdfnaE22KS4VkQxkMrt1MA2jEptEprclaL/eC3kRsmTSz2XU9ZEWmeBpG4o6mAJtFNjK2xIe5fyotyU5rOcuVTmDtgmGcFWqctcYntSfyUgvyhjD3tzMhHcntBiyHZ1bnEpBLB9Ax/bjy1UDUvxlPBiaGEiIG2TTq+JYJ72FryJL5O2zKI5Pu2cS59V2YlmTB+PNJYd9Mn91YIELeRGyZNLAABik/9oAAAAAAAAg4zoMedVAAAAAAAASGFsbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADNL5NxT4Jz9XTBbd5n52pYFJA283mHng014xo4LMf6r8EtunY0r2Fdlwp1izfKcEubsVfqecJs2YkZQjKnue/2QAwt5EbJk0sBAGKT/2iDjOgx51VQXgdzoJIAAAAAAAAeLGt3IoPovr7Yi9wAAAAAAAAAAAAAAAAAAAAAAAAAAI2KYJvoBF5zuXbG2j0MPwXwuJ19D77Z2fs7Ydd4ZOMqdsY++lw02Wgg2y1bzaWlUOdQYuDZqF4VqlpiK1D52zw="
 
 
 //# sourceMappingURL=web.js.map
