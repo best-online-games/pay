@@ -3,8 +3,8 @@ namespace $ {
   // This is a SHARED land that everyone can write to (to register themselves)
   // All users (including admin) are automatically added to the list when they first access their profile
 
-  // Use the main domain land for people registry (same as app domain)
-  export const $bog_pay_app_people_registry_land = 'OonXNN12_gSræV7iT'
+  // Use the main domain land for people registry (with orgy-level permissions - all can write)
+  export const $bog_pay_app_people_registry_land = 'YpaaEBfX_BcHFsæKs'
 
   export class $bog_pay_app_people extends $hyoo_crus_entity.with({
     List: $hyoo_crus_list_ref_to(() => $bog_pay_app_person),
@@ -68,9 +68,14 @@ namespace $ {
       // This ensures the List is created with proper permissions for everyone to write
       if (!registry.List()) {
         console.log('>>> [REGISTRY STEP 6] List is null, initializing it')
-        registry.List(null)
+
+        // Create List - it will inherit permissions from the registry land
+        // Since registry was created with join-level permissions, List will have them too
+        const list = registry.List(null)!
+
         console.log('>>> [REGISTRY STEP 7] List initialized', {
           list_now_exists: !!registry.List(),
+          list_ref: list.ref().description,
         })
       } else {
         const list = registry.List()!
