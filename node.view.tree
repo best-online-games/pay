@@ -577,9 +577,6 @@ $mol_card $mol_list
 $bog_pay_app_games $mol_page
 	title @ \Games
 	Head null
-	attr *
-		^
-		some <= bla \
 	body /
 		<= Games_section $mol_section
 			title @ \Для каких игр подходит 
@@ -691,6 +688,7 @@ $mol_deck $mol_list
 		<= Content $mol_view
 
 $bog_pay_app $mol_page
+	Domain $bog_pay_app_domain
 	plugins /
 		<= Theme $bog_pay_theme_auto
 	head /
@@ -706,3 +704,4 @@ $bog_pay_app $mol_page
 			<= Games $bog_pay_app_games
 			<= Personal_cabinet $bog_pay_app_account
 			<= Admin $bog_pay_app_admin_page
+	Yard $hyoo_sync_client
