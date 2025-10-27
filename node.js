@@ -17062,7 +17062,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$bog_pay_app_people_registry_land = 'zGBdtaer_FopVR1YS';
+    $.$bog_pay_app_people_registry_land = 'OonXNN12_gSræV7iT';
     class $bog_pay_app_people extends $hyoo_crus_entity.with({
         List: $hyoo_crus_list_ref_to(() => $bog_pay_app_person),
     }) {

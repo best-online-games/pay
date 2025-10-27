@@ -8293,7 +8293,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    export const $bog_pay_app_people_registry_land = "zGBdtaer_FopVR1YS";
+    export const $bog_pay_app_people_registry_land = "OonXNN12_gSr\u00E6V7iT";
     const $bog_pay_app_people_base: Omit<typeof $hyoo_crus_entity, "prototype"> & (new (...args: any[]) => $mol_type_override<$hyoo_crus_entity, {
         readonly List: (auto?: any) => {
             remote_list(next?: readonly $bog_pay_app_person[] | undefined): readonly $bog_pay_app_person[];
