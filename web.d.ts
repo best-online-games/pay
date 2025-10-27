@@ -8810,6 +8810,7 @@ declare namespace $ {
 declare namespace $ {
     class $bog_pay_app_domain extends $hyoo_crowd_struct {
         editable(): boolean;
+        people_registry(): $bog_pay_app_people;
     }
 }
 
@@ -9007,6 +9008,7 @@ declare namespace $ {
 declare namespace $ {
     class $bog_pay_app_account_domain extends $mol_object2 {
         profile(): $bog_pay_app_person | null;
+        ensure_registered(): void;
         plan_basic(): $bog_pay_app_plan;
         sub_active(): $bog_pay_app_subscription | null;
         price_cents(): number;
