@@ -3,8 +3,8 @@ namespace $ {
   // This is a SHARED land that everyone can write to (to register themselves)
   // All users (including admin) are automatically added to the list when they first access their profile
 
-  // Use the main domain land for people registry (with join-level permissions)
-  export const $bog_pay_app_people_registry_land = 'Pnb1U21r_SIUrlFCI'
+  // Use the main domain land for people registry (with orgy-level permissions - everyone can write)
+  export const $bog_pay_app_people_registry_land = 'YpaaEBfX_BcHFsæKs'
 
   export class $bog_pay_app_people extends $hyoo_crus_entity.with({
     List: $hyoo_crus_list_ref_to(() => $bog_pay_app_person),
@@ -44,10 +44,11 @@ namespace $ {
 
       // IMPORTANT: Pass public permissions when creating registry
       // This ensures all nested nodes (like List) have public access
-      const rank = this.$.$hyoo_crus_rank(this.$.$hyoo_crus_rank_tier.join)
+      // Use POST level (orgy) - everyone is effectively admin and can write
+      const rank = this.$.$hyoo_crus_rank_post('just')
 
       console.log('>>> [REGISTRY STEP 4] Creating/accessing registry with permissions', {
-        rank_level: this.$.$hyoo_crus_rank_tier.join,
+        rank_level: 'post (orgy - everyone can write)',
       })
 
       const registry = shared_land.home().hall_by($bog_pay_app_people, {
