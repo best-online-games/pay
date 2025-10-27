@@ -7,7 +7,52 @@ namespace $ {
       // Профиль текущего пользователя (локально, CRUS home space)
       const person = $hyoo_crus_glob.home().hall_by($bog_pay_app_person, {})
 
+      // Register in global land
+      this.ensure_registered()
+
       return person
+    }
+
+    @$mol_mem
+    ensure_registered() {
+      const person = $hyoo_crus_glob.home().hall_by($bog_pay_app_person, {})
+      if (!person) return
+
+      try {
+        const registry = $bog_pay_app_people.hall()
+        const list = registry.List()
+
+        if (!list) {
+          console.error('>>> Cannot register: List is null')
+          return
+        }
+
+        const person_ref = person.ref()
+        const peer = person.land().auth().peer()
+
+        // Check if already registered
+        const already_has = list.has(person_ref.description!)
+
+        if (already_has) {
+          console.log('>>> User already in global land', {
+            person_ref: person_ref.description,
+            peer,
+          })
+          return
+        }
+
+        // Add to global registry
+        list.add(person_ref.description!)
+
+        console.log('>>> ✅ User added to global land', {
+          person_ref: person_ref.description,
+          peer,
+          name: person.Name()?.str() || '(no name)',
+          email: person.Email()?.str() || '(no email)',
+        })
+      } catch (error) {
+        console.error('>>> Failed to register in global land', error)
+      }
     }
 
     @$mol_mem

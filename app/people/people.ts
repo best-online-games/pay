@@ -1,6 +1,7 @@
 namespace $ {
   // Global shared registry of users for admin overview/cron-like actions
   // This is a SHARED land that everyone can write to (to register themselves)
+  // All users (including admin) are automatically added to the list when they first access their profile
 
   // Use the main domain land for people registry (same as app domain)
   export const $bog_pay_app_people_registry_land = 'OonXNN12_gSræV7iT'
@@ -42,6 +43,12 @@ namespace $ {
 
       if (!registry) {
         throw new Error('Cannot access people registry in global land')
+      }
+
+      // Initialize List field if it doesn't exist yet
+      // This ensures the List is created with proper permissions for everyone to write
+      if (!registry.List()) {
+        registry.List(null)
       }
 
       return registry
