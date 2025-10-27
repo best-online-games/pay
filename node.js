@@ -17078,20 +17078,43 @@ var $;
             return registry_land.ref().description;
         }
         static hall() {
+            console.log('>>> [REGISTRY STEP 1] Starting hall() for people registry');
             const glob = this.$.$hyoo_crus_glob;
             const registry_ref = this.$.$hyoo_crus_ref($.$bog_pay_app_people_registry_land);
+            console.log('>>> [REGISTRY STEP 2] Getting shared land', {
+                land_id: $.$bog_pay_app_people_registry_land,
+            });
             const shared_land = glob.Land(registry_ref);
-            console.log('>>> Accessing people registry in global land:', {
+            console.log('>>> [REGISTRY STEP 3] Got shared land', {
                 land_ref: shared_land.ref().description,
             });
+            const rank = this.$.$hyoo_crus_rank(this.$.$hyoo_crus_rank_tier.join);
+            console.log('>>> [REGISTRY STEP 4] Creating/accessing registry with permissions', {
+                rank_level: this.$.$hyoo_crus_rank_tier.join,
+            });
             const registry = shared_land.home().hall_by($bog_pay_app_people, {
-                '': this.$.$hyoo_crus_rank(this.$.$hyoo_crus_rank_tier.join),
+                '': rank,
             });
             if (!registry) {
+                console.error('>>> [REGISTRY ERROR] Cannot access people registry in global land');
                 throw new Error('Cannot access people registry in global land');
             }
+            console.log('>>> [REGISTRY STEP 5] Got registry, checking List', {
+                registry_ref: registry.ref().description,
+                list_exists: !!registry.List(),
+            });
             if (!registry.List()) {
+                console.log('>>> [REGISTRY STEP 6] List is null, initializing it');
                 registry.List(null);
+                console.log('>>> [REGISTRY STEP 7] List initialized', {
+                    list_now_exists: !!registry.List(),
+                });
+            }
+            else {
+                const list = registry.List();
+                console.log('>>> [REGISTRY STEP 6] List already exists', {
+                    list_size: list.items_vary().length,
+                });
             }
             return registry;
         }
@@ -19963,36 +19986,75 @@ var $;
             return person;
         }
         ensure_registered() {
+            console.log('>>> [STEP 1] Starting registration process');
             const person = $hyoo_crus_glob.home().hall_by($bog_pay_app_person, {});
-            if (!person)
+            if (!person) {
+                console.log('>>> [STEP 1] FAILED: No person found');
                 return;
+            }
+            const person_ref = person.ref();
+            const peer = person.land().auth().peer();
+            console.log('>>> [STEP 2] Got local person', {
+                person_ref: person_ref.description,
+                peer,
+            });
             try {
+                console.log('>>> [STEP 3] Accessing global registry');
                 const registry = $bog_pay_app_people.hall();
+                console.log('>>> [STEP 4] Got registry, accessing List');
                 const list = registry.List();
                 if (!list) {
-                    console.error('>>> Cannot register: List is null');
+                    console.error('>>> [STEP 4] FAILED: List is null', {
+                        registry_exists: !!registry,
+                        registry_ref: registry.ref().description,
+                    });
                     return;
                 }
-                const person_ref = person.ref();
-                const peer = person.land().auth().peer();
+                console.log('>>> [STEP 5] Got List, checking if already registered', {
+                    list_size: list.items_vary().length,
+                });
                 const already_has = list.has(person_ref.description);
                 if (already_has) {
-                    console.log('>>> User already in global land', {
+                    console.log('>>> [STEP 6] User already in global land', {
                         person_ref: person_ref.description,
                         peer,
                     });
                     return;
                 }
+                console.log('>>> [STEP 6] User NOT in list, adding now');
                 list.add(person_ref.description);
-                console.log('>>> ✅ User added to global land', {
+                console.log('>>> ✅ [STEP 7] User added to global land', {
                     person_ref: person_ref.description,
                     peer,
                     name: person.Name()?.str() || '(no name)',
                     email: person.Email()?.str() || '(no email)',
+                    list_size_after: list.items_vary().length,
                 });
             }
             catch (error) {
-                console.error('>>> Failed to register in global land', error);
+                if (error instanceof Promise) {
+                    console.error('>>> [ERROR] Got Promise instead of error, waiting for it...', {
+                        promise: error,
+                    });
+                    error.then(() => {
+                        console.log('>>> [ERROR] Promise resolved successfully');
+                    }, (err) => {
+                        const error_obj = err;
+                        console.error('>>> [ERROR] Promise rejected:', {
+                            error: err,
+                            message: error_obj?.message || String(err),
+                            stack: error_obj?.stack || '(no stack)',
+                        });
+                    });
+                }
+                else {
+                    const error_obj = error;
+                    console.error('>>> [ERROR] Failed to register in global land:', {
+                        error,
+                        error_message: error_obj?.message || String(error),
+                        error_stack: error_obj?.stack || '(no stack)',
+                    });
+                }
             }
         }
         plan_basic() {
