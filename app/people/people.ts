@@ -37,7 +37,7 @@ namespace $ {
       // IMPORTANT: Pass public permissions when creating registry
       // This ensures all nested nodes (like List) have public access
       const registry = shared_land.home().hall_by($bog_pay_app_people, {
-        '': this.$.$hyoo_crus_rank_join('just'),
+        '': this.$.$hyoo_crus_rank(this.$.$hyoo_crus_rank_tier.join),
       })
 
       if (!registry) {
