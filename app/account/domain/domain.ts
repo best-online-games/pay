@@ -15,43 +15,91 @@ namespace $ {
 
     @$mol_mem
     ensure_registered() {
+      console.log('>>> [STEP 1] Starting registration process')
+
       const person = $hyoo_crus_glob.home().hall_by($bog_pay_app_person, {})
-      if (!person) return
+      if (!person) {
+        console.log('>>> [STEP 1] FAILED: No person found')
+        return
+      }
+
+      const person_ref = person.ref()
+      const peer = person.land().auth().peer()
+
+      console.log('>>> [STEP 2] Got local person', {
+        person_ref: person_ref.description,
+        peer,
+      })
 
       try {
+        console.log('>>> [STEP 3] Accessing global registry')
         const registry = $bog_pay_app_people.hall()
+
+        console.log('>>> [STEP 4] Got registry, accessing List')
         const list = registry.List()
 
         if (!list) {
-          console.error('>>> Cannot register: List is null')
+          console.error('>>> [STEP 4] FAILED: List is null', {
+            registry_exists: !!registry,
+            registry_ref: registry.ref().description,
+          })
           return
         }
 
-        const person_ref = person.ref()
-        const peer = person.land().auth().peer()
+        console.log('>>> [STEP 5] Got List, checking if already registered', {
+          list_size: list.items_vary().length,
+        })
 
         // Check if already registered
         const already_has = list.has(person_ref.description!)
 
         if (already_has) {
-          console.log('>>> User already in global land', {
+          console.log('>>> [STEP 6] User already in global land', {
             person_ref: person_ref.description,
             peer,
           })
           return
         }
 
+        console.log('>>> [STEP 6] User NOT in list, adding now')
+
         // Add to global registry
         list.add(person_ref.description!)
 
-        console.log('>>> ✅ User added to global land', {
+        console.log('>>> ✅ [STEP 7] User added to global land', {
           person_ref: person_ref.description,
           peer,
           name: person.Name()?.str() || '(no name)',
           email: person.Email()?.str() || '(no email)',
+          list_size_after: list.items_vary().length,
         })
       } catch (error) {
-        console.error('>>> Failed to register in global land', error)
+        // Properly handle error - check if it's a Promise
+        if (error instanceof Promise) {
+          console.error('>>> [ERROR] Got Promise instead of error, waiting for it...', {
+            promise: error,
+          })
+          error.then(
+            () => {
+              console.log('>>> [ERROR] Promise resolved successfully')
+            },
+            (err: any) => {
+              const error_obj = err as Error
+              console.error('>>> [ERROR] Promise rejected:', {
+                error: err,
+                message: error_obj?.message || String(err),
+                stack: error_obj?.stack || '(no stack)',
+              })
+            },
+          )
+        } else {
+          const error_obj = error as Error
+          console.error('>>> [ERROR] Failed to register in global land:', {
+            error,
+            error_message: error_obj?.message || String(error),
+            error_stack: error_obj?.stack || '(no stack)',
+          })
+        }
       }
     }
 
