@@ -429,7 +429,7 @@ declare namespace $ {
         static getter<Host, Args extends readonly unknown[], Result>(task: (this: Host, ...args: Args) => Result): (host: Host, args: Args) => $mol_wire_task<Host, Args, Result>;
         get temp(): boolean;
         complete(): void;
-        put(next: Result | Error | Promise<Result | Error>): Result | Error | Promise<Result | Error>;
+        put(next: Result | Error | Promise<Result | Error>): Error | Result | Promise<Error | Result>;
         destructor(): void;
     }
 }
@@ -1224,6 +1224,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_error_message(this: $, error: unknown): string;
+}
+
+declare namespace $ {
     function $mol_dom_render_styles(el: Element, styles: {
         [key: string]: string | number;
     }): void;
@@ -1699,6 +1703,7 @@ declare namespace $ {
 		enabled( ): boolean
 		click( next?: any ): any
 		event_click( next?: any ): any
+		status( next?: readonly(any)[] ): readonly(any)[]
 		event( ): ({ 
 			click( next?: ReturnType< $mol_button['activate'] > ): ReturnType< $mol_button['activate'] >,
 			dblclick( next?: ReturnType< $mol_button['clicks'] > ): ReturnType< $mol_button['clicks'] >,
@@ -1719,7 +1724,6 @@ declare namespace $ {
 //# sourceMappingURL=button.view.tree.d.ts.map
 declare namespace $.$$ {
     class $mol_button extends $.$mol_button {
-        status(next?: any[]): any[];
         disabled(): boolean;
         event_activate(next: Event): void;
         event_key_press(event: KeyboardEvent): any;
@@ -7205,7 +7209,7 @@ declare namespace $ {
 declare namespace $ {
 
 	type $mol_button_open_native__files_mol_button_open_1 = $mol_type_enforce<
-		ReturnType< $mol_button_open['files'] >
+		ReturnType< $mol_button_open['files_handled'] >
 		,
 		ReturnType< $mol_button_open_native['files'] >
 	>
@@ -7221,7 +7225,8 @@ declare namespace $ {
 	>
 	export class $mol_button_open extends $mol_button_minor {
 		Icon( ): $mol_icon_upload
-		files( next?: readonly(any)[] ): readonly(any)[]
+		files( next?: readonly(File)[] ): readonly(File)[]
+		files_handled( next?: ReturnType< $mol_button_open['files'] > ): ReturnType< $mol_button_open['files'] >
 		accept( ): string
 		multiple( ): boolean
 		Native( ): $mol_button_open_native
@@ -7233,7 +7238,7 @@ declare namespace $ {
 		multiple( ): boolean
 		picked( next?: any ): any
 		dom_name( ): string
-		files( next?: readonly(any)[] ): readonly(any)[]
+		files( next?: readonly(File)[] ): readonly(File)[]
 		attr( ): ({ 
 			'type': string,
 			'accept': ReturnType< $mol_button_open_native['accept'] >,
@@ -7248,6 +7253,9 @@ declare namespace $ {
 
 //# sourceMappingURL=open.view.tree.d.ts.map
 declare namespace $.$$ {
+    class $mol_button_open extends $.$mol_button_open {
+        files_handled(next?: readonly File[]): readonly File[];
+    }
     class $mol_button_open_native extends $.$mol_button_open_native {
         dom_node(): HTMLInputElement;
         picked(): void;
