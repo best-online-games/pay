@@ -20404,6 +20404,61 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $bog_pay_app_openvpn_api extends $mol_object2 {
+        base_url() {
+            const override = $mol_state_arg.value('pay_api');
+            if (override)
+                return this.normalize_base(override);
+            const loc = $mol_dom_context?.location;
+            if (!loc)
+                return 'http://127.0.0.1:8080';
+            if (loc.port === '9080') {
+                return `${loc.protocol}//${loc.hostname}:8080`;
+            }
+            return this.normalize_base(`${loc.protocol}//${loc.host}`);
+        }
+        normalize_base(input) {
+            return input.endsWith('/') ? input.slice(0, -1) : input;
+        }
+        ensure_url(path) {
+            return `${this.base_url()}${path}`;
+        }
+        headers() {
+            return { 'Content-Type': 'text/plain; charset=utf-8' };
+        }
+        ensure_certificate(client) {
+            const url = this.ensure_url('/api/v1/openvpn/certificates');
+            return $mol_fetch.text(url, {
+                method: 'POST',
+                headers: this.headers(),
+                body: client,
+            });
+        }
+        revoke_certificate(client) {
+            const url = this.ensure_url('/api/v1/openvpn/certificates/revoke');
+            $mol_fetch.response(url, {
+                method: 'POST',
+                headers: this.headers(),
+                body: client,
+            });
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_openvpn_api.prototype, "base_url", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_openvpn_api.prototype, "ensure_certificate", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_openvpn_api.prototype, "revoke_certificate", null);
+    $.$bog_pay_app_openvpn_api = $bog_pay_app_openvpn_api;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
     function $mol_offline() { }
     $.$mol_offline = $mol_offline;
 })($ || ($ = {}));

@@ -9167,6 +9167,17 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $bog_pay_app_openvpn_api extends $mol_object2 {
+        base_url(): string;
+        private normalize_base;
+        private ensure_url;
+        private headers;
+        ensure_certificate(client: string): string;
+        revoke_certificate(client: string): void;
+    }
+}
+
+declare namespace $ {
     function $mol_offline(): void;
 }
 
