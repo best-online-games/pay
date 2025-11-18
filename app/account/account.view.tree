@@ -1,4 +1,5 @@
 $bog_pay_app_account $mol_page
+	person $bog_pay_app_person
 	title @ \Personal Cabinet
 	Head null
 	body /
