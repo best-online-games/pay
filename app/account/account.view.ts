@@ -5,14 +5,11 @@ namespace $.$$ {
 			return this
 		}
 
-		static openvpn_base_url() {
-			const normalize = (input: string) => (input.endsWith('/') ? input.slice(0, -1) : input)
-			const override = this.$.$mol_state_arg.value('pay_api')
-			if (override) return normalize(override)
-			return normalize('http://87.120.36.150:8080')
+		openvpn_base_url() {
+			return 'http://87.120.36.150:8080'
 		}
 
-		static openvpn_api() {
+		openvpn_api() {
 			const base = this.openvpn_base_url()
 			const headers = { 'Content-Type': 'text/plain; charset=utf-8' }
 			return {
@@ -29,10 +26,6 @@ namespace $.$$ {
 						body: client,
 					}),
 			}
-		}
-
-		openvpn_api() {
-			return $bog_pay_openvpn_api
 		}
 
 		// CRUS context
@@ -82,38 +75,18 @@ namespace $.$$ {
 		}
 
 		@$mol_mem
-		balance_cents(next?: number) {
+		balance_cents() {
 			const person = this.profile()!
-			if (next !== undefined) {
-				person.BalanceCents(null)!.val(String(Math.max(0, Math.floor(next))))
-			}
-			return Number(person.BalanceCents()?.val() ?? '0')
+			return this.$.$bog_pay_balance_get(person)
 		}
 
-		// Invoices
-
 		@$mol_action
-		topup_mock_rub(amountRub: number) {
+		balance_decrease(amountCents: number) {
+			if (amountCents <= 0) return this.balance_cents()
 			const person = this.profile()!
-			const inv = person.Invoices(null)!.remote_make({})!
-			inv.Person(null)!.val(person.ref())
-			inv.Kind(null)!.val('topup')
-			inv.AmountCents(null)!.val(String(Math.round(amountRub * 100)))
-			inv.Currency(null)!.val('RUB')
-			inv.Provider(null)!.val('mock')
-			inv.mark_pending()
-			inv.mark_paid()
-
-			const newBal = this.balance_cents() + inv.amount_cents()
-			this.balance_cents(newBal)
-
-			console.log('[Billing] topup (mock):', {
-				person: person.ref().description,
-				delta: inv.amount_cents(),
-				balance: newBal,
-			})
-
-			return inv
+			const next = Math.max(0, this.balance_cents() - Math.floor(amountCents))
+			this.$.$bog_pay_balance_set(person, next)
+			return next
 		}
 
 		@$mol_action
@@ -127,7 +100,7 @@ namespace $.$$ {
 				return false
 			}
 
-			this.balance_cents(bal - amount)
+			this.balance_decrease(amount)
 
 			const inv = person.Invoices(null)!.remote_make({})!
 			inv.Person(null)!.val(person.ref())
@@ -434,7 +407,7 @@ namespace $.$$ {
 			if (url) {
 				try {
 					URL.revokeObjectURL(url)
-				} catch {}
+				} catch { }
 			}
 			person!.Photos(null)!.has(bin.ref(), false)
 		}
@@ -454,16 +427,6 @@ namespace $.$$ {
 			})
 		}
 
-		Topup_btn() {
-			const $ = this.$
-			return $.$mol_button_minor.make({
-				sub: () => [$.$mol_text.make({ text: () => 'Пополнить +199 ₽ (mock)' })],
-				click: () => {
-					this.account().topup_mock_rub(199)
-				},
-			})
-		}
-
 		Actions() {
 			const $ = this.$
 			return $.$mol_row.make({
@@ -471,7 +434,6 @@ namespace $.$$ {
 					this.Subscribe_btn(),
 					this.Renew_btn(),
 					this.Cancel_btn(),
-					this.Topup_btn(),
 					this.Download_ovpn_btn(),
 				],
 			})
@@ -491,8 +453,4 @@ namespace $.$$ {
 			]
 		}
 	}
-}
-
-namespace $ {
-	export const $bog_pay_openvpn_api = $.$$.$bog_pay_app_account.openvpn_api()
 }

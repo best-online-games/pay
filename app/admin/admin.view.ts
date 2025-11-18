@@ -1,6 +1,22 @@
 namespace $.$$ {
+	// 1) Список админов по короткому user_id (peer)
+	// Заполняй сюда свои user_id (например: 'u2ldl9lC', 'abc12345', ...)
+	export const $bog_pay_app_admin_peers = [
+		'oUduJQXl',
+		'mcBM6jhX',
+		'SSCOg7yi', // Current user
+		// 'CR9M4ik7',
+		// 'SjixkGkN'
+	] as const
 	// Admin page: shows list of users and runs "cron-like" enforcement while open.
-	export class $bog_pay_app_admin_page extends $mol_page {
+	export class $bog_pay_app_admin extends $mol_page {
+		@$mol_mem
+		static is_me() {
+			const my_peer = this.$.$hyoo_crus_glob.home().land().auth().peer()
+			const is_admin = ($bog_pay_app_admin_peers as readonly string[]).includes(my_peer)
+
+			return is_admin
+		}
 		// Guard: only admin can see and run enforcement
 		@$mol_mem
 		is_admin() {
@@ -143,8 +159,7 @@ namespace $.$$ {
 		@$mol_mem_key
 		person_balance_rub(index: number) {
 			const p = this.people()[index]
-			const cents = Number(p?.BalanceCents()?.val() ?? '0')
-			return (cents / 100).toFixed(2)
+			return (this.$.$bog_pay_balance_get(p) / 100).toFixed(2)
 		}
 
 		@$mol_mem_key
@@ -252,23 +267,21 @@ namespace $.$$ {
 
 		// Enforcement logic (cron-like)
 
-	@$mol_action
-	enforce_all() {
-		if (!this.is_admin()) return
-		const api = $bog_pay_openvpn_api
-		for (const person of this.people()) {
-			this.enforce_person(person, api)
+		@$mol_action
+		enforce_all() {
+			if (!this.is_admin()) return
+			for (const person of this.people()) {
+				this.enforce_person(person)
+			}
 		}
-	}
 
-	@$mol_action
-	enforce_person(
-		person: $bog_pay_app_person,
-		api: typeof $bog_pay_openvpn_api,
-	) {
-		// Pick latest subscription (or active)
-		const subs = person.Subscriptions()?.remote_list() ?? []
-		if (subs.length === 0) return
+		@$mol_action
+		enforce_person(
+			person: $bog_pay_app_person,
+		) {
+			// Pick latest subscription (or active)
+			const subs = person.Subscriptions()?.remote_list() ?? []
+			if (subs.length === 0) return
 
 			// Choose sub to maintain
 			let sub = subs.slice().sort((a, b) => {
@@ -295,17 +308,16 @@ namespace $.$$ {
 			}
 
 			// Enforce access state (reconcile provision/revoke)
-			sub.enforce_access(api)
+			sub.enforce_access()
 		}
 
 		@$mol_action
 		charge_person_for_sub(person: $bog_pay_app_person, sub: $bog_pay_app_subscription) {
 			const price = this.price_cents()
-			const balance = Number(person.BalanceCents()?.val() ?? '0')
+			const balance = this.$.$bog_pay_balance_get(person)
 			if (balance < price) return false
 
-			// deduct
-			person.BalanceCents(null)!.val(String(balance - price))
+			this.$.$bog_pay_balance_set(person, balance - price)
 
 			// invoice record
 			const inv = person.Invoices(null)!.remote_make({})!
