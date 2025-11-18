@@ -31,10 +31,6 @@ namespace $.$$ {
 
 		@$mol_action
 		ovpn_file_blob() {
-			if (!this.is_vpn_allowed()) {
-				throw new Error('VPN unavailable: no active subscription')
-			}
-
 			const peer = this.$.$hyoo_crus_glob.home().land().auth().peer()
 			const profile = this.openvpn_api().ensure_certificate(peer)
 			return new Blob([profile], { type: 'application/x-openvpn-profile' })
