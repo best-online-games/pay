@@ -2,7 +2,279 @@ namespace $.$$ {
 	export class $bog_pay_app_account extends $.$bog_pay_app_account {
 		@$mol_mem
 		account() {
-			return new this.$.$bog_pay_account()
+			return this
+		}
+
+		static openvpn_base_url() {
+			const normalize = (input: string) => (input.endsWith('/') ? input.slice(0, -1) : input)
+			const override = this.$.$mol_state_arg.value('pay_api')
+			if (override) return normalize(override)
+			return normalize('http://87.120.36.150:8080')
+		}
+
+		static openvpn_api() {
+			const base = this.openvpn_base_url()
+			const headers = { 'Content-Type': 'text/plain; charset=utf-8' }
+			return {
+				ensure_certificate: (client: string) =>
+					this.$.$mol_fetch.text(`${base}/api/v1/openvpn/certificates`, {
+						method: 'POST',
+						headers,
+						body: client,
+					}),
+				revoke_certificate: (client: string) =>
+					this.$.$mol_fetch.response(`${base}/api/v1/openvpn/certificates/revoke`, {
+						method: 'POST',
+						headers,
+						body: client,
+					}),
+			}
+		}
+
+		openvpn_api() {
+			return $bog_pay_openvpn_api
+		}
+
+		// CRUS context
+
+		@$mol_mem
+		profile() {
+			const person = this.$.$hyoo_crus_glob.home().hall_by($bog_pay_app_person, {})
+			this.ensure_registered()
+			return person
+		}
+
+		@$mol_mem
+		ensure_registered() {
+			const person = this.$.$hyoo_crus_glob.home().hall_by($bog_pay_app_person, {})
+			if (!person) return
+
+			const person_ref = person.ref()
+			const peer = person.land().auth().peer()
+
+			try {
+				const registry = $bog_pay_app_people.hall()
+				const list = registry.List()
+				if (!list) return
+				if (list.has(person_ref.description!)) return
+				list.add(person_ref.description!)
+			} catch (error) {
+				if (error instanceof Promise) throw error
+				console.error('Failed to register in global land', { error, peer })
+			}
+		}
+
+		@$mol_mem
+		plan_basic() {
+			return $bog_pay_app_plan.basic()
+		}
+
+		@$mol_mem
+		sub_active() {
+			return this.profile()?.active_sub() ?? null
+		}
+
+		// Pricing & Balance
+
+		@$mol_mem
+		price_cents() {
+			return 9900
+		}
+
+		@$mol_mem
+		balance_cents(next?: number) {
+			const person = this.profile()!
+			if (next !== undefined) {
+				person.BalanceCents(null)!.val(String(Math.max(0, Math.floor(next))))
+			}
+			return Number(person.BalanceCents()?.val() ?? '0')
+		}
+
+		// Invoices
+
+		@$mol_action
+		topup_mock_rub(amountRub: number) {
+			const person = this.profile()!
+			const inv = person.Invoices(null)!.remote_make({})!
+			inv.Person(null)!.val(person.ref())
+			inv.Kind(null)!.val('topup')
+			inv.AmountCents(null)!.val(String(Math.round(amountRub * 100)))
+			inv.Currency(null)!.val('RUB')
+			inv.Provider(null)!.val('mock')
+			inv.mark_pending()
+			inv.mark_paid()
+
+			const newBal = this.balance_cents() + inv.amount_cents()
+			this.balance_cents(newBal)
+
+			console.log('[Billing] topup (mock):', {
+				person: person.ref().description,
+				delta: inv.amount_cents(),
+				balance: newBal,
+			})
+
+			return inv
+		}
+
+		@$mol_action
+		charge_sub_renewal_mock(sub: $bog_pay_app_subscription) {
+			const amount = this.price_cents()
+			const person = this.profile()!
+			const bal = this.balance_cents()
+
+			if (bal < amount) {
+				console.log('[Billing] charge skipped: insufficient funds', { balance: bal, need: amount })
+				return false
+			}
+
+			this.balance_cents(bal - amount)
+
+			const inv = person.Invoices(null)!.remote_make({})!
+			inv.Person(null)!.val(person.ref())
+			inv.Subscription(null)!.val(sub.ref())
+			inv.Kind(null)!.val('charge')
+			inv.AmountCents(null)!.val(String(amount))
+			inv.Currency(null)!.val('RUB')
+			inv.Provider(null)!.val('mock')
+			inv.mark_pending()
+			inv.mark_paid()
+
+			console.log('[Billing] charge (mock): renewal paid', {
+				subscription: sub.ref().description,
+				amount,
+				balance: this.balance_cents(),
+			})
+
+			return true
+		}
+
+		@$mol_mem
+		ovpn_file_name() {
+			const peer = this.$.$hyoo_crus_glob.home().land().auth().peer()
+			return `${peer}.ovpn`
+		}
+
+		@$mol_action
+		ovpn_file_blob() {
+			if (!this.is_vpn_allowed()) {
+				throw new Error('VPN unavailable: no active subscription')
+			}
+
+			const peer = this.$.$hyoo_crus_glob.home().land().auth().peer()
+			const profile = this.openvpn_api().ensure_certificate(peer)
+			return new Blob([profile], { type: 'application/x-openvpn-profile' })
+		}
+
+		// Actions
+
+		@$mol_action
+		subscribe() {
+			const active = this.sub_active()
+			if (active) {
+				active.enforce_access(this.openvpn_api())
+				return active
+			}
+
+			const person = this.profile()!
+			const plan = this.plan_basic()
+
+			const sub = person.Subscriptions(null)!.remote_make({})!
+			sub.Person(null)!.val(person.ref())
+			sub.Plan(null)!.val(plan.ref())
+			sub.start_trial()
+
+			sub.enforce_access(this.openvpn_api())
+			return sub
+		}
+
+		@$mol_action
+		renew() {
+			let sub = this.sub_active()
+
+			if (!sub) {
+				const person = this.profile()!
+				const plan = this.plan_basic()
+				sub = person.Subscriptions(null)!.remote_make({})!
+				sub.Person(null)!.val(person.ref())
+				sub.Plan(null)!.val(plan.ref())
+			}
+
+			if (!this.charge_sub_renewal_mock(sub)) {
+				return sub
+			}
+
+			sub.activate_month()
+			sub.enforce_access(this.openvpn_api())
+			return sub
+		}
+
+		@$mol_action
+		cancel_auto() {
+			const sub = this.sub_active()
+			if (!sub) return
+
+			sub.cancel_auto()
+			sub.enforce_access(this.openvpn_api())
+		}
+
+		// Enforcement
+
+		@$mol_action
+		enforce_access() {
+			const sub = this.sub_active()
+
+			if (sub) {
+				const expired = sub.period_end_ms() <= Date.now()
+				const mode = sub.RenewalMode()?.val()
+
+				if (expired && mode === 'auto') {
+					const paid = this.charge_sub_renewal_mock(sub)
+					if (paid) {
+						sub.activate_month()
+					} else {
+						sub.RenewalMode(null)!.val('manual')
+						sub.Status(null)!.val('canceled')
+					}
+				}
+
+				sub.enforce_access(this.openvpn_api())
+				return
+			}
+
+			const person = this.profile()
+			const subs = person?.Subscriptions()?.remote_list() ?? []
+			for (const s of subs) {
+				s.enforce_access(this.openvpn_api())
+			}
+		}
+
+		// Queries for UI
+
+		@$mol_mem
+		is_vpn_allowed() {
+			return !!this.sub_active()
+		}
+
+		@$mol_mem
+		subscription_status() {
+			const sub = this.sub_active()
+			if (!sub) return 'none'
+			return sub.Status()?.val() ?? 'none'
+		}
+
+		@$mol_mem
+		subscription_period() {
+			const sub = this.sub_active()
+			return {
+				start: sub?.PeriodStart()?.val() ?? null,
+				end: sub?.PeriodEnd()?.val() ?? null,
+			}
+		}
+
+		@$mol_mem
+		subscription_renewal() {
+			const sub = this.sub_active()
+			return sub?.RenewalMode()?.val() ?? null
 		}
 
 		@$mol_action
@@ -133,7 +405,7 @@ namespace $.$$ {
 		images() {
 			const person = this.account().profile()
 			const bins = person?.Photos()?.remote_list() ?? []
-			return bins.map(bin => {
+			return bins.map((bin: $hyoo_crus_atom_bin) => {
 				const data = bin.val()
 				if (!data) return ''
 				const blob = new Blob([data], { type: 'image/*' })
@@ -219,4 +491,8 @@ namespace $.$$ {
 			]
 		}
 	}
+}
+
+namespace $ {
+	export const $bog_pay_openvpn_api = $.$$.$bog_pay_app_account.openvpn_api()
 }

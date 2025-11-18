@@ -252,24 +252,23 @@ namespace $.$$ {
 
 		// Enforcement logic (cron-like)
 
-		@$mol_mem
-		openvpn_api() {
-			return new this.$.$bog_pay_app_openvpn_api()
+	@$mol_action
+	enforce_all() {
+		if (!this.is_admin()) return
+		const api = $bog_pay_openvpn_api
+		for (const person of this.people()) {
+			this.enforce_person(person, api)
 		}
+	}
 
-		@$mol_action
-		enforce_all() {
-			if (!this.is_admin()) return
-			for (const person of this.people()) {
-				this.enforce_person(person)
-			}
-		}
-
-		@$mol_action
-		enforce_person(person: $bog_pay_app_person) {
-			// Pick latest subscription (or active)
-			const subs = person.Subscriptions()?.remote_list() ?? []
-			if (subs.length === 0) return
+	@$mol_action
+	enforce_person(
+		person: $bog_pay_app_person,
+		api: typeof $bog_pay_openvpn_api,
+	) {
+		// Pick latest subscription (or active)
+		const subs = person.Subscriptions()?.remote_list() ?? []
+		if (subs.length === 0) return
 
 			// Choose sub to maintain
 			let sub = subs.slice().sort((a, b) => {
@@ -296,7 +295,7 @@ namespace $.$$ {
 			}
 
 			// Enforce access state (reconcile provision/revoke)
-			sub.enforce_access(this.openvpn_api())
+			sub.enforce_access(api)
 		}
 
 		@$mol_action

@@ -15,4 +15,3 @@ $bog_pay_app $mol_page
 			<= Games $bog_pay_app_games
 			<= Personal_cabinet $bog_pay_app_account
 			<= Admin $bog_pay_app_admin_page
-	Yard $hyoo_sync_client
