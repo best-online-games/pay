@@ -19321,10 +19321,6 @@ var $;
 
 ;
 	($.$bog_pay_app_admin) = class $bog_pay_app_admin extends ($.$mol_page) {
-		account(){
-			const obj = new this.$.$bog_pay_app_account();
-			return obj;
-		}
 		title(){
 			return (this.$.$mol_locale.text("$bog_pay_app_admin_title"));
 		}
@@ -19332,7 +19328,6 @@ var $;
 			return null;
 		}
 	};
-	($mol_mem(($.$bog_pay_app_admin.prototype), "account"));
 
 
 ;

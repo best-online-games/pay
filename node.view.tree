@@ -1004,7 +1004,6 @@ $bog_pay_app_account $bog_lk
 	Form_title null
 
 $bog_pay_app_admin $mol_page
-	account $bog_pay_app_account
 	title @ \Admin
 	Head null
 

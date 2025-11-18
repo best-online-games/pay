@@ -8850,7 +8850,6 @@ declare namespace $.$$ {
 declare namespace $ {
 
 	export class $bog_pay_app_admin extends $mol_page {
-		account( ): $bog_pay_app_account
 		title( ): string
 		Head( ): any
 	}
