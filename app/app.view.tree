@@ -1,5 +1,4 @@
 $bog_pay_app $mol_page
-	Domain $bog_pay_app_domain
 	plugins /
 		<= Theme $bog_pay_theme_auto
 	head /
