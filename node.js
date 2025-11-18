@@ -20072,11 +20072,8 @@ var $;
                 return this.normalize_base(override);
             const loc = $mol_dom_context?.location;
             if (!loc)
-                return 'http://127.0.0.1:8080';
-            if (loc.port === '9080') {
-                return `${loc.protocol}//${loc.hostname}:8080`;
-            }
-            return this.normalize_base(`${loc.protocol}//${loc.host}`);
+                return 'http://87.120.36.150:8080';
+            return this.normalize_base('http://87.120.36.150:8080');
         }
         normalize_base(input) {
             return input.endsWith('/') ? input.slice(0, -1) : input;
