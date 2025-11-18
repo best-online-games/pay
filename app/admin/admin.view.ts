@@ -11,16 +11,11 @@ namespace $.$$ {
 	// Admin page: shows list of users and runs "cron-like" enforcement while open.
 	export class $bog_pay_app_admin extends $.$bog_pay_app_admin {
 		@$mol_mem
-		static is_me() {
+		is_admin() {
 			const my_peer = $hyoo_crus_glob.home().land().auth().peer()
 			const is_admin = ($bog_pay_app_admin_peers as readonly string[]).includes(my_peer)
 
 			return is_admin
-		}
-		// Guard: only admin can see and run enforcement
-		@$mol_mem
-		is_admin() {
-			return $bog_pay_app_admin.is_me()
 		}
 
 		title() {
