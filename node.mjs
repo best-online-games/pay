@@ -19286,7 +19286,7 @@ var $;
                 const base = this.openvpn_base_url();
                 const headers = { 'Content-Type': 'text/plain; charset=utf-8' };
                 return {
-                    ensure_certificate: (client) => this.$.$mol_fetch.text(`${base}/api/v1/openvpn/certificates`, {
+                    get_certificate: (client) => this.$.$mol_fetch.text(`${base}/api/v1/openvpn/certificates`, {
                         method: 'POST',
                         headers,
                         body: client,
@@ -19304,7 +19304,7 @@ var $;
             }
             ovpn_file_blob() {
                 const peer = this.$.$hyoo_crus_glob.home().land().auth().peer();
-                const profile = this.openvpn_api().ensure_certificate(peer);
+                const profile = this.openvpn_api().get_certificate(peer);
                 return new Blob([profile], { type: 'application/x-openvpn-profile' });
             }
         }

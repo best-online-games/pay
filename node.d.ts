@@ -8820,7 +8820,7 @@ declare namespace $.$$ {
     class $bog_pay_app_account extends $.$bog_pay_app_account {
         openvpn_base_url(): string;
         openvpn_api(): {
-            ensure_certificate: (client: string) => string;
+            get_certificate: (client: string) => string;
             revoke_certificate: (client: string) => $mol_fetch_response;
         };
         ovpn_file_name(): string;
