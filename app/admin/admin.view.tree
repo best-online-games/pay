@@ -1,5 +1,5 @@
 $bog_pay_app_admin_page $mol_page
-	openvpn_api $bog_pay_app_account
+	account $bog_pay_app_account
 	title @ \Admin
 	Head null
 	body /

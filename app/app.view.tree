@@ -16,4 +16,4 @@ $bog_pay_app $mol_page
 			<= Home $bog_pay_app_home
 			<= Games $bog_pay_app_games
 			<= Personal_cabinet $bog_pay_app_account
-			<= Admin $bog_pay_app_admin_page
+			<= Admin $bog_pay_app_admin

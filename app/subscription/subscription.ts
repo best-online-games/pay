@@ -130,7 +130,7 @@ namespace $ {
 		// Certificate operations (OpenVPN API)
 
 		@$mol_action
-		provision_access(api: typeof $bog_pay_openvpn_api) {
+		provision_access(api: ReturnType<$.$bog_pay_app_account['openvpn_api']>) {
 			const person = this.Person()?.remote()
 			const client = person?.ref().description
 			if (!client) return
@@ -140,7 +140,7 @@ namespace $ {
 		}
 
 		@$mol_action
-		revoke_access(api: typeof $bog_pay_openvpn_api) {
+		revoke_access(api: ReturnType<$.$bog_pay_app_account['openvpn_api']>) {
 			const person = this.Person()?.remote()
 			const client = person?.ref().description
 			if (!client) return
@@ -156,7 +156,7 @@ namespace $ {
 		}
 
 		@$mol_action
-		enforce_access(api: typeof $bog_pay_openvpn_api) {
+		enforce_access(api: ReturnType<$.$bog_pay_app_account['openvpn_api']>) {
 			// Reconciliation (tolerant): daily check is enough. Do not revoke on expiry; revoke only after cancellation.
 			this.expire_if_needed()
 			const desired = this.access_desired()

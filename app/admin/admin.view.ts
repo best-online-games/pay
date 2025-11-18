@@ -267,22 +267,21 @@ namespace $.$$ {
 
 		// Enforcement logic (cron-like)
 
-		@$mol_mem
-		openvpn_api() {
-			return new this.$.$bog_pay_app_account().openvpn_api()
-		}
-
 		@$mol_action
 		enforce_all() {
 			if (!this.is_admin()) return
+			const account = new this.$.$bog_pay_app_account()
+			const api = account.openvpn_api()
 			for (const person of this.people()) {
-				this.enforce_person(person)
+				this.enforce_person(person, account, api)
 			}
 		}
 
 		@$mol_action
 		enforce_person(
 			person: $bog_pay_app_person,
+			account: $bog_pay_app_account,
+			api: ReturnType<$.$bog_pay_app_account['openvpn_api']>,
 		) {
 			// Pick latest subscription (or active)
 			const subs = person.Subscriptions()?.remote_list() ?? []
@@ -313,16 +312,16 @@ namespace $.$$ {
 			}
 
 			// Enforce access state (reconcile provision/revoke)
-			sub.enforce_access(this.openvpn_api())
+			sub.enforce_access(api)
 		}
 
 		@$mol_action
-		charge_person_for_sub(person: $bog_pay_app_person, sub: $bog_pay_app_subscription) {
+		charge_person_for_sub(person: $bog_pay_app_person, sub: $bog_pay_app_subscription, account: $bog_pay_app_account) {
 			const price = this.price_cents()
-			const balance = this.$.$bog_pay_balance_get(person)
+			const balance = account.balance_get(person)
 			if (balance < price) return false
 
-			this.$.$bog_pay_balance_set(person, balance - price)
+			account.balance_set(person, balance - price)
 
 			// invoice record
 			const inv = person.Invoices(null)!.remote_make({})!

@@ -1,8 +1,10 @@
 namespace $.$$ {
-	new $mol_after_frame(() => {
-		$hyoo_crus_yard.masters = ['https://crus.hd4.ru/'] // только прод-мастер
-		$hyoo_crus_glob.yard().sync() // дёрнуть синхронизацию
-	})
+  new $mol_after_frame(() => {
+    $hyoo_crus_yard.masters = ['https://crus.hd4.ru/'] // только прод-мастер
+    $hyoo_crus_glob.yard().sync() // дёрнуть синхронизацию
+  })
+
+  export class $bog_pay_app_admin extends $.$bog_pay_app_admin {}
 	export class $bog_pay_app extends $.$bog_pay_app {
 		body() {
 			const originalLang = this.$.$mol_locale.lang()

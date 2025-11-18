@@ -106,7 +106,7 @@ namespace $.$$ {
 		@$mol_mem
 		balance_cents() {
 			const person = this.profile()!
-			return this.$.$bog_pay_balance_get(person)
+			return this.balance_get(person)
 		}
 
 		@$mol_action
@@ -114,7 +114,7 @@ namespace $.$$ {
 			if (amountCents <= 0) return this.balance_cents()
 			const person = this.profile()!
 			const next = Math.max(0, this.balance_cents() - Math.floor(amountCents))
-			this.$.$bog_pay_balance_set(person, next)
+			this.balance_set(person, next)
 			return next
 		}
 
