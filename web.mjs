@@ -2380,6 +2380,7 @@ var $;
 var $;
 (function ($) {
     $.$mol_gap = $mol_style_prop('mol_gap', [
+        'page',
         'block',
         'text',
         'round',
@@ -2392,7 +2393,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/gap/gap.css", ":root {\n\t--mol_gap_block: .75rem;\n\t--mol_gap_text: .5rem .75rem;\n\t--mol_gap_round: .25rem;\n\t--mol_gap_space: .25rem;\n\t--mol_gap_blur: .5rem;\n}\n");
+    $mol_style_attach("mol/gap/gap.css", ":root {\n\t--mol_gap_page: 3rem;\n\t--mol_gap_block: .75rem;\n\t--mol_gap_text: .5rem .75rem;\n\t--mol_gap_round: .25rem;\n\t--mol_gap_space: .25rem;\n\t--mol_gap_blur: .5rem;\n}\n");
 })($ || ($ = {}));
 
 ;
@@ -9718,24 +9719,6 @@ var $;
 
 
 ;
-	($.$mol_button_major) = class $mol_button_major extends ($.$mol_button_minor) {
-		theme(){
-			return "$mol_theme_base";
-		}
-	};
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/button/major/major.view.css", "[mol_button_major] {\n\tbackground-color: var(--mol_theme_back);\n\tcolor: var(--mol_theme_text);\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-;
 "use strict";
 
 ;
@@ -15949,6 +15932,665 @@ var $;
 })($ || ($ = {}));
 
 ;
+"use strict";
+var $;
+(function ($) {
+    const { unicode_only, line_end, tab, repeat_greedy, optional, forbid_after, force_after, char_only, char_except } = $mol_regexp;
+    $.$hyoo_crus_text_tokens = $mol_regexp.from({
+        token: {
+            'line-break': line_end,
+            'indents': repeat_greedy(tab, 1),
+            'emoji': [
+                unicode_only('Extended_Pictographic'),
+                optional(unicode_only('Emoji_Modifier')),
+                repeat_greedy([
+                    unicode_only('Emoji_Component'),
+                    unicode_only('Extended_Pictographic'),
+                    optional(unicode_only('Emoji_Modifier')),
+                ]),
+            ],
+            'link': /\b(https?:\/\/[^\s,.;:!?")]+(?:[,.;:!?")][^\s,.;:!?")]+)+)/,
+            'Word': [
+                [char_only(' ', 0xA0)],
+                repeat_greedy(char_only([
+                    unicode_only('General_Category', 'Uppercase_Letter'),
+                    unicode_only('Diacritic'),
+                    unicode_only('General_Category', 'Number'),
+                ]), 1),
+                repeat_greedy(char_only([
+                    unicode_only('General_Category', 'Lowercase_Letter'),
+                    unicode_only('Diacritic'),
+                    unicode_only('General_Category', 'Number'),
+                ])),
+            ],
+            'word': [
+                [char_only(' ', 0xA0)],
+                repeat_greedy(char_only([
+                    unicode_only('General_Category', 'Lowercase_Letter'),
+                    unicode_only('Diacritic'),
+                    unicode_only('General_Category', 'Number'),
+                ]), 1),
+            ],
+            'spaces': [
+                forbid_after(line_end),
+                repeat_greedy(unicode_only('White_Space'), 1),
+                force_after(unicode_only('White_Space')),
+            ],
+            'space': [
+                forbid_after(line_end),
+                unicode_only('White_Space'),
+                forbid_after([
+                    unicode_only('White_Space'),
+                    unicode_only('General_Category', 'Uppercase_Letter'),
+                    unicode_only('General_Category', 'Lowercase_Letter'),
+                    unicode_only('Diacritic'),
+                    unicode_only('General_Category', 'Number'),
+                ]),
+            ],
+            'others': [
+                [char_only(' ', 0xA0)],
+                repeat_greedy(char_except([
+                    unicode_only('General_Category', 'Uppercase_Letter'),
+                    unicode_only('General_Category', 'Lowercase_Letter'),
+                    unicode_only('Diacritic'),
+                    unicode_only('General_Category', 'Number'),
+                    unicode_only('White_Space'),
+                ]), 1),
+            ],
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $hyoo_crus_text extends $hyoo_crus_node {
+        static tag = $hyoo_crus_sand_tag[$hyoo_crus_sand_tag.vals];
+        value(next) {
+            return this.text(next);
+        }
+        text(next) {
+            if (next !== undefined) {
+                const land = this.land();
+                const prev = this.units();
+                const lines = next.match(/.*\n|.+$/g) ?? [];
+                $mol_reconcile({
+                    prev,
+                    from: 0,
+                    to: prev.length,
+                    next: lines,
+                    equal: (next, prev) => {
+                        return land.Node($hyoo_crus_text).Item(prev.self()).str() === next;
+                    },
+                    drop: (prev, lead) => this.land().post(lead?.self() ?? '', prev.head(), prev.self(), null),
+                    insert: (next, lead) => {
+                        const sand = this.land().post(lead?.self() ?? '', this.head(), land.self_make(), 'p', 'vals');
+                        land.Node($hyoo_crus_text).Item(sand.self()).str(next);
+                        return sand;
+                    },
+                    replace: (next, prev, lead) => {
+                        land.Node($hyoo_crus_text).Item(prev.self()).str(next);
+                        return prev;
+                    },
+                });
+            }
+            return this.str();
+        }
+        str(next) {
+            if (next === undefined) {
+                let str = '';
+                const land = this.land();
+                for (const unit of this.units()) {
+                    if (unit.tag() === 'term')
+                        str += $hyoo_crus_vary_cast_str(land.sand_decode(unit)) ?? '';
+                    else
+                        str += land.Node($hyoo_crus_text).Item(unit.self()).str();
+                }
+                return str;
+            }
+            else {
+                this.write(next, 0, -1);
+                return this.str();
+            }
+        }
+        write(next, str_from = -1, str_to = str_from) {
+            const land = this.land();
+            const list = this.units();
+            let from = str_from < 0 ? list.length : 0;
+            let word = '';
+            while (from < list.length) {
+                word = $hyoo_crus_vary_cast_str(land.sand_decode(list[from])) ?? '';
+                if (str_from <= word.length) {
+                    next = word.slice(0, str_from) + next;
+                    break;
+                }
+                str_from -= word.length;
+                if (str_to > 0)
+                    str_to -= word.length;
+                from++;
+            }
+            let to = str_to < 0 ? list.length : from;
+            while (to < list.length) {
+                word = $hyoo_crus_vary_cast_str(land.sand_decode(list[to])) ?? '';
+                to++;
+                if (str_to < word.length) {
+                    next = next + word.slice(str_to);
+                    break;
+                }
+                str_to -= word.length;
+            }
+            if (from && from === list.length) {
+                --from;
+                next = ($hyoo_crus_vary_cast_str(land.sand_decode(list[from])) ?? '') + next;
+            }
+            const words = next.match($hyoo_crus_text_tokens) ?? [];
+            this.cast($hyoo_crus_list_vary).splice(words, from, to);
+            return this;
+        }
+        point_by_offset(offset) {
+            const land = this.land();
+            let off = offset;
+            for (const unit of this.units()) {
+                if (unit.tag() === 'term') {
+                    const len = $hyoo_crus_vary_cast_str(land.sand_decode(unit))?.length ?? 0;
+                    if (off <= len)
+                        return [unit.self(), off];
+                    else
+                        off -= len;
+                }
+                else {
+                    const found = land.Node($hyoo_crus_text).Item(unit.self()).point_by_offset(off);
+                    if (found[0])
+                        return found;
+                    off = found[1];
+                }
+            }
+            return ['', off];
+        }
+        offset_by_point([self, offset]) {
+            const land = this.land();
+            for (const unit of this.units()) {
+                if (unit.self() === self)
+                    return [self, offset];
+                if (unit.tag() === 'term') {
+                    offset += $hyoo_crus_vary_cast_str(land.sand_decode(unit))?.length ?? 0;
+                }
+                else {
+                    const found = land.Node($hyoo_crus_text).Item(unit.self()).offset_by_point([self, offset]);
+                    if (found[0])
+                        return [self, found[1]];
+                    offset = found[1];
+                }
+            }
+            return ['', offset];
+        }
+        selection(lord, next) {
+            const base = this.$.$hyoo_crus_glob.Land(lord).Data($hyoo_crus_home);
+            if (next) {
+                base.Selection(null)?.val(next.map(offset => this.point_by_offset(offset).join(':')).join('|'));
+                return next;
+            }
+            else {
+                this.text();
+                return base.Selection()?.val()?.split('|').map(point => {
+                    const chunks = point.split(':');
+                    return this.offset_by_point([chunks[0], Number(chunks[1]) || 0])[1];
+                }) ?? [0, 0];
+            }
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $hyoo_crus_text.prototype, "text", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_crus_text.prototype, "str", null);
+    __decorate([
+        $mol_action
+    ], $hyoo_crus_text.prototype, "write", null);
+    __decorate([
+        $mol_action
+    ], $hyoo_crus_text.prototype, "point_by_offset", null);
+    __decorate([
+        $mol_action
+    ], $hyoo_crus_text.prototype, "offset_by_point", null);
+    __decorate([
+        $mol_mem_key
+    ], $hyoo_crus_text.prototype, "selection", null);
+    $.$hyoo_crus_text = $hyoo_crus_text;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $bog_pay_app_plan extends $hyoo_crus_entity.with({
+        Title: $hyoo_crus_text,
+        Descr: $hyoo_crus_text,
+        PriceCents: $hyoo_crus_atom_str,
+        Currency: $hyoo_crus_atom_str,
+        Period: $hyoo_crus_atom_str,
+        TrialDays: $hyoo_crus_atom_str,
+        Public: $hyoo_crus_atom_str,
+    }) {
+        price_cents() {
+            return Number(this.PriceCents()?.val() ?? '0');
+        }
+        is_public() {
+            return this.Public()?.val() === 'true';
+        }
+        static basic_id() {
+            return '___bogPayAp';
+        }
+        static basic() {
+            const base = this.$.$hyoo_crus_glob.home().land().ref();
+            const rel = this.$.$hyoo_crus_ref(this.basic_id());
+            const ref = this.$.$hyoo_crus_ref_resolve(base, rel);
+            const plan = this.$.$hyoo_crus_glob.Node(ref, $bog_pay_app_plan);
+            if (!plan.PriceCents()?.val()) {
+                plan.Title(null).text('Bog Ping Premium');
+                plan.Descr(null).text('Единый тариф: 99 ₽/мес, первые 14 дней бесплатно');
+                plan.PriceCents(null).val('9900');
+                plan.Currency(null).val('RUB');
+                plan.Period(null).val('month');
+                plan.TrialDays(null).val('14');
+                plan.Public(null).val('true');
+            }
+            return plan;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_plan.prototype, "price_cents", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_plan.prototype, "is_public", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_plan, "basic", null);
+    $.$bog_pay_app_plan = $bog_pay_app_plan;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $.$bog_pay_trial_ms = 5_000;
+    $.$bog_pay_renewal_ms = 5_000;
+    class $bog_pay_app_subscription extends $hyoo_crus_entity.with({
+        Person: $hyoo_crus_atom_ref_to(() => $bog_pay_app_person),
+        Plan: $hyoo_crus_atom_ref_to(() => $bog_pay_app_plan),
+        Status: $hyoo_crus_atom_str,
+        PeriodStart: $hyoo_crus_atom_str,
+        PeriodEnd: $hyoo_crus_atom_str,
+        CancelAt: $hyoo_crus_atom_str,
+        RenewalMode: $hyoo_crus_atom_str,
+        AccessState: $hyoo_crus_atom_str,
+    }) {
+        now_ms() {
+            return Date.now();
+        }
+        period_start_ms() {
+            const s = this.PeriodStart()?.val();
+            return s ? Date.parse(s) : 0;
+        }
+        period_end_ms() {
+            const s = this.PeriodEnd()?.val();
+            return s ? Date.parse(s) : 0;
+        }
+        is_trial() {
+            return this.Status()?.val() === 'trial' && this.period_end_ms() > this.now_ms();
+        }
+        is_active() {
+            const status = this.Status()?.val();
+            if (this.period_end_ms() <= this.now_ms())
+                return false;
+            return status === 'active' || status === 'trial';
+        }
+        is_expired() {
+            return !!this.period_end_ms() && this.period_end_ms() <= this.now_ms();
+        }
+        remaining_ms() {
+            const end = this.period_end_ms();
+            return end ? Math.max(0, end - this.now_ms()) : 0;
+        }
+        start_trial() {
+            const now = new Date();
+            const end = new Date(now.valueOf() + $.$bog_pay_trial_ms);
+            this.Status(null).val('trial');
+            this.PeriodStart(null).val(now.toISOString());
+            this.PeriodEnd(null).val(end.toISOString());
+            this.RenewalMode(null).val('auto');
+            this.AccessState(null).val('revoked');
+        }
+        activate_month() {
+            const now = new Date();
+            const currentEnd = this.period_end_ms();
+            const baseTs = currentEnd && currentEnd > now.valueOf() ? currentEnd : now.valueOf();
+            const end = new Date(baseTs + $.$bog_pay_renewal_ms);
+            this.Status(null).val('active');
+            if (!this.PeriodStart()?.val()) {
+                this.PeriodStart(null).val(now.toISOString());
+            }
+            this.PeriodEnd(null).val(end.toISOString());
+            if (!this.RenewalMode()?.val()) {
+                this.RenewalMode(null).val('auto');
+            }
+        }
+        cancel_auto() {
+            this.RenewalMode(null).val('manual');
+            this.CancelAt(null).val(new Date().toISOString());
+        }
+        renew_auto() {
+            this.RenewalMode(null).val('auto');
+            if (this.period_end_ms() > Date.now() && this.Status()?.val() !== 'active') {
+                this.Status(null).val('active');
+            }
+        }
+        expire_if_needed() {
+            if (!this.is_expired())
+                return;
+            const renewal = this.RenewalMode()?.val();
+            if (renewal === 'auto') {
+                this.activate_month();
+            }
+            else {
+                this.Status(null).val('canceled');
+            }
+        }
+        provision_access(api) {
+            const person = this.Person()?.remote();
+            const client = person?.ref().description;
+            if (!client)
+                return;
+            api.ensure_certificate(client);
+            this.AccessState(null).val('provisioned');
+        }
+        revoke_access(api) {
+            const person = this.Person()?.remote();
+            const client = person?.ref().description;
+            if (!client)
+                return;
+            api.revoke_certificate(client);
+            this.AccessState(null).val('revoked');
+        }
+        access_desired() {
+            return this.is_active();
+        }
+        enforce_access(api) {
+            this.expire_if_needed();
+            const desired = this.access_desired();
+            const state = this.AccessState()?.val();
+            const status = this.Status()?.val();
+            if (desired && state !== 'provisioned') {
+                this.provision_access(api);
+            }
+            if (status === 'canceled' && state === 'provisioned') {
+                this.revoke_access(api);
+            }
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_subscription.prototype, "now_ms", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_subscription.prototype, "period_start_ms", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_subscription.prototype, "period_end_ms", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_subscription.prototype, "is_trial", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_subscription.prototype, "is_active", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_subscription.prototype, "is_expired", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_subscription.prototype, "remaining_ms", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_subscription.prototype, "start_trial", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_subscription.prototype, "activate_month", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_subscription.prototype, "cancel_auto", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_subscription.prototype, "renew_auto", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_subscription.prototype, "expire_if_needed", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_subscription.prototype, "provision_access", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_subscription.prototype, "revoke_access", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_subscription.prototype, "access_desired", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_subscription.prototype, "enforce_access", null);
+    $.$bog_pay_app_subscription = $bog_pay_app_subscription;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $bog_pay_app_invoice extends $hyoo_crus_entity.with({
+        Person: $hyoo_crus_atom_ref_to(() => $bog_pay_app_person),
+        Subscription: $hyoo_crus_atom_ref_to(() => $bog_pay_app_subscription),
+        Kind: $hyoo_crus_atom_str,
+        AmountCents: $hyoo_crus_atom_str,
+        Currency: $hyoo_crus_atom_str,
+        Status: $hyoo_crus_atom_str,
+        CreatedAt: $hyoo_crus_atom_str,
+        PaidAt: $hyoo_crus_atom_str,
+        Provider: $hyoo_crus_atom_str,
+        ProviderInvoiceId: $hyoo_crus_atom_str,
+        PaymentUrl: $hyoo_crus_text,
+        Meta: $hyoo_crus_text,
+    }) {
+        amount_cents() {
+            return Number(this.AmountCents()?.val() ?? '0');
+        }
+        is_topup() {
+            return this.Kind()?.val() === 'topup';
+        }
+        is_charge() {
+            return this.Kind()?.val() === 'charge';
+        }
+        is_paid() {
+            return this.Status()?.val() === 'paid';
+        }
+        is_pending() {
+            return this.Status()?.val() === 'pending';
+        }
+        is_failed() {
+            return this.Status()?.val() === 'failed';
+        }
+        mark_pending() {
+            if (!this.CreatedAt()?.val())
+                this.CreatedAt(null).val(new Date().toISOString());
+            this.Status(null).val('pending');
+        }
+        mark_paid() {
+            this.Status(null).val('paid');
+            this.PaidAt(null).val(new Date().toISOString());
+        }
+        mark_failed() {
+            this.Status(null).val('failed');
+        }
+        cancel() {
+            this.Status(null).val('canceled');
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_invoice.prototype, "amount_cents", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_invoice.prototype, "is_topup", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_invoice.prototype, "is_charge", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_invoice.prototype, "is_paid", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_invoice.prototype, "is_pending", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_invoice.prototype, "is_failed", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_invoice.prototype, "mark_pending", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_invoice.prototype, "mark_paid", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_invoice.prototype, "mark_failed", null);
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_invoice.prototype, "cancel", null);
+    $.$bog_pay_app_invoice = $bog_pay_app_invoice;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $bog_pay_app_person extends $hyoo_crus_entity.with({
+        Name: $hyoo_crus_text,
+        Email: $hyoo_crus_text,
+        CreatedAt: $hyoo_crus_atom_str,
+        BalanceCents: $hyoo_crus_atom_str,
+        Subscriptions: $hyoo_crus_list_ref_to(() => $bog_pay_app_subscription),
+        Invoices: $hyoo_crus_list_ref_to(() => $bog_pay_app_invoice),
+        Photos: $hyoo_crus_list_ref_to(() => $hyoo_crus_atom_bin),
+    }) {
+        active_sub() {
+            const now = Date.now();
+            const subs = this.Subscriptions()?.remote_list() ?? [];
+            for (const sub of subs) {
+                const status = sub.Status()?.val();
+                const endStr = sub.PeriodEnd()?.val();
+                const endAt = endStr ? Date.parse(endStr) : 0;
+                if (!endAt || endAt <= now)
+                    continue;
+                if (status === 'active' || status === 'trial')
+                    return sub;
+            }
+            return null;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_person.prototype, "active_sub", null);
+    $.$bog_pay_app_person = $bog_pay_app_person;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $.$bog_pay_app_people_registry_land = 'YpaaEBfX_BcHFsæKs';
+    class $bog_pay_app_people extends $hyoo_crus_entity.with({
+        List: $hyoo_crus_list_ref_to(() => $bog_pay_app_person),
+    }) {
+        static init_registry() {
+            const glob = this.$.$hyoo_crus_glob;
+            const registry_land = glob.land_grab({ '': this.$.$hyoo_crus_rank_post('just') });
+            this.$.$mol_log3_rise({
+                place: this,
+                message: 'Created shared registry land',
+                land_ref: registry_land.ref().description,
+                instructions: 'Copy this land_ref and update $bog_pay_app_people_registry_land constant!',
+            });
+            return registry_land.ref().description;
+        }
+        static hall() {
+            console.log('>>> [REGISTRY STEP 1] Starting hall() for people registry');
+            const glob = this.$.$hyoo_crus_glob;
+            const registry_ref = this.$.$hyoo_crus_ref($.$bog_pay_app_people_registry_land);
+            console.log('>>> [REGISTRY STEP 2] Getting shared land', {
+                land_id: $.$bog_pay_app_people_registry_land,
+            });
+            const shared_land = glob.Land(registry_ref);
+            console.log('>>> [REGISTRY STEP 3] Got shared land', {
+                land_ref: shared_land.ref().description,
+            });
+            const rank = this.$.$hyoo_crus_rank_post('just');
+            console.log('>>> [REGISTRY STEP 4] Creating/accessing registry with permissions', {
+                rank_level: 'post (orgy - everyone can write)',
+            });
+            const registry = shared_land.home().hall_by($bog_pay_app_people, {
+                '': rank,
+            });
+            if (!registry) {
+                console.error('>>> [REGISTRY ERROR] Cannot access people registry in global land');
+                throw new Error('Cannot access people registry in global land');
+            }
+            console.log('>>> [REGISTRY STEP 5] Got registry, checking List', {
+                registry_ref: registry.ref().description,
+                list_exists: !!registry.List(),
+            });
+            if (!registry.List()) {
+                console.log('>>> [REGISTRY STEP 6] List is null, initializing it');
+                const list = registry.List(null);
+                console.log('>>> [REGISTRY STEP 7] List initialized', {
+                    list_now_exists: !!registry.List(),
+                    list_ref: list.ref().description,
+                });
+            }
+            else {
+                const list = registry.List();
+                console.log('>>> [REGISTRY STEP 6] List already exists', {
+                    list_size: list.items_vary().length,
+                });
+            }
+            return registry;
+        }
+    }
+    __decorate([
+        $mol_action
+    ], $bog_pay_app_people, "init_registry", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_people, "hall", null);
+    $.$bog_pay_app_people = $bog_pay_app_people;
+})($ || ($ = {}));
+
+;
+	($.$mol_button_major) = class $mol_button_major extends ($.$mol_button_minor) {
+		theme(){
+			return "$mol_theme_base";
+		}
+	};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/button/major/major.view.css", "[mol_button_major] {\n\tbackground-color: var(--mol_theme_back);\n\tcolor: var(--mol_theme_text);\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
 	($.$mol_icon_upload) = class $mol_icon_upload extends ($.$mol_icon) {
 		path(){
 			return "M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z";
@@ -16264,7 +16906,213 @@ var $;
     (function ($$) {
         class $bog_pay_app_account extends $.$bog_pay_app_account {
             account() {
-                return new this.$.$bog_pay_account();
+                return this;
+            }
+            static openvpn_base_url() {
+                const normalize = (input) => (input.endsWith('/') ? input.slice(0, -1) : input);
+                const override = this.$.$mol_state_arg.value('pay_api');
+                if (override)
+                    return normalize(override);
+                return normalize('http://87.120.36.150:8080');
+            }
+            static openvpn_api() {
+                const base = this.openvpn_base_url();
+                const headers = { 'Content-Type': 'text/plain; charset=utf-8' };
+                return {
+                    ensure_certificate: (client) => this.$.$mol_fetch.text(`${base}/api/v1/openvpn/certificates`, {
+                        method: 'POST',
+                        headers,
+                        body: client,
+                    }),
+                    revoke_certificate: (client) => this.$.$mol_fetch.response(`${base}/api/v1/openvpn/certificates/revoke`, {
+                        method: 'POST',
+                        headers,
+                        body: client,
+                    }),
+                };
+            }
+            openvpn_api() {
+                return $_1.$bog_pay_openvpn_api;
+            }
+            profile() {
+                const person = this.$.$hyoo_crus_glob.home().hall_by($bog_pay_app_person, {});
+                this.ensure_registered();
+                return person;
+            }
+            ensure_registered() {
+                const person = this.$.$hyoo_crus_glob.home().hall_by($bog_pay_app_person, {});
+                if (!person)
+                    return;
+                const person_ref = person.ref();
+                const peer = person.land().auth().peer();
+                try {
+                    const registry = $bog_pay_app_people.hall();
+                    const list = registry.List();
+                    if (!list)
+                        return;
+                    if (list.has(person_ref.description))
+                        return;
+                    list.add(person_ref.description);
+                }
+                catch (error) {
+                    if (error instanceof Promise)
+                        throw error;
+                    console.error('Failed to register in global land', { error, peer });
+                }
+            }
+            plan_basic() {
+                return $bog_pay_app_plan.basic();
+            }
+            sub_active() {
+                return this.profile()?.active_sub() ?? null;
+            }
+            price_cents() {
+                return 9900;
+            }
+            balance_cents(next) {
+                const person = this.profile();
+                if (next !== undefined) {
+                    person.BalanceCents(null).val(String(Math.max(0, Math.floor(next))));
+                }
+                return Number(person.BalanceCents()?.val() ?? '0');
+            }
+            topup_mock_rub(amountRub) {
+                const person = this.profile();
+                const inv = person.Invoices(null).remote_make({});
+                inv.Person(null).val(person.ref());
+                inv.Kind(null).val('topup');
+                inv.AmountCents(null).val(String(Math.round(amountRub * 100)));
+                inv.Currency(null).val('RUB');
+                inv.Provider(null).val('mock');
+                inv.mark_pending();
+                inv.mark_paid();
+                const newBal = this.balance_cents() + inv.amount_cents();
+                this.balance_cents(newBal);
+                console.log('[Billing] topup (mock):', {
+                    person: person.ref().description,
+                    delta: inv.amount_cents(),
+                    balance: newBal,
+                });
+                return inv;
+            }
+            charge_sub_renewal_mock(sub) {
+                const amount = this.price_cents();
+                const person = this.profile();
+                const bal = this.balance_cents();
+                if (bal < amount) {
+                    console.log('[Billing] charge skipped: insufficient funds', { balance: bal, need: amount });
+                    return false;
+                }
+                this.balance_cents(bal - amount);
+                const inv = person.Invoices(null).remote_make({});
+                inv.Person(null).val(person.ref());
+                inv.Subscription(null).val(sub.ref());
+                inv.Kind(null).val('charge');
+                inv.AmountCents(null).val(String(amount));
+                inv.Currency(null).val('RUB');
+                inv.Provider(null).val('mock');
+                inv.mark_pending();
+                inv.mark_paid();
+                console.log('[Billing] charge (mock): renewal paid', {
+                    subscription: sub.ref().description,
+                    amount,
+                    balance: this.balance_cents(),
+                });
+                return true;
+            }
+            ovpn_file_name() {
+                const peer = this.$.$hyoo_crus_glob.home().land().auth().peer();
+                return `${peer}.ovpn`;
+            }
+            ovpn_file_blob() {
+                if (!this.is_vpn_allowed()) {
+                    throw new Error('VPN unavailable: no active subscription');
+                }
+                const peer = this.$.$hyoo_crus_glob.home().land().auth().peer();
+                const profile = this.openvpn_api().ensure_certificate(peer);
+                return new Blob([profile], { type: 'application/x-openvpn-profile' });
+            }
+            subscribe() {
+                const active = this.sub_active();
+                if (active) {
+                    active.enforce_access(this.openvpn_api());
+                    return active;
+                }
+                const person = this.profile();
+                const plan = this.plan_basic();
+                const sub = person.Subscriptions(null).remote_make({});
+                sub.Person(null).val(person.ref());
+                sub.Plan(null).val(plan.ref());
+                sub.start_trial();
+                sub.enforce_access(this.openvpn_api());
+                return sub;
+            }
+            renew() {
+                let sub = this.sub_active();
+                if (!sub) {
+                    const person = this.profile();
+                    const plan = this.plan_basic();
+                    sub = person.Subscriptions(null).remote_make({});
+                    sub.Person(null).val(person.ref());
+                    sub.Plan(null).val(plan.ref());
+                }
+                if (!this.charge_sub_renewal_mock(sub)) {
+                    return sub;
+                }
+                sub.activate_month();
+                sub.enforce_access(this.openvpn_api());
+                return sub;
+            }
+            cancel_auto() {
+                const sub = this.sub_active();
+                if (!sub)
+                    return;
+                sub.cancel_auto();
+                sub.enforce_access(this.openvpn_api());
+            }
+            enforce_access() {
+                const sub = this.sub_active();
+                if (sub) {
+                    const expired = sub.period_end_ms() <= Date.now();
+                    const mode = sub.RenewalMode()?.val();
+                    if (expired && mode === 'auto') {
+                        const paid = this.charge_sub_renewal_mock(sub);
+                        if (paid) {
+                            sub.activate_month();
+                        }
+                        else {
+                            sub.RenewalMode(null).val('manual');
+                            sub.Status(null).val('canceled');
+                        }
+                    }
+                    sub.enforce_access(this.openvpn_api());
+                    return;
+                }
+                const person = this.profile();
+                const subs = person?.Subscriptions()?.remote_list() ?? [];
+                for (const s of subs) {
+                    s.enforce_access(this.openvpn_api());
+                }
+            }
+            is_vpn_allowed() {
+                return !!this.sub_active();
+            }
+            subscription_status() {
+                const sub = this.sub_active();
+                if (!sub)
+                    return 'none';
+                return sub.Status()?.val() ?? 'none';
+            }
+            subscription_period() {
+                const sub = this.sub_active();
+                return {
+                    start: sub?.PeriodStart()?.val() ?? null,
+                    end: sub?.PeriodEnd()?.val() ?? null,
+                };
+            }
+            subscription_renewal() {
+                const sub = this.sub_active();
+                return sub?.RenewalMode()?.val() ?? null;
             }
             enforce() {
                 this.account().enforce_access();
@@ -16375,7 +17223,7 @@ var $;
             images() {
                 const person = this.account().profile();
                 const bins = person?.Photos()?.remote_list() ?? [];
-                return bins.map(bin => {
+                return bins.map((bin) => {
                     const data = bin.val();
                     if (!data)
                         return '';
@@ -16460,6 +17308,60 @@ var $;
             $mol_mem
         ], $bog_pay_app_account.prototype, "account", null);
         __decorate([
+            $mol_mem
+        ], $bog_pay_app_account.prototype, "profile", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_account.prototype, "ensure_registered", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_account.prototype, "plan_basic", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_account.prototype, "sub_active", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_account.prototype, "price_cents", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_account.prototype, "balance_cents", null);
+        __decorate([
+            $mol_action
+        ], $bog_pay_app_account.prototype, "topup_mock_rub", null);
+        __decorate([
+            $mol_action
+        ], $bog_pay_app_account.prototype, "charge_sub_renewal_mock", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_account.prototype, "ovpn_file_name", null);
+        __decorate([
+            $mol_action
+        ], $bog_pay_app_account.prototype, "ovpn_file_blob", null);
+        __decorate([
+            $mol_action
+        ], $bog_pay_app_account.prototype, "subscribe", null);
+        __decorate([
+            $mol_action
+        ], $bog_pay_app_account.prototype, "renew", null);
+        __decorate([
+            $mol_action
+        ], $bog_pay_app_account.prototype, "cancel_auto", null);
+        __decorate([
+            $mol_action
+        ], $bog_pay_app_account.prototype, "enforce_access", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_account.prototype, "is_vpn_allowed", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_account.prototype, "subscription_status", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_account.prototype, "subscription_period", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_account.prototype, "subscription_renewal", null);
+        __decorate([
             $mol_action
         ], $bog_pay_app_account.prototype, "enforce", null);
         __decorate([
@@ -16488,6 +17390,9 @@ var $;
         ], $bog_pay_app_account.prototype, "attach_remove_index", null);
         $$.$bog_pay_app_account = $bog_pay_app_account;
     })($$ = $_1.$$ || ($_1.$$ = {}));
+})($ || ($ = {}));
+(function ($) {
+    $.$bog_pay_openvpn_api = $.$$.$bog_pay_app_account.openvpn_api();
 })($ || ($ = {}));
 
 ;
@@ -16531,115 +17436,39 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$mol_check_list) = class $mol_check_list extends ($.$mol_view) {
-		option_checked(id, next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		option_title(id){
-			return "";
-		}
-		option_label(id){
-			return [(this.option_title(id))];
-		}
-		enabled(){
-			return true;
-		}
-		option_enabled(id){
-			return (this.enabled());
-		}
-		option_hint(id){
-			return "";
-		}
-		items(){
-			return [];
-		}
-		dictionary(){
-			return {};
-		}
-		Option(id){
-			const obj = new this.$.$mol_check();
-			(obj.checked) = (next) => ((this.option_checked(id, next)));
-			(obj.label) = () => ((this.option_label(id)));
-			(obj.enabled) = () => ((this.option_enabled(id)));
-			(obj.hint) = () => ((this.option_hint(id)));
-			(obj.minimal_height) = () => (24);
-			return obj;
-		}
-		options(){
-			return {};
-		}
-		keys(){
-			return [];
-		}
-		sub(){
-			return (this.items());
-		}
-	};
-	($mol_mem_key(($.$mol_check_list.prototype), "option_checked"));
-	($mol_mem_key(($.$mol_check_list.prototype), "Option"));
-
-
-;
-"use strict";
-
-;
 "use strict";
 var $;
 (function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_check_list extends $.$mol_check_list {
-            options() {
-                return {};
-            }
-            dictionary(next) {
-                return next ?? {};
-            }
-            option_checked(id, next) {
-                const prev = this.dictionary();
-                if (next === undefined)
-                    return prev[id] ?? null;
-                const next_rec = { ...prev, [id]: next };
-                if (next === null)
-                    delete next_rec[id];
-                return this.dictionary(next_rec)[id] ?? null;
-            }
-            keys() {
-                return Object.keys(this.options());
-            }
-            items() {
-                return this.keys().map(key => this.Option(key));
-            }
-            option_title(key) {
-                return this.options()[key] || key;
-            }
+    $.$bog_pay_app_admin_peers = [
+        'LeRGyZNL',
+        'mcBM6jhX',
+        'SSCOg7yi',
+    ];
+    class $bog_pay_app_admin extends $mol_object2 {
+        static is_me() {
+            const my_peer = this.$.$hyoo_crus_glob.home().land().auth().peer();
+            const is_admin = $.$bog_pay_app_admin_peers.includes(my_peer);
+            return is_admin;
         }
-        __decorate([
-            $mol_mem
-        ], $mol_check_list.prototype, "keys", null);
-        __decorate([
-            $mol_mem
-        ], $mol_check_list.prototype, "items", null);
-        $$.$mol_check_list = $mol_check_list;
-    })($$ = $.$$ || ($.$$ = {}));
+    }
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_admin, "is_me", null);
+    $.$bog_pay_app_admin = $bog_pay_app_admin;
 })($ || ($ = {}));
 
 ;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/check/list/list.view.css", "[mol_check_list] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tflex: 1 1 auto;\n\tborder-radius: var(--mol_gap_round);\n\tgap: 1px;\n}\n\n[mol_check_list_option] {\n\tflex: 0 1 auto;\n}\n\n[mol_check_list_option]:where([mol_check_checked=\"true\"]) {\n\ttext-shadow: 0 0;\n\tcolor: var(--mol_theme_current);\n}\n\n[mol_check_list_option]:where([mol_check_checked=\"true\"][disabled]) {\n\tcolor: var(--mol_theme_text);\n}\n");
-})($ || ($ = {}));
-
-;
-	($.$mol_switch) = class $mol_switch extends ($.$mol_check_list) {
-		value(next){
-			if(next !== undefined) return next;
-			return "";
+	($.$bog_pay_app_admin_page) = class $bog_pay_app_admin_page extends ($.$mol_page) {
+		title(){
+			return (this.$.$mol_locale.text("$bog_pay_app_admin_page_title"));
+		}
+		Head(){
+			return null;
+		}
+		body(){
+			return [(this.Head_bar()), (this.Body_list())];
 		}
 	};
-	($mol_mem(($.$mol_switch.prototype), "value"));
 
 
 ;
@@ -16648,89 +17477,301 @@ var $;
 ;
 "use strict";
 var $;
-(function ($) {
+(function ($_1) {
     var $$;
     (function ($$) {
-        class $mol_switch extends $.$mol_switch {
-            value(next) {
-                return $mol_state_session.value(`${this}.value()`, next) ?? '';
+        class $bog_pay_app_admin_page extends $mol_page {
+            is_admin() {
+                return $bog_pay_app_admin.is_me();
             }
-            option_checked(key, next) {
-                if (next === undefined)
-                    return this.value() == key;
-                this.value(next ? key : '');
-                return next;
-            }
-        }
-        $$.$mol_switch = $mol_switch;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-	($.$mol_deck) = class $mol_deck extends ($.$mol_list) {
-		current(next){
-			if(next !== undefined) return next;
-			return "0";
-		}
-		switch_options(){
-			return {};
-		}
-		Switch(){
-			const obj = new this.$.$mol_switch();
-			(obj.value) = (next) => ((this.current(next)));
-			(obj.options) = () => ((this.switch_options()));
-			return obj;
-		}
-		Content(){
-			const obj = new this.$.$mol_view();
-			return obj;
-		}
-		items(){
-			return [];
-		}
-		rows(){
-			return [(this.Switch()), (this.Content())];
-		}
-	};
-	($mol_mem(($.$mol_deck.prototype), "current"));
-	($mol_mem(($.$mol_deck.prototype), "Switch"));
-	($mol_mem(($.$mol_deck.prototype), "Content"));
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_deck extends $.$mol_deck {
-            current(next) {
-                return $mol_state_session.value(`${this}.current()`, next) || '0';
-            }
-            switch_options() {
-                let options = {};
-                this.items().forEach((item, index) => {
-                    options[String(index)] = item.title();
+            title() {
+                new this.$.$mol_after_frame(() => {
+                    const btn = this.$.$mol_dom_context.document.querySelector('[id^="$bog_pay_app.Root"] [mol_deck_switch_option][id$="Option(\'3\')"]');
+                    if (btn && !this.is_admin()) {
+                        btn.style.display = 'none';
+                    }
                 });
-                return options;
+                if (this.is_admin()) {
+                    return this.$.$mol_locale.text('$bog_pay_app_admin_page_title');
+                }
+                else {
+                    return '';
+                }
             }
-            Content() {
-                return this.items()[Number(this.current())];
+            sub_title() {
+                return this.$.$mol_locale.text('$bog_pay_app_admin_page_title');
+            }
+            price_cents() {
+                return Number($bog_pay_app_plan.basic().PriceCents()?.val() ?? '9900');
+            }
+            people() {
+                console.log('>>> Admin.people() - reading from shared registry');
+                const people_registry = $bog_pay_app_people.hall();
+                if (!people_registry) {
+                    console.warn('>>> Shared registry not found');
+                    return [];
+                }
+                const list = people_registry.List();
+                if (!list) {
+                    console.warn('>>> Registry list is null');
+                    return [];
+                }
+                const all_people_raw = list.remote_list();
+                const all_people = [];
+                const seen_peers = new Set();
+                for (const person of all_people_raw) {
+                    try {
+                        const peer = person.land().auth().peer();
+                        console.log('>>> Got person', {
+                            ref: person.ref().description,
+                            peer,
+                            name: person.Name()?.str() || '(no name)',
+                            email: person.Email()?.str() || '(no email)',
+                        });
+                        if (seen_peers.has(peer)) {
+                            console.log('>>> SKIPPED - duplicate peer');
+                            continue;
+                        }
+                        all_people.push(person);
+                        seen_peers.add(peer);
+                        console.log('>>> ADDED to list, total:', all_people.length);
+                    }
+                    catch (e) {
+                        console.log('>>> ERROR processing person', e);
+                    }
+                }
+                console.log('>>> Admin.people() - FINAL RESULT', {
+                    refs_in_registry: all_people_raw.length,
+                    people_found: all_people.length,
+                    peers: Array.from(seen_peers),
+                });
+                this.$.$mol_log3_rise({
+                    place: this,
+                    message: 'People from shared registry',
+                    refs_in_registry: all_people_raw.length,
+                    people_found: all_people.length,
+                    people: all_people.map(p => ({
+                        land_ref: p?.land().ref().description ?? '?',
+                        peer: p?.land().auth().peer() ?? '?',
+                        name: p?.Name()?.str() || '(no name)',
+                        email: p?.Email()?.str() || '(no email)',
+                    })),
+                });
+                return all_people;
+            }
+            rows() {
+                return this.people().map((person, i) => this.Row(i));
+            }
+            cron_loop() {
+                if (!this.is_admin())
+                    return null;
+                new this.$.$mol_after_timeout(10_000, () => {
+                    this.enforce_all();
+                    this.cron_loop();
+                });
+                return null;
+            }
+            person_peer(index) {
+                const p = this.people()[index];
+                return p?.land().auth().peer() ?? '—';
+            }
+            person_name(index) {
+                const p = this.people()[index];
+                return p?.Name()?.str() || '(no name)';
+            }
+            person_email(index) {
+                const p = this.people()[index];
+                return p?.Email()?.str() || '(no email)';
+            }
+            person_balance_rub(index) {
+                const p = this.people()[index];
+                const cents = Number(p?.BalanceCents()?.val() ?? '0');
+                return (cents / 100).toFixed(2);
+            }
+            person_sub(index) {
+                const p = this.people()[index];
+                const subs = p?.Subscriptions()?.remote_list() ?? [];
+                const now = Date.now();
+                const sorted = subs
+                    .slice()
+                    .sort((a, b) => (b.PeriodEnd()?.val() ? Date.parse(b.PeriodEnd().val()) : 0) -
+                    (a.PeriodEnd()?.val() ? Date.parse(a.PeriodEnd().val()) : 0));
+                const active = sorted.find(s => {
+                    const end = s.PeriodEnd()?.val();
+                    if (!end)
+                        return false;
+                    const end_at = Date.parse(end);
+                    const st = s.Status()?.val();
+                    return end_at > now && (st === 'active' || st === 'trial');
+                });
+                return active ?? sorted[0] ?? null;
+            }
+            person_sub_status(index) {
+                const s = this.person_sub(index);
+                return s?.Status()?.val() ?? 'none';
+            }
+            person_sub_period_end(index) {
+                const s = this.person_sub(index);
+                const end = s?.PeriodEnd()?.val();
+                return end ? new Date(end).toLocaleString() : '—';
+            }
+            Enforce_btn() {
+                const $ = this.$;
+                return $.$mol_button_minor.make({
+                    sub: () => [$.$mol_text.make({ text: () => 'Enforce now' })],
+                    click: () => {
+                        this.enforce_all();
+                    },
+                    enabled: () => this.is_admin(),
+                });
+            }
+            Head_bar() {
+                const $ = this.$;
+                return $.$mol_row.make({
+                    sub: () => [
+                        $.$mol_text.make({
+                            text: () => this.is_admin() ? 'Admin: People overview' : 'No admin access (set ?admin=<public_peer>)',
+                        }),
+                        this.Enforce_btn(),
+                    ],
+                });
+            }
+            Row(index) {
+                const $ = this.$;
+                this.$.$mol_log3_rise({
+                    place: this,
+                    message: 'Rendering person row',
+                    index,
+                    peer: this.person_peer(index),
+                    name: this.person_name(index),
+                    email: this.person_email(index),
+                    balance: this.person_balance_rub(index),
+                    status: this.person_sub_status(index),
+                    period_end: this.person_sub_period_end(index),
+                });
+                return $.$mol_row.make({
+                    sub: () => [
+                        $.$mol_text.make({ text: () => `Peer: ${this.person_peer(index)}` }),
+                        $.$mol_text.make({ text: () => `Name: ${this.person_name(index)}` }),
+                        $.$mol_text.make({ text: () => `Email: ${this.person_email(index)}` }),
+                        $.$mol_text.make({ text: () => `Balance: ${this.person_balance_rub(index)} ₽` }),
+                        $.$mol_text.make({ text: () => `Status: ${this.person_sub_status(index)}` }),
+                        $.$mol_text.make({ text: () => `Until: ${this.person_sub_period_end(index)}` }),
+                    ],
+                });
+            }
+            Body_list() {
+                const $ = this.$;
+                return $.$mol_list.make({
+                    rows: () => this.rows(),
+                });
+            }
+            sub() {
+                this.cron_loop();
+                return [this.Head_bar(), this.Body_list()];
+            }
+            enforce_all() {
+                if (!this.is_admin())
+                    return;
+                const api = $bog_pay_openvpn_api;
+                for (const person of this.people()) {
+                    this.enforce_person(person, api);
+                }
+            }
+            enforce_person(person, api) {
+                const subs = person.Subscriptions()?.remote_list() ?? [];
+                if (subs.length === 0)
+                    return;
+                let sub = subs.slice().sort((a, b) => {
+                    const ae = a.PeriodEnd()?.val() ? Date.parse(a.PeriodEnd().val()) : 0;
+                    const be = b.PeriodEnd()?.val() ? Date.parse(b.PeriodEnd().val()) : 0;
+                    return be - ae;
+                })[0];
+                const end_str = sub.PeriodEnd()?.val();
+                const end_at = end_str ? Date.parse(end_str) : 0;
+                const mode = sub.RenewalMode()?.val();
+                const now = Date.now();
+                if (end_at && end_at <= now && mode === 'auto') {
+                    const charged = this.charge_person_for_sub(person, sub);
+                    if (charged) {
+                        sub.activate_month();
+                    }
+                    else {
+                        sub.RenewalMode(null).val('manual');
+                        sub.Status(null).val('canceled');
+                    }
+                }
+                sub.enforce_access(api);
+            }
+            charge_person_for_sub(person, sub) {
+                const price = this.price_cents();
+                const balance = Number(person.BalanceCents()?.val() ?? '0');
+                if (balance < price)
+                    return false;
+                person.BalanceCents(null).val(String(balance - price));
+                const inv = person.Invoices(null).remote_make({});
+                inv.Person(null).val(person.ref());
+                inv.Subscription(null).val(sub.ref());
+                inv.Kind(null).val('charge');
+                inv.AmountCents(null).val(String(price));
+                inv.Currency(null).val('RUB');
+                inv.Provider(null).val('admin-cron');
+                inv.mark_pending();
+                inv.mark_paid();
+                return true;
             }
         }
         __decorate([
             $mol_mem
-        ], $mol_deck.prototype, "Content", null);
-        $$.$mol_deck = $mol_deck;
-    })($$ = $.$$ || ($.$$ = {}));
+        ], $bog_pay_app_admin_page.prototype, "is_admin", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_admin_page.prototype, "price_cents", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_admin_page.prototype, "people", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_admin_page.prototype, "rows", null);
+        __decorate([
+            $mol_mem
+        ], $bog_pay_app_admin_page.prototype, "cron_loop", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_pay_app_admin_page.prototype, "person_peer", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_pay_app_admin_page.prototype, "person_name", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_pay_app_admin_page.prototype, "person_email", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_pay_app_admin_page.prototype, "person_balance_rub", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_pay_app_admin_page.prototype, "person_sub", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_pay_app_admin_page.prototype, "person_sub_status", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_pay_app_admin_page.prototype, "person_sub_period_end", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_pay_app_admin_page.prototype, "Row", null);
+        __decorate([
+            $mol_action
+        ], $bog_pay_app_admin_page.prototype, "enforce_all", null);
+        __decorate([
+            $mol_action
+        ], $bog_pay_app_admin_page.prototype, "enforce_person", null);
+        __decorate([
+            $mol_action
+        ], $bog_pay_app_admin_page.prototype, "charge_person_for_sub", null);
+        $$.$bog_pay_app_admin_page = $bog_pay_app_admin_page;
+    })($$ = $_1.$$ || ($_1.$$ = {}));
 })($ || ($ = {}));
-
-;
-"use strict";
-let $hyoo_sync_revision = "echo";
 
 ;
 "use strict";
@@ -17189,54 +18230,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    async function $hyoo_sync_peer(path, next) {
-        let serial = $mol_state_local.value('$hyoo_sync_peer', next);
-        if (typeof serial === 'string') {
-            return await $hyoo_crowd_peer.restore(serial);
-        }
-        else {
-            serial = $mol_state_local.value(path);
-            if (typeof serial === 'string') {
-                $mol_state_local.value('$hyoo_sync_peer', serial);
-                $mol_state_local.value(path, null);
-            }
-        }
-        const frame = $mol_jsx("iframe", { src: "https://sync.hyoo.ru/auth/" });
-        frame.style.display = 'none';
-        await new Promise((done, fail) => {
-            frame.onload = done;
-            frame.onerror = fail;
-            frame.onabort = fail;
-            document.body.appendChild(frame);
-        });
-        const serial_ext = await new Promise((done, fail) => {
-            window.addEventListener('message', event => {
-                if (!Array.isArray(event.data))
-                    return;
-                if (event.data[0] !== '$hyoo_sync_peer')
-                    return;
-                done(event.data[1]);
-            });
-            frame.contentWindow.postMessage(['$hyoo_sync_peer', serial], '*');
-            setTimeout(() => done(serial), 5000);
-        });
-        document.body.removeChild(frame);
-        if (typeof serial_ext === 'string') {
-            if (!serial)
-                $mol_state_local.value('$hyoo_sync_peer', serial_ext);
-            return await $hyoo_crowd_peer.restore(serial_ext);
-        }
-        const peer = await $hyoo_crowd_peer.generate();
-        $mol_state_local.value('$hyoo_sync_peer', peer.key_private_serial);
-        return peer;
-    }
-    $.$hyoo_sync_peer = $hyoo_sync_peer;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
     class $hyoo_crowd_node extends $mol_object2 {
         land;
         head;
@@ -17289,6 +18282,62 @@ var $;
         $mol_mem_key
     ], $hyoo_crowd_node.prototype, "nodes", null);
     $.$hyoo_crowd_node = $hyoo_crowd_node;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $hyoo_crowd_reg extends $hyoo_crowd_node {
+        value(next) {
+            const unit = this.units().at(-1);
+            if (next === undefined)
+                return unit?.data ?? null;
+            if ($mol_compare_deep(unit?.data, next))
+                return next;
+            this.land.put(this.head, unit?.self ?? this.land.id_new(), '0_0', next);
+            return next;
+        }
+        str(next) {
+            return String(this.value(next) ?? '');
+        }
+        numb(next) {
+            return Number(this.value(next));
+        }
+        bool(next) {
+            return Boolean(this.value(next));
+        }
+        yoke(law = [''], mod = [], add = []) {
+            const world = this.world();
+            let land_id = $mol_int62_string_ensure(this.value());
+            if (land_id)
+                return world.land_sync(land_id);
+            if (!this.land.allowed_add())
+                return null;
+            const land = $mol_wire_sync(world).grab(law, mod, add);
+            this.value(land.id());
+            world.land_init(land);
+            return land;
+        }
+    }
+    $.$hyoo_crowd_reg = $hyoo_crowd_reg;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $hyoo_crowd_struct extends $hyoo_crowd_node {
+        sub(key, Node) {
+            const head = $mol_int62_hash_string(key + '\n' + this.head);
+            return this.world()?.Fund(Node).Item(`${this.land.id()}!${head}`) ?? new Node(this.land, head);
+        }
+        yoke(key, Node, law = [''], mod = [], add = []) {
+            const land = this.sub(key, $hyoo_crowd_reg).yoke(law, mod, add);
+            return land?.chief.sub(key, Node) ?? null;
+        }
+    }
+    $.$hyoo_crowd_struct = $hyoo_crowd_struct;
 })($ || ($ = {}));
 
 ;
@@ -17733,62 +18782,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $hyoo_crowd_reg extends $hyoo_crowd_node {
-        value(next) {
-            const unit = this.units().at(-1);
-            if (next === undefined)
-                return unit?.data ?? null;
-            if ($mol_compare_deep(unit?.data, next))
-                return next;
-            this.land.put(this.head, unit?.self ?? this.land.id_new(), '0_0', next);
-            return next;
-        }
-        str(next) {
-            return String(this.value(next) ?? '');
-        }
-        numb(next) {
-            return Number(this.value(next));
-        }
-        bool(next) {
-            return Boolean(this.value(next));
-        }
-        yoke(law = [''], mod = [], add = []) {
-            const world = this.world();
-            let land_id = $mol_int62_string_ensure(this.value());
-            if (land_id)
-                return world.land_sync(land_id);
-            if (!this.land.allowed_add())
-                return null;
-            const land = $mol_wire_sync(world).grab(law, mod, add);
-            this.value(land.id());
-            world.land_init(land);
-            return land;
-        }
-    }
-    $.$hyoo_crowd_reg = $hyoo_crowd_reg;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $hyoo_crowd_struct extends $hyoo_crowd_node {
-        sub(key, Node) {
-            const head = $mol_int62_hash_string(key + '\n' + this.head);
-            return this.world()?.Fund(Node).Item(`${this.land.id()}!${head}`) ?? new Node(this.land, head);
-        }
-        yoke(key, Node, law = [''], mod = [], add = []) {
-            const land = this.sub(key, $hyoo_crowd_reg).yoke(law, mod, add);
-            return land?.chief.sub(key, Node) ?? null;
-        }
-    }
-    $.$hyoo_crowd_struct = $hyoo_crowd_struct;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
     class $hyoo_crowd_land extends $mol_object {
         id() {
             return $mol_int62_to_string($mol_int62_random());
@@ -18144,478 +19137,219 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$hyoo_sync_masters = [
-        `sync.hyoo.ru`,
-    ];
+    class $bog_pay_app_domain extends $hyoo_crowd_struct {
+        editable() {
+            return this.land.allowed_mod();
+        }
+        people_registry() {
+            return $bog_pay_app_people.hall();
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_domain.prototype, "editable", null);
+    __decorate([
+        $mol_mem
+    ], $bog_pay_app_domain.prototype, "people_registry", null);
+    $.$bog_pay_app_domain = $bog_pay_app_domain;
+})($ || ($ = {}));
+
+;
+	($.$mol_check_list) = class $mol_check_list extends ($.$mol_view) {
+		option_checked(id, next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		option_title(id){
+			return "";
+		}
+		option_label(id){
+			return [(this.option_title(id))];
+		}
+		enabled(){
+			return true;
+		}
+		option_enabled(id){
+			return (this.enabled());
+		}
+		option_hint(id){
+			return "";
+		}
+		items(){
+			return [];
+		}
+		dictionary(){
+			return {};
+		}
+		Option(id){
+			const obj = new this.$.$mol_check();
+			(obj.checked) = (next) => ((this.option_checked(id, next)));
+			(obj.label) = () => ((this.option_label(id)));
+			(obj.enabled) = () => ((this.option_enabled(id)));
+			(obj.hint) = () => ((this.option_hint(id)));
+			(obj.minimal_height) = () => (24);
+			return obj;
+		}
+		options(){
+			return {};
+		}
+		keys(){
+			return [];
+		}
+		sub(){
+			return (this.items());
+		}
+	};
+	($mol_mem_key(($.$mol_check_list.prototype), "option_checked"));
+	($mol_mem_key(($.$mol_check_list.prototype), "Option"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_check_list extends $.$mol_check_list {
+            options() {
+                return {};
+            }
+            dictionary(next) {
+                return next ?? {};
+            }
+            option_checked(id, next) {
+                const prev = this.dictionary();
+                if (next === undefined)
+                    return prev[id] ?? null;
+                const next_rec = { ...prev, [id]: next };
+                if (next === null)
+                    delete next_rec[id];
+                return this.dictionary(next_rec)[id] ?? null;
+            }
+            keys() {
+                return Object.keys(this.options());
+            }
+            items() {
+                return this.keys().map(key => this.Option(key));
+            }
+            option_title(key) {
+                return this.options()[key] || key;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_check_list.prototype, "keys", null);
+        __decorate([
+            $mol_mem
+        ], $mol_check_list.prototype, "items", null);
+        $$.$mol_check_list = $mol_check_list;
+    })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
 ;
 "use strict";
 var $;
 (function ($) {
-    class $hyoo_sync_yard extends $mol_object2 {
-        db_unit_persisted = new WeakSet();
-        log_pack(data) {
-            return data;
-        }
-        peer(next) {
-            return $mol_wire_sync($hyoo_sync_peer)(this + '.peer()', next);
-        }
-        world() {
-            $mol_wire_solid();
-            const world = new this.$.$hyoo_crowd_world(this.peer());
-            world.land_init = land => this.land_init(land);
-            return world;
-        }
-        land_init(land) {
-            this.db_land_init(land);
-            try {
-                this.land_sync(land);
-            }
-            catch (error) {
-                $mol_fail_log(error);
-            }
-            if (!land.grabbed())
-                this.$.$mol_wait_timeout(10_000);
-        }
-        land(id) {
-            return this.world().land_sync(id);
-        }
-        land_grab(law = [''], mod = [], add = []) {
-            return $mol_wire_sync(this.world()).grab(law, mod, add);
-        }
-        home() {
-            return this.land(this.peer().id);
-        }
-        land_search(query) {
-            const stat = new Map();
-            for (const prefix of query.match(/\p{Letter}{2,}/gu) ?? []) {
-                const caps = prefix.slice(0, 1).toUpperCase() + prefix.slice(1);
-                const prefs = new Set([
-                    caps, ' ' + caps,
-                    prefix, ' ' + prefix,
-                ]);
-                const lands = new Set();
-                const founds = $mol_wire_race(...[...prefs].map(pref => () => $mol_wire_sync(this).db_land_search(pref)));
-                for (const found of founds) {
-                    for (const land of [...found].reverse())
-                        lands.add(land);
-                }
-                for (const land of lands) {
-                    stat.set(land, (stat.get(land) ?? 0) + 1);
-                }
-            }
-            return [...stat].sort((left, right) => right[1] - left[1]).map(pair => pair[0]);
-        }
-        sync() {
-            this.server();
-            for (const land of this.world().lands.values()) {
-                this.db_land_sync(land);
-            }
-            $mol_wire_race(...this.slaves().map(line => () => this.line_sync(line)));
-            try {
-                const master = this.master();
-                if (master)
-                    $mol_wire_race(...[...this.world().lands.values()].map(land => () => this.line_land_sync({ line: master, land })));
-            }
-            catch (error) {
-                $mol_fail_log(error);
-            }
-        }
-        land_sync(land) {
-            this.db_land_init(land);
-            try {
-                this.db_land_sync(land);
-            }
-            catch (error) {
-                $mol_fail_log(error);
-            }
-            try {
-                const master = this.master();
-                if (master)
-                    this.line_land_sync({ line: master, land });
-            }
-            catch (error) {
-                $mol_fail_log(error);
-            }
-            try {
-                $mol_wire_race(...this.slaves()
-                    .filter(line => this.line_lands(line).includes(land))
-                    .map(line => () => this.line_land_sync({ line, land })));
-            }
-            catch (error) {
-                $mol_fail_log(error);
-            }
-        }
-        db_land_clocks(land, next) {
-            $mol_wire_solid();
-            return next;
-        }
-        db_land_sync(land) {
-            this.db_land_init(land);
-            land.clocks;
-            const units = [];
-            for (const unit of land._unit_all.values()) {
-                if (this.db_unit_persisted.has(unit))
-                    continue;
-                units.push(unit);
-            }
-            if (!units.length)
-                return;
-            $mol_wire_sync(this.world()).sign_units(units);
-            $mol_wire_sync(this).db_land_save(land, units);
-            for (const unit of units)
-                this.db_unit_persisted.add(unit);
-        }
-        db_land_init(land) {
-            try {
-                var units = $mol_wire_sync(this).db_land_load(land);
-            }
-            catch (error) {
-                if (!(error instanceof Error))
-                    $mol_fail_hidden(error);
-                this.$.$mol_log3_fail({
-                    place: this,
-                    land: land.id(),
-                    message: error.message,
-                });
-                units = [];
-            }
-            for (const unit of units)
-                this.db_unit_persisted.add(unit);
-            units.sort($hyoo_crowd_unit_compare);
-            land.apply(units);
-        }
-        async db_land_load(land) {
-            return [];
-        }
-        async db_land_search(from, to = from) {
-            return new Set();
-        }
-        async db_land_save(land, units) { }
-        master_cursor(next = 0) {
-            return next;
-        }
-        master_list() {
-            const scheme = this.$.$mol_dom_context.document.location.protocol.replace(/^http/, 'ws');
-            return this.$.$hyoo_sync_masters.map(host => `${scheme}//${host}`);
-        }
-        master_link() {
-            return this.master_list()[this.master_cursor()];
-        }
-        master() {
-            return null;
-        }
-        server() {
-            return null;
-        }
-        slaves(next = []) {
-            return next;
-        }
-        line_lands(line, next = []) {
-            return next;
-        }
-        line_land_clocks({ line, land }, next) {
-            $mol_wire_solid();
-            return next;
-        }
-        line_sync(line) {
-            $mol_wire_race(...this.line_lands(line).map(land => () => this.line_land_sync({ line, land })));
-        }
-        line_land_sync({ line, land }) {
-            this.line_land_init({ line, land });
-            let clocks = this.line_land_clocks({ line, land });
-            if (!clocks)
-                return;
-            const units = land.delta(clocks);
-            if (!units.length)
-                return;
-            this.line_send_units(line, units);
-            for (const unit of units) {
-                clocks[unit.group()].see_peer(unit.auth, unit.time);
-            }
-        }
-        line_land_init({ line, land }) {
-            this.db_land_init(land);
-            this.line_send_clocks(line, land);
-        }
-        line_land_neck({ line, land }, next = []) {
-            return next;
-        }
-        async line_receive(line, message) {
-            if (!message.byteLength)
-                return;
-            const view = new DataView(message.buffer, message.byteOffset, message.byteLength);
-            const int0 = view.getInt32(0, true);
-            const int1 = view.getInt32(4, true);
-            const land_id = $mol_int62_to_string({
-                lo: int0 << 1 >> 1,
-                hi: int1 << 1 >> 1,
-            });
-            const handle = async (prev) => {
-                if (prev)
-                    await prev;
-                const world = this.world();
-                const land = await $mol_wire_async(world).land(land_id);
-                let clocks = this.line_land_clocks({ line, land });
-                if (!clocks)
-                    this.line_land_clocks({ line, land }, clocks = [new $hyoo_crowd_clock, new $hyoo_crowd_clock]);
-                if (int0 << 1 >> 1 ^ int0) {
-                    const bin = new $hyoo_crowd_clock_bin(message.buffer, message.byteOffset, message.byteLength);
-                    for (let group = 0; group < clocks.length; ++group) {
-                        clocks[group].see_bin(bin, group);
-                    }
-                    if (bin.count() + land.delta(clocks).length < land._unit_all.size) {
-                        this.line_land_clocks({ line, land }, clocks = [new $hyoo_crowd_clock, new $hyoo_crowd_clock]);
-                    }
-                    const lands = this.line_lands(line);
-                    if (lands.includes(land)) {
-                        this.$.$mol_log3_warn({
-                            place: this,
-                            land: land.id(),
-                            message: 'Already syncing',
-                            hint: 'Bug at $hyoo_sync_yard',
-                            line: $mol_key(line),
-                            clocks,
-                        });
-                    }
-                    else {
-                        this.line_lands(line, [...lands, land]);
-                    }
-                    return;
-                }
-                const { allow, forbid } = await world.apply(message);
-                for (const [{ bin, ...unit }, error] of forbid) {
-                    this.$.$mol_log3_fail({
-                        place: this,
-                        land: land.id(),
-                        message: error,
-                        line: $mol_key(line),
-                        unit,
-                    });
-                }
-                if (!allow.length)
-                    return;
-                for (const unit of allow) {
-                    clocks[unit.group()].see_peer(unit.auth, unit.time);
-                }
-                this.$.$mol_log3_rise({
-                    place: this,
-                    land: land.id(),
-                    message: 'Sync Gain',
-                    line: $mol_key(line),
-                    units: this.log_pack(allow),
-                });
-            };
-            this.line_land_neck({ line, land: land_id }, [
-                handle(this.line_land_neck({ line, land: land_id })[0])
-                    .catch(error => {
-                    this.$.$mol_log3_fail({
-                        place: this,
-                        land: land_id,
-                        message: String(error?.message ?? error),
-                    });
-                })
-            ]);
-        }
-        line_send_clocks(line, land) { }
-        async line_send_units(line, units) { }
-        [$mol_dev_format_head]() {
-            return $mol_dev_format_native(this);
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $hyoo_sync_yard.prototype, "peer", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_sync_yard.prototype, "world", null);
-    __decorate([
-        $mol_mem_key
-    ], $hyoo_sync_yard.prototype, "land_init", null);
-    __decorate([
-        $mol_action
-    ], $hyoo_sync_yard.prototype, "land_search", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_sync_yard.prototype, "sync", null);
-    __decorate([
-        $mol_mem_key
-    ], $hyoo_sync_yard.prototype, "land_sync", null);
-    __decorate([
-        $mol_mem_key
-    ], $hyoo_sync_yard.prototype, "db_land_clocks", null);
-    __decorate([
-        $mol_mem_key
-    ], $hyoo_sync_yard.prototype, "db_land_sync", null);
-    __decorate([
-        $mol_mem_key
-    ], $hyoo_sync_yard.prototype, "db_land_init", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_sync_yard.prototype, "master_cursor", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_sync_yard.prototype, "master_link", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_sync_yard.prototype, "slaves", null);
-    __decorate([
-        $mol_mem_key
-    ], $hyoo_sync_yard.prototype, "line_lands", null);
-    __decorate([
-        $mol_mem_key
-    ], $hyoo_sync_yard.prototype, "line_land_clocks", null);
-    __decorate([
-        $mol_mem_key
-    ], $hyoo_sync_yard.prototype, "line_sync", null);
-    __decorate([
-        $mol_mem_key
-    ], $hyoo_sync_yard.prototype, "line_land_sync", null);
-    __decorate([
-        $mol_mem_key
-    ], $hyoo_sync_yard.prototype, "line_land_init", null);
-    __decorate([
-        $mol_mem_key
-    ], $hyoo_sync_yard.prototype, "line_land_neck", null);
-    $.$hyoo_sync_yard = $hyoo_sync_yard;
+    $mol_style_attach("mol/check/list/list.view.css", "[mol_check_list] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tflex: 1 1 auto;\n\tborder-radius: var(--mol_gap_round);\n\tgap: 1px;\n}\n\n[mol_check_list_option] {\n\tflex: 0 1 auto;\n}\n\n[mol_check_list_option]:where([mol_check_checked=\"true\"]) {\n\ttext-shadow: 0 0;\n\tcolor: var(--mol_theme_current);\n}\n\n[mol_check_list_option]:where([mol_check_checked=\"true\"][disabled]) {\n\tcolor: var(--mol_theme_text);\n}\n");
 })($ || ($ = {}));
+
+;
+	($.$mol_switch) = class $mol_switch extends ($.$mol_check_list) {
+		value(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+	};
+	($mol_mem(($.$mol_switch.prototype), "value"));
+
+
+;
+"use strict";
 
 ;
 "use strict";
 var $;
 (function ($) {
-    class $hyoo_sync_client extends $hyoo_sync_yard {
-        async db() {
-            const db1 = await this.$.$mol_db('$hyoo_sync_client_db');
-            await db1.kill();
-            return await this.$.$mol_db('$hyoo_sync_client_db2', mig => mig.store_make('Unit'), mig => mig.stores.Unit.index_make('Land', ['land']), mig => mig.stores.Unit.index_make('Data', ['data']));
-        }
-        async db_land_load(land) {
-            try {
-                var db = await this.db();
+    var $$;
+    (function ($$) {
+        class $mol_switch extends $.$mol_switch {
+            value(next) {
+                return $mol_state_session.value(`${this}.value()`, next) ?? '';
             }
-            catch (error) {
-                $mol_fail_log(error);
-                return [];
-            }
-            const Unit = db.read('Unit').Unit;
-            const recs = await Unit.indexes.Land.select([land.id()]);
-            if (!recs)
-                return [];
-            const units = recs.map(rec => new $hyoo_crowd_unit(rec.land, rec.auth, rec.head, rec.self, rec.next, rec.prev, rec.time, rec.data, new $hyoo_crowd_unit_bin(rec.bin.buffer)));
-            return units;
-        }
-        async db_land_search(from, to = from + '\uFFFF') {
-            try {
-                var db = await this.db();
-            }
-            catch (error) {
-                $mol_fail_log(error);
-                return new Set();
-            }
-            const Unit = db.read('Unit').Unit;
-            const query = IDBKeyRange.bound([from], [to]);
-            const recs = await Unit.indexes.Data.select(query);
-            return new Set(recs.map(rec => rec.land));
-        }
-        async db_land_save(land, units) {
-            try {
-                var db = await this.db();
-            }
-            catch (error) {
-                $mol_fail_log(error);
-                return;
-            }
-            const trans = db.change('Unit');
-            const Unit = trans.stores.Unit;
-            for (const unit of units) {
-                Unit.put(unit, [unit.land, unit.head, unit.self]);
-            }
-            await trans.commit();
-            this.$.$mol_storage.persisted(true);
-        }
-        reconnects(reset) {
-            return ($mol_wire_probe(() => this.reconnects()) ?? 0) + 1;
-        }
-        master() {
-            this.reconnects();
-            const link = this.master_link();
-            const line = new $mol_dom_context.WebSocket(link, ['$hyoo_sync_protocol_1']);
-            line.binaryType = 'arraybuffer';
-            line.onmessage = async (event) => {
-                if (event.data instanceof ArrayBuffer) {
-                    await this.line_receive(line, new Uint8Array(event.data));
-                }
-                else {
-                    this.$.$mol_log3_fail({
-                        place: this,
-                        message: 'Wrong data',
-                        data: event.data
-                    });
-                }
-            };
-            let interval;
-            line.onclose = () => {
-                clearInterval(interval);
-                setTimeout(() => this.reconnects(null), 1000);
-            };
-            Object.assign(line, {
-                destructor: () => {
-                    line.onclose = () => { };
-                    clearInterval(interval);
-                    line.close();
-                }
-            });
-            return new Promise((done, fail) => {
-                line.onopen = () => {
-                    this.$.$mol_log3_come({
-                        place: this,
-                        message: 'Connected to Master',
-                        line: $mol_key(line),
-                        server: link,
-                    });
-                    interval = setInterval(() => line.send(new Uint8Array), 30000);
-                    done(line);
-                };
-                line.onerror = () => {
-                    line.onclose = event => {
-                        fail(new Error(`Master is unavailable (${event.code})`));
-                    };
-                    clearInterval(interval);
-                    this.master_cursor((this.master_cursor() + 1) % this.$.$hyoo_sync_masters.length);
-                };
-            });
-        }
-        line_send_clocks(line, land) {
-            if (line instanceof WebSocket) {
-                line.send(land.clocks_bin);
-            }
-            else {
-                line.postMessage(['hyoo_sync_clocks', land.id(), land._clocks]);
+            option_checked(key, next) {
+                if (next === undefined)
+                    return this.value() == key;
+                this.value(next ? key : '');
+                return next;
             }
         }
-        async line_send_units(line, units) {
-            if (line instanceof WebSocket) {
-                await this.world().sign_units(units);
-                const message = new Blob(units.map(unit => unit.bin));
-                line.send(message);
+        $$.$mol_switch = $mol_switch;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$mol_deck) = class $mol_deck extends ($.$mol_list) {
+		current(next){
+			if(next !== undefined) return next;
+			return "0";
+		}
+		switch_options(){
+			return {};
+		}
+		Switch(){
+			const obj = new this.$.$mol_switch();
+			(obj.value) = (next) => ((this.current(next)));
+			(obj.options) = () => ((this.switch_options()));
+			return obj;
+		}
+		Content(){
+			const obj = new this.$.$mol_view();
+			return obj;
+		}
+		items(){
+			return [];
+		}
+		rows(){
+			return [(this.Switch()), (this.Content())];
+		}
+	};
+	($mol_mem(($.$mol_deck.prototype), "current"));
+	($mol_mem(($.$mol_deck.prototype), "Switch"));
+	($mol_mem(($.$mol_deck.prototype), "Content"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_deck extends $.$mol_deck {
+            current(next) {
+                return $mol_state_session.value(`${this}.current()`, next) || '0';
             }
-            else {
-                line.postMessage(['hyoo_sync_units', units[0].land, units]);
+            switch_options() {
+                let options = {};
+                this.items().forEach((item, index) => {
+                    options[String(index)] = item.title();
+                });
+                return options;
+            }
+            Content() {
+                return this.items()[Number(this.current())];
             }
         }
-    }
-    __decorate([
-        $mol_memo.method
-    ], $hyoo_sync_client.prototype, "db", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_sync_client.prototype, "reconnects", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_sync_client.prototype, "master", null);
-    $.$hyoo_sync_client = $hyoo_sync_client;
+        __decorate([
+            $mol_mem
+        ], $mol_deck.prototype, "Content", null);
+        $$.$mol_deck = $mol_deck;
+    })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
 ;
@@ -18673,10 +19407,6 @@ var $;
 			]);
 			return obj;
 		}
-		Yard(){
-			const obj = new this.$.$hyoo_sync_client();
-			return obj;
-		}
 	};
 	($mol_mem(($.$bog_pay_app.prototype), "Theme"));
 	($mol_mem(($.$bog_pay_app.prototype), "Lights"));
@@ -18686,1020 +19416,7 @@ var $;
 	($mol_mem(($.$bog_pay_app.prototype), "Admin"));
 	($mol_mem(($.$bog_pay_app.prototype), "Domain"));
 	($mol_mem(($.$bog_pay_app.prototype), "Deck"));
-	($mol_mem(($.$bog_pay_app.prototype), "Yard"));
 
-
-;
-"use strict";
-var $;
-(function ($) {
-    const { unicode_only, line_end, tab, repeat_greedy, optional, forbid_after, force_after, char_only, char_except } = $mol_regexp;
-    $.$hyoo_crus_text_tokens = $mol_regexp.from({
-        token: {
-            'line-break': line_end,
-            'indents': repeat_greedy(tab, 1),
-            'emoji': [
-                unicode_only('Extended_Pictographic'),
-                optional(unicode_only('Emoji_Modifier')),
-                repeat_greedy([
-                    unicode_only('Emoji_Component'),
-                    unicode_only('Extended_Pictographic'),
-                    optional(unicode_only('Emoji_Modifier')),
-                ]),
-            ],
-            'link': /\b(https?:\/\/[^\s,.;:!?")]+(?:[,.;:!?")][^\s,.;:!?")]+)+)/,
-            'Word': [
-                [char_only(' ', 0xA0)],
-                repeat_greedy(char_only([
-                    unicode_only('General_Category', 'Uppercase_Letter'),
-                    unicode_only('Diacritic'),
-                    unicode_only('General_Category', 'Number'),
-                ]), 1),
-                repeat_greedy(char_only([
-                    unicode_only('General_Category', 'Lowercase_Letter'),
-                    unicode_only('Diacritic'),
-                    unicode_only('General_Category', 'Number'),
-                ])),
-            ],
-            'word': [
-                [char_only(' ', 0xA0)],
-                repeat_greedy(char_only([
-                    unicode_only('General_Category', 'Lowercase_Letter'),
-                    unicode_only('Diacritic'),
-                    unicode_only('General_Category', 'Number'),
-                ]), 1),
-            ],
-            'spaces': [
-                forbid_after(line_end),
-                repeat_greedy(unicode_only('White_Space'), 1),
-                force_after(unicode_only('White_Space')),
-            ],
-            'space': [
-                forbid_after(line_end),
-                unicode_only('White_Space'),
-                forbid_after([
-                    unicode_only('White_Space'),
-                    unicode_only('General_Category', 'Uppercase_Letter'),
-                    unicode_only('General_Category', 'Lowercase_Letter'),
-                    unicode_only('Diacritic'),
-                    unicode_only('General_Category', 'Number'),
-                ]),
-            ],
-            'others': [
-                [char_only(' ', 0xA0)],
-                repeat_greedy(char_except([
-                    unicode_only('General_Category', 'Uppercase_Letter'),
-                    unicode_only('General_Category', 'Lowercase_Letter'),
-                    unicode_only('Diacritic'),
-                    unicode_only('General_Category', 'Number'),
-                    unicode_only('White_Space'),
-                ]), 1),
-            ],
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $hyoo_crus_text extends $hyoo_crus_node {
-        static tag = $hyoo_crus_sand_tag[$hyoo_crus_sand_tag.vals];
-        value(next) {
-            return this.text(next);
-        }
-        text(next) {
-            if (next !== undefined) {
-                const land = this.land();
-                const prev = this.units();
-                const lines = next.match(/.*\n|.+$/g) ?? [];
-                $mol_reconcile({
-                    prev,
-                    from: 0,
-                    to: prev.length,
-                    next: lines,
-                    equal: (next, prev) => {
-                        return land.Node($hyoo_crus_text).Item(prev.self()).str() === next;
-                    },
-                    drop: (prev, lead) => this.land().post(lead?.self() ?? '', prev.head(), prev.self(), null),
-                    insert: (next, lead) => {
-                        const sand = this.land().post(lead?.self() ?? '', this.head(), land.self_make(), 'p', 'vals');
-                        land.Node($hyoo_crus_text).Item(sand.self()).str(next);
-                        return sand;
-                    },
-                    replace: (next, prev, lead) => {
-                        land.Node($hyoo_crus_text).Item(prev.self()).str(next);
-                        return prev;
-                    },
-                });
-            }
-            return this.str();
-        }
-        str(next) {
-            if (next === undefined) {
-                let str = '';
-                const land = this.land();
-                for (const unit of this.units()) {
-                    if (unit.tag() === 'term')
-                        str += $hyoo_crus_vary_cast_str(land.sand_decode(unit)) ?? '';
-                    else
-                        str += land.Node($hyoo_crus_text).Item(unit.self()).str();
-                }
-                return str;
-            }
-            else {
-                this.write(next, 0, -1);
-                return this.str();
-            }
-        }
-        write(next, str_from = -1, str_to = str_from) {
-            const land = this.land();
-            const list = this.units();
-            let from = str_from < 0 ? list.length : 0;
-            let word = '';
-            while (from < list.length) {
-                word = $hyoo_crus_vary_cast_str(land.sand_decode(list[from])) ?? '';
-                if (str_from <= word.length) {
-                    next = word.slice(0, str_from) + next;
-                    break;
-                }
-                str_from -= word.length;
-                if (str_to > 0)
-                    str_to -= word.length;
-                from++;
-            }
-            let to = str_to < 0 ? list.length : from;
-            while (to < list.length) {
-                word = $hyoo_crus_vary_cast_str(land.sand_decode(list[to])) ?? '';
-                to++;
-                if (str_to < word.length) {
-                    next = next + word.slice(str_to);
-                    break;
-                }
-                str_to -= word.length;
-            }
-            if (from && from === list.length) {
-                --from;
-                next = ($hyoo_crus_vary_cast_str(land.sand_decode(list[from])) ?? '') + next;
-            }
-            const words = next.match($hyoo_crus_text_tokens) ?? [];
-            this.cast($hyoo_crus_list_vary).splice(words, from, to);
-            return this;
-        }
-        point_by_offset(offset) {
-            const land = this.land();
-            let off = offset;
-            for (const unit of this.units()) {
-                if (unit.tag() === 'term') {
-                    const len = $hyoo_crus_vary_cast_str(land.sand_decode(unit))?.length ?? 0;
-                    if (off <= len)
-                        return [unit.self(), off];
-                    else
-                        off -= len;
-                }
-                else {
-                    const found = land.Node($hyoo_crus_text).Item(unit.self()).point_by_offset(off);
-                    if (found[0])
-                        return found;
-                    off = found[1];
-                }
-            }
-            return ['', off];
-        }
-        offset_by_point([self, offset]) {
-            const land = this.land();
-            for (const unit of this.units()) {
-                if (unit.self() === self)
-                    return [self, offset];
-                if (unit.tag() === 'term') {
-                    offset += $hyoo_crus_vary_cast_str(land.sand_decode(unit))?.length ?? 0;
-                }
-                else {
-                    const found = land.Node($hyoo_crus_text).Item(unit.self()).offset_by_point([self, offset]);
-                    if (found[0])
-                        return [self, found[1]];
-                    offset = found[1];
-                }
-            }
-            return ['', offset];
-        }
-        selection(lord, next) {
-            const base = this.$.$hyoo_crus_glob.Land(lord).Data($hyoo_crus_home);
-            if (next) {
-                base.Selection(null)?.val(next.map(offset => this.point_by_offset(offset).join(':')).join('|'));
-                return next;
-            }
-            else {
-                this.text();
-                return base.Selection()?.val()?.split('|').map(point => {
-                    const chunks = point.split(':');
-                    return this.offset_by_point([chunks[0], Number(chunks[1]) || 0])[1];
-                }) ?? [0, 0];
-            }
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $hyoo_crus_text.prototype, "text", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_crus_text.prototype, "str", null);
-    __decorate([
-        $mol_action
-    ], $hyoo_crus_text.prototype, "write", null);
-    __decorate([
-        $mol_action
-    ], $hyoo_crus_text.prototype, "point_by_offset", null);
-    __decorate([
-        $mol_action
-    ], $hyoo_crus_text.prototype, "offset_by_point", null);
-    __decorate([
-        $mol_mem_key
-    ], $hyoo_crus_text.prototype, "selection", null);
-    $.$hyoo_crus_text = $hyoo_crus_text;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $bog_pay_app_plan extends $hyoo_crus_entity.with({
-        Title: $hyoo_crus_text,
-        Descr: $hyoo_crus_text,
-        PriceCents: $hyoo_crus_atom_str,
-        Currency: $hyoo_crus_atom_str,
-        Period: $hyoo_crus_atom_str,
-        TrialDays: $hyoo_crus_atom_str,
-        Public: $hyoo_crus_atom_str,
-    }) {
-        price_cents() {
-            return Number(this.PriceCents()?.val() ?? '0');
-        }
-        is_public() {
-            return this.Public()?.val() === 'true';
-        }
-        static basic_id() {
-            return '___bogPayAp';
-        }
-        static basic() {
-            const base = this.$.$hyoo_crus_glob.home().land().ref();
-            const rel = this.$.$hyoo_crus_ref(this.basic_id());
-            const ref = this.$.$hyoo_crus_ref_resolve(base, rel);
-            const plan = this.$.$hyoo_crus_glob.Node(ref, $bog_pay_app_plan);
-            if (!plan.PriceCents()?.val()) {
-                plan.Title(null).text('Bog Ping Premium');
-                plan.Descr(null).text('Единый тариф: 99 ₽/мес, первые 14 дней бесплатно');
-                plan.PriceCents(null).val('9900');
-                plan.Currency(null).val('RUB');
-                plan.Period(null).val('month');
-                plan.TrialDays(null).val('14');
-                plan.Public(null).val('true');
-            }
-            return plan;
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_plan.prototype, "price_cents", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_plan.prototype, "is_public", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_plan, "basic", null);
-    $.$bog_pay_app_plan = $bog_pay_app_plan;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $bog_pay_app_invoice extends $hyoo_crus_entity.with({
-        Person: $hyoo_crus_atom_ref_to(() => $bog_pay_app_person),
-        Subscription: $hyoo_crus_atom_ref_to(() => $bog_pay_app_subscription),
-        Kind: $hyoo_crus_atom_str,
-        AmountCents: $hyoo_crus_atom_str,
-        Currency: $hyoo_crus_atom_str,
-        Status: $hyoo_crus_atom_str,
-        CreatedAt: $hyoo_crus_atom_str,
-        PaidAt: $hyoo_crus_atom_str,
-        Provider: $hyoo_crus_atom_str,
-        ProviderInvoiceId: $hyoo_crus_atom_str,
-        PaymentUrl: $hyoo_crus_text,
-        Meta: $hyoo_crus_text,
-    }) {
-        amount_cents() {
-            return Number(this.AmountCents()?.val() ?? '0');
-        }
-        is_topup() {
-            return this.Kind()?.val() === 'topup';
-        }
-        is_charge() {
-            return this.Kind()?.val() === 'charge';
-        }
-        is_paid() {
-            return this.Status()?.val() === 'paid';
-        }
-        is_pending() {
-            return this.Status()?.val() === 'pending';
-        }
-        is_failed() {
-            return this.Status()?.val() === 'failed';
-        }
-        mark_pending() {
-            if (!this.CreatedAt()?.val())
-                this.CreatedAt(null).val(new Date().toISOString());
-            this.Status(null).val('pending');
-        }
-        mark_paid() {
-            this.Status(null).val('paid');
-            this.PaidAt(null).val(new Date().toISOString());
-        }
-        mark_failed() {
-            this.Status(null).val('failed');
-        }
-        cancel() {
-            this.Status(null).val('canceled');
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_invoice.prototype, "amount_cents", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_invoice.prototype, "is_topup", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_invoice.prototype, "is_charge", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_invoice.prototype, "is_paid", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_invoice.prototype, "is_pending", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_invoice.prototype, "is_failed", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_app_invoice.prototype, "mark_pending", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_app_invoice.prototype, "mark_paid", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_app_invoice.prototype, "mark_failed", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_app_invoice.prototype, "cancel", null);
-    $.$bog_pay_app_invoice = $bog_pay_app_invoice;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $bog_pay_app_person extends $hyoo_crus_entity.with({
-        Name: $hyoo_crus_text,
-        Email: $hyoo_crus_text,
-        CreatedAt: $hyoo_crus_atom_str,
-        BalanceCents: $hyoo_crus_atom_str,
-        Subscriptions: $hyoo_crus_list_ref_to(() => $bog_pay_app_subscription),
-        Invoices: $hyoo_crus_list_ref_to(() => $bog_pay_app_invoice),
-        Photos: $hyoo_crus_list_ref_to(() => $hyoo_crus_atom_bin),
-    }) {
-        active_sub() {
-            const now = Date.now();
-            const subs = this.Subscriptions()?.remote_list() ?? [];
-            for (const sub of subs) {
-                const status = sub.Status()?.val();
-                const endStr = sub.PeriodEnd()?.val();
-                const endAt = endStr ? Date.parse(endStr) : 0;
-                if (!endAt || endAt <= now)
-                    continue;
-                if (status === 'active' || status === 'trial')
-                    return sub;
-            }
-            return null;
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_person.prototype, "active_sub", null);
-    $.$bog_pay_app_person = $bog_pay_app_person;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $.$bog_pay_trial_ms = 5_000;
-    $.$bog_pay_renewal_ms = 5_000;
-    class $bog_pay_app_subscription extends $hyoo_crus_entity.with({
-        Person: $hyoo_crus_atom_ref_to(() => $bog_pay_app_person),
-        Plan: $hyoo_crus_atom_ref_to(() => $bog_pay_app_plan),
-        Status: $hyoo_crus_atom_str,
-        PeriodStart: $hyoo_crus_atom_str,
-        PeriodEnd: $hyoo_crus_atom_str,
-        CancelAt: $hyoo_crus_atom_str,
-        RenewalMode: $hyoo_crus_atom_str,
-        AccessState: $hyoo_crus_atom_str,
-    }) {
-        now_ms() {
-            return Date.now();
-        }
-        period_start_ms() {
-            const s = this.PeriodStart()?.val();
-            return s ? Date.parse(s) : 0;
-        }
-        period_end_ms() {
-            const s = this.PeriodEnd()?.val();
-            return s ? Date.parse(s) : 0;
-        }
-        is_trial() {
-            return this.Status()?.val() === 'trial' && this.period_end_ms() > this.now_ms();
-        }
-        is_active() {
-            const status = this.Status()?.val();
-            if (this.period_end_ms() <= this.now_ms())
-                return false;
-            return status === 'active' || status === 'trial';
-        }
-        is_expired() {
-            return !!this.period_end_ms() && this.period_end_ms() <= this.now_ms();
-        }
-        remaining_ms() {
-            const end = this.period_end_ms();
-            return end ? Math.max(0, end - this.now_ms()) : 0;
-        }
-        start_trial() {
-            const now = new Date();
-            const end = new Date(now.valueOf() + $.$bog_pay_trial_ms);
-            this.Status(null).val('trial');
-            this.PeriodStart(null).val(now.toISOString());
-            this.PeriodEnd(null).val(end.toISOString());
-            this.RenewalMode(null).val('auto');
-            this.AccessState(null).val('revoked');
-        }
-        activate_month() {
-            const now = new Date();
-            const currentEnd = this.period_end_ms();
-            const baseTs = currentEnd && currentEnd > now.valueOf() ? currentEnd : now.valueOf();
-            const end = new Date(baseTs + $.$bog_pay_renewal_ms);
-            this.Status(null).val('active');
-            if (!this.PeriodStart()?.val()) {
-                this.PeriodStart(null).val(now.toISOString());
-            }
-            this.PeriodEnd(null).val(end.toISOString());
-            if (!this.RenewalMode()?.val()) {
-                this.RenewalMode(null).val('auto');
-            }
-        }
-        cancel_auto() {
-            this.RenewalMode(null).val('manual');
-            this.CancelAt(null).val(new Date().toISOString());
-        }
-        renew_auto() {
-            this.RenewalMode(null).val('auto');
-            if (this.period_end_ms() > Date.now() && this.Status()?.val() !== 'active') {
-                this.Status(null).val('active');
-            }
-        }
-        expire_if_needed() {
-            if (!this.is_expired())
-                return;
-            const renewal = this.RenewalMode()?.val();
-            if (renewal === 'auto') {
-                this.activate_month();
-            }
-            else {
-                this.Status(null).val('canceled');
-            }
-        }
-        provision_access(api) {
-            const person = this.Person()?.remote();
-            const client = person?.ref().description;
-            if (!client)
-                return;
-            api.ensure_certificate(client);
-            this.AccessState(null).val('provisioned');
-        }
-        revoke_access(api) {
-            const person = this.Person()?.remote();
-            const client = person?.ref().description;
-            if (!client)
-                return;
-            api.revoke_certificate(client);
-            this.AccessState(null).val('revoked');
-        }
-        access_desired() {
-            return this.is_active();
-        }
-        enforce_access(api) {
-            this.expire_if_needed();
-            const desired = this.access_desired();
-            const state = this.AccessState()?.val();
-            const status = this.Status()?.val();
-            if (desired && state !== 'provisioned') {
-                this.provision_access(api);
-            }
-            if (status === 'canceled' && state === 'provisioned') {
-                this.revoke_access(api);
-            }
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_subscription.prototype, "now_ms", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_subscription.prototype, "period_start_ms", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_subscription.prototype, "period_end_ms", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_subscription.prototype, "is_trial", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_subscription.prototype, "is_active", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_subscription.prototype, "is_expired", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_subscription.prototype, "remaining_ms", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_app_subscription.prototype, "start_trial", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_app_subscription.prototype, "activate_month", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_app_subscription.prototype, "cancel_auto", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_app_subscription.prototype, "renew_auto", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_app_subscription.prototype, "expire_if_needed", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_app_subscription.prototype, "provision_access", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_app_subscription.prototype, "revoke_access", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_subscription.prototype, "access_desired", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_app_subscription.prototype, "enforce_access", null);
-    $.$bog_pay_app_subscription = $bog_pay_app_subscription;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $.$bog_pay_app_people_registry_land = 'YpaaEBfX_BcHFsæKs';
-    class $bog_pay_app_people extends $hyoo_crus_entity.with({
-        List: $hyoo_crus_list_ref_to(() => $bog_pay_app_person),
-    }) {
-        static init_registry() {
-            const glob = this.$.$hyoo_crus_glob;
-            const registry_land = glob.land_grab({ '': this.$.$hyoo_crus_rank_post('just') });
-            this.$.$mol_log3_rise({
-                place: this,
-                message: 'Created shared registry land',
-                land_ref: registry_land.ref().description,
-                instructions: 'Copy this land_ref and update $bog_pay_app_people_registry_land constant!',
-            });
-            return registry_land.ref().description;
-        }
-        static hall() {
-            console.log('>>> [REGISTRY STEP 1] Starting hall() for people registry');
-            const glob = this.$.$hyoo_crus_glob;
-            const registry_ref = this.$.$hyoo_crus_ref($.$bog_pay_app_people_registry_land);
-            console.log('>>> [REGISTRY STEP 2] Getting shared land', {
-                land_id: $.$bog_pay_app_people_registry_land,
-            });
-            const shared_land = glob.Land(registry_ref);
-            console.log('>>> [REGISTRY STEP 3] Got shared land', {
-                land_ref: shared_land.ref().description,
-            });
-            const rank = this.$.$hyoo_crus_rank_post('just');
-            console.log('>>> [REGISTRY STEP 4] Creating/accessing registry with permissions', {
-                rank_level: 'post (orgy - everyone can write)',
-            });
-            const registry = shared_land.home().hall_by($bog_pay_app_people, {
-                '': rank,
-            });
-            if (!registry) {
-                console.error('>>> [REGISTRY ERROR] Cannot access people registry in global land');
-                throw new Error('Cannot access people registry in global land');
-            }
-            console.log('>>> [REGISTRY STEP 5] Got registry, checking List', {
-                registry_ref: registry.ref().description,
-                list_exists: !!registry.List(),
-            });
-            if (!registry.List()) {
-                console.log('>>> [REGISTRY STEP 6] List is null, initializing it');
-                const list = registry.List(null);
-                console.log('>>> [REGISTRY STEP 7] List initialized', {
-                    list_now_exists: !!registry.List(),
-                    list_ref: list.ref().description,
-                });
-            }
-            else {
-                const list = registry.List();
-                console.log('>>> [REGISTRY STEP 6] List already exists', {
-                    list_size: list.items_vary().length,
-                });
-            }
-            return registry;
-        }
-    }
-    __decorate([
-        $mol_action
-    ], $bog_pay_app_people, "init_registry", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_people, "hall", null);
-    $.$bog_pay_app_people = $bog_pay_app_people;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $bog_pay_app_account_domain extends $mol_object2 {
-        profile() {
-            const person = $hyoo_crus_glob.home().hall_by($bog_pay_app_person, {});
-            this.ensure_registered();
-            return person;
-        }
-        ensure_registered() {
-            console.log('>>> [STEP 1] Starting registration process');
-            const person = $hyoo_crus_glob.home().hall_by($bog_pay_app_person, {});
-            if (!person) {
-                console.log('>>> [STEP 1] FAILED: No person found');
-                return;
-            }
-            const person_ref = person.ref();
-            const peer = person.land().auth().peer();
-            console.log('>>> [STEP 2] Got local person', {
-                person_ref: person_ref.description,
-                peer,
-            });
-            try {
-                console.log('>>> [STEP 3] Accessing global registry');
-                const registry = $bog_pay_app_people.hall();
-                console.log('>>> [STEP 4] Got registry, accessing List');
-                const list = registry.List();
-                if (!list) {
-                    console.error('>>> [STEP 4] FAILED: List is null', {
-                        registry_exists: !!registry,
-                        registry_ref: registry.ref().description,
-                    });
-                    return;
-                }
-                console.log('>>> [STEP 5] Got List, checking if already registered', {
-                    list_size: list.items_vary().length,
-                });
-                const already_has = list.has(person_ref.description);
-                if (already_has) {
-                    console.log('>>> [STEP 6] User already in global land', {
-                        person_ref: person_ref.description,
-                        peer,
-                    });
-                    return;
-                }
-                console.log('>>> [STEP 6] User NOT in list, adding now');
-                list.add(person_ref.description);
-                console.log('>>> ✅ [STEP 7] User added to global land', {
-                    person_ref: person_ref.description,
-                    peer,
-                    name: person.Name()?.str() || '(no name)',
-                    email: person.Email()?.str() || '(no email)',
-                    list_size_after: list.items_vary().length,
-                });
-            }
-            catch (error) {
-                if (error instanceof Promise) {
-                    console.error('>>> [ERROR] Got Promise instead of error, waiting for it...', {
-                        promise: error,
-                    });
-                    error.then(() => {
-                        console.log('>>> [ERROR] Promise resolved successfully');
-                    }, (err) => {
-                        const error_obj = err;
-                        console.error('>>> [ERROR] Promise rejected:', {
-                            error: err,
-                            message: error_obj?.message || String(err),
-                            stack: error_obj?.stack || '(no stack)',
-                        });
-                    });
-                }
-                else {
-                    const error_obj = error;
-                    console.error('>>> [ERROR] Failed to register in global land:', {
-                        error,
-                        error_message: error_obj?.message || String(error),
-                        error_stack: error_obj?.stack || '(no stack)',
-                    });
-                }
-            }
-        }
-        plan_basic() {
-            return $bog_pay_app_plan.basic();
-        }
-        sub_active() {
-            return this.profile()?.active_sub() ?? null;
-        }
-        price_cents() {
-            return 9900;
-        }
-        balance_cents(next) {
-            const person = this.profile();
-            if (next !== undefined) {
-                person.BalanceCents(null).val(String(Math.max(0, Math.floor(next))));
-            }
-            return Number(person.BalanceCents()?.val() ?? '0');
-        }
-        topup_mock_rub(amountRub) {
-            const person = this.profile();
-            const inv = person.Invoices(null).remote_make({});
-            inv.Person(null).val(person.ref());
-            inv.Kind(null).val('topup');
-            inv.AmountCents(null).val(String(Math.round(amountRub * 100)));
-            inv.Currency(null).val('RUB');
-            inv.Provider(null).val('mock');
-            inv.mark_pending();
-            inv.mark_paid();
-            const newBal = this.balance_cents() + inv.amount_cents();
-            this.balance_cents(newBal);
-            console.log('[Billing] topup (mock):', {
-                person: person.ref().description,
-                delta: inv.amount_cents(),
-                balance: newBal,
-            });
-            return inv;
-        }
-        charge_sub_renewal_mock(sub) {
-            const amount = this.price_cents();
-            const person = this.profile();
-            const bal = this.balance_cents();
-            if (bal < amount) {
-                console.log('[Billing] charge skipped: insufficient funds', { balance: bal, need: amount });
-                return false;
-            }
-            this.balance_cents(bal - amount);
-            const inv = person.Invoices(null).remote_make({});
-            inv.Person(null).val(person.ref());
-            inv.Subscription(null).val(sub.ref());
-            inv.Kind(null).val('charge');
-            inv.AmountCents(null).val(String(amount));
-            inv.Currency(null).val('RUB');
-            inv.Provider(null).val('mock');
-            inv.mark_pending();
-            inv.mark_paid();
-            console.log('[Billing] charge (mock): renewal paid', {
-                subscription: sub.ref().description,
-                amount,
-                balance: this.balance_cents(),
-            });
-            return true;
-        }
-        openvpn_api() {
-            return new $bog_pay_app_openvpn_api();
-        }
-        ovpn_file_name() {
-            const peer = this.$.$hyoo_crus_glob.home().land().auth().peer();
-            return `${peer}.ovpn`;
-        }
-        ovpn_file_blob() {
-            if (!this.is_vpn_allowed()) {
-                throw new Error('VPN unavailable: no active subscription');
-            }
-            const peer = this.$.$hyoo_crus_glob.home().land().auth().peer();
-            const profile = this.openvpn_api().ensure_certificate(peer);
-            return new Blob([profile], { type: 'application/x-openvpn-profile' });
-        }
-        subscribe() {
-            const active = this.sub_active();
-            if (active) {
-                active.enforce_access(this.openvpn_api());
-                return active;
-            }
-            const person = this.profile();
-            const plan = this.plan_basic();
-            const sub = person.Subscriptions(null).remote_make({});
-            sub.Person(null).val(person.ref());
-            sub.Plan(null).val(plan.ref());
-            sub.start_trial();
-            sub.enforce_access(this.openvpn_api());
-            console.log('[Billing] subscribe (mock): start trial for plan', {
-                person: person.ref().description,
-                plan: plan.ref().description,
-                status: sub.Status()?.val(),
-                period: { start: sub.PeriodStart()?.val(), end: sub.PeriodEnd()?.val() },
-            });
-            return sub;
-        }
-        renew() {
-            let sub = this.sub_active();
-            if (!sub) {
-                const person = this.profile();
-                const plan = this.plan_basic();
-                sub = person.Subscriptions(null).remote_make({});
-                sub.Person(null).val(person.ref());
-                sub.Plan(null).val(plan.ref());
-            }
-            if (!this.charge_sub_renewal_mock(sub)) {
-                console.log('[Billing] renew (mock): insufficient funds, please top-up balance first');
-                return sub;
-            }
-            sub.activate_month();
-            console.log('[Billing] renew (mock): +period', {
-                subscription: sub.ref().description,
-                status: sub.Status()?.val(),
-                period: { start: sub.PeriodStart()?.val(), end: sub.PeriodEnd()?.val() },
-                balance: this.balance_cents(),
-            });
-            sub.enforce_access(this.openvpn_api());
-            return sub;
-        }
-        cancel_auto() {
-            const sub = this.sub_active();
-            if (!sub)
-                return;
-            sub.cancel_auto();
-            console.log('[Billing] cancel auto (mock): access remains until period end', {
-                subscription: sub.ref().description,
-                status: sub.Status()?.val(),
-                renewal: sub.RenewalMode()?.val(),
-                period: { start: sub.PeriodStart()?.val(), end: sub.PeriodEnd()?.val() },
-            });
-            sub.enforce_access(this.openvpn_api());
-        }
-        enforce_access() {
-            const sub = this.sub_active();
-            if (sub) {
-                const expired = sub.period_end_ms() <= Date.now();
-                const mode = sub.RenewalMode()?.val();
-                if (expired && mode === 'auto') {
-                    const paid = this.charge_sub_renewal_mock(sub);
-                    if (paid) {
-                        sub.activate_month();
-                    }
-                    else {
-                        sub.RenewalMode(null).val('manual');
-                        sub.Status(null).val('canceled');
-                    }
-                }
-                sub.enforce_access(this.openvpn_api());
-                return;
-            }
-            const person = this.profile();
-            const subs = person?.Subscriptions()?.remote_list() ?? [];
-            for (const s of subs) {
-                s.enforce_access(this.openvpn_api());
-            }
-        }
-        is_vpn_allowed() {
-            return !!this.sub_active();
-        }
-        subscription_status() {
-            const sub = this.sub_active();
-            if (!sub)
-                return 'none';
-            return sub.Status()?.val() ?? 'none';
-        }
-        subscription_period() {
-            const sub = this.sub_active();
-            return {
-                start: sub?.PeriodStart()?.val() ?? null,
-                end: sub?.PeriodEnd()?.val() ?? null,
-            };
-        }
-        subscription_renewal() {
-            const sub = this.sub_active();
-            return sub?.RenewalMode()?.val() ?? null;
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_account_domain.prototype, "profile", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_account_domain.prototype, "ensure_registered", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_account_domain.prototype, "plan_basic", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_account_domain.prototype, "sub_active", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_account_domain.prototype, "price_cents", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_account_domain.prototype, "balance_cents", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_app_account_domain.prototype, "topup_mock_rub", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_app_account_domain.prototype, "charge_sub_renewal_mock", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_account_domain.prototype, "openvpn_api", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_account_domain.prototype, "ovpn_file_name", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_app_account_domain.prototype, "ovpn_file_blob", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_app_account_domain.prototype, "subscribe", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_app_account_domain.prototype, "renew", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_app_account_domain.prototype, "cancel_auto", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_app_account_domain.prototype, "enforce_access", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_account_domain.prototype, "is_vpn_allowed", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_account_domain.prototype, "subscription_status", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_account_domain.prototype, "subscription_period", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_account_domain.prototype, "subscription_renewal", null);
-    $.$bog_pay_app_account_domain = $bog_pay_app_account_domain;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $bog_pay_app_openvpn_api extends $mol_object2 {
-        base_url() {
-            const override = $mol_state_arg.value('pay_api');
-            if (override)
-                return this.normalize_base(override);
-            const loc = $mol_dom_context?.location;
-            if (!loc)
-                return 'http://87.120.36.150:8080';
-            return this.normalize_base('http://87.120.36.150:8080');
-        }
-        normalize_base(input) {
-            return input.endsWith('/') ? input.slice(0, -1) : input;
-        }
-        ensure_url(path) {
-            return `${this.base_url()}${path}`;
-        }
-        headers() {
-            return { 'Content-Type': 'text/plain; charset=utf-8' };
-        }
-        ensure_certificate(client) {
-            const url = this.ensure_url('/api/v1/openvpn/certificates');
-            return $mol_fetch.text(url, {
-                method: 'POST',
-                headers: this.headers(),
-                body: client,
-            });
-        }
-        revoke_certificate(client) {
-            const url = this.ensure_url('/api/v1/openvpn/certificates/revoke');
-            $mol_fetch.response(url, {
-                method: 'POST',
-                headers: this.headers(),
-                body: client,
-            });
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_openvpn_api.prototype, "base_url", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_app_openvpn_api.prototype, "ensure_certificate", null);
-    __decorate([
-        $mol_action
-    ], $bog_pay_app_openvpn_api.prototype, "revoke_certificate", null);
-    $.$bog_pay_app_openvpn_api = $bog_pay_app_openvpn_api;
-})($ || ($ = {}));
 
 ;
 "use strict";
@@ -19817,349 +19534,6 @@ var $;
 
 ;
 "use strict";
-var $;
-(function ($) {
-    $.$bog_pay_app_admin_peers = [
-        'LeRGyZNL',
-        'mcBM6jhX',
-        'SSCOg7yi',
-    ];
-    class $bog_pay_app_admin extends $mol_object2 {
-        static is_me() {
-            const my_peer = this.$.$hyoo_crus_glob.home().land().auth().peer();
-            const is_admin = $.$bog_pay_app_admin_peers.includes(my_peer);
-            return is_admin;
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_admin, "is_me", null);
-    $.$bog_pay_app_admin = $bog_pay_app_admin;
-})($ || ($ = {}));
-
-;
-	($.$bog_pay_app_admin_page) = class $bog_pay_app_admin_page extends ($.$mol_page) {
-		title(){
-			return (this.$.$mol_locale.text("$bog_pay_app_admin_page_title"));
-		}
-		Head(){
-			return null;
-		}
-		body(){
-			return [(this.Head_bar()), (this.Body_list())];
-		}
-	};
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($_1) {
-    var $$;
-    (function ($$) {
-        class $bog_pay_app_admin_page extends $mol_page {
-            is_admin() {
-                return $bog_pay_app_admin.is_me();
-            }
-            title() {
-                new this.$.$mol_after_frame(() => {
-                    const btn = this.$.$mol_dom_context.document.querySelector('[id^="$bog_pay_app.Root"] [mol_deck_switch_option][id$="Option(\'3\')"]');
-                    if (btn && !this.is_admin()) {
-                        btn.style.display = 'none';
-                    }
-                });
-                if (this.is_admin()) {
-                    return this.$.$mol_locale.text('$bog_pay_app_admin_page_title');
-                }
-                else {
-                    return '';
-                }
-            }
-            sub_title() {
-                return this.$.$mol_locale.text('$bog_pay_app_admin_page_title');
-            }
-            price_cents() {
-                return Number($bog_pay_app_plan.basic().PriceCents()?.val() ?? '9900');
-            }
-            people() {
-                console.log('>>> Admin.people() - reading from shared registry');
-                const people_registry = $bog_pay_app_people.hall();
-                if (!people_registry) {
-                    console.warn('>>> Shared registry not found');
-                    return [];
-                }
-                const list = people_registry.List();
-                if (!list) {
-                    console.warn('>>> Registry list is null');
-                    return [];
-                }
-                const all_people_raw = list.remote_list();
-                const all_people = [];
-                const seen_peers = new Set();
-                for (const person of all_people_raw) {
-                    try {
-                        const peer = person.land().auth().peer();
-                        console.log('>>> Got person', {
-                            ref: person.ref().description,
-                            peer,
-                            name: person.Name()?.str() || '(no name)',
-                            email: person.Email()?.str() || '(no email)',
-                        });
-                        if (seen_peers.has(peer)) {
-                            console.log('>>> SKIPPED - duplicate peer');
-                            continue;
-                        }
-                        all_people.push(person);
-                        seen_peers.add(peer);
-                        console.log('>>> ADDED to list, total:', all_people.length);
-                    }
-                    catch (e) {
-                        console.log('>>> ERROR processing person', e);
-                    }
-                }
-                console.log('>>> Admin.people() - FINAL RESULT', {
-                    refs_in_registry: all_people_raw.length,
-                    people_found: all_people.length,
-                    peers: Array.from(seen_peers),
-                });
-                this.$.$mol_log3_rise({
-                    place: this,
-                    message: 'People from shared registry',
-                    refs_in_registry: all_people_raw.length,
-                    people_found: all_people.length,
-                    people: all_people.map(p => ({
-                        land_ref: p?.land().ref().description ?? '?',
-                        peer: p?.land().auth().peer() ?? '?',
-                        name: p?.Name()?.str() || '(no name)',
-                        email: p?.Email()?.str() || '(no email)',
-                    })),
-                });
-                return all_people;
-            }
-            rows() {
-                return this.people().map((person, i) => this.Row(i));
-            }
-            cron_loop() {
-                if (!this.is_admin())
-                    return null;
-                new this.$.$mol_after_timeout(10_000, () => {
-                    this.enforce_all();
-                    this.cron_loop();
-                });
-                return null;
-            }
-            person_peer(index) {
-                const p = this.people()[index];
-                return p?.land().auth().peer() ?? '—';
-            }
-            person_name(index) {
-                const p = this.people()[index];
-                return p?.Name()?.str() || '(no name)';
-            }
-            person_email(index) {
-                const p = this.people()[index];
-                return p?.Email()?.str() || '(no email)';
-            }
-            person_balance_rub(index) {
-                const p = this.people()[index];
-                const cents = Number(p?.BalanceCents()?.val() ?? '0');
-                return (cents / 100).toFixed(2);
-            }
-            person_sub(index) {
-                const p = this.people()[index];
-                const subs = p?.Subscriptions()?.remote_list() ?? [];
-                const now = Date.now();
-                const sorted = subs
-                    .slice()
-                    .sort((a, b) => (b.PeriodEnd()?.val() ? Date.parse(b.PeriodEnd().val()) : 0) -
-                    (a.PeriodEnd()?.val() ? Date.parse(a.PeriodEnd().val()) : 0));
-                const active = sorted.find(s => {
-                    const end = s.PeriodEnd()?.val();
-                    if (!end)
-                        return false;
-                    const end_at = Date.parse(end);
-                    const st = s.Status()?.val();
-                    return end_at > now && (st === 'active' || st === 'trial');
-                });
-                return active ?? sorted[0] ?? null;
-            }
-            person_sub_status(index) {
-                const s = this.person_sub(index);
-                return s?.Status()?.val() ?? 'none';
-            }
-            person_sub_period_end(index) {
-                const s = this.person_sub(index);
-                const end = s?.PeriodEnd()?.val();
-                return end ? new Date(end).toLocaleString() : '—';
-            }
-            Enforce_btn() {
-                const $ = this.$;
-                return $.$mol_button_minor.make({
-                    sub: () => [$.$mol_text.make({ text: () => 'Enforce now' })],
-                    click: () => {
-                        this.enforce_all();
-                    },
-                    enabled: () => this.is_admin(),
-                });
-            }
-            Head_bar() {
-                const $ = this.$;
-                return $.$mol_row.make({
-                    sub: () => [
-                        $.$mol_text.make({
-                            text: () => this.is_admin() ? 'Admin: People overview' : 'No admin access (set ?admin=<public_peer>)',
-                        }),
-                        this.Enforce_btn(),
-                    ],
-                });
-            }
-            Row(index) {
-                const $ = this.$;
-                this.$.$mol_log3_rise({
-                    place: this,
-                    message: 'Rendering person row',
-                    index,
-                    peer: this.person_peer(index),
-                    name: this.person_name(index),
-                    email: this.person_email(index),
-                    balance: this.person_balance_rub(index),
-                    status: this.person_sub_status(index),
-                    period_end: this.person_sub_period_end(index),
-                });
-                return $.$mol_row.make({
-                    sub: () => [
-                        $.$mol_text.make({ text: () => `Peer: ${this.person_peer(index)}` }),
-                        $.$mol_text.make({ text: () => `Name: ${this.person_name(index)}` }),
-                        $.$mol_text.make({ text: () => `Email: ${this.person_email(index)}` }),
-                        $.$mol_text.make({ text: () => `Balance: ${this.person_balance_rub(index)} ₽` }),
-                        $.$mol_text.make({ text: () => `Status: ${this.person_sub_status(index)}` }),
-                        $.$mol_text.make({ text: () => `Until: ${this.person_sub_period_end(index)}` }),
-                    ],
-                });
-            }
-            Body_list() {
-                const $ = this.$;
-                return $.$mol_list.make({
-                    rows: () => this.rows(),
-                });
-            }
-            sub() {
-                this.cron_loop();
-                return [this.Head_bar(), this.Body_list()];
-            }
-            openvpn_api() {
-                return new this.$.$bog_pay_app_openvpn_api();
-            }
-            enforce_all() {
-                if (!this.is_admin())
-                    return;
-                for (const person of this.people()) {
-                    this.enforce_person(person);
-                }
-            }
-            enforce_person(person) {
-                const subs = person.Subscriptions()?.remote_list() ?? [];
-                if (subs.length === 0)
-                    return;
-                let sub = subs.slice().sort((a, b) => {
-                    const ae = a.PeriodEnd()?.val() ? Date.parse(a.PeriodEnd().val()) : 0;
-                    const be = b.PeriodEnd()?.val() ? Date.parse(b.PeriodEnd().val()) : 0;
-                    return be - ae;
-                })[0];
-                const end_str = sub.PeriodEnd()?.val();
-                const end_at = end_str ? Date.parse(end_str) : 0;
-                const mode = sub.RenewalMode()?.val();
-                const now = Date.now();
-                if (end_at && end_at <= now && mode === 'auto') {
-                    const charged = this.charge_person_for_sub(person, sub);
-                    if (charged) {
-                        sub.activate_month();
-                    }
-                    else {
-                        sub.RenewalMode(null).val('manual');
-                        sub.Status(null).val('canceled');
-                    }
-                }
-                sub.enforce_access(this.openvpn_api());
-            }
-            charge_person_for_sub(person, sub) {
-                const price = this.price_cents();
-                const balance = Number(person.BalanceCents()?.val() ?? '0');
-                if (balance < price)
-                    return false;
-                person.BalanceCents(null).val(String(balance - price));
-                const inv = person.Invoices(null).remote_make({});
-                inv.Person(null).val(person.ref());
-                inv.Subscription(null).val(sub.ref());
-                inv.Kind(null).val('charge');
-                inv.AmountCents(null).val(String(price));
-                inv.Currency(null).val('RUB');
-                inv.Provider(null).val('admin-cron');
-                inv.mark_pending();
-                inv.mark_paid();
-                return true;
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $bog_pay_app_admin_page.prototype, "is_admin", null);
-        __decorate([
-            $mol_mem
-        ], $bog_pay_app_admin_page.prototype, "price_cents", null);
-        __decorate([
-            $mol_mem
-        ], $bog_pay_app_admin_page.prototype, "people", null);
-        __decorate([
-            $mol_mem
-        ], $bog_pay_app_admin_page.prototype, "rows", null);
-        __decorate([
-            $mol_mem
-        ], $bog_pay_app_admin_page.prototype, "cron_loop", null);
-        __decorate([
-            $mol_mem_key
-        ], $bog_pay_app_admin_page.prototype, "person_peer", null);
-        __decorate([
-            $mol_mem_key
-        ], $bog_pay_app_admin_page.prototype, "person_name", null);
-        __decorate([
-            $mol_mem_key
-        ], $bog_pay_app_admin_page.prototype, "person_email", null);
-        __decorate([
-            $mol_mem_key
-        ], $bog_pay_app_admin_page.prototype, "person_balance_rub", null);
-        __decorate([
-            $mol_mem_key
-        ], $bog_pay_app_admin_page.prototype, "person_sub", null);
-        __decorate([
-            $mol_mem_key
-        ], $bog_pay_app_admin_page.prototype, "person_sub_status", null);
-        __decorate([
-            $mol_mem_key
-        ], $bog_pay_app_admin_page.prototype, "person_sub_period_end", null);
-        __decorate([
-            $mol_mem_key
-        ], $bog_pay_app_admin_page.prototype, "Row", null);
-        __decorate([
-            $mol_mem
-        ], $bog_pay_app_admin_page.prototype, "openvpn_api", null);
-        __decorate([
-            $mol_action
-        ], $bog_pay_app_admin_page.prototype, "enforce_all", null);
-        __decorate([
-            $mol_action
-        ], $bog_pay_app_admin_page.prototype, "enforce_person", null);
-        __decorate([
-            $mol_action
-        ], $bog_pay_app_admin_page.prototype, "charge_person_for_sub", null);
-        $$.$bog_pay_app_admin_page = $bog_pay_app_admin_page;
-    })($$ = $_1.$$ || ($_1.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
 
 ;
 "use strict";
@@ -20167,22 +19541,9 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
-        new $mol_after_frame(() => {
-            $hyoo_crus_yard.masters = ['https://crus.hd4.ru/'];
-            $hyoo_crus_glob.yard().sync();
-        });
         class $bog_pay_app extends $.$bog_pay_app {
             domain_id() {
                 return 'YpaaEBfX_BcHFsæKs';
-            }
-            domain_rights() {
-                const land_id = this.domain_id();
-                return new Uint8Array($mol_fetch.buffer(require(`/bog/pay/app/${land_id}!${land_id}.bin`)));
-            }
-            Domain() {
-                const yard = super.Yard();
-                $mol_wire_sync(yard.world()).apply(this.domain_rights());
-                return yard.world().Fund($bog_pay_app_domain).Item(this.domain_id());
             }
             body() {
                 const originalLang = this.$.$mol_locale.lang();
@@ -20195,18 +19556,7 @@ var $;
         __decorate([
             $mol_mem
         ], $bog_pay_app.prototype, "domain_id", null);
-        __decorate([
-            $mol_mem
-        ], $bog_pay_app.prototype, "domain_rights", null);
-        __decorate([
-            $mol_mem
-        ], $bog_pay_app.prototype, "Domain", null);
         $$.$bog_pay_app = $bog_pay_app;
-        $$.$bog_pay_person = $.$bog_pay_app_person;
-        $$.$bog_pay_plan = $.$bog_pay_app_plan;
-        $$.$bog_pay_subscription = $.$bog_pay_app_subscription;
-        $$.$bog_pay_account = $.$bog_pay_app_account_domain;
-        $$.$bog_pay_invoice = $.$bog_pay_app_invoice;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
@@ -20244,30 +19594,6 @@ var $;
             },
         });
     })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-var $node = $node || {} ; $node[ "/bog/pay/app/YpaaEBfX_BcHFsæKs!YpaaEBfX_BcHFsæKs.bin" ] = "data:application/octet-stream;base64,AwAAAGKWmhAX1wXBxbPirAAAAAAAAAAACwAAAAAAAAD/8GKWmhAX1wXBxbPirCthSsZdmlHuj/QIYhovZyQDDKoeD/tbCeMn1v5TR/14uCj2Rp4Ql9ZvokLkqDY2XMJxKo3JmdhEoA3BXVZIyIQidi+uWjqzKQ8lmX7FUZ8Riwl6gjyeeJeXwE59Y5YJEiRhN3AstUUzgF2N2iDLg7g/pff/YpaaEBfXAABCk/9oLeRGyZNLPZdT1kRaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABzEEbczqN6yZ0gSkGoCW5JZToCXCi4OSdqf7HLeN3Sb0sgqlSExt0tjPtQSTgL0b+XsWIbXifFPvIaM/KcCATB939ilpoQF9cBAEKT/2gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACsA7iiDUuO80smUI7278RT+d9hpCzQpW7JK4IjrZNp5BofXBh24ZNdfnaE22KS4VkQxkMrt1MA2jEptEprclaL/eC3kRsmTSz2XU9ZEWmeBpG4o6mAJtFNjK2xIe5fyotyU5rOcuVTmDtgmGcFWqctcYntSfyUgvyhjD3tzMhHcntBiyHZ1bnEpBLB9Ax/bjy1UDUvxlPBiaGEiIG2TTq+JYJ72FryJL5O2zKI5Pu2cS59V2YlmTB+PNJYd9Mn91YIELeRGyZNLAABik/9oAAAAAAAAg4zoMedVAAAAAAAASGFsbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADNL5NxT4Jz9XTBbd5n52pYFJA283mHng014xo4LMf6r8EtunY0r2Fdlwp1izfKcEubsVfqecJs2YkZQjKnue/2QAwt5EbJk0sBAGKT/2iDjOgx51VQXgdzoJIAAAAAAAAeLGt3IoPovr7Yi9wAAAAAAAAAAAAAAAAAAAAAAAAAAI2KYJvoBF5zuXbG2j0MPwXwuJ19D77Z2fs7Ydd4ZOMqdsY++lw02Wgg2y1bzaWlUOdQYuDZqF4VqlpiK1D52zw="
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $bog_pay_app_domain extends $hyoo_crowd_struct {
-        editable() {
-            return this.land.allowed_mod();
-        }
-        people_registry() {
-            return $bog_pay_app_people.hall();
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_domain.prototype, "editable", null);
-    __decorate([
-        $mol_mem
-    ], $bog_pay_app_domain.prototype, "people_registry", null);
-    $.$bog_pay_app_domain = $bog_pay_app_domain;
 })($ || ($ = {}));
 
 

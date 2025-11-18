@@ -662,6 +662,13 @@ $mol_button_download $mol_button_minor
 
 $mol_row $mol_view
 
+$bog_pay_app_admin_page $mol_page
+	title @ \Admin
+	Head null
+	body /
+		<= Head_bar
+		<= Body_list
+
 $mol_check_list $mol_view
 	dictionary *
 	Option* $mol_check
@@ -703,11 +710,3 @@ $bog_pay_app $mol_page
 			<= Games $bog_pay_app_games
 			<= Personal_cabinet $bog_pay_app_account
 			<= Admin $bog_pay_app_admin_page
-	Yard $hyoo_sync_client
-
-$bog_pay_app_admin_page $mol_page
-	title @ \Admin
-	Head null
-	body /
-		<= Head_bar
-		<= Body_list
