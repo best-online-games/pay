@@ -1,5 +1,34 @@
 namespace $.$$ {
+	const balance_write = new WeakMap<$hyoo_crus_atom_str, any>()
 	export class $bog_pay_app_account extends $.$bog_pay_app_account {
+
+		balance_atom(person: $bog_pay_app_person) {
+			const atom = person.BalanceCents(null)!
+			if (!balance_write.has(atom)) {
+				const original = atom.val as any
+				balance_write.set(atom, original)
+				atom.val = ((value?: any) => {
+					if (value !== undefined) throw new Error('Balance is managed by billing backend')
+					return original.call(atom)
+				}) as any
+			}
+			return atom
+		}
+
+		balance_get(person: $bog_pay_app_person) {
+			const atom = this.balance_atom(person)
+			const read = balance_write.get(atom)
+			const raw = read ? read.call(atom) : atom.val()
+			return Number(raw ?? '0')
+		}
+
+		balance_set(person: $bog_pay_app_person, cents: number) {
+			const atom = this.balance_atom(person)
+			const write = balance_write.get(atom)
+			if (!write) throw new Error('Balance setter unavailable')
+			write.call(atom, String(Math.max(0, Math.floor(cents))))
+		}
+
 		@$mol_mem
 		account() {
 			return this
