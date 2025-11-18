@@ -1,12 +1,6 @@
-$bog_pay_app_account $mol_page
-	person $bog_pay_app_person
+$bog_pay_app_account $bog_lk
 	title @ \Personal Cabinet
 	Head null
-	body /
-		<= Info_peer
-		<= Info_status
-		<= Info_period
-		<= Info_renewal
-		<= Info_vpn
-		<= Attach_images
-		<= Actions
+	plugins /
+	Profile_form null
+	Form_title null

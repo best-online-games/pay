@@ -2,6 +2,3 @@ $bog_pay_app_admin $mol_page
 	account $bog_pay_app_account
 	title @ \Admin
 	Head null
-	body /
-		<= Head_bar
-		<= Body_list
