@@ -34,13 +34,126 @@ $mol_page $mol_view
 			dom_name \footer
 			sub <= foot /$mol_view
 
-$mol_theme_auto $mol_plugin
-	light \$mol_theme_light
-	attr * mol_theme <= theme <= dark \$mol_theme_dark
+$bog_theme_auto $mol_plugin
+	themes <= themes_default /
+	theme_light \$mol_theme_light
+	theme_dark \$mol_theme_dark
+	theme_next? null
+	theme_prev? null
+	theme_set? null
+	attr * mol_theme <= theme \
 
-$bog_pay_theme_auto $mol_theme_auto
-	light \$mol_theme_light
-	dark \$mol_theme_dark
+$mol_pop $mol_view
+	showed? false
+	align_vert \
+	align_hor \
+	prefer \vert
+	sub /
+		<= Anchor null
+	sub_visible /
+		<= Anchor
+		<= Bubble $mol_pop_bubble
+			align <= align \bottom_center
+			content <= bubble_content /$mol_view_content
+			height_max <= height_max 9999
+
+$mol_pop_bubble $mol_view
+	sub <= content /$mol_view_content
+	style *
+		^
+		maxHeight <= height_max 9999
+	attr *
+		^
+		mol_pop_align <= align \
+		tabindex 0
+
+$mol_svg $mol_view
+	dom_name \svg
+	dom_name_space \http://www.w3.org/2000/svg
+	font_size 16
+	font_family \
+	style_size *
+
+$mol_svg_root $mol_svg
+	dom_name \svg
+	attr *
+		^
+		viewBox <= view_box \0 0 100 100
+		preserveAspectRatio <= aspect \xMidYMid
+
+$mol_svg_path $mol_svg
+	dom_name \path
+	attr *
+		^
+		d <= geometry \
+
+
+$mol_icon $mol_svg_root
+	view_box \0 0 24 24
+	minimal_width 16
+	minimal_height 16
+	sub /
+		<= Path $mol_svg_path
+			geometry <= path \
+
+$mol_icon_brightness_4 $mol_icon path \M12,18C11.11,18 10.26,17.8 9.5,17.45C11.56,16.5 13,14.42 13,12C13,9.58 11.56,7.5 9.5,6.55C10.26,6.2 11.11,6 12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18M20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31L23.31,12L20,8.69Z
+
+$mol_hotkey $mol_plugin
+	event *
+		^
+		keydown?event <=> keydown?event null
+	key *
+	mod_ctrl false
+	mod_alt false
+	mod_shift false
+
+$mol_string $mol_view
+	dom_name \input
+	enabled true
+	minimal_height 40
+	autocomplete false
+	selection? /number
+		0
+		0
+	auto /
+		<= selection_watcher null
+		<= error_report null
+	field *
+		^
+		disabled <= disabled false
+		value <= value_changed? <=> value? \
+		placeholder <= hint_visible <= hint \
+		spellcheck <= spellcheck true
+		autocomplete <= autocomplete_native \
+		selectionEnd <= selection_end 0
+		selectionStart <= selection_start 0
+		inputMode <= keyboard \text
+		enterkeyhint <= enter \go
+	attr *
+		^
+		maxlength <= length_max +Infinity
+		type <= type? \text
+	event *
+		^
+		input?event <=> event_change?event null
+	plugins /
+		<= Submit $mol_hotkey
+			mod_ctrl <= submit_with_ctrl false
+			key * enter?event <=> submit?event null
+
+$mol_list $mol_view
+	render_visible_only true
+	render_over 0.1
+	sub <= rows /$mol_view
+		<= Gap_before $mol_view style * paddingTop <= gap_before 0
+		<= Empty $mol_view
+		<= Gap_after $mol_view style * paddingTop <= gap_after 0
+	item_height_min* 1
+	item_width_min* 1
+	view_window_shift? 0
+	view_window /
+		0
+		0
 
 $mol_speck $mol_view
 	theme \$mol_theme_accent
@@ -74,70 +187,60 @@ $mol_button_typed $mol_button
 
 $mol_button_minor $mol_button_typed
 
-$mol_check $mol_button_minor
+$bog_theme_picker_row $mol_button_minor
+	theme_name \
+	title <= theme_name
 	attr *
 		^
-		mol_check_checked <= checked? false
-		aria-checked <= aria_checked \false
-		role <= aria_role \checkbox
-	sub /$mol_view_content
-		<= Icon null
-		<= label /
-			<= Title $mol_view
-				sub /
-					<= title \
-
-$mol_check_icon $mol_check
-
-$mol_svg $mol_view
-	dom_name \svg
-	dom_name_space \http://www.w3.org/2000/svg
-	font_size 16
-	font_family \
-	style_size *
-
-$mol_svg_root $mol_svg
-	dom_name \svg
-	attr *
+		bog_theme_picker_row_focused <= focused_str \
+	event *
 		^
-		viewBox <= view_box \0 0 100 100
-		preserveAspectRatio <= aspect \xMidYMid
+		pointerenter?event <=> hover?event null
 
-$mol_svg_path $mol_svg
-	dom_name \path
-	attr *
-		^
-		d <= geometry \
-
-
-$mol_icon $mol_svg_root
-	view_box \0 0 24 24
-	minimal_width 16
-	minimal_height 16
+$bog_theme_picker $mol_scroll
+	theme_auto $bog_theme_auto
+	close? null
+	query?val \
+	focused_index?val -1
+	Theme_row* $bog_theme_picker_row
+		theme_name <= theme_name* \
+		focused <= theme_focused* false
+		click?event <=> theme_select*?event null
+		hover?event <=> theme_hover*?event null
 	sub /
-		<= Path $mol_svg_path
-			geometry <= path \
+		<= Content $mol_list rows /
+			<= Search $mol_string
+				value?val <=> query?val
+				hint @ \Just start typing
+			<= Theme_list $mol_list
+				rows <= theme_rows /
+	event *
+		^
+		keydown?event <=> key_down?event null
 
-$mol_icon_brightness_4 $mol_icon path \M12,18C11.11,18 10.26,17.8 9.5,17.45C11.56,16.5 13,14.42 13,12C13,9.58 11.56,7.5 9.5,6.55C10.26,6.2 11.11,6 12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18M20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31L23.31,12L20,8.69Z
-
-$mol_lights_toggle $mol_check_icon
-	Icon <= Lights_icon $mol_icon_brightness_4
-	hint @ \Toggle lights
-	checked? <=> lights? false
-
-$mol_list $mol_view
-	render_visible_only true
-	render_over 0.1
-	sub <= rows /$mol_view
-		<= Gap_before $mol_view style * paddingTop <= gap_before 0
-		<= Empty $mol_view
-		<= Gap_after $mol_view style * paddingTop <= gap_after 0
-	item_height_min* 1
-	item_width_min* 1
-	view_window_shift? 0
-	view_window /
-		0
-		0
+$bog_theme_toggle $mol_pop
+	theme_auto $bog_theme_auto
+	showed?val false
+	align \bottom_right
+	Anchor $mol_button_minor
+		sub /
+			<= Icon $mol_icon_brightness_4
+		hint @ \Cycle through themes
+		click?event <=> clicked?event null
+		event *
+			^
+			pointerdown?event <=> press_start?event null
+			pointermove?event <=> press_move?event null
+			pointerup?event <=> press_end?event null
+			pointercancel?event <=> press_cancel?event null
+			lostpointercapture?event <=> press_lost?event null
+	bubble_content /
+		<= Backdrop $mol_view
+			event *
+				click?event <=> backdrop_click?event null
+		<= Picker $bog_theme_picker
+			theme_auto <= theme_auto
+			close? <=> picker_close? null
 
 $mol_paragraph $mol_view
 	line_height 24
@@ -238,6 +341,19 @@ $mol_float $mol_view
 	style *
 		^
 		minHeight \auto
+
+$mol_check $mol_button_minor
+	attr *
+		^
+		mol_check_checked <= checked? false
+		aria-checked <= aria_checked \false
+		role <= aria_role \checkbox
+	sub /$mol_view_content
+		<= Icon null
+		<= label /
+			<= Title $mol_view
+				sub /
+					<= title \
 
 $mol_icon_chevron $mol_icon path \M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z
 
@@ -615,21 +731,6 @@ $bog_pay_app_games $mol_page
 						<= Game3_text $mol_text
 							text @ \PUBG, Fortnite, Warzone — стабильное соединение без лагов в критические моменты. Будьте первым, кто заметит врага и сделает выстрел.
 
-$bog_pay_app_account $mol_page
-	title @ \Personal Cabinet
-	Head null
-	body /
-		<= Info_peer
-		<= Info_status
-		<= Info_period
-		<= Info_renewal
-		<= Info_vpn
-		<= Attach_images
-		<= Actions
-
-$mol_button_major $mol_button_minor
-	theme \$mol_theme_base
-
 $mol_icon_upload $mol_icon path \M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z
 
 $mol_button_open $mol_button_minor
@@ -650,24 +751,262 @@ $mol_button_open_native $mol_view
 	event *
 		change?next <=> picked?next null
 
-$mol_icon_download $mol_icon path \M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z
+$bog_lk_avatar $mol_button_open
+	entity null
 
-$mol_button_download $mol_button_minor
-	blob null
-	uri \
-	file_name \blob.bin
-	sub /
-		<= Icon $mol_icon_download
-		<= title \
+$mol_labeler $mol_list
+	rows /
+		<= Label $mol_view
+			minimal_height 32
+			sub <= label /$mol_view_content
+				<= title
+		<= Content $mol_view
+			minimal_height 24
+			sub <= content /
 
 $mol_row $mol_view
 
-$bog_pay_app_admin_page $mol_page
+$mol_form_field $mol_labeler
+	bids /string
+	label /
+		<= name \
+		<= Bid $mol_view
+			sub / <= bid \
+	content / <= control null
+
+$mol_textarea $mol_stack
+	attr *
+		^
+		mol_textarea_clickable <= clickable? false
+		mol_textarea_sidebar_showed <= sidebar_showed false
+	event *
+		keydown?event <=> press?event null
+		pointermove?event <=> hover?event null
+	sub /
+		<= Edit $mol_textarea_edit
+			value? <=> value? \
+			hint <= hint \ 
+			enabled <= enabled true
+			spellcheck <= spellcheck true
+			length_max <= length_max +Infinity
+			selection? <=> selection? /number
+			bring => bring
+			submit? <=> submit? null
+			submit_with_ctrl <= submit_with_ctrl true
+		<= View $mol_text_code
+			text <= value
+			render_visible_only false
+			row_numb* <= row_numb* 0
+			sidebar_showed <= sidebar_showed
+			highlight <= highlight \
+			syntax <= syntax $mol_syntax2
+	symbols_alt *string
+		comma \<
+		period \>
+		dash \−
+		equals \≈
+		graveAccent \́
+		forwardSlash \÷
+		E \€
+		V \✔
+		X \×
+		C \©
+		P \§
+		H \₽
+		key0 \°
+		key8 \•
+		key2 \@
+		key3 \#
+		key4 \$
+		key6 \^
+		key7 \&
+		bracketOpen \[
+		bracketClose \]
+		slashBack \|
+	symbols_alt_ctrl *string
+		space \ 
+	symbols_alt_shift *string
+		V \✅
+		X \❌
+		O \⭕
+		key1 \❗
+		key4 \💲
+		key7 \❓
+		comma \«
+		period \»
+		semicolon \“
+		quoteSingle \”
+		dash \—
+		equals \≠
+		graveAccent \̱
+		bracketOpen \{
+		bracketClose \}
+
+$mol_textarea_edit $mol_string
+	dom_name \textarea
+	enter \enter
+	field *
+		^
+		scrollTop 0
+
+$mol_button_major $mol_button_minor
+	theme \$mol_theme_base
+
+$mol_status $mol_view
+	status <= title
+	minimal_height 24
+	minimal_width 0
+	sub /
+		<= message \
+
+$mol_form $mol_list
+	submit_allowed true
+	submit_blocked false
+	event *
+		^
+		keydown?event <=> keydown?event null
+	save?event null
+	message_done @ \Saved
+	errors *string
+		\Form invalid
+			<= form_invalid @ \Form is not valid
+	rows /
+		<= Body $mol_list
+			sub <= body <= form_fields /$mol_form_field
+		<= Foot $mol_row
+			sub <= foot <= buttons /$mol_view
+				<= Submit $mol_button_major
+					title <= submit_title @ \Save
+					hint <= submit_hint \
+					activate? => submit_activate?
+					click? <=> submit? null
+				<= Result $mol_status
+					message <= result? null
+
+$mol_form_group $mol_view
+
+$bog_lk $mol_page
+	title @ \Personal Page
+	plugins /
+		<= Theme $bog_theme_auto
+	head /
+		<= Lights $bog_theme_toggle
+			theme_auto <= Theme
+	profile null
+	can_edit? true
+	body /
+		<= Hero $mol_row
+			sub /
+				<= Avatar $bog_lk_avatar
+					entity <= profile
+					enabled <= can_edit
+				<= Hero_meta $mol_row
+					sub /
+						<= Hero_info $mol_list
+							rows /
+								<= Display_name $mol_text
+									text <= display_name_text \
+								<= Username_preview $mol_text
+									text <= username_preview_text \
+								<= Peer_id $mol_labeler
+									Label <= Peer_label $mol_text
+										text @ \User ID
+									Content <= Peer_value $mol_text
+										text <= peer_id \
+								<= Bio_preview $mol_text
+									text <= bio_preview_text \
+						<= Share_panel $mol_list
+							rows /
+								<= Share_title $mol_text
+									text @ \Поделиться:
+								<= Share_row $mol_row
+									sub /
+										<= Share_field $mol_string
+											value <= share_link \
+											hint @ \Ссылка на профиль
+										<= Share_copy $mol_button_minor
+											title @ \Скопировать ссылку
+											click? => share_copy_click? \
+											sub /
+												<= Share_copy_text $mol_text
+													text @ \Скопировать
+								<= Share_feedback $mol_text
+									text <= share_feedback_text \
+		<= Form_title $mol_text
+			text @ \Tell people about yourself
+		<= Profile_form $mol_form
+			body /
+				<= Basics_heading $mol_text
+					text @ \Basic information
+				<= Basics_group $mol_form_group sub /
+					<= Full_name_field $mol_form_field
+						name @ \Full name
+						Content <= Full_name_input $mol_string
+							value? <=> full_name? \
+							hint @ \Full name placeholder
+					<= Nickname_field $mol_form_field
+						name @ \Username
+						Content <= Nickname_input $mol_string
+							value? <=> nickname? \
+							hint @ \Username placeholder
+					<= Bio_field $mol_form_field
+						name @ \Bio
+						Content <= Bio_input $mol_textarea
+							value? <=> bio? \
+							hint @ \Bio placeholder
+				<= Location_heading $mol_text
+					text @ \Location
+				<= Location_group $mol_form_group sub /
+					<= City_field $mol_form_field
+						name @ \City
+						Content <= City_input $mol_string
+							value? <=> city? \
+							hint @ \City placeholder
+					<= Country_field $mol_form_field
+						name @ \Country
+						Content <= Country_input $mol_string
+							value? <=> country? \
+							hint @ \Country placeholder
+				<= Contacts_heading $mol_text
+					text @ \Contacts
+				<= Contacts_group $mol_form_group sub /
+					<= Email_field $mol_form_field
+						name @ \Email
+						Content <= Email_input $mol_string
+							value? <=> email? \
+							hint @ \Email placeholder
+					<= Website_field $mol_form_field
+						name @ \Website
+						Content <= Website_input $mol_string
+							value? <=> website? \
+							hint @ \Website placeholder
+					<= Telegram_field $mol_form_field
+						name @ \Telegram
+						Content <= Telegram_input $mol_string
+							value? <=> telegram? \
+							hint @ \Telegram placeholder
+					<= Github_field $mol_form_field
+						name @ \GitHub
+						Content <= Github_input $mol_string
+							value? <=> github? \
+							hint @ \GitHub placeholder
+					<= Twitter_field $mol_form_field
+						name @ \Twitter
+						Content <= Twitter_input $mol_string
+							value? <=> twitter? \
+							hint @ \Twitter placeholder
+
+$bog_pay_app_account $bog_lk
+	title @ \Personal Cabinet
+	Head null
+	plugins /
+	Profile_form null
+	Form_title null
+
+$bog_pay_app_admin $mol_page
+	account $bog_pay_app_account
 	title @ \Admin
 	Head null
-	body /
-		<= Head_bar
-		<= Body_list
 
 $mol_check_list $mol_view
 	dictionary *
@@ -694,12 +1033,14 @@ $mol_deck $mol_list
 		<= Content $mol_view
 
 $bog_pay_app $mol_page
-	Domain $bog_pay_app_domain
 	plugins /
-		<= Theme $bog_pay_theme_auto
+		<= Theme $bog_theme_auto
+			theme_light \$mol_theme_light
+			theme_dark \$mol_theme_dark
 	head /
 		<= Switch
-		<= Lights $mol_lights_toggle
+		<= Theme_toggle $bog_theme_toggle
+			theme_auto <= Theme
 	body /
 		<= Content
 	Deck $mol_deck
@@ -709,4 +1050,4 @@ $bog_pay_app $mol_page
 			<= Home $bog_pay_app_home
 			<= Games $bog_pay_app_games
 			<= Personal_cabinet $bog_pay_app_account
-			<= Admin $bog_pay_app_admin_page
+			<= Admin $bog_pay_app_admin
