@@ -1,9 +1,16 @@
 namespace $.$$ {
 	const balance_write = new WeakMap<$hyoo_crus_atom_str, any>()
 	export class $bog_pay_app_account extends $.$bog_pay_app_account {
-
 		balance_atom(person: $bog_pay_app_person) {
-			const atom = person.BalanceCents(null)!
+			const atom = person?.BalanceCents?.(null)
+			if (!atom) {
+				return {
+					val: (value?: any) => {
+						if (value !== undefined) throw new Error('Balance is unavailable')
+						return '0'
+					},
+				} as any
+			}
 			if (!balance_write.has(atom)) {
 				const original = atom.val as any
 				balance_write.set(atom, original)
@@ -436,7 +443,7 @@ namespace $.$$ {
 			if (url) {
 				try {
 					URL.revokeObjectURL(url)
-				} catch { }
+				} catch {}
 			}
 			person!.Photos(null)!.has(bin.ref(), false)
 		}
@@ -459,12 +466,7 @@ namespace $.$$ {
 		Actions() {
 			const $ = this.$
 			return $.$mol_row.make({
-				sub: () => [
-					this.Subscribe_btn(),
-					this.Renew_btn(),
-					this.Cancel_btn(),
-					this.Download_ovpn_btn(),
-				],
+				sub: () => [this.Subscribe_btn(), this.Renew_btn(), this.Cancel_btn(), this.Download_ovpn_btn()],
 			})
 		}
 

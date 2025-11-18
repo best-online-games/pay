@@ -1,4 +1,4 @@
-$bog_pay_app_admin_page $mol_page
+$bog_pay_app_admin $mol_page
 	account $bog_pay_app_account
 	title @ \Admin
 	Head null

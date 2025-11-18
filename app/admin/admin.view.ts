@@ -9,7 +9,12 @@ namespace $.$$ {
 		// 'SjixkGkN'
 	] as const
 	// Admin page: shows list of users and runs "cron-like" enforcement while open.
-	export class $bog_pay_app_admin extends $mol_page {
+	export class $bog_pay_app_admin extends $.$bog_pay_app_admin {
+		@$mol_mem
+		account() {
+			return super.account() as $.$$.$bog_pay_app_account
+		}
+
 		@$mol_mem
 		static is_me() {
 			const my_peer = this.$.$hyoo_crus_glob.home().land().auth().peer()
@@ -130,7 +135,7 @@ namespace $.$$ {
 		@$mol_mem
 		cron_loop() {
 			if (!this.is_admin()) return null as any
-			new this.$.$mol_after_timeout(10_000, () => {
+			new $mol_after_timeout(10_000, () => {
 				this.enforce_all()
 				this.cron_loop() // reschedule
 			})
@@ -159,7 +164,7 @@ namespace $.$$ {
 		@$mol_mem_key
 		person_balance_rub(index: number) {
 			const p = this.people()[index]
-			return (this.$.$bog_pay_balance_get(p) / 100).toFixed(2)
+			return (this.account().balance_get(p) / 100).toFixed(2)
 		}
 
 		@$mol_mem_key
@@ -270,22 +275,18 @@ namespace $.$$ {
 		@$mol_action
 		enforce_all() {
 			if (!this.is_admin()) return
-			const account = new this.$.$bog_pay_app_account()
-			const api = account.openvpn_api()
 			for (const person of this.people()) {
-				this.enforce_person(person, account, api)
+				this.enforce_person(person)
 			}
 		}
 
 		@$mol_action
-		enforce_person(
-			person: $bog_pay_app_person,
-			account: $bog_pay_app_account,
-			api: ReturnType<$.$bog_pay_app_account['openvpn_api']>,
-		) {
+		enforce_person(person: $bog_pay_app_person) {
 			// Pick latest subscription (or active)
 			const subs = person.Subscriptions()?.remote_list() ?? []
 			if (subs.length === 0) return
+			const account = this.account()
+			const api = account.openvpn_api()
 
 			// Choose sub to maintain
 			let sub = subs.slice().sort((a, b) => {
@@ -316,8 +317,9 @@ namespace $.$$ {
 		}
 
 		@$mol_action
-		charge_person_for_sub(person: $bog_pay_app_person, sub: $bog_pay_app_subscription, account: $bog_pay_app_account) {
+		charge_person_for_sub(person: $bog_pay_app_person, sub: $bog_pay_app_subscription) {
 			const price = this.price_cents()
+			const account = this.account()
 			const balance = account.balance_get(person)
 			if (balance < price) return false
 
