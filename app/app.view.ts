@@ -11,5 +11,17 @@ namespace $.$$ {
 			this.$.$mol_locale.lang(originalLang)
 			return [this.Content()]
 		}
+
+		Switch() {
+			const sw = this.Deck().Switch()
+			const base_value = sw.value
+			sw.value = (next?: string) => {
+				if (next === undefined) return '0'
+				base_value.call(sw, next)
+				return next
+			}
+			return sw
+		}
+
 	}
 }
