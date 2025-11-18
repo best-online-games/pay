@@ -8842,7 +8842,7 @@ declare namespace $ {
 
 //# sourceMappingURL=admin.view.tree.d.ts.map
 declare namespace $.$$ {
-    const $bog_pay_app_admin_peers: readonly ["oUduJQXl", "mcBM6jhX", "SSCOg7yi"];
+    const $bog_pay_app_admin_peers: readonly ["oUduJQXl", "mcBM6jhX"];
     class $bog_pay_app_admin extends $.$bog_pay_app_admin {
         is_admin(): boolean;
         title(): string;

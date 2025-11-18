@@ -19348,11 +19348,7 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
-        $$.$bog_pay_app_admin_peers = [
-            'oUduJQXl',
-            'mcBM6jhX',
-            'SSCOg7yi',
-        ];
+        $$.$bog_pay_app_admin_peers = ['oUduJQXl', 'mcBM6jhX'];
         class $bog_pay_app_admin extends $.$bog_pay_app_admin {
             is_admin() {
                 const my_peer = $hyoo_crus_glob.home().land().auth().peer();
