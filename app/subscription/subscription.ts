@@ -15,7 +15,7 @@ namespace $ {
 		PeriodEnd: $hyoo_crus_atom_str,
 		CancelAt: $hyoo_crus_atom_str,
 		RenewalMode: $hyoo_crus_atom_str,
-		AccessState: $hyoo_crus_atom_str, // 'provisioned' | 'revoked' (mock state)
+		AccessState: $hyoo_crus_atom_str, // 'provisioned' | 'revoked'
 	}) {
 		// Helpers
 
@@ -127,25 +127,25 @@ namespace $ {
 			}
 		}
 
-		// Mock certificate operations
+		// Certificate operations (OpenVPN API)
 
 		@$mol_action
-		provision_access_mock() {
-			const plan = this.Plan()?.remote()
+		provision_access(api: $bog_pay_app_openvpn_api) {
 			const person = this.Person()?.remote()
-			const id = this.ref().description ?? 'unknown'
-			console.log('[VPN] provision certificate (mock):', {
-				subscription: id,
-				person: person ? person.ref().description : null,
-				plan: plan ? plan.ref().description : null,
-			})
+			const client = person?.ref().description
+			if (!client) return
+
+			api.ensure_certificate(client)
 			this.AccessState(null)!.val('provisioned')
 		}
 
 		@$mol_action
-		revoke_access_mock() {
-			const id = this.ref().description ?? 'unknown'
-			console.log('[VPN] revoke certificate (mock):', { subscription: id })
+		revoke_access(api: $bog_pay_app_openvpn_api) {
+			const person = this.Person()?.remote()
+			const client = person?.ref().description
+			if (!client) return
+
+			api.revoke_certificate(client)
 			this.AccessState(null)!.val('revoked')
 		}
 
@@ -156,7 +156,7 @@ namespace $ {
 		}
 
 		@$mol_action
-		enforce_access_mock() {
+		enforce_access(api: $bog_pay_app_openvpn_api) {
 			// Reconciliation (tolerant): daily check is enough. Do not revoke on expiry; revoke only after cancellation.
 			this.expire_if_needed()
 			const desired = this.access_desired()
@@ -164,11 +164,11 @@ namespace $ {
 			const status = this.Status()?.val()
 
 			if (desired && state !== 'provisioned') {
-				this.provision_access_mock()
+				this.provision_access(api)
 			}
 			// Revoke only when subscription is explicitly canceled
 			if (status === 'canceled' && state === 'provisioned') {
-				this.revoke_access_mock()
+				this.revoke_access(api)
 			}
 		}
 	}

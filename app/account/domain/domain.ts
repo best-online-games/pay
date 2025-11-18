@@ -189,7 +189,12 @@ namespace $ {
       return true
     }
 
-    // OVPN mock download
+    // OVPN download & provisioning
+
+    @$mol_mem
+    openvpn_api() {
+      return new $bog_pay_app_openvpn_api()
+    }
 
     @$mol_mem
     ovpn_file_name() {
@@ -197,13 +202,15 @@ namespace $ {
       return `${peer}.ovpn`
     }
 
+    @$mol_action
     ovpn_file_blob() {
+      if (!this.is_vpn_allowed()) {
+        throw new Error('VPN unavailable: no active subscription')
+      }
+
       const peer = this.$.$hyoo_crus_glob.home().land().auth().peer()
-      const content = `# OVPN profile (mock)
-# user: ${peer}
-# generated: ${new Date().toISOString()}
-`
-      return new Blob([content], { type: 'application/x-openvpn-profile' })
+      const profile = this.openvpn_api().ensure_certificate(peer)
+      return new Blob([profile], { type: 'application/x-openvpn-profile' })
     }
 
     // Actions
@@ -213,7 +220,7 @@ namespace $ {
       // Идемпотентно: если уже есть активная — просто приводим доступ в соответствие
       const active = this.sub_active()
       if (active) {
-        active.enforce_access_mock()
+        active.enforce_access(this.openvpn_api())
         return active
       }
 
@@ -226,8 +233,8 @@ namespace $ {
       sub.Plan(null)!.val(plan.ref())
       sub.start_trial()
 
-      // Мокаем выпуск сертификата
-      sub.enforce_access_mock()
+      // Выпуск/приведение доступа
+      sub.enforce_access(this.openvpn_api())
       console.log('[Billing] subscribe (mock): start trial for plan', {
         person: person.ref().description,
         plan: plan.ref().description,
@@ -268,7 +275,7 @@ namespace $ {
       })
 
       // Приводим доступ
-      sub.enforce_access_mock()
+      sub.enforce_access(this.openvpn_api())
       return sub
     }
 
@@ -286,7 +293,7 @@ namespace $ {
       })
 
       // Доступ не отзываем до конца оплаченного/триального периода
-      sub.enforce_access_mock()
+      sub.enforce_access(this.openvpn_api())
     }
 
     // Enforcement
@@ -312,7 +319,7 @@ namespace $ {
           }
         }
 
-        sub.enforce_access_mock()
+        sub.enforce_access(this.openvpn_api())
         return
       }
 
@@ -320,7 +327,7 @@ namespace $ {
       const person = this.profile()
       const subs = person?.Subscriptions()?.remote_list() ?? []
       for (const s of subs) {
-        s.enforce_access_mock()
+        s.enforce_access(this.openvpn_api())
       }
     }
 

@@ -175,9 +175,10 @@ namespace $.$$ {
 		Download_ovpn_btn() {
 			const $ = this.$
 			return $.$mol_button_download.make({
-				sub: () => [$.$mol_text.make({ text: () => 'Скачать .ovpn (mock)' })],
+				sub: () => [$.$mol_text.make({ text: () => 'Скачать .ovpn' })],
 				file_name: () => this.account().ovpn_file_name(),
 				blob: () => this.account().ovpn_file_blob(),
+				enabled: () => this.account().is_vpn_allowed(),
 			})
 		}
 

@@ -252,6 +252,11 @@ namespace $.$$ {
 
 		// Enforcement logic (cron-like)
 
+		@$mol_mem
+		openvpn_api() {
+			return new this.$.$bog_pay_app_openvpn_api()
+		}
+
 		@$mol_action
 		enforce_all() {
 			if (!this.is_admin()) return
@@ -291,7 +296,7 @@ namespace $.$$ {
 			}
 
 			// Enforce access state (reconcile provision/revoke)
-			sub.enforce_access_mock()
+			sub.enforce_access(this.openvpn_api())
 		}
 
 		@$mol_action
