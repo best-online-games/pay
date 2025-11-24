@@ -8345,6 +8345,8 @@ declare namespace $.$$ {
         private share_feedback_timer;
         share_ref(): string | null;
         can_edit(): boolean;
+        Back(): any;
+        back_click(event?: Event): void;
         own_profile(): $bog_lk_profile | null;
         profile(): $bog_lk_profile | null;
         protected profile_text(ensure: (profile: $bog_lk_profile) => $hyoo_crus_text | null, next?: string): string;
@@ -8390,110 +8392,110 @@ declare namespace $ {
 		,
 		ReturnType< $bog_theme_toggle['theme_auto'] >
 	>
-	type $bog_lk_avatar__entity_bog_lk_2 = $mol_type_enforce<
+	type __bog_lk_2 = $mol_type_enforce<
+		Parameters< $bog_lk['back_click'] >[0]
+		,
+		Parameters< ReturnType< $bog_lk['Back'] >['click'] >[0]
+	>
+	type $mol_text__text_bog_lk_3 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_text['text'] >
+	>
+	type $mol_button_minor__title_bog_lk_4 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_button_minor['title'] >
+	>
+	type $mol_button_minor__sub_bog_lk_5 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_button_minor['sub'] >
+	>
+	type $bog_lk_avatar__entity_bog_lk_6 = $mol_type_enforce<
 		ReturnType< $bog_lk['profile'] >
 		,
 		ReturnType< $bog_lk_avatar['entity'] >
 	>
-	type $bog_lk_avatar__enabled_bog_lk_3 = $mol_type_enforce<
+	type $bog_lk_avatar__enabled_bog_lk_7 = $mol_type_enforce<
 		ReturnType< $bog_lk['can_edit'] >
 		,
 		ReturnType< $bog_lk_avatar['enabled'] >
 	>
-	type $mol_text__text_bog_lk_4 = $mol_type_enforce<
+	type $mol_text__text_bog_lk_8 = $mol_type_enforce<
 		ReturnType< $bog_lk['display_name_text'] >
 		,
 		ReturnType< $mol_text['text'] >
 	>
-	type $mol_text__text_bog_lk_5 = $mol_type_enforce<
+	type $mol_text__text_bog_lk_9 = $mol_type_enforce<
 		ReturnType< $bog_lk['username_preview_text'] >
 		,
 		ReturnType< $mol_text['text'] >
 	>
-	type $mol_text__text_bog_lk_6 = $mol_type_enforce<
+	type $mol_text__text_bog_lk_10 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_text['text'] >
 	>
-	type $mol_text__text_bog_lk_7 = $mol_type_enforce<
+	type $mol_text__text_bog_lk_11 = $mol_type_enforce<
 		ReturnType< $bog_lk['peer_id'] >
 		,
 		ReturnType< $mol_text['text'] >
 	>
-	type $mol_labeler__Label_bog_lk_8 = $mol_type_enforce<
+	type $mol_labeler__Label_bog_lk_12 = $mol_type_enforce<
 		ReturnType< $bog_lk['Peer_label'] >
 		,
 		ReturnType< $mol_labeler['Label'] >
 	>
-	type $mol_labeler__Content_bog_lk_9 = $mol_type_enforce<
+	type $mol_labeler__Content_bog_lk_13 = $mol_type_enforce<
 		ReturnType< $bog_lk['Peer_value'] >
 		,
 		ReturnType< $mol_labeler['Content'] >
 	>
-	type $mol_text__text_bog_lk_10 = $mol_type_enforce<
+	type $mol_text__text_bog_lk_14 = $mol_type_enforce<
 		ReturnType< $bog_lk['bio_preview_text'] >
 		,
 		ReturnType< $mol_text['text'] >
 	>
-	type $mol_list__rows_bog_lk_11 = $mol_type_enforce<
+	type $mol_list__rows_bog_lk_15 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
-	>
-	type $mol_text__text_bog_lk_12 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	type $mol_string__value_bog_lk_13 = $mol_type_enforce<
-		ReturnType< $bog_lk['share_link'] >
-		,
-		ReturnType< $mol_string['value'] >
-	>
-	type $mol_string__hint_bog_lk_14 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_string['hint'] >
-	>
-	type __bog_lk_15 = $mol_type_enforce<
-		Parameters< $bog_lk['share_copy_click'] >[0]
-		,
-		Parameters< ReturnType< $bog_lk['Share_copy'] >['click'] >[0]
 	>
 	type $mol_text__text_bog_lk_16 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_text['text'] >
 	>
-	type $mol_button_minor__title_bog_lk_17 = $mol_type_enforce<
+	type $mol_string__value_bog_lk_17 = $mol_type_enforce<
+		ReturnType< $bog_lk['share_link'] >
+		,
+		ReturnType< $mol_string['value'] >
+	>
+	type $mol_string__hint_bog_lk_18 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_string['hint'] >
+	>
+	type __bog_lk_19 = $mol_type_enforce<
+		Parameters< $bog_lk['share_copy_click'] >[0]
+		,
+		Parameters< ReturnType< $bog_lk['Share_copy'] >['click'] >[0]
+	>
+	type $mol_text__text_bog_lk_20 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_text['text'] >
+	>
+	type $mol_button_minor__title_bog_lk_21 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button_minor['title'] >
 	>
-	type $mol_button_minor__sub_bog_lk_18 = $mol_type_enforce<
+	type $mol_button_minor__sub_bog_lk_22 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
-	>
-	type $mol_row__sub_bog_lk_19 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_row['sub'] >
-	>
-	type $mol_text__text_bog_lk_20 = $mol_type_enforce<
-		ReturnType< $bog_lk['share_feedback_text'] >
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	type $mol_list__rows_bog_lk_21 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_list['rows'] >
-	>
-	type $mol_row__sub_bog_lk_22 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_row['sub'] >
 	>
 	type $mol_row__sub_bog_lk_23 = $mol_type_enforce<
 		readonly(any)[]
@@ -8501,37 +8503,37 @@ declare namespace $ {
 		ReturnType< $mol_row['sub'] >
 	>
 	type $mol_text__text_bog_lk_24 = $mol_type_enforce<
+		ReturnType< $bog_lk['share_feedback_text'] >
+		,
+		ReturnType< $mol_text['text'] >
+	>
+	type $mol_list__rows_bog_lk_25 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_list['rows'] >
+	>
+	type $mol_row__sub_bog_lk_26 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_row['sub'] >
+	>
+	type $mol_row__sub_bog_lk_27 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_row['sub'] >
+	>
+	type $mol_text__text_bog_lk_28 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_text['text'] >
 	>
-	type $mol_text__text_bog_lk_25 = $mol_type_enforce<
+	type $mol_text__text_bog_lk_29 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_text['text'] >
-	>
-	type $mol_string__value_bog_lk_26 = $mol_type_enforce<
-		ReturnType< $bog_lk['full_name'] >
-		,
-		ReturnType< $mol_string['value'] >
-	>
-	type $mol_string__hint_bog_lk_27 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_string['hint'] >
-	>
-	type $mol_form_field__name_bog_lk_28 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_form_field['name'] >
-	>
-	type $mol_form_field__Content_bog_lk_29 = $mol_type_enforce<
-		ReturnType< $bog_lk['Full_name_input'] >
-		,
-		ReturnType< $mol_form_field['Content'] >
 	>
 	type $mol_string__value_bog_lk_30 = $mol_type_enforce<
-		ReturnType< $bog_lk['nickname'] >
+		ReturnType< $bog_lk['full_name'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
@@ -8546,19 +8548,19 @@ declare namespace $ {
 		ReturnType< $mol_form_field['name'] >
 	>
 	type $mol_form_field__Content_bog_lk_33 = $mol_type_enforce<
-		ReturnType< $bog_lk['Nickname_input'] >
+		ReturnType< $bog_lk['Full_name_input'] >
 		,
 		ReturnType< $mol_form_field['Content'] >
 	>
-	type $mol_textarea__value_bog_lk_34 = $mol_type_enforce<
-		ReturnType< $bog_lk['bio'] >
+	type $mol_string__value_bog_lk_34 = $mol_type_enforce<
+		ReturnType< $bog_lk['nickname'] >
 		,
-		ReturnType< $mol_textarea['value'] >
+		ReturnType< $mol_string['value'] >
 	>
-	type $mol_textarea__hint_bog_lk_35 = $mol_type_enforce<
+	type $mol_string__hint_bog_lk_35 = $mol_type_enforce<
 		string
 		,
-		ReturnType< $mol_textarea['hint'] >
+		ReturnType< $mol_string['hint'] >
 	>
 	type $mol_form_field__name_bog_lk_36 = $mol_type_enforce<
 		string
@@ -8566,42 +8568,42 @@ declare namespace $ {
 		ReturnType< $mol_form_field['name'] >
 	>
 	type $mol_form_field__Content_bog_lk_37 = $mol_type_enforce<
-		ReturnType< $bog_lk['Bio_input'] >
+		ReturnType< $bog_lk['Nickname_input'] >
 		,
 		ReturnType< $mol_form_field['Content'] >
 	>
-	type $mol_form_group__sub_bog_lk_38 = $mol_type_enforce<
-		readonly(any)[]
+	type $mol_textarea__value_bog_lk_38 = $mol_type_enforce<
+		ReturnType< $bog_lk['bio'] >
 		,
-		ReturnType< $mol_form_group['sub'] >
+		ReturnType< $mol_textarea['value'] >
 	>
-	type $mol_text__text_bog_lk_39 = $mol_type_enforce<
+	type $mol_textarea__hint_bog_lk_39 = $mol_type_enforce<
 		string
 		,
-		ReturnType< $mol_text['text'] >
+		ReturnType< $mol_textarea['hint'] >
 	>
-	type $mol_string__value_bog_lk_40 = $mol_type_enforce<
-		ReturnType< $bog_lk['city'] >
-		,
-		ReturnType< $mol_string['value'] >
-	>
-	type $mol_string__hint_bog_lk_41 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_string['hint'] >
-	>
-	type $mol_form_field__name_bog_lk_42 = $mol_type_enforce<
+	type $mol_form_field__name_bog_lk_40 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__Content_bog_lk_43 = $mol_type_enforce<
-		ReturnType< $bog_lk['City_input'] >
+	type $mol_form_field__Content_bog_lk_41 = $mol_type_enforce<
+		ReturnType< $bog_lk['Bio_input'] >
 		,
 		ReturnType< $mol_form_field['Content'] >
 	>
+	type $mol_form_group__sub_bog_lk_42 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_form_group['sub'] >
+	>
+	type $mol_text__text_bog_lk_43 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_text['text'] >
+	>
 	type $mol_string__value_bog_lk_44 = $mol_type_enforce<
-		ReturnType< $bog_lk['country'] >
+		ReturnType< $bog_lk['city'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
@@ -8616,42 +8618,42 @@ declare namespace $ {
 		ReturnType< $mol_form_field['name'] >
 	>
 	type $mol_form_field__Content_bog_lk_47 = $mol_type_enforce<
-		ReturnType< $bog_lk['Country_input'] >
+		ReturnType< $bog_lk['City_input'] >
 		,
 		ReturnType< $mol_form_field['Content'] >
 	>
-	type $mol_form_group__sub_bog_lk_48 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_form_group['sub'] >
-	>
-	type $mol_text__text_bog_lk_49 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_text['text'] >
-	>
-	type $mol_string__value_bog_lk_50 = $mol_type_enforce<
-		ReturnType< $bog_lk['email'] >
+	type $mol_string__value_bog_lk_48 = $mol_type_enforce<
+		ReturnType< $bog_lk['country'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
-	type $mol_string__hint_bog_lk_51 = $mol_type_enforce<
+	type $mol_string__hint_bog_lk_49 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_string['hint'] >
 	>
-	type $mol_form_field__name_bog_lk_52 = $mol_type_enforce<
+	type $mol_form_field__name_bog_lk_50 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__Content_bog_lk_53 = $mol_type_enforce<
-		ReturnType< $bog_lk['Email_input'] >
+	type $mol_form_field__Content_bog_lk_51 = $mol_type_enforce<
+		ReturnType< $bog_lk['Country_input'] >
 		,
 		ReturnType< $mol_form_field['Content'] >
 	>
+	type $mol_form_group__sub_bog_lk_52 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_form_group['sub'] >
+	>
+	type $mol_text__text_bog_lk_53 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_text['text'] >
+	>
 	type $mol_string__value_bog_lk_54 = $mol_type_enforce<
-		ReturnType< $bog_lk['website'] >
+		ReturnType< $bog_lk['email'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
@@ -8666,12 +8668,12 @@ declare namespace $ {
 		ReturnType< $mol_form_field['name'] >
 	>
 	type $mol_form_field__Content_bog_lk_57 = $mol_type_enforce<
-		ReturnType< $bog_lk['Website_input'] >
+		ReturnType< $bog_lk['Email_input'] >
 		,
 		ReturnType< $mol_form_field['Content'] >
 	>
 	type $mol_string__value_bog_lk_58 = $mol_type_enforce<
-		ReturnType< $bog_lk['telegram'] >
+		ReturnType< $bog_lk['website'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
@@ -8686,12 +8688,12 @@ declare namespace $ {
 		ReturnType< $mol_form_field['name'] >
 	>
 	type $mol_form_field__Content_bog_lk_61 = $mol_type_enforce<
-		ReturnType< $bog_lk['Telegram_input'] >
+		ReturnType< $bog_lk['Website_input'] >
 		,
 		ReturnType< $mol_form_field['Content'] >
 	>
 	type $mol_string__value_bog_lk_62 = $mol_type_enforce<
-		ReturnType< $bog_lk['github'] >
+		ReturnType< $bog_lk['telegram'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
@@ -8706,12 +8708,12 @@ declare namespace $ {
 		ReturnType< $mol_form_field['name'] >
 	>
 	type $mol_form_field__Content_bog_lk_65 = $mol_type_enforce<
-		ReturnType< $bog_lk['Github_input'] >
+		ReturnType< $bog_lk['Telegram_input'] >
 		,
 		ReturnType< $mol_form_field['Content'] >
 	>
 	type $mol_string__value_bog_lk_66 = $mol_type_enforce<
-		ReturnType< $bog_lk['twitter'] >
+		ReturnType< $bog_lk['github'] >
 		,
 		ReturnType< $mol_string['value'] >
 	>
@@ -8726,16 +8728,36 @@ declare namespace $ {
 		ReturnType< $mol_form_field['name'] >
 	>
 	type $mol_form_field__Content_bog_lk_69 = $mol_type_enforce<
+		ReturnType< $bog_lk['Github_input'] >
+		,
+		ReturnType< $mol_form_field['Content'] >
+	>
+	type $mol_string__value_bog_lk_70 = $mol_type_enforce<
+		ReturnType< $bog_lk['twitter'] >
+		,
+		ReturnType< $mol_string['value'] >
+	>
+	type $mol_string__hint_bog_lk_71 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_string['hint'] >
+	>
+	type $mol_form_field__name_bog_lk_72 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_form_field['name'] >
+	>
+	type $mol_form_field__Content_bog_lk_73 = $mol_type_enforce<
 		ReturnType< $bog_lk['Twitter_input'] >
 		,
 		ReturnType< $mol_form_field['Content'] >
 	>
-	type $mol_form_group__sub_bog_lk_70 = $mol_type_enforce<
+	type $mol_form_group__sub_bog_lk_74 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_form_group['sub'] >
 	>
-	type $mol_form__body_bog_lk_71 = $mol_type_enforce<
+	type $mol_form__body_bog_lk_75 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_form['body'] >
@@ -8743,6 +8765,9 @@ declare namespace $ {
 	export class $bog_lk extends $mol_page {
 		Theme( ): $bog_theme_auto
 		Lights( ): $bog_theme_toggle
+		back_click( next?: ReturnType< ReturnType< $bog_lk['Back'] >['click'] > ): ReturnType< ReturnType< $bog_lk['Back'] >['click'] >
+		Back_text( ): $mol_text
+		Back( ): $mol_button_minor
 		Avatar( ): $bog_lk_avatar
 		display_name_text( ): string
 		Display_name( ): $mol_text
